@@ -1,0 +1,16 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form rendered="#{identity.isLogged}">
+	    You are logged in as #{identity.user.name} | 
+	    <h:commandLink action="#{identity.logout}" value="Logout" />
+	</h:form>
+	<h:form rendered="#{!identity.isLogged}">
+
+		<h:commandLink action="login" value="LOGIN" /> |
+		
+	</h:form>
+
+</ui:composition>

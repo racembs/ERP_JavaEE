@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>tn.esprit.b4</groupId>
+		<artifactId>esprit1718b4eventmanagement</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>esprit1718b4eventmanagement-ear</artifactId>
+	<packaging>ear</packaging>
+
+	<name>esprit1718b4eventmanagement-ear</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>tn.esprit.b4</groupId>
+			<artifactId>esprit1718b4eventmanagement-web</artifactId>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>tn.esprit.b4</groupId>
+			<artifactId>esprit1718b4eventmanagement-web</artifactId>
+			<type>pom</type>
+		</dependency>
+		<!-- mysql jdbc driver -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>tn.esprit.b4</groupId>
+			<artifactId>esprit1718b4eventmanagement-service</artifactId>
+			<type>ejb</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<configuration>
+					<hostname>localhost</hostname>
+					<port>19990</port>
+					<filename>${project.artifactId}.ear</filename>
+				</configuration>
+				<executions>
+					<execution>
+						<id>undeploy</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>undeploy</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>deploy</id>
+						<phase>install</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>deploy_jdbc_driver</id>
+						<phase>package</phase>
+						<goals>
+							<goal>deploy-artifact</goal>
+						</goals>
+						<configuration>
+							<groupId>mysql</groupId>
+							<artifactId>mysql-connector-java</artifactId>
+							<name>${mysql.artifactId}-${mysql.driver.version}.jar</name>
+						</configuration>
+					</execution>
+					<execution>
+						<id>add_datasource</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>add-resource</goal>
+						</goals>
+						<configuration>
+							<address>subsystem=datasources,data-source=${ds.jndi.name}</address>
+							<resources>
+								<resource>
+									<properties>
+										<connection-url>${db.jdbc.url}</connection-url>
+										<jndi-name>${ds.jndi.name}</jndi-name>
+										<enabled>true</enabled>
+										<enable>true</enable>
+										<user-name>${mysql.username}</user-name>
+										<driver-name>${mysql.driver.name}</driver-name>
+										<pool-name>${ds.jndi.name}</pool-name>
+										<use-ccm>false</use-ccm>
+									</properties>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+
+</project>

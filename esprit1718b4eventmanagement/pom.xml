@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>tn.esprit.b4</groupId>
+	<artifactId>esprit1718b4eventmanagement</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<contributors>
+		<contributor>
+			<email>medali.bettaieb@esprit.tn</email>
+			<name>medali.bettaieb</name>
+			<organization>ESPRIT</organization>
+			<organizationUrl>http://www.esprit.ens.tn/</organizationUrl>
+		</contributor>
+	</contributors>
+	<inceptionYear>2018</inceptionYear>
+	<properties>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<javaee-api-version>7.0</javaee-api-version>
+		<javaee-web-api-version>7.0</javaee-web-api-version>
+		<wildfly.version>8.2.0.Final</wildfly.version>
+		<hibernate.core.version>4.3.5.Final</hibernate.core.version>
+		<guava.version>18.0</guava.version>
+		<primefaces.version>5.1</primefaces.version>
+		<ejb.spec.version>3.2</ejb.spec.version>
+
+		<!-- Plugin versions and properties -->
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.ear.plugin.version>2.10</maven.ear.plugin.version>
+		<maven.ejb.plugin.version>2.4</maven.ejb.plugin.version>
+		<maven.war.plugin.version>2.5</maven.war.plugin.version>
+		<maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
+		<wildfly.maven.plugin.version>1.0.2.Final</wildfly.maven.plugin.version>
+
+		<!-- Properties required for testing -->
+		<junit.version>4.11</junit.version>
+		<version.jboss.bom>8.2.1.Final</version.jboss.bom>
+
+		<!-- Properties required for mysql driver configuration and dataSource 
+			configuration -->
+		<mysql.artifactId>mysql-connector-java</mysql.artifactId>
+		<mysql.driver.version>5.1.6</mysql.driver.version>
+		<mysql.hostname>localhost</mysql.hostname>
+		<mysql.port>3306</mysql.port>
+		<mysql.database.name>bettaiebdb</mysql.database.name>
+		<db.jdbc.url>jdbc:mysql://${mysql.hostname}:${mysql.port}/${mysql.database.name}</db.jdbc.url>
+		<ds.jndi.name>java:/myTestDS</ds.jndi.name>
+		<mysql.username>root</mysql.username>
+		<!-- <mysql.password>root</mysql.password> -->
+		<mysql.driver.name>${mysql.artifactId}-${mysql.driver.version}.jar</mysql.driver.name>
+
+		<!-- Quality control and Reporting -->
+		<maven.overview.plugin.version>1.7-SNAPSHOT</maven.overview.plugin.version>
+		<maven.overview.reporting.plugin.version>RELEASE</maven.overview.reporting.plugin.version>
+		<maven.checkstyle.plugin.version>2.13</maven.checkstyle.plugin.version>
+		<maven.javadoc.plugin.version>2.10.1</maven.javadoc.plugin.version>
+		<maven.dashboard.plugin.version>1.0.0-beta-1</maven.dashboard.plugin.version>
+
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- Declared modules dependencies -->
+			<dependency>
+				<groupId>tn.esprit.b4</groupId>
+				<artifactId>esprit1718b4eventmanagement-domain</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>tn.esprit.b4</groupId>
+				<artifactId>esprit1718b4eventmanagement-service</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>tn.esprit.b4</groupId>
+				<artifactId>esprit1718b4eventmanagement-web</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<type>war</type>
+			</dependency>
+
+			<!-- required for skinny wars activation -->
+			<dependency>
+				<groupId>tn.esprit.b4</groupId>
+				<artifactId>esprit1718b4eventmanagement-web</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<type>pom</type>
+			</dependency>
+			<!-- /Declared modules dependencies -->
+
+			<!-- to be used in the service and domain modules -->
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-api</artifactId>
+				<version>${javaee-api-version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- to be user within the webapp module -->
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-web-api</artifactId>
+				<version>${javaee-web-api-version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- to be used in the sevice module and client module for unit testing -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- primefaces dependency for webapp -->
+			<dependency>
+				<groupId>org.primefaces</groupId>
+				<artifactId>primefaces</artifactId>
+				<version>${primefaces.version}</version>
+			</dependency>
+
+			<!-- required for accessing remote EJB Services from a remote client -->
+			<dependency>
+				<groupId>org.wildfly</groupId>
+				<artifactId>wildfly-ejb-client-bom</artifactId>
+				<version>${wildfly.version}</version>
+				<type>pom</type>
+			</dependency>
+
+			<!-- required in the remote client side app for supporting hibernate persistentBag -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.core.version}</version>
+			</dependency>
+
+			<!-- required for dynamic loading of proxies in the remote client side -->
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+
+			<!-- mysql jdbc driver -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.driver.version}</version>
+			</dependency>
+
+			<!-- JBoss distributes a complete set of Java EE 7 APIs including a Bill 
+				of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection) 
+				of artifacts. We use this here so that we always get the correct versions 
+				of artifacts. Here we use the jboss-javaee-7.0-with-tools stack (you can 
+				read this as the JBoss stack of the Java EE 7 APIs, with some extras tools 
+				for your project, such as Arquillian for testing) and the jboss-javaee-7.0-with-hibernate 
+				stack you can read this as the JBoss stack of the Java EE 7 APIs, with extras 
+				from the Hibernate family of projects) -->
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>jboss-javaee-7.0-with-tools</artifactId>
+				<version>${version.jboss.bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>jboss-javaee-7.0-with-hibernate</artifactId>
+				<version>${version.jboss.bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<defaultGoal>clean install help:active-profiles</defaultGoal>
+		<pluginManagement>
+			<plugins>
+
+				<!-- maven ear plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-ear-plugin</artifactId>
+					<version>${maven.ear.plugin.version}</version>
+					<configuration>
+						<fileNameMapping>no-version</fileNameMapping>
+						<generateModuleId>true</generateModuleId>
+						<defaultLibBundleDir>/lib</defaultLibBundleDir>
+						<skinnyWars>true</skinnyWars>
+						<modules>
+							<ejbModule>
+								<groupId>${project.groupId}</groupId>
+								<artifactId>esprit1718b4eventmanagement-service</artifactId>
+							</ejbModule>
+							<webModule>
+								<groupId>${project.groupId}</groupId>
+								<artifactId>esprit1718b4eventmanagement-web</artifactId>
+								<contextRoot>esprit1718b4eventmanagement-web</contextRoot>
+								<bundleFileName>esprit1718b4eventmanagement-web.war</bundleFileName>
+							</webModule>
+						</modules>
+					</configuration>
+				</plugin>
+
+				<!-- ejb plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-ejb-plugin</artifactId>
+					<version>${maven.ejb.plugin.version}</version>
+					<configuration>
+						<ejbVersion>${ejb.spec.version}</ejbVersion>
+					</configuration>
+				</plugin>
+				<!-- war plugin -skinny wars mode! -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>${maven.war.plugin.version}</version>
+					<configuration>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+						<packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
+						<archive>
+							<manifest>
+								<addClasspath>true</addClasspath>
+								<classpathPrefix>lib/</classpathPrefix>
+							</manifest>
+						</archive>
+					</configuration>
+				</plugin>
+
+				<!-- wildfly Plugin -->
+				<plugin>
+					<groupId>org.wildfly.plugins</groupId>
+					<artifactId>wildfly-maven-plugin</artifactId>
+					<version>${wildfly.maven.plugin.version}</version>
+				</plugin>
+
+				<!-- Surefire Plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven.surefire.plugin.version}</version>
+					<configuration>
+						<testFailureIgnore>true</testFailureIgnore>
+					</configuration>
+				</plugin>
+
+				<!-- maven overview Plugin -->
+				<plugin>
+					<groupId>com.googlecode.maven-overview-plugin</groupId>
+					<artifactId>maven-overview-plugin</artifactId>
+					<version>${maven.overview.plugin.version}</version>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<profiles>
+
+		<profile>
+			<id>nightly-build</id>
+			<build>
+				<defaultGoal>clean install com.googlecode.maven-overview-plugin:maven-overview-plugin:RELEASE:overview site help:active-profiles</defaultGoal>
+			</build>
+			<reporting>
+				<plugins>
+
+					<plugin>
+						<groupId>com.googlecode.maven-overview-plugin</groupId>
+						<artifactId>maven-overview-plugin</artifactId>
+						<version>${maven.overview.reporting.plugin.version}</version>
+						<configuration>
+							<width>1600</width>
+							<height>1600</height>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-report-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-checkstyle-plugin</artifactId>
+						<version>${maven.checkstyle.plugin.version}</version>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>${maven.javadoc.plugin.version}</version>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>dashboard-maven-plugin</artifactId>
+						<version>${maven.dashboard.plugin.version}</version>
+					</plugin>
+				</plugins>
+			</reporting>
+		</profile>
+
+	</profiles>
+
+	<distributionManagement>
+		<repository>
+			<id>deployment</id>
+			<name>releases</name>
+			<url>http://bitbox.tn:8081/nexus/content/repositories/releases/</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>deployment</id>
+			<name>snapshots</name>
+			<url>http://bitbox.tn:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+  <modules>
+    <module>esprit1718b4eventmanagement-web</module>
+    <module>esprit1718b4eventmanagement-ear</module>
+    <module>esprit1718b4eventmanagement-client</module>
+    <module>esprit1718b4eventmanagement-domain</module>
+    <module>esprit1718b4eventmanagement-service</module>
+  </modules>
+</project>

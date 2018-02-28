@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an unmanaged datasource. It should be used for proofs of concept 
+	or testing only -->
+<datasources xmlns="http://www.jboss.org/ironjacamar/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.jboss.org/ironjacamar/schema http://docs.jboss.org/ironjacamar/schema/datasources_1_0.xsd">
+	<!-- The datasource is bound into JNDI at this location. We reference this 
+		in META-INF/test-persistence.xml -->
+	<datasource jndi-name="java:/myTestDS" pool-name="app-test"
+		enabled="true" use-java-context="true">
+		<connection-url>jdbc:mysql://localhost:3306/bettaiebtestdb</connection-url>
+		<driver>mysql</driver>
+		<security>
+			<user-name>root</user-name>
+		</security>
+	</datasource>
+</datasources>
+ 
