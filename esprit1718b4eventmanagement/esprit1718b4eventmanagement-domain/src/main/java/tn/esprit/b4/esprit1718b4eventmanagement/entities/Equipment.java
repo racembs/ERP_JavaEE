@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tab_Equipment")
-public class Equipment {
+public class Equipment implements Serializable {
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
