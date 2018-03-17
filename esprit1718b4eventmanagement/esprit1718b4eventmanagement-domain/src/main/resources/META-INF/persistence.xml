@@ -10,5 +10,7 @@
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
 		</properties>
+
+			
 	</persistence-unit>
 </persistence>
