@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
 @Entity
 public class Works implements Serializable {
 	/** serialVersionUID */
@@ -37,13 +38,18 @@ public class Works implements Serializable {
 	@EmbeddedId
 	private WorksPK worksPK;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="idUser",referencedColumnName="USR_CODE",updatable=true,insertable=true)
+
+	
+	////////////////////
+	@ManyToOne
+	@JoinColumn(name="id_user",
+	referencedColumnName="USR_CODE",
+	insertable=false,
+	updatable=false)
 	private User user;
 	
-			
 	@ManyToOne
-	@JoinColumn(name="idEquipement",
+	@JoinColumn(name="id_equipement",
 	referencedColumnName="Id",
 	insertable=false,
 	updatable=false)
