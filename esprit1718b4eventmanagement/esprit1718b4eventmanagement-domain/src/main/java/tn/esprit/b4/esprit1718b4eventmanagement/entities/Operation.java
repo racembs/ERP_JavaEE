@@ -35,9 +35,16 @@ public class Operation implements Serializable {
 	} 
 	
 
+	@ManyToOne
+	@JoinColumns({
+			@JoinColumn(name="idUser",referencedColumnName="idUser",insertable=false,updatable=false),
+			@JoinColumn(name="id_equipement",referencedColumnName="id_equipement",insertable=false,updatable=false)})
+	private ChargingStation chargingstations;
+	
+	
 	
 	@ManyToOne
-	@JoinColumn(name="optr",referencedColumnName="IdOptRange",insertable=false,updatable=false)
+	@JoinColumn(name="id_OperatingRange",referencedColumnName="IdOptRange",insertable=false,updatable=false)
 	private OperatingRange optrange;
 	
 	public int getPhaseNumber() {
@@ -86,5 +93,16 @@ public class Operation implements Serializable {
 	public void setOptrange(OperatingRange optrange) {
 		this.optrange = optrange;
 	}
+
+	public ChargingStation getChargingstations() {
+		return chargingstations;
+	}
+
+	public void setChargingstations(ChargingStation chargingstations) {
+		this.chargingstations = chargingstations;
+	}
+	
+	
+	
    
 }

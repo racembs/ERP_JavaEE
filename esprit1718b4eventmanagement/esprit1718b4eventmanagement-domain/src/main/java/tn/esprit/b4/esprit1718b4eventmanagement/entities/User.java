@@ -34,8 +34,8 @@ public class User implements Serializable {
 	@Column(name = "USR_ROLE")
 	private String role;
 	
-	@OneToMany(mappedBy="users")
-	private List <ChargingStation> chargingstations;
+//	@OneToMany(mappedBy="users")
+//	private List <ChargingStation> chargingstations;
 	
 	public Long getCode() {
 		return code;
@@ -97,13 +97,7 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public List<ChargingStation> getChargingstations() {
-		return chargingstations;
-	}
-
-	public void setChargingstations(List<ChargingStation> chargingstations) {
-		this.chargingstations = chargingstations;
-	}
+	
 
 	
 	

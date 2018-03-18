@@ -34,6 +34,7 @@ public class Equipment implements Serializable {
 
 	@OneToMany(mappedBy="equipement")
 	private List <ChargingStation> chargingstations;
+	
 	public int getId() {
 		return Id;
 	}
