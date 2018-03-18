@@ -2,6 +2,9 @@ package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 /**
@@ -17,6 +20,8 @@ public class Client implements Serializable {
 	private int id;
 	private int code;
 	private String company;
+	@OneToMany(mappedBy="client")
+	private List<Orders> orders = new ArrayList<>();
 	private static final long serialVersionUID = 1L;
 
 	public Client() {

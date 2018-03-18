@@ -28,6 +28,9 @@ public class Orders implements Serializable {
 	@OneToMany(mappedBy="order")
 	private List<ManufacturingOrder> manufactOrders = new ArrayList<>();
 	
+	@ManyToOne
+	private Client client;
+	
 	private static final long serialVersionUID = 1L;
 
 	public Orders() {
