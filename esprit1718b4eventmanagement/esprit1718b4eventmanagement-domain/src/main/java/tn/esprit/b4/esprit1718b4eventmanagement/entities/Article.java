@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -28,6 +29,11 @@ public class Article implements Serializable {
 		@OneToMany(mappedBy="article")
 		private List<ManufacturingOrder> manufactOrders = new ArrayList<>();
 		
+		@ManyToMany
+		private List <OperatingRange> operatingranges;
+		public void setOperatingranges(List<OperatingRange> operatingranges) {
+			this.operatingranges = operatingranges;
+		}
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column(name = "Id")
@@ -118,6 +124,9 @@ public class Article implements Serializable {
 		}
 		public void setManufactOrders(List<ManufacturingOrder> manufactOrders) {
 			this.manufactOrders = manufactOrders;
+		}
+		public List<OperatingRange> getOperatingranges() {
+			return operatingranges;
 		}
 		
 		

@@ -1,16 +1,19 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 @Entity
-
+@Table(name = "tab_User")
 public class User implements Serializable {
 
 	/** serialVersionUID */
@@ -30,6 +33,10 @@ public class User implements Serializable {
 	private String email;
 	@Column(name = "USR_ROLE")
 	private String role;
+	
+	@OneToMany(mappedBy="users")
+	private List <ChargingStation> chargingstations;
+	
 	public Long getCode() {
 		return code;
 	}
@@ -90,4 +97,14 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
+	public List<ChargingStation> getChargingstations() {
+		return chargingstations;
+	}
+
+	public void setChargingstations(List<ChargingStation> chargingstations) {
+		this.chargingstations = chargingstations;
+	}
+
+	
+	
 }

@@ -32,7 +32,14 @@ public class Operation implements Serializable {
 
 	public Operation() {
 		super();
-	}   
+	} 
+	
+
+	
+	@ManyToOne
+	@JoinColumn(name="optr",referencedColumnName="IdOptRange",insertable=false,updatable=false)
+	private OperatingRange optrange;
+	
 	public int getPhaseNumber() {
 		return this.PhaseNumber;
 	}
@@ -60,6 +67,24 @@ public class Operation implements Serializable {
 
 	public void setDescription(String Description) {
 		this.Description = Description;
+	}
+
+	public OperationPK getOperationPK() {
+		return OperationPK;
+	}
+
+	public void setOperationPK(OperationPK operationPK) {
+		OperationPK = operationPK;
+	}
+
+	
+
+	public OperatingRange getOptrange() {
+		return optrange;
+	}
+
+	public void setOptrange(OperatingRange optrange) {
+		this.optrange = optrange;
 	}
    
 }

@@ -2,6 +2,8 @@ package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.List;
+
 import javax.persistence.*;
 
 /**
@@ -14,6 +16,7 @@ public class OperatingRange implements Serializable {
 
 	   
 	@Id
+	@Column(name = "IdOptRange")
 	private int id;
 	
 	@Column(name = "Code")
@@ -29,7 +32,19 @@ public class OperatingRange implements Serializable {
 	private int Deadline;
 	
 	private static final long serialVersionUID = 1L;
+	
+	@ManyToMany(mappedBy="operatingranges")
+	private List <Article> articles;
+	
+	@OneToMany(mappedBy="optrange")
+	private List <Operation> operations;
 
+	public List<Article> getArticles() {
+		return articles;
+	}
+	public void setArticles(List<Article> articles) {
+		this.articles = articles;
+	}
 	public OperatingRange() {
 		super();
 	}   
@@ -68,5 +83,12 @@ public class OperatingRange implements Serializable {
 	public void setDeadline(int Deadline) {
 		this.Deadline = Deadline;
 	}
+	public List<Operation> getOperations() {
+		return operations;
+	}
+	public void setOperations(List<Operation> operations) {
+		this.operations = operations;
+	}
    
+	
 }

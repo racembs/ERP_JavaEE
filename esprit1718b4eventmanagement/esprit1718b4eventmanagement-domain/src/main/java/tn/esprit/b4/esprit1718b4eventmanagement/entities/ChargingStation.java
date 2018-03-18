@@ -2,6 +2,8 @@ package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.List;
+import javax.persistence.ManyToOne;
 import javax.persistence.*;
 
 /**
@@ -30,8 +32,19 @@ public class ChargingStation implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	
 	@EmbeddedId
 	private ChargingStationPK WorkStationPK;
+	
+	@ManyToOne
+	@JoinColumn(name="idUser",referencedColumnName="USR_CODE",insertable=false,updatable=false)
+	private User users;
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="id_equipement",referencedColumnName="Id",insertable=false,updatable=false)
+	private Equipment equipement;
+	
+	
 
 	public ChargingStation() {
 		super();
@@ -71,6 +84,26 @@ public class ChargingStation implements Serializable {
 	public void setDescription(String Description) {
 		this.Description = Description;
 	}
+	public ChargingStationPK getWorkStationPK() {
+		return WorkStationPK;
+	}
+	public void setWorkStationPK(ChargingStationPK workStationPK) {
+		WorkStationPK = workStationPK;
+	}
+
+	public User getUsers() {
+		return users;
+	}
+	public void setUsers(User users) {
+		this.users = users;
+	}
+	public Equipment getEquipement() {
+		return equipement;
+	}
+	public void setEquipement(Equipment equipement) {
+		this.equipement = equipement;
+	}
+
    
 	
 }

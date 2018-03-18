@@ -7,14 +7,16 @@ import javax.persistence.Embeddable;
 public class ChargingStationPK implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Column(name="id_equipement")
-	private Integer idEquipment;
-	@Column(name="id_user")
+	private Integer id_equipment;
+	
+	@Column(name="idUser")
 	private Integer idUser;
-	public Integer getIdEquipment() {
-		return idEquipment;
+	
+	public Integer getId_equipment() {
+		return id_equipment;
 	}
-	public void setIdEquipment(Integer idEquipment) {
-		this.idEquipment = idEquipment;
+	public void setId_equipment(Integer id_equipment) {
+		this.id_equipment = id_equipment;
 	}
 	public Integer getIdUser() {
 		return idUser;
@@ -26,8 +28,8 @@ public class ChargingStationPK implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((idEquipment == null) ? 0 : idEquipment.hashCode());
 		result = prime * result + ((idUser == null) ? 0 : idUser.hashCode());
+		result = prime * result + ((id_equipment == null) ? 0 : id_equipment.hashCode());
 		return result;
 	}
 	@Override
@@ -39,22 +41,17 @@ public class ChargingStationPK implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		ChargingStationPK other = (ChargingStationPK) obj;
-		if (idEquipment == null) {
-			if (other.idEquipment != null)
-				return false;
-		} else if (!idEquipment.equals(other.idEquipment))
-			return false;
 		if (idUser == null) {
 			if (other.idUser != null)
 				return false;
 		} else if (!idUser.equals(other.idUser))
 			return false;
+		if (id_equipment == null) {
+			if (other.id_equipment != null)
+				return false;
+		} else if (!id_equipment.equals(other.id_equipment))
+			return false;
 		return true;
 	}
-	@Override
-	public String toString() {
-		return "ChargingStationPK [idEquipment=" + idEquipment + ", idUser=" + idUser + "]";
-	}
-	
 	
 }

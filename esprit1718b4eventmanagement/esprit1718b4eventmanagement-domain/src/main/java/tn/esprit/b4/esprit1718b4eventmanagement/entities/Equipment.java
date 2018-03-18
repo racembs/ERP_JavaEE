@@ -1,11 +1,13 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +29,11 @@ public class Equipment implements Serializable {
 	private String State;
 	@Column(name = "EISDate")
 	private String EISDate;
+	
+	
+
+	@OneToMany(mappedBy="equipement")
+	private List <ChargingStation> chargingstations;
 	public int getId() {
 		return Id;
 	}
@@ -69,5 +76,13 @@ public class Equipment implements Serializable {
 		State = state;
 		EISDate = eISDate;
 	}
+	public List<ChargingStation> getChargingstations() {
+		return chargingstations;
+	}
+	public void setChargingstations(List<ChargingStation> chargingstations) {
+		this.chargingstations = chargingstations;
+	}
 
+	
+	
 }
