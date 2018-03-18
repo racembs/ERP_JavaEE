@@ -1,18 +1,17 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 
 import java.io.Serializable;
-import java.lang.String;
 import java.util.Date;
 
 import javax.persistence.*;
 
 /**
- * Entity implementation class for Entity: Order
+ * Entity implementation class for Entity: Orders
  *
  */
 @Entity
 
-public class Order implements Serializable {
+public class Orders implements Serializable {
 
 	   
 	@Id
@@ -25,7 +24,7 @@ public class Order implements Serializable {
 	private String statut;
 	private static final long serialVersionUID = 1L;
 
-	public Order() {
+	public Orders() {
 		super();
 	}   
 	public int getId() {
@@ -34,22 +33,13 @@ public class Order implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}   
-	public int getReference() {
-		return this.reference;
 	}
-
+	public int getReference() {
+		return reference;
+	}
 	public void setReference(int reference) {
 		this.reference = reference;
-	}   
-	public String getStatut() {
-		return this.statut;
 	}
-
-	public void setStatut(String statut) {
-		this.statut = statut;
-	}
-	
 	public Date getOrder_date() {
 		return order_date;
 	}
@@ -62,6 +52,11 @@ public class Order implements Serializable {
 	public void setDelivery_date(Date delivery_date) {
 		this.delivery_date = delivery_date;
 	}
-
+	public String getStatut() {
+		return statut;
+	}
+	public void setStatut(String statut) {
+		this.statut = statut;
+	}
    
 }

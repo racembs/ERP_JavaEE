@@ -3,10 +3,15 @@ import java.util.List;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -14,22 +19,38 @@ import javax.persistence.Table;
 @Table(name = "tab_Nomenclature")
 public class Nomenclature {
 	private static final long serialVersionUID = 1L;
+	@EmbeddedId
+	private NomenclaturePk nomenclauturePk;
 	
-	@OneToMany
-	private List<Article> articles;
+	@ManyToOne
+	@JoinColumn(name="idArticlesFils",referencedColumnName="Id"
+	,insertable=false,updatable=false)
+	private Article articleFils;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Id")
-	private int Id;
+	@ManyToOne
+	@JoinColumn(name="idArticlePere",referencedColumnName="Id"
+	,insertable=false,updatable=false)
+	private Article articlePere;
+
 	@Column(name = "Quantity")
 	private int Quantity;
-	
-	public int getId() {
-		return Id;
+	public NomenclaturePk getNomenclauturePk() {
+		return nomenclauturePk;
 	}
-	public void setId(int id) {
-		Id = id;
+	public void setNomenclauturePk(NomenclaturePk nomenclauturePk) {
+		this.nomenclauturePk = nomenclauturePk;
+	}
+	public Article getArticlePere() {
+		return articlePere;
+	}
+	public void setArticlePere(Article articlePere) {
+		this.articlePere = articlePere;
+	}
+	public Article getArticleFils() {
+		return articleFils;
+	}
+	public void setArticleFils(Article articleFils) {
+		this.articleFils = articleFils;
 	}
 	public int getQuantity() {
 		return Quantity;
@@ -38,23 +59,6 @@ public class Nomenclature {
 		Quantity = quantity;
 	}
 	
-	
-	public List<Article> getArticle() {
-		return articles;
-	}
-	public void setArticle(List<Article> article) {
-		this.articles = article;
-	}
-	
-	public Nomenclature(List<Article> article, int id, int quantity) {
-		super();
-		this.articles = article;
-		Id = id;
-		Quantity = quantity;
-	}
-	public Nomenclature() {
-		super();
-	}
 
 	
 	

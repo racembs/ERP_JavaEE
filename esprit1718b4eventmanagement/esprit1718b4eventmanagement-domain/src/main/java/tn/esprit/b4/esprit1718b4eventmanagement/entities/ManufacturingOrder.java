@@ -11,7 +11,7 @@ import javax.persistence.*;
  *
  */
 @Entity
-
+@Table(name = "ManufacturingOrder")
 public class ManufacturingOrder implements Serializable {
 
 	   

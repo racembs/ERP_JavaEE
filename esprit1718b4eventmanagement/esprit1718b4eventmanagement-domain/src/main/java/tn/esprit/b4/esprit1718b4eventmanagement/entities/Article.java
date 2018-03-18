@@ -1,22 +1,29 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
 
 @Entity
-@Table(name = "tab_Article")
+@Table(name = "Article")
 public class Article implements Serializable {
 
 		private static final long serialVersionUID = 1L;
+		@OneToMany(mappedBy="articleFils")
+		private List<Nomenclature> nomenclatures1;
 		
-		@ManyToOne
-		private Nomenclature nomenclature;
+		@OneToMany(mappedBy="articlePere")
+		private List<Nomenclature> nomenclatures;
+		
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column(name = "Id")
@@ -74,12 +81,6 @@ public class Article implements Serializable {
 		}
 		public void setQuantity(int quantity) {
 			Quantity = quantity;
-		}
-		public Nomenclature getNomenclature() {
-			return nomenclature;
-		}
-		public void setNomenclature(Nomenclature nomenclature) {
-			this.nomenclature = nomenclature;
 		}
 		
 		public Article(int id, String articleCode, String description, String unitCode, String type, float pmp,
