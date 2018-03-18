@@ -115,7 +115,7 @@ public class ChargingStation implements Serializable {
 		this.operations = operations;
 	}
 	public ChargingStation(int code, String naturePost, int nbDay, int nbHours, String description,
-			ChargingStationPK workStationPK, Users users, Equipment equipement, List<Operation> operations) {
+			ChargingStationPK workStationPK, User users, Equipment equipement, List<Operation> operations) {
 		super();
 		Code = code;
 		NaturePost = naturePost;
@@ -123,7 +123,7 @@ public class ChargingStation implements Serializable {
 		NbHours = nbHours;
 		Description = description;
 		WorkStationPK = workStationPK;
-		this.users = users;
+		this.User = users;
 		this.equipement = equipement;
 		this.operations = operations;
 	}
