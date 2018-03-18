@@ -2,6 +2,7 @@ package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.ManyToOne;
 import javax.persistence.*;
@@ -46,7 +47,7 @@ public class ChargingStation implements Serializable {
 	private Equipment equipement;
 	
 	@OneToMany(mappedBy="chargingstations")
-	private List <Operation> operations;
+	private List <Operation> operations = new ArrayList<>();
 
 	public ChargingStation() {
 		super();
@@ -112,6 +113,24 @@ public class ChargingStation implements Serializable {
 	}
 	public void setOperations(List<Operation> operations) {
 		this.operations = operations;
+	}
+	public ChargingStation(int code, String naturePost, int nbDay, int nbHours, String description,
+			ChargingStationPK workStationPK, Users users, Equipment equipement, List<Operation> operations) {
+		super();
+		Code = code;
+		NaturePost = naturePost;
+		NbDay = nbDay;
+		NbHours = nbHours;
+		Description = description;
+		WorkStationPK = workStationPK;
+		this.users = users;
+		this.equipement = equipement;
+		this.operations = operations;
+	}
+	public ChargingStation(int code) {
+		super();
+		Code = code;
+		
 	}
 
    
