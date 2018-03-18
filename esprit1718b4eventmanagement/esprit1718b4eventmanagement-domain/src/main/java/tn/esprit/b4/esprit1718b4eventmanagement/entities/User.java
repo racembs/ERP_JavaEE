@@ -28,7 +28,8 @@ public class User implements Serializable {
 	private String password;
 	@Column(name = "USR_EMAIL")
 	private String email;
-
+	@Column(name = "USR_ROLE")
+	private String role;
 	public Long getCode() {
 		return code;
 	}
@@ -55,6 +56,14 @@ public class User implements Serializable {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public void setPassword(String password) {
