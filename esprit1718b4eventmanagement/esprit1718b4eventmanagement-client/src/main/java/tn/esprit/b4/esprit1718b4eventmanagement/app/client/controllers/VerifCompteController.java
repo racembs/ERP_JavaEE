@@ -6,6 +6,7 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,6 +16,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -22,20 +25,18 @@ import javafx.stage.Stage;
  *
  * @author Asus
  */
-public class DrawerController implements Initializable {
+public class VerifCompteController implements Initializable {
 
     @FXML
-    private JFXButton homeBtn;
+    private StackPane rootPane;
     @FXML
-    private JFXButton appointmentBtn;
+    private JFXPasswordField txtcode;
     @FXML
-    private JFXButton paymentBtn;
+    private JFXButton btnLogin;
     @FXML
-    private JFXButton logoutBtn;
+    private ImageView imgProgress;
     @FXML
-    private JFXButton exitBtn;
-    @FXML
-    private JFXButton ProfileBtn;
+    private JFXButton btncancel;
 
     /**
      * Initializes the controller class.
@@ -45,26 +46,19 @@ public class DrawerController implements Initializable {
         // TODO
     }    
 
-     @FXML
-    private void logOut(ActionEvent event) {
-      
-        
+    @FXML
+    private void OnLoginVerifAction(ActionEvent event) {
     }
 
     @FXML
-    private void exit(ActionEvent event) {
-    
-    }
-
-    @FXML
-    private void onProfileClik(ActionEvent event) throws IOException {
-          	Parent parent= null;
-			    	parent  =FXMLLoader.load(getClass().getResource("/views/Profile.fxml"));
+    private void OnCancelAction(ActionEvent event) throws IOException {
+         	Parent parent= null;
+			    	parent  =FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
 					Scene scene=new Scene(parent);
 					Stage primaryStage= new Stage(); 
 					primaryStage.setScene(scene);
 					primaryStage.show();
-					 ProfileBtn.getScene().getWindow().hide();
+					 btnLogin.getScene().getWindow().hide();
     }
     
 }

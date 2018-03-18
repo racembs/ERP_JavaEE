@@ -50,7 +50,9 @@ public class LoginController implements Initializable {
     private JFXButton btnLogin;
     @FXML
     private ImageView imgProgress;
-
+    
+    
+public static User user = new User();
     /**
      * Initializes the controller class.
      */
@@ -77,17 +79,17 @@ public class LoginController implements Initializable {
 			
 			System.out.println("JNDI OK");
 
-			User user = userService.findByLogin(txtUsername.getText());
+			 user = userService.findByLogin(txtUsername.getText());
 
 			if (user == null) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error");
 				alert.setHeaderText(null);
-				alert.setContentText("Invalid username or password !");
+				alert.setContentText("Invalid username !");
 				alert.showAndWait();
 			} else {
 				System.out.println("User password from DB : " + user.getPassword());
-				if (txtPassword.getText().equals(user.getPassword())&&(user.getRole().equals("user"))) {
+				if (txtPassword.getText().equals(user.getPassword())&&(user.getRole().equals("user"))&&(user.getStatut().equals("valable"))) {
 					System.out.println("3okkkeeyy");
 					
 
@@ -97,9 +99,9 @@ public class LoginController implements Initializable {
 					Stage primaryStage= new Stage(); 
 					primaryStage.setScene(scene);
 					primaryStage.show();
-				
+					  btnLogin.getScene().getWindow().hide();
 				} 
-				else if (txtPassword.getText().equals(user.getPassword())&&(user.getRole().equals("superuser"))) {
+				else if (txtPassword.getText().equals(user.getPassword())&&(user.getRole().equals("superuser"))&&(user.getStatut().equals("valable"))) {
 					System.out.println("3okkkeeyy");
 					
 
@@ -109,8 +111,26 @@ public class LoginController implements Initializable {
 					Stage primaryStage= new Stage(); 
 					primaryStage.setScene(scene);
 					primaryStage.show();
+					 btnLogin.getScene().getWindow().hide();
 				
 				} 
+				else if (user.getStatut().equals("Bloquer"))
+				{Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText(null);
+				alert.setContentText("Votre Compte est Bloquer veuiller saisir le code envoie sur votre mail !");
+				alert.showAndWait();
+				
+				Parent parent= null;
+		    	parent  =FXMLLoader.load(getClass().getResource("/views/VerifCompte.fxml"));
+				Scene scene=new Scene(parent);
+				Stage primaryStage= new Stage(); 
+				primaryStage.setScene(scene);
+				primaryStage.show();
+				 btnLogin.getScene().getWindow().hide();
+				
+				
+				}
 				else {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Error");
