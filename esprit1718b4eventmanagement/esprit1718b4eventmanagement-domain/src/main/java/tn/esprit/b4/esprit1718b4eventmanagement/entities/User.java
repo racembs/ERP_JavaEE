@@ -43,6 +43,21 @@ public class User implements Serializable {
 	private String statut;
 	
 	
+	public User(int id, Long code, String firstname, String lastname, String login, String password, String email,
+			String role, String numtel, String statut, List<ChargingStation> chargingstations) {
+		super();
+		this.id = id;
+		this.code = code;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.login = login;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.numtel = numtel;
+		this.statut = statut;
+		this.chargingstations = chargingstations;
+	}
 	private static final long serialVersionUID = 1L;
 
 	
@@ -97,20 +112,7 @@ public class User implements Serializable {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((chargingstations == null) ? 0 : chargingstations.hashCode());
-		result = prime * result + ((code == null) ? 0 : code.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + id;
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
-		
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		return result;
-	}
+	
 	public String getNumtel() {
 		return numtel;
 	}
@@ -123,50 +125,7 @@ public class User implements Serializable {
 	public void setStatut(String statut) {
 		this.statut = statut;
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (chargingstations == null) {
-			if (other.chargingstations != null)
-				return false;
-		} else if (!chargingstations.equals(other.chargingstations))
-			return false;
-		if (code == null) {
-			if (other.code != null)
-				return false;
-		} else if (!code.equals(other.code))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (id != other.id)
-			return false;
-		if (login == null) {
-			if (other.login != null)
-				return false;
-		} else if (!login.equals(other.login))
-			return false;
-		
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (role == null) {
-			if (other.role != null)
-				return false;
-		} else if (!role.equals(other.role))
-			return false;
-		return true;
-	}
+	
 	public String getFirstname() {
 		return firstname;
 	}
@@ -179,5 +138,16 @@ public class User implements Serializable {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+	public User(String firstname, String lastname, String login, String password, String email, String numtel) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.login = login;
+		this.password = password;
+		this.email = email;
+		this.numtel = numtel;
+	}
+
+	
 	
 }

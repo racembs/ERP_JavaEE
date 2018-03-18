@@ -32,7 +32,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
  */
 public class profileController implements Initializable {
 
-    private Label txtrole;
+   
     @FXML
     private Label txtlastname;
     @FXML
@@ -97,12 +97,6 @@ User user = LoginController.user;
     private void OnChangeAction(ActionEvent event) {
     	
     	
-    	
-    	
-    	
-    	
-    	
-    	
 		String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote";
 Context context;
 
@@ -121,7 +115,7 @@ Context context;
         	if (txtpwd.getText().equals(txtpwd1.getText()))
         	{
         		
-	proxy.update(user);
+proxy.update1(user);
 	 
 	 
 	System.out.println(user.getLastname());
