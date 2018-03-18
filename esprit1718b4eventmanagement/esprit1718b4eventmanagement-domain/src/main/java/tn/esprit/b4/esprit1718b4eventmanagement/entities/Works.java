@@ -43,7 +43,7 @@ public class Works implements Serializable {
 	////////////////////
 	@ManyToOne
 	@JoinColumn(name="id_user",
-	referencedColumnName="USR_CODE",
+	referencedColumnName="id",
 	insertable=false,
 	updatable=false)
 	private User user;

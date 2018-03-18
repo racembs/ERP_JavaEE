@@ -39,7 +39,7 @@ public class ChargingStation implements Serializable {
 	
 	@ManyToOne (cascade=CascadeType.ALL)
 	@JoinColumn(name="idUser",referencedColumnName="id",insertable=false,updatable=false)
-	private Users users;
+	private User User;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="id_equipement",referencedColumnName="Id",insertable=false,updatable=false)
@@ -95,11 +95,11 @@ public class ChargingStation implements Serializable {
 
 
 	
-	public Users getUsers() {
-		return users;
+	public User getUser() {
+		return User;
 	}
-	public void setUsers(Users users) {
-		this.users = users;
+	public void setUser(User User) {
+		this.User = User;
 	}
 	public Equipment getEquipement() {
 		return equipement;
