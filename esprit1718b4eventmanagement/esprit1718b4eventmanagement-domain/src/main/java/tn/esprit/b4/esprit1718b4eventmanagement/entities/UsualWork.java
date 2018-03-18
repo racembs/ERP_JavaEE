@@ -5,8 +5,11 @@ import java.util.Date;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 @Entity
 @DiscriminatorValue(value="UsualWork")
 public class UsualWork  extends Works implements Serializable{
@@ -20,6 +23,8 @@ public class UsualWork  extends Works implements Serializable{
 	private Date WRDate;
 	@Temporal(TemporalType.DATE)
 	private Date WODate;
+	@Enumerated(EnumType.STRING)
+	private Nature nature;
 	public String getEmmergency() {
 		return emmergency;
 	}
@@ -43,6 +48,12 @@ public class UsualWork  extends Works implements Serializable{
 	}
 	public void setWODate(Date wODate) {
 		WODate = wODate;
+	}
+	public Nature getNature() {
+		return nature;
+	}
+	public void setNature(Nature nature) {
+		this.nature = nature;
 	}
 
 }
