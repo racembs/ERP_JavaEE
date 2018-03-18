@@ -1,7 +1,9 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -22,6 +24,10 @@ public class Orders implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date delivery_date;
 	private String statut;
+	
+	@OneToMany(mappedBy="order")
+	private List<ManufacturingOrder> manufactOrders = new ArrayList<>();
+	
 	private static final long serialVersionUID = 1L;
 
 	public Orders() {
@@ -57,6 +63,12 @@ public class Orders implements Serializable {
 	}
 	public void setStatut(String statut) {
 		this.statut = statut;
+	}
+	public List<ManufacturingOrder> getManufactOrders() {
+		return manufactOrders;
+	}
+	public void setManufactOrders(List<ManufacturingOrder> manufactOrders) {
+		this.manufactOrders = manufactOrders;
 	}
    
 }

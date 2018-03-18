@@ -1,5 +1,6 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -23,6 +24,9 @@ public class Article implements Serializable {
 		
 		@OneToMany(mappedBy="articlePere")
 		private List<Nomenclature> nomenclatures;
+		
+		@OneToMany(mappedBy="article")
+		private List<ManufacturingOrder> manufactOrders = new ArrayList<>();
 		
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -96,6 +100,24 @@ public class Article implements Serializable {
 		}
 		public Article() {
 			super();
+		}
+		public List<Nomenclature> getNomenclatures1() {
+			return nomenclatures1;
+		}
+		public void setNomenclatures1(List<Nomenclature> nomenclatures1) {
+			this.nomenclatures1 = nomenclatures1;
+		}
+		public List<Nomenclature> getNomenclatures() {
+			return nomenclatures;
+		}
+		public void setNomenclatures(List<Nomenclature> nomenclatures) {
+			this.nomenclatures = nomenclatures;
+		}
+		public List<ManufacturingOrder> getManufactOrders() {
+			return manufactOrders;
+		}
+		public void setManufactOrders(List<ManufacturingOrder> manufactOrders) {
+			this.manufactOrders = manufactOrders;
 		}
 		
 		

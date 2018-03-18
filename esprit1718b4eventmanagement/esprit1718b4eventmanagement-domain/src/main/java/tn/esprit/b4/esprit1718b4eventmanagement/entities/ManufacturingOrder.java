@@ -15,7 +15,8 @@ import javax.persistence.*;
 public class ManufacturingOrder implements Serializable {
 
 	   
-	@Id
+	@EmbeddedId
+	private ManufacturingOrderPk manufacturingOrderPk;
 	private int code;
 	private int quantity;
 	@Temporal(TemporalType.DATE)
@@ -24,6 +25,17 @@ public class ManufacturingOrder implements Serializable {
 	private Date firm_start_date;
 	private float manufacturing_deadline;
 	private String status;
+	
+	@ManyToOne
+	@JoinColumn(name="id_Order",referencedColumnName="id"
+	,insertable=false,updatable=false)
+	private Orders order;
+	
+	@ManyToOne
+	@JoinColumn(name="id_Article",referencedColumnName="Id"
+	,insertable=false,updatable=false)
+	private Article article;
+	
 	private static final long serialVersionUID = 1L;
 
 	public ManufacturingOrder() {
