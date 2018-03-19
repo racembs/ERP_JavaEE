@@ -21,8 +21,14 @@ public class User implements Serializable {
 	
 	@Column(name = "code")
 	private Long code;
-	@Column(name = "nom")
-	private String nom;
+	
+	
+	
+	@Column(name = "fisrtname")
+	private String firstname;
+	@Column(name = "lastname")
+	private String lastname;
+	
 	@Column(name = "login")
 	private String login;
 	@Column(name = "password")
@@ -31,11 +37,24 @@ public class User implements Serializable {
 	private String email;
 	@Column(name = "role")
 	private String role;
+	@Column(name = "numtel")
+	private String numtel;
+	@Column(name = "statut")
+	private String statut;
+	@Column(name = "nb")
+	private String nb;
+
+	@OneToMany(mappedBy="User")
+	private List <ChargingStation> chargingstations;
+	
 	private static final long serialVersionUID = 1L;
 
 	
-	@OneToMany(mappedBy="User")
-	private List <ChargingStation> chargingstations;
+	
+	
+	
+	
+	
 	
 	
 	public List<ChargingStation> getChargingstations() {
@@ -54,13 +73,7 @@ public class User implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}   
-	public String getNom() {
-		return this.nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
+	
 	public Long getCode() {
 		return code;
 	}
@@ -91,67 +104,77 @@ public class User implements Serializable {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((chargingstations == null) ? 0 : chargingstations.hashCode());
-		result = prime * result + ((code == null) ? 0 : code.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + id;
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
-		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		return result;
+	
+	public String getNumtel() {
+		return numtel;
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (chargingstations == null) {
-			if (other.chargingstations != null)
-				return false;
-		} else if (!chargingstations.equals(other.chargingstations))
-			return false;
-		if (code == null) {
-			if (other.code != null)
-				return false;
-		} else if (!code.equals(other.code))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (id != other.id)
-			return false;
-		if (login == null) {
-			if (other.login != null)
-				return false;
-		} else if (!login.equals(other.login))
-			return false;
-		if (nom == null) {
-			if (other.nom != null)
-				return false;
-		} else if (!nom.equals(other.nom))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (role == null) {
-			if (other.role != null)
-				return false;
-		} else if (!role.equals(other.role))
-			return false;
-		return true;
+	public void setNumtel(String numtel) {
+		this.numtel = numtel;
+	}
+	public String getStatut() {
+		return statut;
+	}
+	public void setStatut(String statut) {
+		this.statut = statut;
+	}
+	
+	public String getFirstname() {
+		return firstname;
+	}
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+	public String getLastname() {
+		return lastname;
+	}
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+	
+	public String getNb() {
+		return nb;
+	}
+	public void setNb(String nb) {
+		this.nb = nb;
+	}
+	public User(String firstname, String lastname, String login, String password, String email, String numtel) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.login = login;
+		this.password = password;
+		this.email = email;
+		this.numtel = numtel;
+	}
+
+	public User(int id, Long code, String firstname, String lastname, String login, String password, String email,
+			String role, String numtel, String statut, List<ChargingStation> chargingstations) {
+		super();
+		this.id = id;
+		this.code = code;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.login = login;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.numtel = numtel;
+		this.statut = statut;
+		this.chargingstations = chargingstations;
+	}
+	
+	
+
+	public User(String firstname, String lastname, String login, String password, String email, String numtel,
+			String nb) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.login = login;
+		this.password = password;
+		this.email = email;
+		this.numtel = numtel;
+		this.nb = nb;
 	}
 	
 }

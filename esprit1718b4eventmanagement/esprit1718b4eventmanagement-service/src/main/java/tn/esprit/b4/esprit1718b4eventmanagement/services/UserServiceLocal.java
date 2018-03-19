@@ -10,11 +10,9 @@ import tn.esprit.b4.esprit1718b4eventmanagement.utilities.IGenericDAO;
 public interface UserServiceLocal extends IGenericDAO<User> {
 
 	User login(String login, String password);
-	public User add(User u);
-	public User update(User u);
-	public Boolean remove(Integer id);
-	public List<User> findAll();
-	public User findById(Integer id);
+
+	public void update1(User u);
+	
 	public User findByLogin(String l);
 
 }
