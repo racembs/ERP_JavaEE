@@ -17,6 +17,7 @@ public class Client implements Serializable {
 
 	   
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private int code;
 	private String company;
@@ -46,6 +47,11 @@ public class Client implements Serializable {
 	}
 
 	public void setCompany(String company) {
+		this.company = company;
+	}
+	public Client(int code, String company) {
+		super();
+		this.code = code;
 		this.company = company;
 	}
    
