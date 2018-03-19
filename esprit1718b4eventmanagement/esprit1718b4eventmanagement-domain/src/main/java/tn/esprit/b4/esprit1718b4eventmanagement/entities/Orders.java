@@ -17,6 +17,7 @@ public class Orders implements Serializable {
 
 	   
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private int reference;
 	@Temporal(TemporalType.DATE)
@@ -72,6 +73,20 @@ public class Orders implements Serializable {
 	}
 	public void setManufactOrders(List<ManufacturingOrder> manufactOrders) {
 		this.manufactOrders = manufactOrders;
+	}
+	
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	public Orders(int reference, Date order_date, Date delivery_date, String statut) {
+		super();
+		this.reference = reference;
+		this.order_date = order_date;
+		this.delivery_date = delivery_date;
+		this.statut = statut;
 	}
    
 }
