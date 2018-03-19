@@ -17,6 +17,7 @@ public class OperatingRange implements Serializable {
 	   
 	@Id
 	@Column(name = "IdOptRange")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(name = "Code")
@@ -88,6 +89,26 @@ public class OperatingRange implements Serializable {
 	}
 	public void setOperations(List<Operation> operations) {
 		this.operations = operations;
+	}
+	public OperatingRange(int id, String code, String designation, String stakingCondition, int deadline,
+			List<Article> articles, List<Operation> operations) {
+		super();
+		this.id = id;
+		Code = code;
+		this.designation = designation;
+		StakingCondition = stakingCondition;
+		Deadline = deadline;
+		this.articles = articles;
+		this.operations = operations;
+	}
+	public OperatingRange(String code, String designation, String stakingCondition, int deadline) {
+		super();
+		
+		Code = code;
+		this.designation = designation;
+		StakingCondition = stakingCondition;
+		Deadline = deadline;
+		
 	}
    
 	
