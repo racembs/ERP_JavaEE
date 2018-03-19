@@ -3,6 +3,7 @@ package tn.esprit.b4.esprit1718b4eventmanagement.services;
 import javax.ejb.Remote;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingOrder;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingOrderPk;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Orders;
 
@@ -12,6 +13,7 @@ public interface ManufacturingServiceRemote {
 	public int addClient(Client client);
 	public Client findClientById(int id);
 	public int addOrders(Orders order);
-	public ManufacturingOrderPk addManufactOrder();
+	public ManufacturingOrderPk addManufactOrder(int idCommande, int idArticle, ManufacturingOrder manuf);
+	public ManufacturingOrderPk addManufactChild(int idArticleFils,int quantité,ManufacturingOrderPk manuPk);
 
 }
