@@ -48,6 +48,9 @@ public class TestManufacturing {
 		manuf.setStatus("en attente");
 		manufactProxy.addManufactOrder(idOrder, PF.getId(), manuf);
 		
+		ManufacturingOrder searchMan = manufactProxy.findManufactOrderById(1,1);
+		System.out.println(searchMan.getArticle().getDescription());
+		
 	
 			
 	}

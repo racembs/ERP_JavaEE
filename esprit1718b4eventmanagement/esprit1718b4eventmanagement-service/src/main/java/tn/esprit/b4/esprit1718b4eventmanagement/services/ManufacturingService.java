@@ -48,6 +48,14 @@ public class ManufacturingService implements ManufacturingServiceLocal, Manufact
 		return null;
 	}
 
+	@Override
+	public ManufacturingOrder findManufactOrderById(int idOrder, int idArticle) {
+		ManufacturingOrderPk manufPk = new ManufacturingOrderPk();
+		manufPk.setId_Article(idArticle);
+		manufPk.setId_Order(idOrder);
+		return em.find(ManufacturingOrder.class, manufPk);
+	}
+
 	
 	
 
