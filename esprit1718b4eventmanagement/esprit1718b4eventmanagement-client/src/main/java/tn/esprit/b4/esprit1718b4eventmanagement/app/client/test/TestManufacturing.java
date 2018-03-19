@@ -10,6 +10,8 @@ import javax.naming.NamingException;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingOrder;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingOrderPk;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Orders;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ManufacturingServiceRemote;
@@ -36,6 +38,16 @@ public class TestManufacturing {
 		
 		order.setClient(client);
 		int idOrder = manufactProxy.addOrders(order);
+		
+		Article PF = new Article("ARM100", "Armoire", "unit", "Produit fini", 540, 10);
+		PF.setId(ArticleProxy.addArticle(PF));
+		
+		ManufacturingOrder manuf = new ManufacturingOrder();
+		manuf.setCode(4518);
+		manuf.setQuantity(10);
+		manuf.setStatus("en attente");
+		manufactProxy.addManufactOrder(idOrder, PF.getId(), manuf);
+		
 	
 			
 	}
