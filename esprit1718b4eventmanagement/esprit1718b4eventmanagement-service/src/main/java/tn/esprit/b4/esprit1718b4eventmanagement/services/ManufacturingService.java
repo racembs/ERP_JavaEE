@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingOrderPk;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Orders;
 
 @Stateless
@@ -28,6 +29,12 @@ public class ManufacturingService implements ManufacturingServiceLocal, Manufact
 	public int addOrders(Orders order) {
 		em.persist(order);
 		return order.getId();
+	}
+
+	@Override
+	public ManufacturingOrderPk addManufactOrder() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

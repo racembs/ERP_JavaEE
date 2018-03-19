@@ -12,6 +12,6 @@ public interface ManufacturingServiceRemote {
 	public int addClient(Client client);
 	public Client findClientById(int id);
 	public int addOrders(Orders order);
-	public ManufacturingOrderPk addManufactOrder()
+	public ManufacturingOrderPk addManufactOrder();
 
 }
