@@ -17,14 +17,34 @@ public class TestChargingStation {
 		ChargingStation ch = new ChargingStation();
 		
 		ch.setCode(10);
+		
 
 //		ch.getEquipement().setId(1);
 //		ch.getUser().setId(1);
 //		int idE= ch.getEquipement().getId();
 //		int idU= ch.getUser().getId();
 //	    proxy.addChargingStation(idE, idU, ch);
+	
 		proxy.addChargingStation(1, 1, ch);
-		System.out.print("created");
+		System.out.println("created");
+		
+		
+		
+		
+		ChargingStation chs=proxy.findChargingStation(1,1);
+		System.out.println(chs.getCode());
+		
+		
+		proxy.updateChargingStation(1, 1);
+		System.out.println("modified");
+		
+		
+
+		proxy.deleteChargingStation(1, 1);
+		System.out.println("deleted");
+		
+		
 	}
 
+	
 }
