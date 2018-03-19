@@ -41,28 +41,20 @@ public class User implements Serializable {
 	private String numtel;
 	@Column(name = "statut")
 	private String statut;
+	@Column(name = "nb")
+	private String nb;
+
+	@OneToMany(mappedBy="User")
+	private List <ChargingStation> chargingstations;
 	
-	
-	public User(int id, Long code, String firstname, String lastname, String login, String password, String email,
-			String role, String numtel, String statut, List<ChargingStation> chargingstations) {
-		super();
-		this.id = id;
-		this.code = code;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.login = login;
-		this.password = password;
-		this.email = email;
-		this.role = role;
-		this.numtel = numtel;
-		this.statut = statut;
-		this.chargingstations = chargingstations;
-	}
 	private static final long serialVersionUID = 1L;
 
 	
-	@OneToMany(mappedBy="User")
-	private List <ChargingStation> chargingstations;
+	
+	
+	
+	
+	
 	
 	
 	public List<ChargingStation> getChargingstations() {
@@ -138,6 +130,13 @@ public class User implements Serializable {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+	
+	public String getNb() {
+		return nb;
+	}
+	public void setNb(String nb) {
+		this.nb = nb;
+	}
 	public User(String firstname, String lastname, String login, String password, String email, String numtel) {
 		super();
 		this.firstname = firstname;
@@ -148,6 +147,34 @@ public class User implements Serializable {
 		this.numtel = numtel;
 	}
 
+	public User(int id, Long code, String firstname, String lastname, String login, String password, String email,
+			String role, String numtel, String statut, List<ChargingStation> chargingstations) {
+		super();
+		this.id = id;
+		this.code = code;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.login = login;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.numtel = numtel;
+		this.statut = statut;
+		this.chargingstations = chargingstations;
+	}
 	
+	
+
+	public User(String firstname, String lastname, String login, String password, String email, String numtel,
+			String nb) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.login = login;
+		this.password = password;
+		this.email = email;
+		this.numtel = numtel;
+		this.nb = nb;
+	}
 	
 }
