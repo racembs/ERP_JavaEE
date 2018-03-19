@@ -93,10 +93,10 @@ public class Article implements Serializable {
 			Quantity = quantity;
 		}
 		
-		public Article(int id, String articleCode, String description, String unitCode, String type, float pmp,
+		public Article(String articleCode, String description, String unitCode, String type, float pmp,
 				int quantity) {
 			super();
-			Id = id;
+			
 			ArticleCode = articleCode;
 			Description = description;
 			UnitCode = unitCode;
