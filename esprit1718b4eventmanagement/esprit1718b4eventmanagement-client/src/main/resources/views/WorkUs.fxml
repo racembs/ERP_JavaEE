@@ -36,32 +36,8 @@
                      <children>
                         <HBox layoutX="23.0" layoutY="33.0" prefHeight="135.0" prefWidth="1068.0" spacing="30.0">
                            <children>
-                              <AnchorPane prefHeight="110.0" prefWidth="393.0" style="-fx-background-color: #00ADD8;" styleClass="card-unpadded">
-                                 <children>
-                                    <Pane layoutX="-1.0" prefHeight="141.0" prefWidth="23.0" style="-fx-background-color: #007390;" />
-                                    <ImageView fitHeight="97.0" fitWidth="124.0" layoutX="33.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../views/imgs/doctor.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label layoutX="182.0" layoutY="14.0" prefHeight="67.0" prefWidth="89.0" styleClass="custom-white-title-label" text="16" />
-                                    <Label layoutX="182.0" layoutY="76.0" prefHeight="31.0" prefWidth="210.0" styleClass="custom-white-label" text="Registered doctors" />
-                                    <Label layoutX="182.0" layoutY="107.0" prefHeight="33.0" prefWidth="210.0" styleClass="custom-white-label" text="We need you." />
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane prefHeight="166.0" prefWidth="393.0" style="-fx-background-color: #DD4B39;" styleClass="card-unpadded">
-                                 <children>
-                                    <Pane layoutX="-1.0" prefHeight="166.0" prefWidth="23.0" style="-fx-background-color: #C74433;" />
-                                    <ImageView fitHeight="125.0" fitWidth="124.0" layoutX="33.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../imgs/Appointment.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label layoutX="209.0" layoutY="14.0" prefHeight="67.0" prefWidth="89.0" styleClass="custom-white-title-label" text="57 of 100 " />
-                                    <Label layoutX="182.0" layoutY="76.0" prefHeight="31.0" prefWidth="210.0" styleClass="custom-white-label" text="Unattended appointments" />
-                                    <JFXProgressBar layoutX="179.0" layoutY="120.0" progress="0.52" />
-                                 </children>
-                              </AnchorPane>
+                        
+                     
                               <AnchorPane prefHeight="157.0" prefWidth="205.0" style="-fx-background-color: #F39C12;" styleClass="card">
                                  <children>
                                     <VBox layoutX="14.0" layoutY="14.0" prefHeight="85.0" prefWidth="159.0">
@@ -136,7 +112,7 @@
                                        <children>
                                           <JFXButton styleClass="cancel-button" text="Cancel" />
                                           <JFXButton prefHeight="27.0" prefWidth="78.0" styleClass="green-btn" text="Edit" />
-                                          <JFXButton layoutX="72.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" styleClass="blue-btn" text="Save" />
+                                          <JFXButton fx:id="saveWR" layoutX="72.0" layoutY="10.0" onAction="#onclickSave" prefHeight="37.0" prefWidth="100.0" styleClass="blue-btn" text="Save" />
                                        </children>
                                        <padding>
                                           <Insets right="20.0" />
