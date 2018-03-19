@@ -14,6 +14,7 @@ public interface ManufacturingServiceLocal {
 	public Client findClientById(int id);
 	public int addOrders(Orders order);
 	public ManufacturingOrderPk addManufactOrder(int idCommande, int idArticle, ManufacturingOrder manuf);
+	public ManufacturingOrder findManufactOrderById(int idOrder, int idArticle);
 	public ManufacturingOrderPk addManufactChild(int idArticleFils,int quantité,ManufacturingOrderPk manuPk);
 
 }
