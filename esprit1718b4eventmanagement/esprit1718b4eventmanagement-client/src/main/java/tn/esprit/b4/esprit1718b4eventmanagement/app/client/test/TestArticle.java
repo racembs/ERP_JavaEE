@@ -23,6 +23,7 @@ public class TestArticle {
 		ArticleProxy.updateArticle(article2);
 		ArticleProxy.incrementArticleQuantity(1,20);
 		//ArticleProxy.addNomenclature(1,2,5);
+		
 		System.out.println(ArticleProxy.findArticle(1).getDescription());
 		ArticleProxy.updateNomeclature(1,2,20);
 		
