@@ -6,9 +6,9 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class ManufacturingOrderPk implements Serializable{
 	private static final long serialVersionUID = 1L;
-	@Column(name="id_Article")
+	@Column(name="id_Article",nullable=true)
 	private Integer id_Article;
-	@Column(name="id_Order")
+	@Column(name="id_Order",nullable=true)
 	private Integer id_Order;
 	public Integer getId_Article() {
 		return id_Article;

@@ -51,7 +51,7 @@
                         <Image url="@image/Preloader_9.gif" />
                      </image>
                   </ImageView>
-                  <Hyperlink alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="265.0" layoutY="365.0" prefHeight="36.0" prefWidth="134.0" text="forgot password ?" textAlignment="RIGHT">
+                  <Hyperlink fx:id="lienpwdforgot" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="265.0" layoutY="365.0" onAction="#OnForgotPassWord" prefHeight="36.0" prefWidth="134.0" text="forgot password ?" textAlignment="RIGHT">
                      <font>
                         <Font size="14.0" />
                      </font>

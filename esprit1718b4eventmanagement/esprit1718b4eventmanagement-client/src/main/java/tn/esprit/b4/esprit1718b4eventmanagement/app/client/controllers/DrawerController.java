@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,13 +47,21 @@ public class DrawerController implements Initializable {
     }    
 
      @FXML
-    private void logOut(ActionEvent event) {
+    private void logOut(ActionEvent event) throws IOException {
+        Parent parent= null;
+			    	parent  =FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
+					Scene scene=new Scene(parent);
+					Stage primaryStage= new Stage(); 
+					primaryStage.setScene(scene);
+					primaryStage.show();
+					 ProfileBtn.getScene().getWindow().hide();
       
         
     }
 
     @FXML
     private void exit(ActionEvent event) {
+        Platform.exit();
     
     }
 

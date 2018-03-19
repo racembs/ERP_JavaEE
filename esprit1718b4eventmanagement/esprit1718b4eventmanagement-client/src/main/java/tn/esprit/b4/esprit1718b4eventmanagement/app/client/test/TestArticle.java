@@ -27,6 +27,8 @@ public class TestArticle {
 		System.out.println(ArticleProxy.findArticle(1).getDescription());
 		ArticleProxy.updateNomeclature(1,2,20);
 		
+		System.out.println(ArticleProxy.getFilsArticles(1).get(0).getArticleFils());
+		
 	
 			
 	}

@@ -1,9 +1,13 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.ejb.Stateless;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
@@ -67,6 +71,17 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 		nomenclature.setQuantity(quantity);
 		
 		em.merge(nomenclature);
+	}
+
+
+	@Override
+	public List<Nomenclature> getFilsArticles(int idArticlePere) {
+		TypedQuery<Nomenclature> query
+		=em.createQuery("select n from Nomenclature n where n.nomenclauturePk.idArticlePere=:idPere", Nomenclature.class);
+		query.setParameter("idPere", idArticlePere);
+		List<Nomenclature> nomenclature=query.getResultList();
+		return nomenclature;
+		
 	}
 	
 

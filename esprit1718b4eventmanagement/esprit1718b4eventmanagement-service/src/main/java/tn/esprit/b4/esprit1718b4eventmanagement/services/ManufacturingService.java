@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingOrder;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingOrderPk;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Orders;
 
@@ -32,10 +33,29 @@ public class ManufacturingService implements ManufacturingServiceLocal, Manufact
 	}
 
 	@Override
-	public ManufacturingOrderPk addManufactOrder() {
+	public ManufacturingOrderPk addManufactOrder(int idOrder, int idArticle, ManufacturingOrder manuf) {
+		ManufacturingOrderPk manufPk = new ManufacturingOrderPk();
+		manufPk.setId_Article(idArticle);
+		manufPk.setId_Order(idOrder);
+		manuf.setManufacturingOrderPk(manufPk);
+		em.persist(manuf);
+		return manufPk;
+	}
+
+	@Override
+	public ManufacturingOrderPk addManufactChild(int idArticleFils, int quantité, ManufacturingOrderPk manuPk) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public ManufacturingOrder findManufactOrderById(int idOrder, int idArticle) {
+		ManufacturingOrderPk manufPk = new ManufacturingOrderPk();
+		manufPk.setId_Article(idArticle);
+		manufPk.setId_Order(idOrder);
+		return em.find(ManufacturingOrder.class, manufPk);
+	}
+
 	
 	
 

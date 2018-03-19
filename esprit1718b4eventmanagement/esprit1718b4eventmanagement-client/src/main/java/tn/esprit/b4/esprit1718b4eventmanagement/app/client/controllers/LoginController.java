@@ -26,6 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.image.ImageView;
 
 import javafx.scene.layout.StackPane;
@@ -54,6 +55,8 @@ public class LoginController implements Initializable {
     
     
 public static User user = new User();
+    @FXML
+    private Hyperlink lienpwdforgot;
     /**
      * Initializes the controller class.
      */
@@ -199,6 +202,53 @@ user.setNb("0");
     	
     	
     	
+    }
+
+    @FXML
+    private void OnForgotPassWord(ActionEvent event) throws NamingException, IOException {
+        Context context;
+		
+			context = new InitialContext();
+			UserServiceRemote userService = (UserServiceRemote) context
+					.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
+		
+		
+		
+		
+		System.out.println("JNDI OK");
+
+		 user = userService.findByLogin(txtUsername.getText());
+                 
+                 if (txtUsername.getText().equals(""))
+                 {Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText(null);
+				alert.setContentText("Veuillez remplir le username !");
+				alert.showAndWait();}
+                 else if (user == null) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText(null);
+				alert.setContentText("Invalid username !");
+				alert.showAndWait();
+			} 
+                 else 
+                 {
+                 
+                 
+                 		userService.update(user);
+			    	Parent parent= null;
+			    	parent  =FXMLLoader.load(getClass().getResource("/views/PassWordForgot.fxml"));
+					Scene scene=new Scene(parent);
+					Stage primaryStage= new Stage(); 
+					primaryStage.setScene(scene);
+					primaryStage.show();
+					  lienpwdforgot.getScene().getWindow().hide();
+                 
+                 }
+        
+        
+        
     }
     
 }
