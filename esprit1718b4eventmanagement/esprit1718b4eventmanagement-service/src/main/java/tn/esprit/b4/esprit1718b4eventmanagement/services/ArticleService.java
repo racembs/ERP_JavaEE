@@ -16,32 +16,57 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 	EntityManager em;
 
 	@Override
-	public void addArticle(Article article) {
+	public int addArticle(Article article) {
 		em.persist(article);
+		return article.getId();
 		}
 
 	
 	@Override
-	public void incrementArticleQuantity(int idArticle, int Quantity) {
+	public void incrementArticleQuantity(int idArticle, int quantity) {
 		Article article =em.find(Article.class,idArticle);
-		article.setQuantity(article.getQuantity()+Quantity);
+		article.setQuantity(article.getQuantity()+quantity);
 		
 	}
 
 
 	@Override
-	public void addNomenclature(int idArticlePere, int idArticleFils, int Quantity) {
-		Article articlePere =em.find(Article.class,idArticlePere);
-		Article articleFils =em.find(Article.class,idArticleFils);
+	public void addNomenclature(int idArticlePere, int idArticleFils, int quantity) {
 		Nomenclature nomenclature =new Nomenclature();
 		NomenclaturePk nomenclaturePk =new NomenclaturePk();
 		nomenclaturePk.setIdArticleFils(idArticleFils);
 		nomenclaturePk.setIdArticlePere(idArticlePere);
 		nomenclature.setNomenclauturePk(nomenclaturePk);
-		nomenclature.setQuantity(Quantity);
+		nomenclature.setQuantity(quantity);
 		em.persist(nomenclature);
 		
 		
+	}
+
+
+	@Override
+	public void updateArticle(Article article) {
+		em.merge(article);
+	}
+
+
+	@Override
+	public Article findArticle(int idArticle) {
+		Article article =em.find(Article.class,idArticle);
+		return article;
+	}
+
+
+	@Override
+	public void updateNomeclature(int idArticlePere, int idArticleFils, int quantity) {
+		Nomenclature nomenclature=new Nomenclature();
+		NomenclaturePk nomenclaturePk=new NomenclaturePk();
+		nomenclaturePk.setIdArticlePere(1);
+		nomenclaturePk.setIdArticleFils(2);
+		nomenclature.setNomenclauturePk(nomenclaturePk);
+		nomenclature.setQuantity(quantity);
+		
+		em.merge(nomenclature);
 	}
 	
 
