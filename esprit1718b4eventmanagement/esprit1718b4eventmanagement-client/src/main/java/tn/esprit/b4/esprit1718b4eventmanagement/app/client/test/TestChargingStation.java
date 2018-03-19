@@ -15,12 +15,16 @@ public class TestChargingStation {
 		Context context = new InitialContext();
 		ChargingStationServiceRemote proxy = (ChargingStationServiceRemote) context.lookup(jndiName);
 		ChargingStation ch = new ChargingStation();
+		
 		ch.setCode(10);
-		ChargingStationPK  workStationPK = new ChargingStationPK();
-		workStationPK.setId_equipment(1);
-		workStationPK.setIdUser(1);
-		ch.setWorkStationPK(workStationPK);
-		proxy.ajouterChargStation(ch);
+
+//		ch.getEquipement().setId(1);
+//		ch.getUser().setId(1);
+//		int idE= ch.getEquipement().getId();
+//		int idU= ch.getUser().getId();
+//	    proxy.addChargingStation(idE, idU, ch);
+		proxy.addChargingStation(1, 1, ch);
+		System.out.print("created");
 	}
 
 }
