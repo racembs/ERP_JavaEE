@@ -22,10 +22,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -58,7 +61,7 @@ public class HomeViewController implements Initializable {
         hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
             transition.setRate(transition.getRate() * -1);
             transition.play();
-
+           
             if (drawer.isShown()) {
                 drawer.close();
             } else {
@@ -67,8 +70,9 @@ public class HomeViewController implements Initializable {
 
         });
         try {
+        	AnchorPane wrPane = FXMLLoader.load(getClass().getResource("/views/WorkUs.fxml"));
             VBox sidePane = FXMLLoader.load(getClass().getResource("/views/Drawer.fxml"));
-            
+           
           
             drawer.setSidePane(sidePane);
 
@@ -76,10 +80,12 @@ public class HomeViewController implements Initializable {
                 if (node.getAccessibleText() != null) {
                     node.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent ev) -> {
                         switch (node.getAccessibleText()) {
-                            case "homeMenu":
-                             
+                            case "WorkRequest":
+                            	 drawer.close();                               
+                              setNode(wrPane);
+                               break;
                             case "doctorMenu":
-                              
+                            	
                             case "paymentMenu":
                                
                             case "appointmentMenu":

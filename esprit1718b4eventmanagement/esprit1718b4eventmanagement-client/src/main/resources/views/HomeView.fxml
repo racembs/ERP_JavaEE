@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1200.0" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.HomeViewController">
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1200.0" stylesheets="@../views/styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.HomeViewController">
    <children>
       <JFXToolbar layoutY="-1.0" prefHeight="0.0" prefWidth="1200.0" styleClass="jfx-toolbar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <left>
@@ -21,7 +21,7 @@
             
          </right>
          <stylesheets>
-            <URL value="@../styles/styles.css" />
+            <URL value="@../views/styles.css" />
             <URL value="@styles.css" />
          </stylesheets>
       </JFXToolbar>

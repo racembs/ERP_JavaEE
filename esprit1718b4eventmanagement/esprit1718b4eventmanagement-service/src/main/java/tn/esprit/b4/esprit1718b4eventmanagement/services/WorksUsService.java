@@ -5,7 +5,7 @@ import javax.persistence.TypedQuery;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
+
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.WorksPK;
 
 
