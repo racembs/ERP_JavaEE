@@ -190,5 +190,19 @@ public class User implements Serializable {
 		this.statut = statut;
 		this.nb = nb;
 	}
+	public User(String firstname, String lastname, String login, String password, String email, String role,
+			String numtel, String statut) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.login = login;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.numtel = numtel;
+		this.statut = statut;
+	}
+
+
 	
 }

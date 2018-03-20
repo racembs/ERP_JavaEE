@@ -4,7 +4,9 @@
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
@@ -78,7 +80,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="DETAILS Users">
+          <Tab onSelectionChanged="#OnUserDetail" text="DETAILS Users">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -87,12 +89,12 @@
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
                                  <children>
                                     <TextField layoutX="787.0" layoutY="14.0" prefHeight="30.0" prefWidth="302.0" promptText="Search doctor by name" styleClass="search-box" />
-                                    <TableView layoutX="11.0" layoutY="53.0" prefHeight="326.0" prefWidth="1080.0">
+                                    <TableView fx:id="tableau" layoutX="11.0" layoutY="53.0" prefHeight="326.0" prefWidth="1080.0">
                                       <columns>
-                                        <TableColumn editable="false" prefWidth="389.0" text="C1" />
-                                          <TableColumn editable="false" prefWidth="168.0" sortable="false" text="C2" />
-                                          <TableColumn editable="false" prefWidth="171.0" sortable="false" text="C2" />
-                                          <TableColumn editable="false" prefWidth="250.0" sortable="false" text="C2" />
+                                        <TableColumn fx:id="ColFirstName" editable="false" prefWidth="199.0" text="FirstName" />
+                                          <TableColumn fx:id="ColLastName" editable="false" prefWidth="168.0" sortable="false" text="LastName" />
+                                          <TableColumn fx:id="ColEmail" editable="false" prefWidth="152.0" sortable="false" text="Email" />
+                                          <TableColumn fx:id="ColStatut" editable="false" prefWidth="459.0" sortable="false" text="Statut" />
                                       </columns>
                                     </TableView>
                                  </children>
@@ -115,14 +117,18 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label text="Personal Details" />
-                                                <Label prefHeight="20.0" prefWidth="83.0" text="Contacts" GridPane.rowIndex="4" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="ID No 30229182" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="Doctor" GridPane.columnIndex="1" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="Daniel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="Mungatana" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="green-label" text="0717160344" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="green-label" text="danmlayah@gmail.com" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Label text="First Name" />
+                                                <Label prefHeight="20.0" prefWidth="83.0" text="Login" GridPane.rowIndex="4" />
+                                                <Label fx:id="labnum" prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label fx:id="labfirstname" prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" />
+                                                <Label fx:id="lablastname" prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label fx:id="labmail" prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label fx:id="lablogin" prefHeight="20.0" prefWidth="300.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label fx:id="labpassword" prefHeight="20.0" prefWidth="300.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Label text="Last Name" GridPane.rowIndex="1" />
+                                                <Label text="Email" GridPane.rowIndex="2" />
+                                                <Label text="Phone Number" GridPane.rowIndex="3" />
+                                                <Label text="Password" GridPane.rowIndex="5" />
                                              </children>
                                           </GridPane>
                                           <GridPane prefHeight="219.0" prefWidth="520.0" styleClass="card">
@@ -139,19 +145,35 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label text="Speciality" />
-                                                <Label text="Taking Appointments ?" GridPane.rowIndex="2" />
-                                                <Label text="Pending Appointments" GridPane.rowIndex="3" />
-                                                <Label prefHeight="20.0" prefWidth="280.0" styleClass="yellow-label" text="Cardiologist" GridPane.columnIndex="1" />
-                                                <Label prefHeight="20.0" prefWidth="280.0" styleClass="yellow-label" text="Department of Cardiology" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Label prefHeight="20.0" prefWidth="279.0" styleClass="red-label" text="YES" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label fx:id="labrole" prefHeight="21.0" prefWidth="302.0" styleClass="yellow-label" GridPane.columnIndex="1" />
+                                                <Label fx:id="labstatut" prefHeight="22.0" prefWidth="301.0" styleClass="red-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                    <children>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="98.0" style="-fx-font-weight: bold;" styleClass="green-label" text="12" />
-                                                      <JFXButton buttonType="RAISED" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: rgb(0, 166, 90); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="View" />
+                                                      <CheckBox fx:id="chekVal" mnemonicParsing="false" text="Valable" />
                                                    </children>
                                                 </HBox>
-                                                <JFXButton buttonType="RAISED" ripplerFill="#53eb11" styleClass="blue-btn" text="Edit Info" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <JFXButton buttonType="RAISED" onAction="#OnChangeAction" prefHeight="37.0" prefWidth="184.0" ripplerFill="#53eb11" styleClass="blue-btn" text="Change Statut" GridPane.rowIndex="2" />
+                                                <Label text="Statut" GridPane.rowIndex="1" />
+                                                <Label text="Role" />
+                                                <CheckBox fx:id="CheckBloc" mnemonicParsing="false" text="Bloquer" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <JFXButton fx:id="BtnConfirme" buttonType="RAISED" onAction="#OnConfirmeAction" prefHeight="37.0" prefWidth="184.0" ripplerFill="#53eb11" styleClass="blue-btn" text="Confirme" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <JFXButton buttonType="RAISED" onAction="#OnChangeRoleAction" prefHeight="37.0" prefWidth="234.0" ripplerFill="#53eb11" styleClass="yellow-label" text="Change Role" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <JFXButton fx:id="BtnConfirme1" buttonType="RAISED" onAction="#OnConfirmeRoleAction" prefHeight="37.0" prefWidth="184.0" ripplerFill="#53eb11" text="Confirme" GridPane.rowIndex="5">
+                                                   <styleClass>
+                                                      <String fx:value="blue-btn" />
+                                                      <String fx:value="yellow-label" />
+                                                   </styleClass>
+                                                </JFXButton>
+                                                <JFXRadioButton fx:id="chekGmao" text="GPAO" GridPane.rowIndex="3">
+                                                   <toggleGroup>
+                                                      <ToggleGroup fx:id="q1" />
+                                                   </toggleGroup>
+                                                </JFXRadioButton>
+                                                <JFXRadioButton fx:id="chekGPAO" text="GMAO" GridPane.rowIndex="4">
+                                                   <toggleGroup>
+                                                      <ToggleGroup fx:id="q2" />
+                                                   </toggleGroup>
+                                                </JFXRadioButton>
                                              </children>
                                           </GridPane>
                                        </children>
