@@ -5,7 +5,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote;
 
 public class TestChargingStation {
@@ -19,11 +18,6 @@ public class TestChargingStation {
 		ch.setCode(10);
 		
 
-//		ch.getEquipement().setId(1);
-//		ch.getUser().setId(1);
-//		int idE= ch.getEquipement().getId();
-//		int idU= ch.getUser().getId();
-//	    proxy.addChargingStation(idE, idU, ch);
 	
 		proxy.addChargingStation(1, 1, ch);
 		System.out.println("created");
@@ -39,7 +33,6 @@ public class TestChargingStation {
 		System.out.println("modified");
 		
 		
-
 		proxy.deleteChargingStation(1, 1);
 		System.out.println("deleted");
 		

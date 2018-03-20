@@ -16,27 +16,27 @@ import javax.persistence.*;
 public class ChargingStation implements Serializable {
 
 	@Column(name = "Code")
-	private int Code;
+	private int code;
 	
-	@Column(name = "NaturePost")
-	private String NaturePost;
+	@Column(name = "NaturePost" , nullable=true)
+	private String naturepost;
 	
-	@Column(name = "NbDay")
-	private int NbDay;
+	@Column(name = "NbDay" , nullable=true)
+	private int nbday;
 	
-	@Column(name = "NbHours")
-	private int NbHours;
+	@Column(name = "NbHours" , nullable=true)
+	private int nbhours;
 	
-	@Column(name = "Description")
-	private String Description;
+	@Column(name = "Description" , nullable=true)
+	private String description;
 	
 	
 	private static final long serialVersionUID = 1L;
 	
 	
 	@EmbeddedId
-	@Column(name = "WorkStationPK")
-	private ChargingStationPK WorkStationPK;
+	@Column(name = "ChargingStationPK")
+	private ChargingStationPK chargingstationPK;
 	
 	@ManyToOne (cascade=CascadeType.ALL)
 	@JoinColumn(name="idUser",referencedColumnName="id",insertable=false,updatable=false)
@@ -51,88 +51,79 @@ public class ChargingStation implements Serializable {
 
 	public ChargingStation() {
 		super();
-	}   
+	}
+
 	public int getCode() {
-		return this.Code;
+		return code;
 	}
 
-	public void setCode(int Code) {
-		this.Code = Code;
-	}   
-	public String getNaturePost() {
-		return this.NaturePost;
+	public void setCode(int code) {
+		this.code = code;
 	}
 
-	public void setNaturePost(String NaturePost) {
-		this.NaturePost = NaturePost;
-	}   
-	public int getNbDay() {
-		return this.NbDay;
+	public String getNaturepost() {
+		return naturepost;
 	}
 
-	public void setNbDay(int NbDay) {
-		this.NbDay = NbDay;
-	}   
-	public int getNbHours() {
-		return this.NbHours;
+	public void setNaturepost(String naturepost) {
+		this.naturepost = naturepost;
 	}
 
-	public void setNbHours(int NbHours) {
-		this.NbHours = NbHours;
-	}   
+	public int getNbday() {
+		return nbday;
+	}
+
+	public void setNbday(int nbday) {
+		this.nbday = nbday;
+	}
+
+	public int getNbhours() {
+		return nbhours;
+	}
+
+	public void setNbhours(int nbhours) {
+		this.nbhours = nbhours;
+	}
+
 	public String getDescription() {
-		return this.Description;
+		return description;
 	}
 
-	public void setDescription(String Description) {
-		this.Description = Description;
-	}
-	public ChargingStationPK getWorkStationPK() {
-		return WorkStationPK;
-	}
-	public void setWorkStationPK(ChargingStationPK workStationPK) {
-		WorkStationPK = workStationPK;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
+	public ChargingStationPK getChargingstationPK() {
+		return chargingstationPK;
+	}
 
-	
+	public void setChargingstationPK(ChargingStationPK chargingstationPK) {
+		this.chargingstationPK = chargingstationPK;
+	}
+
 	public User getUser() {
 		return User;
 	}
-	public void setUser(User User) {
-		this.User = User;
+
+	public void setUser(User user) {
+		User = user;
 	}
+
 	public Equipment getEquipement() {
 		return equipement;
 	}
+
 	public void setEquipement(Equipment equipement) {
 		this.equipement = equipement;
 	}
+
 	public List<Operation> getOperations() {
 		return operations;
 	}
+
 	public void setOperations(List<Operation> operations) {
 		this.operations = operations;
-	}
-	public ChargingStation(int code, String naturePost, int nbDay, int nbHours, String description,
-			ChargingStationPK workStationPK, User users, Equipment equipement, List<Operation> operations) {
-		super();
-		Code = code;
-		NaturePost = naturePost;
-		NbDay = nbDay;
-		NbHours = nbHours;
-		Description = description;
-		WorkStationPK = workStationPK;
-		this.User = users;
-		this.equipement = equipement;
-		this.operations = operations;
-	}
-	public ChargingStation(int code) {
-		super();
-		Code = code;
-		
-	}
+	}   
 
-   
 	
 }

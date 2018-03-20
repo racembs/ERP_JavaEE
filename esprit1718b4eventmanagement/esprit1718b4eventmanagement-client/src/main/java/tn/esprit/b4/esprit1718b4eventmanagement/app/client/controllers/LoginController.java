@@ -128,7 +128,7 @@ public static User user = new User();
 				
 				
 				
-				 if (txtPassword.getText().equals(user.getPassword())&&(user.getRole().equals("superuser"))&&(user.getStatut().equals("valable"))) {
+				 if (txtPassword.getText().equals(user.getPassword())&&(user.getRole().equals("GMAO"))&&(user.getStatut().equals("valable"))) {
 					System.out.println("3okkkeeyy");
 					
 user.setNb("0");
@@ -143,7 +143,7 @@ user.setNb("0");
 					 btnLogin.getScene().getWindow().hide();
 				
 				} 
-				else if (txtPassword.getText().equals(user.getPassword())&&(user.getRole().equals("user"))&&(user.getStatut().equals("valable"))) {
+				else if (txtPassword.getText().equals(user.getPassword())&&(user.getRole().equals("GPAO"))&&(user.getStatut().equals("valable"))) {
 					System.out.println("3okkkeeyy");
 					
 user.setNb("0");
@@ -151,6 +151,20 @@ user.setNb("0");
 					userService.update(user);
 			    	Parent parent= null;
 			    	parent  =FXMLLoader.load(getClass().getResource("/views/Dashboard.fxml"));
+					Scene scene=new Scene(parent);
+					Stage primaryStage= new Stage(); 
+					primaryStage.setScene(scene);
+					primaryStage.show();
+					  btnLogin.getScene().getWindow().hide();
+				} 
+				else if (txtPassword.getText().equals(user.getPassword())&&(user.getRole().equals("ResponsableRH"))&&(user.getStatut().equals("valable"))) {
+					System.out.println("3okkkeeyy");
+					
+
+					
+				
+			    	Parent parent= null;
+			    	parent  =FXMLLoader.load(getClass().getResource("/views/InterfaceAdminRH.fxml"));
 					Scene scene=new Scene(parent);
 					Stage primaryStage= new Stage(); 
 					primaryStage.setScene(scene);
