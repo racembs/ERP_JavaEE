@@ -1,0 +1,14 @@
+package tn.esprit.b4.esprit1718b4eventmanagement.services;
+import javax.ejb.Local;
+
+
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.SpareParts;
+
+
+@Local
+public interface NeedSparePartsServiceLocal {
+	public int addSpareParts(SpareParts SpareParts);
+	public void deleteSpareParts(int idSpare);
+	public void updateSpareParts(SpareParts SpareParts);
+	public String findSpareParts(int idSpare);
+}
