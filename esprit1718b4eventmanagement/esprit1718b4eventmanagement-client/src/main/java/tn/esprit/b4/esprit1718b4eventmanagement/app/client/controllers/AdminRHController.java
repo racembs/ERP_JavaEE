@@ -28,6 +28,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -36,6 +37,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
@@ -101,14 +103,10 @@ public class AdminRHController implements Initializable {
     @FXML
     private JFXButton BtnConfirme1;
     @FXML
-    private JFXRadioButton chekGmao;
+    private CheckBox chekGmao;
     @FXML
-    private JFXRadioButton chekGPAO;
-    Integer id ;
-    @FXML
-    private ToggleGroup q1;
-    @FXML
-    private ToggleGroup q2;
+    private CheckBox chekGPAO;
+   String login ;
 
     /**
      * Initializes the controller class.
@@ -183,7 +181,48 @@ Context context;
     }
 
     @FXML
-    private void OnConfirmeAction(ActionEvent event) {
+    private void OnConfirmeAction(ActionEvent event) throws NamingException {
+        
+        
+        
+        
+        
+    	
+      	
+    	String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote";
+    	Context context;
+
+    		
+    			context= new InitialContext();
+
+    		UserServiceRemote proxy=(UserServiceRemote) context.lookup(jndiName);
+    		String select="";
+    		User	user=proxy.findByLogin(login);
+    	if ((CheckBloc.isSelected())&&(chekVal.isSelected()))
+    		{
+                    
+                    	Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText(null);
+			alert.setContentText("veuillez choisir un seul choix !");
+			alert.showAndWait();
+                        
+                    select=user.getStatut();
+                
+                
+                }
+    		else if(CheckBloc.isSelected())
+    		{ select ="Bloquer";
+               
+                }
+    		else
+    		{ select ="valable";
+                CheckBloc.setSelected(false);}
+    	
+    		user.setStatut(select);
+    		proxy.update(user);
+    		afficher();
+                 labstatut.setText(select);
     	
     }
 
@@ -227,7 +266,7 @@ labpassword.setText(p5);
 String p7=tableau.getSelectionModel().getSelectedItem().getRole();
 labrole.setText(p7);
 
- id=tableau.getSelectionModel().getSelectedItem().getId();
+ login=tableau.getSelectionModel().getSelectedItem().getLogin();
                             }
                         
                     });
@@ -287,18 +326,26 @@ labrole.setText(p7);
     			context= new InitialContext();
 
     		UserServiceRemote proxy=(UserServiceRemote) context.lookup(jndiName);
-    		String select="noo";
-    		
-    	/*	if ((chekGmao.isSelected())&&(chekGPAO.isSelected()))
-    		{}
+    		String select="";
+    		 	User	user=proxy.findByLogin(login);
+    	if ((chekGmao.isSelected())&&(chekGPAO.isSelected()))
+    		{Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText(null);
+			alert.setContentText("veuillez choisir un seul choix !");
+			alert.showAndWait();
+                        
+                        select=user.getRole();
+			}
     		else if(chekGmao.isSelected())
-    		{ select =chekGmao.getText();}
+    		{ select ="GMAO";}
     		else
-    		{ select =chekGmao.getText();}
-    	User	user=proxy.findByLogin("mehdi");
-    		user.setRole(select);*/
-    		
+    		{ select ="GPAO";}
+   
+    		user.setRole(select);
+    		proxy.update(user);
     		afficher();
+                labrole.setText(select);
     	
     	
     }

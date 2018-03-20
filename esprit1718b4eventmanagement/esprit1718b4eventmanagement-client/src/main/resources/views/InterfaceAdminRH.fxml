@@ -149,7 +149,7 @@
                                                 <Label fx:id="labstatut" prefHeight="22.0" prefWidth="301.0" styleClass="red-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                    <children>
-                                                      <CheckBox fx:id="chekVal" mnemonicParsing="false" text="Valable" />
+                                                      <CheckBox fx:id="chekVal" mnemonicParsing="false" selected="true" text="Valable" />
                                                    </children>
                                                 </HBox>
                                                 <JFXButton buttonType="RAISED" onAction="#OnChangeAction" prefHeight="37.0" prefWidth="184.0" ripplerFill="#53eb11" styleClass="blue-btn" text="Change Statut" GridPane.rowIndex="2" />
@@ -164,16 +164,8 @@
                                                       <String fx:value="yellow-label" />
                                                    </styleClass>
                                                 </JFXButton>
-                                                <JFXRadioButton fx:id="chekGmao" text="GPAO" GridPane.rowIndex="3">
-                                                   <toggleGroup>
-                                                      <ToggleGroup fx:id="q1" />
-                                                   </toggleGroup>
-                                                </JFXRadioButton>
-                                                <JFXRadioButton fx:id="chekGPAO" text="GMAO" GridPane.rowIndex="4">
-                                                   <toggleGroup>
-                                                      <ToggleGroup fx:id="q2" />
-                                                   </toggleGroup>
-                                                </JFXRadioButton>
+                                                <CheckBox fx:id="chekGmao" mnemonicParsing="false" selected="true" text="GMAO" GridPane.rowIndex="3" />
+                                                <CheckBox fx:id="chekGPAO" mnemonicParsing="false" text="GPAO" GridPane.rowIndex="4" />
                                              </children>
                                           </GridPane>
                                        </children>
