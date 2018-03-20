@@ -18,19 +18,19 @@ public class OperatingRange implements Serializable {
 	@Id
 	@Column(name = "IdOptRange")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int idoptrange;
 	
-	@Column(name = "Code")
-	private String Code;
+	@Column(name = "Code" , nullable=true)
+	private String code;
 	
-	@Column(name = "designation")
+	@Column(name = "designation" , nullable=true)
 	private String designation;
 	
-	@Column(name = "StakingCondition")
-	private String StakingCondition;
+	@Column(name = "StakingCondition" , nullable=true)
+	private String stakingcondition;
 	
-	@Column(name = "Deadline")
-	private int Deadline;
+	@Column(name = "Deadline" , nullable=true)
+	private int deadline;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -40,76 +40,86 @@ public class OperatingRange implements Serializable {
 	@OneToMany(mappedBy="optrange")
 	private List <Operation> operations;
 
-	public List<Article> getArticles() {
-		return articles;
-	}
-	public void setArticles(List<Article> articles) {
-		this.articles = articles;
-	}
-	public OperatingRange() {
-		super();
-	}   
-	public int getId() {
-		return this.id;
+	public int getIdoptrange() {
+		return idoptrange;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}   
+	public void setIdoptrange(int idoptrange) {
+		this.idoptrange = idoptrange;
+	}
+
 	public String getCode() {
-		return this.Code;
+		return code;
 	}
 
-	public void setCode(String Code) {
-		this.Code = Code;
-	}   
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public String getDesignation() {
-		return this.designation;
+		return designation;
 	}
 
 	public void setDesignation(String designation) {
 		this.designation = designation;
-	}   
-	public String getStakingCondition() {
-		return this.StakingCondition;
 	}
 
-	public void setStakingCondition(String StakingCondition) {
-		this.StakingCondition = StakingCondition;
-	}   
+	public String getStakingcondition() {
+		return stakingcondition;
+	}
+
+	public void setStakingcondition(String stakingcondition) {
+		this.stakingcondition = stakingcondition;
+	}
+
 	public int getDeadline() {
-		return this.Deadline;
+		return deadline;
 	}
 
-	public void setDeadline(int Deadline) {
-		this.Deadline = Deadline;
+	public void setDeadline(int deadline) {
+		this.deadline = deadline;
 	}
+
+	public List<Article> getArticles() {
+		return articles;
+	}
+
+	public void setArticles(List<Article> articles) {
+		this.articles = articles;
+	}
+
 	public List<Operation> getOperations() {
 		return operations;
 	}
+
 	public void setOperations(List<Operation> operations) {
 		this.operations = operations;
 	}
-	public OperatingRange(int id, String code, String designation, String stakingCondition, int deadline,
+
+	public OperatingRange(int idoptrange, String code, String designation, String stakingcondition, int deadline,
 			List<Article> articles, List<Operation> operations) {
 		super();
-		this.id = id;
-		Code = code;
+		this.idoptrange = idoptrange;
+		this.code = code;
 		this.designation = designation;
-		StakingCondition = stakingCondition;
-		Deadline = deadline;
+		this.stakingcondition = stakingcondition;
+		this.deadline = deadline;
 		this.articles = articles;
 		this.operations = operations;
 	}
-	public OperatingRange(String code, String designation, String stakingCondition, int deadline) {
+
+	public OperatingRange(String code, String designation, String stakingcondition, int deadline) {
 		super();
-		
-		Code = code;
+		this.code = code;
 		this.designation = designation;
-		StakingCondition = stakingCondition;
-		Deadline = deadline;
-		
+		this.stakingcondition = stakingcondition;
+		this.deadline = deadline;
 	}
-   
+
+	public OperatingRange() {
+		super();
+	}
+
+
 	
 }
