@@ -289,14 +289,14 @@ labrole.setText(p7);
     		UserServiceRemote proxy=(UserServiceRemote) context.lookup(jndiName);
     		String select="noo";
     		
-    		if ((chekGmao.isSelected())&&(chekGPAO.isSelected()))
+    	/*	if ((chekGmao.isSelected())&&(chekGPAO.isSelected()))
     		{}
     		else if(chekGmao.isSelected())
     		{ select =chekGmao.getText();}
     		else
     		{ select =chekGmao.getText();}
     	User	user=proxy.findByLogin("mehdi");
-    		user.setRole(select);
+    		user.setRole(select);*/
     		
     		afficher();
     	
