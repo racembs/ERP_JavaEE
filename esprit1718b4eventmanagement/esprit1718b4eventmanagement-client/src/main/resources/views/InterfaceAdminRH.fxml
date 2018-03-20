@@ -32,6 +32,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
+                        <JFXButton fx:id="btndeconnexion1" buttonType="RAISED" layoutX="40.0" layoutY="-4.0" onAction="#OnDeconnexion1Action" prefHeight="29.0" prefWidth="133.0" ripplerFill="#53eb11" styleClass="blue-btn" text="Deconnexion" />
                         <HBox layoutX="23.0" layoutY="33.0" prefHeight="135.0" prefWidth="1068.0" spacing="30.0">
                            <children>
                               <AnchorPane prefHeight="141.0" prefWidth="1086.0" style="-fx-background-color: #00ADD8;" styleClass="card-unpadded">
@@ -88,7 +89,7 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
                                  <children>
-                                    <TextField layoutX="787.0" layoutY="14.0" prefHeight="30.0" prefWidth="302.0" promptText="Search doctor by name" styleClass="search-box" />
+                                    <TextField fx:id="txtsearch" layoutX="632.0" layoutY="15.0" prefHeight="30.0" prefWidth="302.0" promptText="Search by Login" styleClass="search-box" />
                                     <TableView fx:id="tableau" layoutX="49.0" layoutY="55.0" prefHeight="326.0" prefWidth="1080.0">
                                       <columns>
                                           <TableColumn fx:id="ColLogin" editable="false" maxWidth="143.666748046875" minWidth="-1.0" prefWidth="143.666748046875" sortable="false" text="Login" />
@@ -99,6 +100,8 @@
                                           <TableColumn fx:id="ColStatut" editable="false" minWidth="0.0" prefWidth="178.333251953125" sortable="false" text="Statut" />
                                       </columns>
                                     </TableView>
+                                    <JFXButton fx:id="btndeconnexion" buttonType="RAISED" layoutX="40.0" layoutY="11.0" onAction="#OnDeconnexionAction" prefHeight="37.0" prefWidth="184.0" ripplerFill="#53eb11" styleClass="blue-btn" text="Deconnexion" />
+                                    <JFXButton buttonType="RAISED" layoutX="934.0" layoutY="12.0" onAction="#OnSearchAction" prefHeight="37.0" prefWidth="144.0" ripplerFill="#53eb11" styleClass="blue-btn" text="Search" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="1103.0">

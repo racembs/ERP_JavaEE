@@ -67,8 +67,13 @@ Context context;
         
           UserServiceRemote proxy=(UserServiceRemote) context.lookup(jndiName);
     
-
-        if ((txtcode.getText().equals("123"))&&(user.getRole().equals("superuser"))&&(txtPassword1.getText().equals(txtPassword.getText())))
+if((txtcode.getText().equals(""))||(txtPassword1.getText().equals(""))||(txtPassword.getText().equals("")))
+{Alert alert = new Alert(Alert.AlertType.ERROR);
+alert.setTitle("Error");
+alert.setHeaderText(null);
+alert.setContentText("Remplir tous les champs!");
+alert.showAndWait();}
+          else if ((txtcode.getText().equals("123"))&&(user.getRole().equals("GMAO"))&&(txtPassword1.getText().equals(txtPassword.getText())))
         {
         
         	Parent parent= null;
@@ -83,7 +88,7 @@ Context context;
         proxy.update(user);
         
         }
-        else if ((txtcode.getText().equals("123"))&&(user.getRole().equals("user"))&&(txtPassword1.getText().equals(txtPassword.getText())))
+        else if ((txtcode.getText().equals("123"))&&(user.getRole().equals("GPAO"))&&(txtPassword1.getText().equals(txtPassword.getText())))
         {
         	Parent parent= null;
 		    	parent  =FXMLLoader.load(getClass().getResource("/views/Dashboard.fxml"));
@@ -102,13 +107,13 @@ Context context;
         {Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Error");
 				alert.setHeaderText(null);
-				alert.setContentText("verifier votre mdp !");
+				alert.setContentText("Votre Code est inncorrect veuillez verifier  !");
 				alert.showAndWait();
 				}
         else {Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setTitle("Error");
 				alert.setHeaderText(null);
-				alert.setContentText("Votre Code est inncorrect veuillez verifier !");
+				alert.setContentText("verifier votre mot de passe !");
 				alert.showAndWait();}
         
     }

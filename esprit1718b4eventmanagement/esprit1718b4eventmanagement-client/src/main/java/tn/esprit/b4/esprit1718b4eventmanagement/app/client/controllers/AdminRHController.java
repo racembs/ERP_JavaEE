@@ -11,8 +11,7 @@ import com.jfoenix.controls.JFXButton.ButtonType;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
-
-
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,10 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
@@ -40,7 +42,10 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
@@ -113,6 +118,12 @@ public class AdminRHController implements Initializable {
     private TableColumn <User, String> ColLogin;
     @FXML
     private TableColumn <User, String>ColNum;
+    @FXML
+    private JFXButton btndeconnexion;
+    @FXML
+    private JFXButton btndeconnexion1;
+    @FXML
+    private TextField txtsearch;
 
     /**
      * Initializes the controller class.
@@ -390,6 +401,8 @@ labrole.setText(p7);
     		UserServiceRemote proxy=(UserServiceRemote) context.lookup(jndiName);
     		String select="";
     		 	User	user=proxy.findByLogin(login);
+                        
+                        
     	if ((chekGmao.isSelected())&&(chekGPAO.isSelected()))
     		{Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
@@ -435,6 +448,88 @@ labrole.setText(p7);
     	        List<User> list = proxy.findAll();
     	        ObservableList<User> items = FXCollections.observableArrayList(list);
     	        tableau.setItems(items);}
+
+   
+
+    @FXML
+    private void OnDeconnexionAction(Event event) throws IOException {
+
+    	Parent parent= null;
+    	parent  =FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
+		Scene scene=new Scene(parent);
+		Stage primaryStage= new Stage(); 
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		 btndeconnexion.getScene().getWindow().hide();
+    }
+
+    @FXML
+    private void OnDeconnexion1Action(ActionEvent event) throws IOException {
+    	
+    	
+    	Parent parent= null;
+    	parent  =FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
+		Scene scene=new Scene(parent);
+		Stage primaryStage= new Stage(); 
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		btndeconnexion1.getScene().getWindow().hide();
+		
+		
+		
+		
+		
+    }
+
+    @FXML
+    private void OnSearchAction(ActionEvent event) throws NamingException {
+    	
+    	
+    	
+
+    	String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote";
+    	Context context;
+
+    		
+    			context= new InitialContext();
+
+    		UserServiceRemote proxy=(UserServiceRemote) context.lookup(jndiName);
+    		
+    	    	
+    		ColFirstName.setCellValueFactory(new PropertyValueFactory<User, String>("firstname"));
+    		ColLastName.setCellValueFactory(new PropertyValueFactory<User, String>("lastname"));
+    		ColEmail.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
+    		ColStatut.setCellValueFactory(new PropertyValueFactory<User, String>("statut"));
+    	ColLogin.setCellValueFactory(new PropertyValueFactory<User, String>("login"));
+        ColNum.setCellValueFactory(new PropertyValueFactory<User, String>("numtel"));
+        
+        
+        List<User> list=new ArrayList<>();
+        
+    	String login=	txtsearch.getText();
+    	if (txtsearch.getText().equals(""))
+    	{
+    		List<User> list1=proxy.findAll();
+    		
+    		 ObservableList<User> items = FXCollections.observableArrayList(list1);
+    		 tableau.setItems(items);
+ 	       
+    	}
+    	else 
+    	{
+    	User user1 = proxy.findByLogin(login);
+      
+	        list.add(user1);
+	        ObservableList<User> items = FXCollections.observableArrayList(list);
+	        tableau.setItems(items);
+	        }
+
+    	//     List<User> list=proxy.SearchLogin(login);
+    	        
+    	    
+    	
+    	
+    }
 }
     
 

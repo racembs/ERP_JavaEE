@@ -191,7 +191,7 @@ public class User implements Serializable {
 		this.nb = nb;
 	}
 	public User(String firstname, String lastname, String login, String password, String email, String role,
-			String numtel, String statut) {
+			String numtel, String statut,Long code) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -201,6 +201,23 @@ public class User implements Serializable {
 		this.role = role;
 		this.numtel = numtel;
 		this.statut = statut;
+		this.code = code;
+	}
+	public User(int id, Long code, String firstname, String lastname, String login, String password, String email,
+			String role, String numtel, String statut, String nb, List<ChargingStation> chargingstations) {
+		super();
+		this.id = id;
+		this.code = code;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.login = login;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.numtel = numtel;
+		this.statut = statut;
+		this.nb = nb;
+		this.chargingstations = chargingstations;
 	}
 
 

@@ -4,10 +4,15 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import java.util.List;
 
 import javax.ejb.LocalBean;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.MvtApprov;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 
@@ -62,6 +67,19 @@ public class UserService extends GenericDAO<User> implements UserServiceRemote, 
 	public void update1(User u) {
 		em.merge(u);
 		
+	}
+
+
+
+
+	@Override
+	public List<User> SearchLogin(String login) {
+	TypedQuery<User> query
+		=em.createQuery("select n from User n where n.login=:Login", User.class);
+		query.setParameter("Login", login);
+		List<User> user=query.getResultList();
+		return user;
+	
 	}
 
 
