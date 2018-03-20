@@ -89,12 +89,14 @@
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
                                  <children>
                                     <TextField layoutX="787.0" layoutY="14.0" prefHeight="30.0" prefWidth="302.0" promptText="Search doctor by name" styleClass="search-box" />
-                                    <TableView fx:id="tableau" layoutX="11.0" layoutY="53.0" prefHeight="326.0" prefWidth="1080.0">
+                                    <TableView fx:id="tableau" layoutX="49.0" layoutY="55.0" prefHeight="326.0" prefWidth="1080.0">
                                       <columns>
-                                        <TableColumn fx:id="ColFirstName" editable="false" prefWidth="199.0" text="FirstName" />
-                                          <TableColumn fx:id="ColLastName" editable="false" prefWidth="168.0" sortable="false" text="LastName" />
-                                          <TableColumn fx:id="ColEmail" editable="false" prefWidth="152.0" sortable="false" text="Email" />
-                                          <TableColumn fx:id="ColStatut" editable="false" prefWidth="459.0" sortable="false" text="Statut" />
+                                          <TableColumn fx:id="ColLogin" editable="false" maxWidth="143.666748046875" minWidth="-1.0" prefWidth="143.666748046875" sortable="false" text="Login" />
+                                        <TableColumn fx:id="ColFirstName" editable="false" prefWidth="161.333251953125" text="FirstName" />
+                                          <TableColumn fx:id="ColLastName" editable="false" minWidth="0.0" prefWidth="155.6666259765625" sortable="false" text="LastName" />
+                                          <TableColumn fx:id="ColEmail" editable="false" prefWidth="158.666748046875" sortable="false" text="Email" />
+                                          <TableColumn fx:id="ColNum" editable="false" maxWidth="392.33349609375" minWidth="-1.0" prefWidth="213.9998779296875" sortable="false" text="PhoneNumber" />
+                                          <TableColumn fx:id="ColStatut" editable="false" minWidth="0.0" prefWidth="178.333251953125" sortable="false" text="Statut" />
                                       </columns>
                                     </TableView>
                                  </children>
@@ -112,8 +114,8 @@
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>

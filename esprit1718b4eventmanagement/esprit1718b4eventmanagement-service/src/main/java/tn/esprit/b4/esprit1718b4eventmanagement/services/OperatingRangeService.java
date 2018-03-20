@@ -13,7 +13,7 @@ public class OperatingRangeService implements OperatingRangeServiceLocal, Operat
 	@Override
 	public int addOperatingRange(OperatingRange operatingranges) {
 		em.persist(operatingranges);
-		return operatingranges.getId();
+		return operatingranges.getIdoptrange();
 	
 	}
 	@Override

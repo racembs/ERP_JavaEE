@@ -15,12 +15,11 @@ public class ChargingStationService implements ChargingStationServiceLocal, Char
 	EntityManager em;
 	@Override
 	public ChargingStationPK addChargingStation(int idEquipement, int idUser, ChargingStation ChS) {
-		
-		
+			
 		ChargingStationPK ChSpk = new ChargingStationPK();
 		ChSpk.setId_equipment(idEquipement);
 		ChSpk.setIdUser(idUser);
-		ChS.setWorkStationPK(ChSpk);
+		ChS.setChargingstationPK(ChSpk);
 		em.persist(ChS);
 		return ChSpk;
 	}

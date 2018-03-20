@@ -55,5 +55,20 @@ public class UsualWork  extends Works implements Serializable{
 	public void setNature(Nature nature) {
 		this.nature = nature;
 	}
+	public UsualWork() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public UsualWork(String objet, String description, String technology, WorksPK worksPK, User user,
+			Equipment equipement, String emmergency, String requeststate, Date wRDate, Nature nature) {
+		super(objet, description, technology, worksPK, user, equipement);
+		this.emmergency = emmergency;
+		this.requeststate = requeststate;
+		WRDate = wRDate;
+		this.nature = nature;
+	}
+	
+
+
 
 }

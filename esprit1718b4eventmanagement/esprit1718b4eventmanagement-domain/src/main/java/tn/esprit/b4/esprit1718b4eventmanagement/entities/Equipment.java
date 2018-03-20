@@ -35,6 +35,15 @@ public class Equipment implements Serializable {
 	@OneToMany(mappedBy="equipement")
 	private List <ChargingStation> chargingstations;
 	
+
+	@OneToMany(mappedBy="equipement")
+	private List <Works> Works;
+	public List<Works> getWorks() {
+		return Works;
+	}
+	public void setWorks(List<Works> works) {
+		Works = works;
+	}
 	public int getId() {
 		return Id;
 	}

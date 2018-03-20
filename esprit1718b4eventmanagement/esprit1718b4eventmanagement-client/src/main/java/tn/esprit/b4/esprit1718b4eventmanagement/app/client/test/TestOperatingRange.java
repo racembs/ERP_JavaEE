@@ -17,21 +17,22 @@ public class TestOperatingRange {
 		Context context = new InitialContext();
 		OperatingRangeServiceRemote proxy =  (OperatingRangeServiceRemote) context.lookup(OperatingRangejndiName);
 
-//		OperatingRange optrange = new OperatingRange();
-//		proxy.addOperatingRange(optrange);
+
 		
 		OperatingRange optrange = new OperatingRange("AR","Table mount","Series",30);
 		proxy.addOperatingRange(optrange);
 		System.out.println("created");
 		
-//		proxy.deleteOperatingRange(1);
-//		System.out.println("deleted");
+	
 		
-//		proxy.updateOperatingRange(1);
-//		System.out.println("modified");
+		proxy.updateOperatingRange(2);
+		System.out.println("modified");
 		
-		String des=proxy.findOperatingRange(1);
+		String des=proxy.findOperatingRange(2);
 		System.out.println(des);
+		
+		proxy.deleteOperatingRange(3);
+		System.out.println("deleted");
 		
 	}
 

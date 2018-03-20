@@ -12,23 +12,23 @@ import javax.persistence.*;
 
 public class Operation implements Serializable {
 
-	@Column(name = "PhaseNumber")
-	private int PhaseNumber;
+	@Column(name = "PhaseNumber" , nullable=true)
+	private int phasenumber;
 	
-	@Column(name = "UnitProductionTime")
-	private int UnitProductionTime;
+	@Column(name = "UnitProductionTime" , nullable=true)
+	private int unitproductiontime;
 	
-	@Column(name = "StandardLot")
-	private int StandardLot;
+	@Column(name = "StandardLot" , nullable=true)
+	private int standardlot;
 	
-	@Column(name = "Description")
-	private String Description;
+	@Column(name = "Description" , nullable=true)
+	private String description;
 	
 	
 	private static final long serialVersionUID = 1L;
 	
 	@EmbeddedId
-	private OperationPK OperationPK;
+	private OperationPK operationPK;
 
 	public Operation() {
 		super();
@@ -46,61 +46,90 @@ public class Operation implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_OperatingRange",referencedColumnName="IdOptRange",insertable=false,updatable=false)
 	private OperatingRange optrange;
-	
-	public int getPhaseNumber() {
-		return this.PhaseNumber;
+
+	public int getPhasenumber() {
+		return phasenumber;
 	}
 
-	public void setPhaseNumber(int PhaseNumber) {
-		this.PhaseNumber = PhaseNumber;
-	}   
-	public int getUnitProductionTime() {
-		return this.UnitProductionTime;
+
+
+	public void setPhasenumber(int phasenumber) {
+		this.phasenumber = phasenumber;
 	}
 
-	public void setUnitProductionTime(int UnitProductionTime) {
-		this.UnitProductionTime = UnitProductionTime;
-	}   
-	public int getStandardLot() {
-		return this.StandardLot;
+
+
+	public int getUnitproductiontime() {
+		return unitproductiontime;
 	}
 
-	public void setStandardLot(int StandardLot) {
-		this.StandardLot = StandardLot;
-	}   
+
+
+	public void setUnitproductiontime(int unitproductiontime) {
+		this.unitproductiontime = unitproductiontime;
+	}
+
+
+
+	public int getStandardlot() {
+		return standardlot;
+	}
+
+
+
+	public void setStandardlot(int standardlot) {
+		this.standardlot = standardlot;
+	}
+
+
+
 	public String getDescription() {
-		return this.Description;
+		return description;
 	}
 
-	public void setDescription(String Description) {
-		this.Description = Description;
+
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
+
+
 
 	public OperationPK getOperationPK() {
-		return OperationPK;
+		return operationPK;
 	}
+
+
 
 	public void setOperationPK(OperationPK operationPK) {
-		OperationPK = operationPK;
+		this.operationPK = operationPK;
 	}
 
-	
 
-	public OperatingRange getOptrange() {
-		return optrange;
-	}
-
-	public void setOptrange(OperatingRange optrange) {
-		this.optrange = optrange;
-	}
 
 	public ChargingStation getChargingstations() {
 		return chargingstations;
 	}
 
+
+
 	public void setChargingstations(ChargingStation chargingstations) {
 		this.chargingstations = chargingstations;
 	}
+
+
+
+	public OperatingRange getOptrange() {
+		return optrange;
+	}
+
+
+
+	public void setOptrange(OperatingRange optrange) {
+		this.optrange = optrange;
+	}
+	
+	
 	
 	
 	

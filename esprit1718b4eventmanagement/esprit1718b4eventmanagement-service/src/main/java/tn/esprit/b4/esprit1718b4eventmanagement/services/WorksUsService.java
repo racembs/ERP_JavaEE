@@ -3,20 +3,34 @@ package tn.esprit.b4.esprit1718b4eventmanagement.services;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
-
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.WorksPK;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.List;
+
+import javax.ejb.LocalBean;
+
+import javax.persistence.Query;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
+
+
+/**
+ * Session Bean implementation class UserService
+ */
+@Stateless
 
 
 public class WorksUsService implements WorksUsServiceLocal, WorksUsServiceRemote {
+	@PersistenceContext(unitName="spotlight-ejb")
 	EntityManager em;
-	/*	public WatchlistService() {
-			// TODO Auto-generated constructor stub
-		}
-	*/
 		@Override
 		public void addWR(UsualWork w) {
+			
 			w.setNature(Nature.WorkRequest);
 			em.persist(w);
 			
@@ -45,5 +59,8 @@ public class WorksUsService implements WorksUsServiceLocal, WorksUsServiceRemote
 			
 			return query.setParameter("n", Nature.WorkRequest).getSingleResult();
 		}
-		
+		/*public Equipment findById(int id) {
+			return em.find(Equipment.class, id);
+		}
+		*/
 }
