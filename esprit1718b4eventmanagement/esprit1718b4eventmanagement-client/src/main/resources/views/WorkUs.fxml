@@ -61,8 +61,8 @@
                               <VBox layoutX="20.0" layoutY="14.0" prefHeight="380.0" prefWidth="415.0" spacing="10.0">
                                  <children>
                                    
-                                    <JFXTextField focusColor="#00add8" labelFloat="true" layoutX="10.0" layoutY="10.0" promptText="Object" unFocusColor="#868282" />
-                                     <JFXTextArea maxWidth="404.0" minWidth="404.0" prefHeight="98.0" prefWidth="404.0" promptText="Additional Information" />
+                                    <JFXTextField fx:id="object" focusColor="#00add8" labelFloat="true" layoutX="10.0" layoutY="10.0" promptText="Object" unFocusColor="#868282" />
+                                     <JFXTextArea fx:id="adInfo" maxWidth="404.0" minWidth="404.0" prefHeight="98.0" prefWidth="404.0" promptText="Additional Information" />
                                  </children>
                                  <padding>
                                     <Insets left="20.0" top="10.0" />
@@ -95,11 +95,11 @@
                                           <Label prefHeight="20.0" prefWidth="222.0" style="-fx-text-fill: #868282;" text="Emmergency" />
                                           <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                                              <children>
-                                                <JFXRadioButton selected="true" text="Urgent">
+                                                <JFXRadioButton  selected="true" text="Urgent">
                                                    <toggleGroup>
                                                       <ToggleGroup fx:id="q" />
                                                    </toggleGroup></JFXRadioButton>
-                                                <JFXRadioButton layoutX="10.0" layoutY="10.0" text="Not Urgent" toggleGroup="$q" />
+                                                <JFXRadioButton  layoutX="10.0" layoutY="10.0" text="Not Urgent" toggleGroup="$q" />
                                              </children>
                                              <padding>
                                                 <Insets left="100.0" right="20.0" />
