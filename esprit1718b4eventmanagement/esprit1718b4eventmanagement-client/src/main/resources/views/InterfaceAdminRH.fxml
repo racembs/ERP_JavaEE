@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="684.0" prefWidth="1105.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.AdminRHController">
+   <children>
+      <JFXTabPane layoutX="138.0" layoutY="100.0" prefHeight="684.0" prefWidth="1105.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Add User">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="23.0" layoutY="33.0" prefHeight="135.0" prefWidth="1068.0" spacing="30.0">
+                           <children>
+                              <AnchorPane prefHeight="141.0" prefWidth="1086.0" style="-fx-background-color: #00ADD8;" styleClass="card-unpadded">
+                                 <children>
+                                    <Pane layoutX="-1.0" prefHeight="141.0" prefWidth="23.0" style="-fx-background-color: #007390;" />
+                                    <ImageView fitHeight="97.0" fitWidth="176.0" layoutX="33.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@image/contacts-256.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                        <AnchorPane layoutX="23.0" layoutY="224.0" prefHeight="413.0" prefWidth="1057.0" styleClass="card-unpadded">
+                           <children>
+                              <JFXTextField fx:id="txtfisrtname" focusColor="#00add8" labelFloat="true" layoutX="112.0" layoutY="77.0" promptText="First Name" unFocusColor="#868282" />
+                              <JFXTextField fx:id="txtlastname" focusColor="#00add8" labelFloat="true" layoutX="112.0" layoutY="122.0" promptText="Last Name" unFocusColor="#868282" />
+                              <JFXTextField fx:id="txtemail" focusColor="#00add8" labelFloat="true" layoutX="112.0" layoutY="223.0" promptText="Email address" unFocusColor="#868282" />
+                              <JFXTextField fx:id="txtphonenumber" focusColor="#00add8" labelFloat="true" layoutX="112.0" layoutY="175.0" promptText="Phone Number" unFocusColor="#868282" />
+                              <JFXTextField fx:id="txtpassword" focusColor="#00add8" labelFloat="true" layoutX="504.0" layoutY="122.0" promptText="Password" unFocusColor="#868282" />
+                              <VBox layoutX="435.0" layoutY="164.0" prefHeight="82.0" prefWidth="541.0">
+                                 <children>
+                                    <Label prefHeight="20.0" prefWidth="222.0" style="-fx-text-fill: #868282;" text="Role " />
+                                    <HBox alignment="CENTER_LEFT" prefHeight="62.0" prefWidth="509.0" spacing="30.0">
+                                       <children>
+                                          <JFXRadioButton fx:id="GPAO" selected="true" text="GPAO">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="q" />
+                                             </toggleGroup>
+                                          </JFXRadioButton>
+                                          <JFXRadioButton fx:id="GMAO" layoutX="10.0" layoutY="10.0" text="GMAO" toggleGroup="$q" />
+                                       </children>
+                                       <padding>
+                                          <Insets left="100.0" right="20.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <JFXButton layoutX="611.0" layoutY="262.0" onAction="#OnCancelClick" styleClass="cancel-button" text="Cancel" />
+                              <JFXButton layoutX="469.0" layoutY="262.0" onAction="#OnEditClick" prefHeight="27.0" prefWidth="78.0" styleClass="green-btn" text="Edit" />
+                              <JFXTextField fx:id="txtlogin" focusColor="#00add8" labelFloat="true" layoutX="504.0" layoutY="77.0" promptText="Login" unFocusColor="#868282" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab onSelectionChanged="#OnUserDetail" text="DETAILS Users">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.6173228346456693" layoutX="16.0" layoutY="6.0" orientation="VERTICAL" prefHeight="649.0" prefWidth="1105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
+                                 <children>
+                                    <TextField layoutX="787.0" layoutY="14.0" prefHeight="30.0" prefWidth="302.0" promptText="Search doctor by name" styleClass="search-box" />
+                                    <TableView fx:id="tableau" layoutX="11.0" layoutY="53.0" prefHeight="326.0" prefWidth="1080.0">
+                                      <columns>
+                                        <TableColumn fx:id="ColFirstName" editable="false" prefWidth="199.0" text="FirstName" />
+                                          <TableColumn fx:id="ColLastName" editable="false" prefWidth="168.0" sortable="false" text="LastName" />
+                                          <TableColumn fx:id="ColEmail" editable="false" prefWidth="152.0" sortable="false" text="Email" />
+                                          <TableColumn fx:id="ColStatut" editable="false" prefWidth="459.0" sortable="false" text="Statut" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="1103.0">
+                                 <children>
+                                    <HBox layoutX="30.0" layoutY="14.0" prefHeight="210.0" prefWidth="1043.0" spacing="30.0">
+                                       <children>
+                                          <GridPane prefHeight="219.0" prefWidth="493.0" styleClass="card">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="106.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="321.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="First Name" />
+                                                <Label prefHeight="20.0" prefWidth="83.0" text="Login" GridPane.rowIndex="4" />
+                                                <Label fx:id="labnum" prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label fx:id="labfirstname" prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" />
+                                                <Label fx:id="lablastname" prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label fx:id="labmail" prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label fx:id="lablogin" prefHeight="20.0" prefWidth="300.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label fx:id="labpassword" prefHeight="20.0" prefWidth="300.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Label text="Last Name" GridPane.rowIndex="1" />
+                                                <Label text="Email" GridPane.rowIndex="2" />
+                                                <Label text="Phone Number" GridPane.rowIndex="3" />
+                                                <Label text="Password" GridPane.rowIndex="5" />
+                                             </children>
+                                          </GridPane>
+                                          <GridPane prefHeight="219.0" prefWidth="520.0" styleClass="card">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="186.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" prefWidth="302.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label fx:id="labrole" prefHeight="21.0" prefWidth="302.0" styleClass="yellow-label" GridPane.columnIndex="1" />
+                                                <Label fx:id="labstatut" prefHeight="22.0" prefWidth="301.0" styleClass="red-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                   <children>
+                                                      <CheckBox fx:id="chekVal" mnemonicParsing="false" selected="true" text="Valable" />
+                                                   </children>
+                                                </HBox>
+                                                <JFXButton buttonType="RAISED" onAction="#OnChangeAction" prefHeight="37.0" prefWidth="184.0" ripplerFill="#53eb11" styleClass="blue-btn" text="Change Statut" GridPane.rowIndex="2" />
+                                                <Label text="Statut" GridPane.rowIndex="1" />
+                                                <Label text="Role" />
+                                                <CheckBox fx:id="CheckBloc" mnemonicParsing="false" text="Bloquer" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <JFXButton fx:id="BtnConfirme" buttonType="RAISED" onAction="#OnConfirmeAction" prefHeight="37.0" prefWidth="184.0" ripplerFill="#53eb11" styleClass="blue-btn" text="Confirme" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <JFXButton buttonType="RAISED" onAction="#OnChangeRoleAction" prefHeight="37.0" prefWidth="234.0" ripplerFill="#53eb11" styleClass="yellow-label" text="Change Role" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <JFXButton fx:id="BtnConfirme1" buttonType="RAISED" onAction="#OnConfirmeRoleAction" prefHeight="37.0" prefWidth="184.0" ripplerFill="#53eb11" text="Confirme" GridPane.rowIndex="5">
+                                                   <styleClass>
+                                                      <String fx:value="blue-btn" />
+                                                      <String fx:value="yellow-label" />
+                                                   </styleClass>
+                                                </JFXButton>
+                                                <CheckBox fx:id="chekGmao" mnemonicParsing="false" selected="true" text="GMAO" GridPane.rowIndex="3" />
+                                                <CheckBox fx:id="chekGPAO" mnemonicParsing="false" text="GPAO" GridPane.rowIndex="4" />
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </JFXTabPane>
+   </children>
+</AnchorPane>
