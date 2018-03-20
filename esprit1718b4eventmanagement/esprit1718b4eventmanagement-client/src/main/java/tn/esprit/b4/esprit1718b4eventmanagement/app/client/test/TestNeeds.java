@@ -21,13 +21,17 @@ public class TestNeeds {
 		NeedToolServiceRemote proxy =  (NeedToolServiceRemote) context.lookup(TOOLjndiName);
 		NeedSparePartsServiceRemote proxy2 =  (NeedSparePartsServiceRemote) context.lookup(SparejndiName);
 		
-		Tool newTool = new Tool("desc1",100,"ref1","supp","code_supp1","brand1",(float) 20.3,"nature","family","available");
-		proxy.addTool(newTool);
-		System.out.println("tool created");
+		//Tool newTool = new Tool("desc1",100,"ref1","supp","code_supp1","brand1",(float) 20.3,"nature","family","available");
+		//proxy.addTool(newTool);
+		//System.out.println("tool created");
 		
-		SpareParts newSpare = new SpareParts("descS1",120,"refS1","supp1","code_supp1","brand1",(float) 30.74,"","Sfamily1");
-		proxy2.addSpareParts(newSpare);
+		SpareParts newSpare = new SpareParts("mod",7,"refff","refff","code_supp1","brand1",(float) 30.74,"met","Sfamily1");
+		//proxy2.addSpareParts(newSpare);
 		System.out.println("SparePart created");
+		
+		//newSpare.setQuantity(newSpare.getQuantity()+1);
+		//proxy2.deleteSpareParts(2);
+		System.out.println("SparePart deleted");
 		
 //		proxy.deleteOperatingRange(1);
 //		System.out.println("deleted");

@@ -23,7 +23,7 @@ public class NeedSparePartsService implements NeedSparePartsServiceLocal,NeedSpa
 
 	@Override
 	public void updateSpareParts(SpareParts SpareParts) {
-		em.merge(SpareParts);
+		em.refresh(SpareParts);
 		
 	}
 
