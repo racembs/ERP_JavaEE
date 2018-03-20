@@ -5,7 +5,9 @@
  */
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
+import com.google.common.base.Optional;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXButton.ButtonType;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
@@ -107,6 +109,10 @@ public class AdminRHController implements Initializable {
     @FXML
     private CheckBox chekGPAO;
    String login ;
+    @FXML
+    private TableColumn <User, String> ColLogin;
+    @FXML
+    private TableColumn <User, String>ColNum;
 
     /**
      * Initializes the controller class.
@@ -239,38 +245,94 @@ Context context;
                 public TableRow<User> call(TableView<User> param) {
                     final TableRow<User> row = new TableRow<>();
                     final ContextMenu contextMenu = new ContextMenu();
-                    final MenuItem removeMenuItem = new MenuItem("Afficher");
-                    
-                    removeMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+                    final MenuItem MenuItem = new MenuItem("Afficher");
+                    final MenuItem removeMenuItem = new MenuItem("Supprimer");
+                    MenuItem.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
                            
-                                 String p=tableau.getSelectionModel().getSelectedItem().getEmail();
+               String p=tableau.getSelectionModel().getSelectedItem().getEmail();
  labmail.setText(p);
  
-                                  String p1=tableau.getSelectionModel().getSelectedItem().getFirstname();
+               String p1=tableau.getSelectionModel().getSelectedItem().getFirstname();
  labfirstname.setText(p1);
   
-                            String p2=tableau.getSelectionModel().getSelectedItem().getLastname();
+               String p2=tableau.getSelectionModel().getSelectedItem().getLastname();
  lablastname.setText(p2);
+ 
               String p3=tableau.getSelectionModel().getSelectedItem().getStatut();
 labstatut.setText(p3);
- String p4=tableau.getSelectionModel().getSelectedItem().getLogin();
+
+              String p4=tableau.getSelectionModel().getSelectedItem().getLogin();
 lablogin.setText(p4);
-            String p6=tableau.getSelectionModel().getSelectedItem().getNumtel();
+
+              String p6=tableau.getSelectionModel().getSelectedItem().getNumtel();
 labnum.setText(p6);
 
-
-String p5=tableau.getSelectionModel().getSelectedItem().getPassword();
+               String p5=tableau.getSelectionModel().getSelectedItem().getPassword();
 labpassword.setText(p5);
-String p7=tableau.getSelectionModel().getSelectedItem().getRole();
+
+               String p7=tableau.getSelectionModel().getSelectedItem().getRole();
 labrole.setText(p7);
 
  login=tableau.getSelectionModel().getSelectedItem().getLogin();
                             }
                         
                     });
-                    contextMenu.getItems().add(removeMenuItem);
+                    ////////remove
+                    removeMenuItem.setOnAction(new  EventHandler<ActionEvent>() {
+
+						@Override
+						public void handle(ActionEvent event) {
+							
+							
+					    	String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote";
+					    	Context context;
+
+					    		
+					    			try {
+										context= new InitialContext();
+								
+
+					    		UserServiceRemote proxy=(UserServiceRemote) context.lookup(jndiName);
+					    		   
+					    		
+					    		
+
+					              
+					    		
+					    	User user=	proxy.findByLogin(login);
+							proxy.delete(user);
+							
+							afficher();
+	                            
+							
+					    			} 
+	                            catch (NamingException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+							
+							
+						
+							
+						}
+                    	
+                   
+					});
+                    
+                    
+                    
+  contextMenu.getItems().add(removeMenuItem);
+                    
+                    row.contextMenuProperty().bind(
+                            Bindings.when(row.emptyProperty())
+                                    .then((ContextMenu) null)
+                                    .otherwise(contextMenu));
+                    
+                    
+                    
+                    contextMenu.getItems().add(MenuItem);
                     
                     row.contextMenuProperty().bind(
                             Bindings.when(row.emptyProperty())
@@ -283,7 +345,7 @@ labrole.setText(p7);
                 }
                 
                 
-                
+               
                 
                 
      
@@ -349,7 +411,7 @@ labrole.setText(p7);
     	
     	
     }
-    
+   
     
     public void afficher() throws NamingException
     {
@@ -367,7 +429,8 @@ labrole.setText(p7);
     		ColLastName.setCellValueFactory(new PropertyValueFactory<User, String>("lastname"));
     		ColEmail.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
     		ColStatut.setCellValueFactory(new PropertyValueFactory<User, String>("statut"));
-    	
+    	ColLogin.setCellValueFactory(new PropertyValueFactory<User, String>("login"));
+        ColNum.setCellValueFactory(new PropertyValueFactory<User, String>("numtel"));
     		
     	        List<User> list = proxy.findAll();
     	        ObservableList<User> items = FXCollections.observableArrayList(list);

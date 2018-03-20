@@ -122,7 +122,14 @@ Context context;
     
 
     @FXML
-    private void OnCancelAction(ActionEvent event) {
+    private void OnCancelAction(ActionEvent event) throws IOException {
+    	Parent parent= null;
+    	parent  =FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
+		Scene scene=new Scene(parent);
+		Stage primaryStage= new Stage(); 
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		 btnLogin.getScene().getWindow().hide();
     }
     
 }
