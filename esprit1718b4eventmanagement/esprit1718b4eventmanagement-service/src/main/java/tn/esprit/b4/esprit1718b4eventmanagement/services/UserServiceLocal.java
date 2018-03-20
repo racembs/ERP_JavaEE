@@ -12,7 +12,7 @@ public interface UserServiceLocal extends IGenericDAO<User> {
 	User login(String login, String password);
 
 	public void update1(User u);
-	
+	public List<User> SearchLogin(String login);
 	public User findByLogin(String l);
 
 }

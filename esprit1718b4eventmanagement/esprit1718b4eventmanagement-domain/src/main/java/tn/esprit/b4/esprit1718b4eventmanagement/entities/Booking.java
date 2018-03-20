@@ -20,12 +20,9 @@ private static final long serialVersionUID = 1L;
 	@Column(name = "BOOK_DATE")
 	@Temporal(TemporalType.DATE)
 	private Date BookDate;
-	@Column(name = "Planned_Release_DATE")
+	@Column(name = "Release_DATE")
 	@Temporal(TemporalType.DATE)
-	private Date PReleaseDate;
-	@Column(name = "Actual_Release_DATE")
-	@Temporal(TemporalType.DATE)
-	private Date AReleaseDate;
+	private Date ReleaseDate;
 	
 	@EmbeddedId
 	private BookingPK bookingPK;
@@ -56,6 +53,19 @@ private static final long serialVersionUID = 1L;
 	public void setBookDate(Date bookDate) {
 		BookDate = bookDate;
 	}
+
+
+
+	public Date getReleaseDate() {
+		return ReleaseDate;
+	}
+
+
+
+	public void setReleaseDate(Date releaseDate) {
+		ReleaseDate = releaseDate;
+	}
+
 
 
 	public BookingPK getBookingPK() {
@@ -100,38 +110,13 @@ private static final long serialVersionUID = 1L;
 
 
 
-
-	public Booking(Date bookDate, Date pReleaseDate, BookingPK bookingPK, Works works, Need need) {
+	public Booking(Date bookDate, Date releaseDate, BookingPK bookingPK, Works works, Need need) {
 		super();
 		BookDate = bookDate;
-		PReleaseDate = pReleaseDate;
+		ReleaseDate = releaseDate;
 		this.bookingPK = bookingPK;
 		this.works = works;
 		this.need = need;
-	}
-
-
-
-	public Date getPReleaseDate() {
-		return PReleaseDate;
-	}
-
-
-
-	public void setPReleaseDate(Date pReleaseDate) {
-		PReleaseDate = pReleaseDate;
-	}
-
-
-
-	public Date getAReleaseDate() {
-		return AReleaseDate;
-	}
-
-
-
-	public void setAReleaseDate(Date aReleaseDate) {
-		AReleaseDate = aReleaseDate;
 	}
 
 

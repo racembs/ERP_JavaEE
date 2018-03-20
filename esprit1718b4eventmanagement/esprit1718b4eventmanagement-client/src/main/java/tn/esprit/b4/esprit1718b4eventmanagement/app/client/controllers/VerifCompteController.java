@@ -63,7 +63,7 @@ Context context;
           UserServiceRemote proxy=(UserServiceRemote) context.lookup(jndiName);
           
           
-        if ((txtcode.getText().equals("123"))&&(user.getRole().equals("superuser")))
+        if ((txtcode.getText().equals("123"))&&(user.getRole().equals("GMAO")))
         {
         
         	Parent parent= null;
@@ -78,7 +78,7 @@ Context context;
         proxy.update(user);
         
         }
-        else if ((txtcode.getText().equals("123"))&&(user.getRole().equals("user")))
+        else if ((txtcode.getText().equals("123"))&&(user.getRole().equals("GPAO")))
         {
         	Parent parent= null;
 		    	parent  =FXMLLoader.load(getClass().getResource("/views/Dashboard.fxml"));

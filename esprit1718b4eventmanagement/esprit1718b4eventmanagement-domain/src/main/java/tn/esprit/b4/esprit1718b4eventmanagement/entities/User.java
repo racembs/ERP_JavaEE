@@ -48,15 +48,6 @@ public class User implements Serializable {
 	@OneToMany(mappedBy="User")
 	private List <ChargingStation> chargingstations;
 	
-	@OneToMany(mappedBy="user")
-	private List <Works> works;
-	
-	
-
-
-
-
-
 	private static final long serialVersionUID = 1L;
 
 	
@@ -66,12 +57,7 @@ public class User implements Serializable {
 	
 	
 	
-	public List<Works> getWorks() {
-		return works;
-	}
-	public void setWorks(List<Works> works) {
-		this.works = works;
-	}
+	
 	public List<ChargingStation> getChargingstations() {
 		return chargingstations;
 	}
@@ -191,30 +177,6 @@ public class User implements Serializable {
 		this.numtel = numtel;
 		this.nb = nb;
 	}
-
-	public User(int id, Long code, String firstname, String lastname, String login, String password, String email,
-			String role, String numtel, String statut, String nb, List<ChargingStation> chargingstations,
-			List<Works> works) {
-		super();
-		this.id = id;
-		this.code = code;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.login = login;
-		this.password = password;
-		this.email = email;
-		this.role = role;
-		this.numtel = numtel;
-		this.statut = statut;
-		this.nb = nb;
-		this.chargingstations = chargingstations;
-		this.works = works;
-	}
-
-
-
-
-
 	public User(String firstname, String lastname, String login, String password, String email, String role,
 			String numtel, String statut, String nb) {
 		super();
@@ -229,8 +191,7 @@ public class User implements Serializable {
 		this.nb = nb;
 	}
 	public User(String firstname, String lastname, String login, String password, String email, String role,
-			String numtel, String statut) 
-	{
+			String numtel, String statut) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -243,5 +204,5 @@ public class User implements Serializable {
 	}
 
 
-
+	
 }

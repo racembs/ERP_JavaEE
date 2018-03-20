@@ -51,13 +51,5 @@ public class WorksPK implements Serializable{
 			return false;
 		return true;
 	}
-	public WorksPK(Integer idEquipment, Integer idUser) {
-		super();
-		this.idEquipment = idEquipment;
-		this.idUser = idUser;
-	}
-	public WorksPK() {
-		super();
-	}
 	
 }
