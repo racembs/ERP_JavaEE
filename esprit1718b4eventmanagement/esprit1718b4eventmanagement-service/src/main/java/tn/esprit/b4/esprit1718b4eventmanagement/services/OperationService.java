@@ -4,6 +4,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperationPK;
@@ -26,21 +27,25 @@ public class OperationService implements OperationServiceLocal, OperationService
 	}
 
 	@Override
-	public void deleteOperation(int idOperatingRange, ChargingStationPK WorkStationPK) {
-		// TODO Auto-generated method stub
+	public void deleteOperation(int idOperatingRange, ChargingStationPK idChargingStation) {
+		Operation Opt= findOperation(idOperatingRange, idChargingStation);
+		em.remove(Opt);
 		
 	}
 
 	@Override
-	public void updateOperation(int idOperatingRange, ChargingStationPK WorkStationPK) {
-		// TODO Auto-generated method stub
+	public void updateOperation(int idOperatingRange, ChargingStationPK idChargingStation) {
+		Operation Opt= findOperation(idOperatingRange, idChargingStation);
+		Opt.setDescription("Description");
 		
 	}
 
 	@Override
-	public Operation findOperation(int idOperatingRange, ChargingStationPK WorkStationPK) {
-		// TODO Auto-generated method stub
-		return null;
+	public Operation findOperation(int idOperatingRange, ChargingStationPK idChargingStation) {
+		OperationPK Optpk = new OperationPK();
+		Optpk.setId(idOperatingRange);
+		Optpk.setIdChargingStation(idChargingStation);
+		return em.find(Operation.class, Optpk);
 	}
 
 }

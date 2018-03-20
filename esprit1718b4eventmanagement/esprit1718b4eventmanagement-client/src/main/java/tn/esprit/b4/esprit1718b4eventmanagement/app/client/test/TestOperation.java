@@ -25,16 +25,30 @@ public class TestOperation {
 			ChargingStationServiceRemote proxy1 = (ChargingStationServiceRemote) context1.lookup(jndiName1);
 			ChargingStation ch = new ChargingStation();
 			
-			ch.setCode(10);
-
-		
-			ChargingStationPK chpk=proxy1.addChargingStation(1, 1, ch);
-			System.out.println("created");
+//			ch.setCode(10);
+//
+//		
+//			ChargingStationPK chpk=proxy1.addChargingStation(1, 1, ch);
+//			System.out.println("created");
+//			
+//			opt.setDescription("done");
+//			proxy.addOperation(1, chpk, opt);
+//			System.out.println("createddd");
+//			
 			
-			opt.setDescription("done");
-			proxy.addOperation(1, chpk, opt);
-			System.out.println("createddd");
-
+			ChargingStation chs=proxy1.findChargingStation(1,1);
+			ChargingStationPK chpk1= chs.getWorkStationPK();
+			
+			
+			Operation optd=proxy.findOperation(1, chpk1);
+			System.out.println(optd.getDescription());
+			
+			
+			proxy.updateOperation(1, chpk1);
+			System.out.println("modified");
+			
+			proxy.deleteOperation(1, chpk1);
+			System.out.println("deleted");
 	}
 
 }
