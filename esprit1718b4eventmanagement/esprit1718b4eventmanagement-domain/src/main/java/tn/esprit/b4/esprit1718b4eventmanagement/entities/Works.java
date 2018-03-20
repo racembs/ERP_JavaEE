@@ -2,6 +2,7 @@ package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 
 import javax.persistence.EmbeddedId;
@@ -40,14 +41,14 @@ public class Works implements Serializable {
 
 	
 	////////////////////
-	@ManyToOne
+	@ManyToOne (cascade = {CascadeType.ALL})
 	@JoinColumn(name="id_user",
 	referencedColumnName="id",
 	insertable=false,
 	updatable=false)
 	private User user;
 	
-	@ManyToOne
+	@ManyToOne (cascade = {CascadeType.ALL})
 	@JoinColumn(name="id_equipement",
 	referencedColumnName="Id",
 	insertable=false,
@@ -125,5 +126,35 @@ public class Works implements Serializable {
 			public void setEquipement(Equipment equipement) {
 				this.equipement = equipement;
 			}
+
+			public Works(String objet, String description, String technology, Date startDate, Date endDate,
+					String state, WorksPK worksPK, User user, Equipment equipement) {
+				super();
+				this.objet = objet;
+				this.description = description;
+				this.technology = technology;
+				this.startDate = startDate;
+				this.endDate = endDate;
+				this.state = state;
+				this.worksPK = worksPK;
+				this.user = user;
+				this.equipement = equipement;
+			}
+
+			public Works() {
+			
+			}
+			public Works(String objet, String description, String technology,
+					WorksPK worksPK, User user, Equipment equipement) {
+				super();
+				this.objet = objet;
+				this.description = description;
+				this.technology = technology;
+				
+				
+				this.worksPK = worksPK;
+				this.user = user;
+				this.equipement = equipement;
+			}	
 			
 }
