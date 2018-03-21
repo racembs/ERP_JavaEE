@@ -110,40 +110,7 @@ public class ArticleController implements Initializable {
     	Article article2=new Article();
     	article2.setDescription("article2");
     	article2.setQuantity(20);
-    	//List<Nomenclature> listNomenclature=ArticleProxy.getFilsArticles(1);
     
-    	/*TreeItem<Article> root=new TreeItem<>(listNomenclature.get(0).getArticleFils());
-    	
-    	TreeItem<Article> Itemarticle1=new TreeItem<>(listNomenclature.get(0).getArticleFils());
-    	TreeItem<Article> Itemarticle2=new TreeItem<>(listNomenclature.get(1).getArticleFils());
-    
-    	root.getChildren().setAll();
-    	Itemarticle1.getChildren().addAll(Itemarticle2);
-    	
- 
-        articleColumn.setCellValueFactory((CellDataFeatures<Article, String> param) -> new SimpleStringProperty(param.getValue().getValue().getDescription()));
-    	quantityColumn.setCellValueFactory((CellDataFeatures<Article, String> param) -> new SimpleStringProperty(String.valueOf(param.getValue().getValue().getQuantity())));
-    	ArticleTableView.setRoot(root);
-    	ArticleTableView.setShowRoot(false);
-    	
-    	
-    	/*TreeItem<String>articlePere2,articleFils1,articleFils2;
-    	TreeItem<Article> root,articlePere1;
-        
-   
-    	articlePere2=new TreeItem<String>("articlePere2");
-    	articleFils1=new TreeItem<String>("articleFils1");
-    	articleFils2=new TreeItem<String>("articleFils2");
-    	root=new TreeItem<Article>();
-    	articlePere1=new TreeItem<Article>();
-        ArticleTreeView.setRoot(root);
-    	root.setExpanded(true);
-    	root.getChildren().add(articlePere1);
-    	articlePere1.getChildren().add(articleFils1);
-    	articlePere2.getChildren().add(articleFils2);
-    	
-    	ArticleTreeView=new JFXTreeView<>(root);
-    	ArticleTreeView.setShowRoot(false);*/
     	
     	
     }    
@@ -178,10 +145,7 @@ public class ArticleController implements Initializable {
     	
     	ArticleProxy.addNomenclature(selectedItem.getValue().getId(),ArticleProxy.findArticleByCode(txtArticleChild.getText()).getId(),Integer.parseInt(txtChildQuantity.getText()));
     	
-    	/*	ArticleTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-			
-			});*/
-    	//ArticleProxy.addNomenclature(5,2,10);
+  
     }
 
     @FXML
@@ -223,8 +187,6 @@ private void fillTableView(String code) throws NamingException {
 	 } while(size>0);
 	
  }
- 	/*root.getChildren().setAll(Itemarticle1,Itemarticle2);
- 	Itemarticle1.getChildren().addAll(Itemarticle2);*/
  	
 
      articleColumn.setCellValueFactory((CellDataFeatures<Article, String> param) -> new SimpleStringProperty(param.getValue().getValue().getDescription()));
