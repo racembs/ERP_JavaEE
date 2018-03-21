@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToolbar?>
 <?import java.net.URL?>
-<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
 
 <AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1200.0" stylesheets="@../views/styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.MenuGPAOController">
-   <children>
+  <children>
       <JFXToolbar layoutY="-1.0" prefHeight="0.0" prefWidth="1200.0" styleClass="jfx-toolbar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <center>
             <Label fx:id="txtCurrentWindow" prefHeight="40.0" prefWidth="199.0" style="-fx-text-fill: white; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="card-title" text="GPAO" BorderPane.alignment="CENTER" />
@@ -28,8 +36,6 @@
       </JFXToolbar>
       <AnchorPane fx:id="holderPane" layoutX="-3.0" layoutY="40.0" prefHeight="702.0" prefWidth="1189.0">
          <children>
-            <Accordion layoutX="102.0" layoutY="143.0" />
-            <Accordion layoutX="121.0" layoutY="143.0" />
             <TabPane layoutX="-1.0" prefHeight="709.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab fx:id="idArticle" text="Article">
@@ -55,50 +61,40 @@
                         </MenuBar>
                      </content>
                   </Tab>
-                <Tab fx:id="idChargingStation" text="Charging Station">
-                     <content>
-                        <MenuBar fx:id="idMenuChangingStation">
-                          <menus>
-                            <Menu mnemonicParsing="false" text="File">
-                              <items>
-                                <MenuItem mnemonicParsing="false" text="Close" />
-                              </items>
-                            </Menu>
-                            <Menu mnemonicParsing="false" text="Edit">
-                              <items>
-                                <MenuItem mnemonicParsing="false" text="Delete" />
-                              </items>
-                            </Menu>
-                            <Menu mnemonicParsing="false" text="Help">
-                              <items>
-                                <MenuItem mnemonicParsing="false" text="About" />
-                              </items>
-                            </Menu>
-                          </menus>
-                        </MenuBar>
-                     </content>
-                  </Tab>
+                <Tab fx:id="idChargingStation" text="Charging Station" />
                   <Tab fx:id="idOperatingRange" text="Operating Range">
                      <content>
-                        <MenuBar fx:id="idMenuOperatingRange">
-                          <menus>
-                            <Menu mnemonicParsing="false" text="File">
-                              <items>
-                                <MenuItem mnemonicParsing="false" text="Close" />
-                              </items>
-                            </Menu>
-                            <Menu mnemonicParsing="false" text="Edit">
-                              <items>
-                                <MenuItem mnemonicParsing="false" text="Delete" />
-                              </items>
-                            </Menu>
-                            <Menu mnemonicParsing="false" text="Help">
-                              <items>
-                                <MenuItem mnemonicParsing="false" text="About" />
-                              </items>
-                            </Menu>
-                          </menus>
-                        </MenuBar>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="45.0" layoutY="45.0" prefHeight="27.0" prefWidth="202.0" text="Add Operating Range">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="103.0" layoutY="101.0" prefHeight="17.0" prefWidth="64.0" text="Code" />
+                              <Label layoutX="103.0" layoutY="135.0" prefHeight="17.0" prefWidth="87.0" text="Designation" />
+                              <Label layoutX="438.0" layoutY="101.0" text="Deadline" />
+                              <Label layoutX="438.0" layoutY="144.0" text="Staking Condition" />
+                              <TextField fx:id="idCode" layoutX="190.0" layoutY="97.0" prefHeight="25.0" prefWidth="176.0" />
+                              <TextArea fx:id="idDesignation" layoutX="190.0" layoutY="135.0" prefHeight="49.0" prefWidth="178.0" />
+                              <TextField fx:id="idDeadline" layoutX="558.0" layoutY="97.0" />
+                              <ComboBox fx:id="idStakingCond" layoutX="558.0" layoutY="140.0" prefWidth="150.0" />
+                              <Separator layoutX="419.0" layoutY="91.0" orientation="VERTICAL" prefHeight="102.0" prefWidth="5.0" />
+                              <TableView fx:id="idTab" layoutX="160.0" layoutY="218.0" prefHeight="189.0" prefWidth="524.0">
+                                <columns>
+                                  <TableColumn fx:id="idCodeTab" prefWidth="75.0" text="Code" />
+                                  <TableColumn fx:id="idDesignationTab" prefWidth="215.0" text="Designation" />
+                                    <TableColumn fx:id="idDeadlineTab" prefWidth="107.0" text="Deadline" />
+                                    <TableColumn fx:id="idStakingCondTab" prefWidth="126.0" text="Staking Condition" />
+                                </columns>
+                              </TableView>
+                              <Button fx:id="idAdd" layoutX="789.0" layoutY="123.0" mnemonicParsing="false" onAction="#AddOperatingRange" text="Add" />
+                              <Button fx:id="idUpdate" layoutX="763.0" layoutY="268.0" mnemonicParsing="false" onAction="#UpdateOperatingRange" text="Update" />
+                              <Button fx:id="idDelete" layoutX="763.0" layoutY="315.0" mnemonicParsing="false" onAction="#DeleteOperatingRange" text="Delete" />
+                              <Button fx:id="idFind" layoutX="633.0" layoutY="46.0" mnemonicParsing="false" onAction="#FindOperatingRange" text="Find" />
+                              <JFXTextField fx:id="idoptrange" layoutX="466.0" layoutY="46.0" />
+                           </children>
+                        </AnchorPane>
                      </content>
                   </Tab>
                   <Tab fx:id="idManufacturing" text="Manufacturing">
@@ -172,11 +168,10 @@
                   </Tab>
               </tabs>
             </TabPane>
-            <Accordion layoutX="14.0" layoutY="81.0" />
          </children></AnchorPane>
    </children>
    
    
    
 </AnchorPane>
-
+ 
