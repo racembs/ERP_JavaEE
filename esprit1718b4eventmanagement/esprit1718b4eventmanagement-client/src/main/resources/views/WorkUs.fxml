@@ -140,10 +140,15 @@
                                     <TextField layoutX="787.0" layoutY="14.0" prefHeight="30.0" prefWidth="302.0" promptText="Search doctor by name" styleClass="search-box" />
                                     <TableView fx:id="tableview" layoutX="11.0" layoutY="53.0" prefHeight="326.0" prefWidth="1080.0">
                                       <columns>
-                                        <TableColumn fx:id="C1" editable="true" prefWidth="389.0" text="C1" />
-                                          <TableColumn fx:id="C2" editable="true" prefWidth="168.0" sortable="true" text="C2" />
-                                          <TableColumn fx:id="C3" editable="true" prefWidth="171.0" sortable="true" text="C3" />
-                                          <TableColumn fx:id="C4" editable="true" prefWidth="250.0" sortable="true" text="C4" />
+                                      
+                                          <TableColumn fx:id="C1" editable="true" prefWidth="150.0" text="Object" />
+                                          <TableColumn fx:id="C2" editable="true" prefWidth="150.0"  text="Add.Informations" />
+                                          <TableColumn fx:id="C3" editable="true" prefWidth="150.0"  text="Technology" />
+                                          <TableColumn fx:id="C4" editable="true" prefWidth="150.0"  text="State" />
+                                          <TableColumn fx:id="C5" editable="true" prefWidth="150.0"  text="Emmergency" />
+                                          <TableColumn fx:id="C6" editable="true" prefWidth="150.0" sortable="true" text="Creation Date" />
+                                          <TableColumn fx:id="C7" editable="true" prefWidth="150.0"  text="Equipment(Ref--Info)" />
+                                           <TableColumn fx:id="C8" editable="true" prefWidth="150.0"  text="Select technician" />
                                       </columns>
                                     </TableView>
                                  </children>

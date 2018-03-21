@@ -14,5 +14,5 @@ public interface UserServiceLocal extends IGenericDAO<User> {
 	public void update1(User u);
 	public List<User> SearchLogin(String login);
 	public User findByLogin(String l);
-
+	public User userbyfstlstname(String login);
 }
