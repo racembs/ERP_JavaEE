@@ -17,5 +17,5 @@ public interface UserServiceRemote extends IGenericDAO<User> {
 
 
 	public User findByLogin(String l);
-
+	public User userbyfstlstname(String login);
 }

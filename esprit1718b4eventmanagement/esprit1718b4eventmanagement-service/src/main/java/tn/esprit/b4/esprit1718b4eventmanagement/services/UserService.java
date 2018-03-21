@@ -82,7 +82,15 @@ public class UserService extends GenericDAO<User> implements UserServiceRemote, 
 	
 	}
 
-
+	@Override
+	public User userbyfstlstname(String login) {
+	TypedQuery<User> query
+		=em.createQuery("select n from User n where CONCAT(n.firstname,' ',n.lastname)=:Login", User.class);
+		query.setParameter("Login", login);
+		User user=query.getSingleResult();
+		return user;
+	
+	}
 
 
 
