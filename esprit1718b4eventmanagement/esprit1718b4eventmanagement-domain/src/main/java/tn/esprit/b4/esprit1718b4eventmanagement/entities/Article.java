@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,16 +21,16 @@ import javax.persistence.Table;
 public class Article implements Serializable {
 
 		private static final long serialVersionUID = 1L;
-		@OneToMany(mappedBy="articleFils")
+		@OneToMany(mappedBy="articleFils",fetch=FetchType.EAGER)
 		private List<Nomenclature> nomenclatures1;
 		
-		@OneToMany(mappedBy="articlePere")
+		@OneToMany(mappedBy="articlePere",fetch=FetchType.EAGER)
 		private List<Nomenclature> nomenclatures;
 		
-		@OneToMany(mappedBy="article")
-		private List<ManufacturingOrder> manufactOrders = new ArrayList<>();
+		@OneToMany(mappedBy="article",fetch=FetchType.EAGER)
+		private List<OrdredItem> orderItem = new ArrayList<>();
 		
-		@ManyToMany
+		@ManyToMany(fetch=FetchType.EAGER)
 		private List <OperatingRange> operatingranges;
 		public void setOperatingranges(List<OperatingRange> operatingranges) {
 			this.operatingranges = operatingranges;
@@ -119,11 +120,11 @@ public class Article implements Serializable {
 		public void setNomenclatures(List<Nomenclature> nomenclatures) {
 			this.nomenclatures = nomenclatures;
 		}
-		public List<ManufacturingOrder> getManufactOrders() {
-			return manufactOrders;
+		public List<OrdredItem> getOrderItem() {
+			return orderItem;
 		}
-		public void setManufactOrders(List<ManufacturingOrder> manufactOrders) {
-			this.manufactOrders = manufactOrders;
+		public void setOrderItem(List<OrdredItem> orderItem) {
+			this.orderItem = orderItem;
 		}
 		public List<OperatingRange> getOperatingranges() {
 			return operatingranges;

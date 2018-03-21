@@ -11,8 +11,9 @@ import javax.naming.NamingException;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingOrder;
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingOrderPk;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Orders;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItem;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItemPk;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ManufacturingServiceRemote;
 
@@ -35,23 +36,42 @@ public class TestManufacturing {
 		Date orderDat = dateFormat.parse("18/03/2018");
 		Date deliveryDat = dateFormat.parse("25/03/2018");
 		Orders order = new Orders(1818,orderDat,deliveryDat,"en attente");
+		Orders order2 = new Orders(1818,orderDat,deliveryDat,"en attente");
 		
 		order.setClient(client);
 		int idOrder = manufactProxy.addOrders(order);
+		int idOrder2 = manufactProxy.addOrders(order2);
 		
 		Article PF = new Article("ARM100", "Armoire", "unit", "Produit fini", 540, 10);
 		PF.setId(ArticleProxy.addArticle(PF));
 		
-		ManufacturingOrder manuf = new ManufacturingOrder();
-		manuf.setCode(4518);
-		manuf.setQuantity(10);
-		manuf.setStatus("en attente");
-		manufactProxy.addManufactOrder(idOrder, PF.getId(), manuf);
+		OrdredItem ordredItem = new OrdredItem();
+		ordredItem.setCode(4518);
+		ordredItem.setQuantity(10);
+		ordredItem.setStatus("en attente");
+		manufactProxy.addOrdredItem(1, 1, ordredItem);
 		
-		ManufacturingOrder searchMan = manufactProxy.findManufactOrderById(1,1);
-		System.out.println(searchMan.getArticle().getDescription());
+		OrdredItem orderItem2 = manufactProxy.findOrdredItemById(1,1);
+		System.out.println(orderItem2.getArticle().getDescription());
+		System.out.println(orderItem2.getOrdredItemPk().getId_Article());
 		
-	
+		
+//		ManufacturingOrder searchMan2 = manufactProxy.addManufactChild(searchMan);
+//		System.out.println(searchMan2.getSonsMO().get(0).getManufacturingOrderPk().getId_Article());
+
+		ManufacturingOrder Father = new ManufacturingOrder();
+		Father.setCode(1200);
+		Father.setQuantity(7);
+		Father.setOrderItem(orderItem2);
+		manufactProxy.addManufactOrder(Father);
+		ManufacturingOrder Child = new ManufacturingOrder();
+		Child.setCode(4600);
+		Child.setQuantity(2);
+		Child.setOrderItem(orderItem2);
+		manufactProxy.addManufactOrder(Child);
+		
+		
+		
 			
 	}
 

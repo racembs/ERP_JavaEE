@@ -27,7 +27,7 @@ public class Orders implements Serializable {
 	private String statut;
 	
 	@OneToMany(mappedBy="order")
-	private List<ManufacturingOrder> manufactOrders = new ArrayList<>();
+	private List<OrdredItem> order_Item = new ArrayList<>();
 	
 	@ManyToOne
 	private Client client;
@@ -68,13 +68,12 @@ public class Orders implements Serializable {
 	public void setStatut(String statut) {
 		this.statut = statut;
 	}
-	public List<ManufacturingOrder> getManufactOrders() {
-		return manufactOrders;
+	public List<OrdredItem> getOrder_Item() {
+		return order_Item;
 	}
-	public void setManufactOrders(List<ManufacturingOrder> manufactOrders) {
-		this.manufactOrders = manufactOrders;
+	public void setOrder_Item(List<OrdredItem> order_Item) {
+		this.order_Item = order_Item;
 	}
-	
 	public Client getClient() {
 		return client;
 	}

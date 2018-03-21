@@ -17,8 +17,9 @@ import javax.persistence.*;
 public class ManufacturingOrder implements Serializable {
 
 	   
-	@EmbeddedId
-	private ManufacturingOrderPk manufacturingOrderPk;
+	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	private int id;
 	private int code;
 	private int quantity;
 	@Temporal(TemporalType.DATE)
@@ -26,26 +27,11 @@ public class ManufacturingOrder implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date firm_start_date;
 	private float manufacturing_deadline;
+	private String type;
 	private String status;
 	
 	@ManyToOne
-	@JoinColumn(name="id_Order",referencedColumnName="id"
-	,insertable=false,updatable=false)
-	private Orders order;
-	
-	@ManyToOne
-	@JoinColumn(name="id_Article",referencedColumnName="Id"
-	,insertable=false,updatable=false)
-	private Article article;
-	
-	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name="FatherMO_id_Article",referencedColumnName="id_Article",insertable=false,updatable=false,nullable=true),
-		@JoinColumn(name="FatherMO_id_Order",referencedColumnName="id_Order",insertable=false,updatable=false,nullable=true)})
-	private ManufacturingOrder FatherMO;
-	
-	@OneToMany(mappedBy="FatherMO")
-	private List<ManufacturingOrder> SonsMO = new ArrayList<>();
+	private OrdredItem orderItem;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -91,35 +77,32 @@ public class ManufacturingOrder implements Serializable {
 	public void setManufacturing_deadline(float manufactring_deadline) {
 		this.manufacturing_deadline = manufactring_deadline;
 	}
-	public ManufacturingOrderPk getManufacturingOrderPk() {
-		return manufacturingOrderPk;
+	public String getType() {
+		return type;
 	}
-	public void setManufacturingOrderPk(ManufacturingOrderPk manufacturingOrderPk) {
-		this.manufacturingOrderPk = manufacturingOrderPk;
+	public void setType(String type) {
+		this.type = type;
 	}
-	public Orders getOrder() {
-		return order;
+	public ManufacturingOrder(int code, Date prev_start_Date, Date firm_start_date, float manufacturing_deadline,
+			String type) {
+		super();
+		this.code = code;
+		this.prev_start_Date = prev_start_Date;
+		this.firm_start_date = firm_start_date;
+		this.manufacturing_deadline = manufacturing_deadline;
+		this.type = type;
 	}
-	public void setOrder(Orders order) {
-		this.order = order;
+	public int getId() {
+		return id;
 	}
-	public Article getArticle() {
-		return article;
+	public void setId(int id) {
+		this.id = id;
 	}
-	public void setArticle(Article article) {
-		this.article = article;
+	public OrdredItem getOrderItem() {
+		return orderItem;
 	}
-	public ManufacturingOrder getFatherMO() {
-		return FatherMO;
-	}
-	public void setFatherMO(ManufacturingOrder fatherMO) {
-		FatherMO = fatherMO;
-	}
-	public List<ManufacturingOrder> getSonsMO() {
-		return SonsMO;
-	}
-	public void setSonsMO(List<ManufacturingOrder> sonsMO) {
-		SonsMO = sonsMO;
+	public void setOrderItem(OrdredItem orderItem) {
+		this.orderItem = orderItem;
 	}
 
    

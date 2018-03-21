@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tab_Nomenclature")
-public class Nomenclature {
+public class Nomenclature implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@EmbeddedId
 	private NomenclaturePk nomenclauturePk;
@@ -34,6 +34,7 @@ public class Nomenclature {
 
 	@Column(name = "Quantity")
 	private int Quantity;
+	
 	public NomenclaturePk getNomenclauturePk() {
 		return nomenclauturePk;
 	}
