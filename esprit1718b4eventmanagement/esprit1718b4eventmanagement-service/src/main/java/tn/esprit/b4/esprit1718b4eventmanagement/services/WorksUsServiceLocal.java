@@ -1,6 +1,7 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.WorksPK;
 import javax.ejb.Local;
 import java.util.List;
@@ -15,6 +16,7 @@ public interface WorksUsServiceLocal {
 	public void addWO(UsualWork w);
 	public void updateWork(UsualWork w);
 	public void deleteWork(WorksPK idw);
-	public UsualWork displayWRB();
+	public List<Works> displayWRB();
 	//public Equipment findById(int id);
+	public List<Works> DisplayUSWorks();
 }

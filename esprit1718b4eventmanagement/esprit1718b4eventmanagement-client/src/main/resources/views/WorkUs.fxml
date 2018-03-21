@@ -129,7 +129,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="DETAILS">
+          <Tab fx:id="tabD" text="DETAILS">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -138,12 +138,12 @@
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
                                  <children>
                                     <TextField layoutX="787.0" layoutY="14.0" prefHeight="30.0" prefWidth="302.0" promptText="Search doctor by name" styleClass="search-box" />
-                                    <TableView layoutX="11.0" layoutY="53.0" prefHeight="326.0" prefWidth="1080.0">
+                                    <TableView fx:id="tableview" layoutX="11.0" layoutY="53.0" prefHeight="326.0" prefWidth="1080.0">
                                       <columns>
-                                        <TableColumn editable="false" prefWidth="389.0" text="C1" />
-                                          <TableColumn editable="false" prefWidth="168.0" sortable="false" text="C2" />
-                                          <TableColumn editable="false" prefWidth="171.0" sortable="false" text="C2" />
-                                          <TableColumn editable="false" prefWidth="250.0" sortable="false" text="C2" />
+                                        <TableColumn fx:id="C1" editable="true" prefWidth="389.0" text="C1" />
+                                          <TableColumn fx:id="C2" editable="true" prefWidth="168.0" sortable="true" text="C2" />
+                                          <TableColumn fx:id="C3" editable="true" prefWidth="171.0" sortable="true" text="C3" />
+                                          <TableColumn fx:id="C4" editable="true" prefWidth="250.0" sortable="true" text="C4" />
                                       </columns>
                                     </TableView>
                                  </children>
@@ -167,13 +167,13 @@
                                             </rowConstraints>
                                              <children>
                                                 <Label text="Personal Details" />
-                                                <Label prefHeight="20.0" prefWidth="83.0" text="Contacts" GridPane.rowIndex="4" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="ID No 30229182" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="Doctor" GridPane.columnIndex="1" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="Daniel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="Mungatana" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="green-label" text="0717160344" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="green-label" text="danmlayah@gmail.com" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <JFXTextField fx:id="f1"  prefHeight="20.0" prefWidth="83.0" text="Contacts" GridPane.rowIndex="4" />
+                                                <JFXTextField fx:id="f2"  prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="ID No 30229182" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <JFXTextField fx:id="f3"  prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="Doctor" GridPane.columnIndex="1" />
+                                                <JFXTextField fx:id="f4"  prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="Daniel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <JFXTextField fx:id="f5"  prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="Mungatana" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <JFXTextField fx:id="f6"  prefHeight="20.0" prefWidth="300.0" styleClass="green-label" text="0717160344" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <JFXTextField fx:id="f7"  prefHeight="20.0" prefWidth="300.0" styleClass="green-label" text="danmlayah@gmail.com" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                              </children>
                                           </GridPane>
                                           <GridPane prefHeight="219.0" prefWidth="520.0" styleClass="card">
