@@ -82,7 +82,17 @@ public class MenuuGPAOController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     	
     	idA.setOnMouseClicked((MouseEvent e) -> {
-            System.out.println("Article Clicked!"); // change functionality
+    		  Parent parent= null;
+  	    	try {
+  				parent  =FXMLLoader.load(getClass().getResource("/views/Article.fxml"));
+  				Scene scene=new Scene(parent);
+  				Stage primaryStage= new Stage(); 
+  				primaryStage.setScene(scene);
+  				primaryStage.show();
+  			} catch (Exception e1) {
+  				// TODO Auto-generated catch block
+  				e1.printStackTrace();
+  			}
         });
     	
     	idCH.setOnMouseClicked((MouseEvent e) -> {

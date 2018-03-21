@@ -19,5 +19,8 @@ public interface ArticleServiceLocal {
 	public void addNomenclature(int idArticlePere,int idArticleFils,int Quantity);
 	public void updateNomeclature(int idArticlePere, int idArticleFils, int Quantity);
 	public List<Nomenclature> getFilsArticles(int idArticlePere);
+	public List<Article> getAllArticles();
+	public List<Article> getArticlesByType(String type);
+	public Article findArticleByCode(String code);
 
 }
