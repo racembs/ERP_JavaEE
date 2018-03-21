@@ -88,15 +88,10 @@ public class ArticleController implements Initializable {
     	try {
 			fillTableView("all");
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
+			
 			
 		}
-    	 
-    	  
-			
-    	
-        
-    	comboType.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Produit-Fini");
+comboType.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Produit-Fini");
     	Article article1=new Article();
     	article1.setDescription("article1");
     	article1.setQuantity(10);
