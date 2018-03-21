@@ -10,5 +10,6 @@ public interface NeedSparePartsServiceLocal {
 	public int addSpareParts(SpareParts SpareParts);
 	public void deleteSpareParts(int idSpare);
 	public void updateSpareParts(SpareParts SpareParts);
-	public String findSpareParts(int idSpare);
+	public SpareParts findSparePartsById(int idSpare);
+	public SpareParts findSparePartsByRef(String ref);
 }

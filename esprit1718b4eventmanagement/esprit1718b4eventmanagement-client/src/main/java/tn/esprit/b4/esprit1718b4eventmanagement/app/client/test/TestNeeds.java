@@ -25,13 +25,16 @@ public class TestNeeds {
 		//proxy.addTool(newTool);
 		//System.out.println("tool created");
 		
-		SpareParts newSpare = new SpareParts("mod",7,"refff","refff","code_supp1","brand1",(float) 30.74,"met","Sfamily1");
+		//SpareParts newSpare = new SpareParts("mod",7,"refff","refff","code_supp1","brand1",(float) 30.74,"met","Sfamily1");
 		//proxy2.addSpareParts(newSpare);
-		System.out.println("SparePart created");
+		//System.out.println("SparePart created");
 		
-		//newSpare.setQuantity(newSpare.getQuantity()+1);
-		//proxy2.deleteSpareParts(2);
-		System.out.println("SparePart deleted");
+		//SpareParts newSpare = proxy2.findSparePartsByRef("refff");
+		SpareParts newSpare = proxy2.findSparePartsById(6);
+		System.out.println("hola");
+		newSpare.setQuantity(newSpare.getQuantity()+1);
+		proxy2.updateSpareParts(newSpare);
+		System.out.println("SparePart updated");
 		
 //		proxy.deleteOperatingRange(1);
 //		System.out.println("deleted");
