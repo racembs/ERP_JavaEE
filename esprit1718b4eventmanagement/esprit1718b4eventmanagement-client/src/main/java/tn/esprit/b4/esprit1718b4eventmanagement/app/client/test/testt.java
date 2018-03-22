@@ -11,7 +11,7 @@ public class testt extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-		Parent parent =FXMLLoader.load(getClass().getResource("/views/login.fxml"));
+		Parent parent =FXMLLoader.load(getClass().getResource("/views/Contacts.fxml"));
 		Scene scene=new Scene(parent);
 		primaryStage.setScene(scene);
 		primaryStage.show();

@@ -42,7 +42,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRe
  * @author Ons
  */
 
-public class MenuGPAOController implements Initializable {
+public class OperatingRangeController implements Initializable {
 	private JFXHamburger hamburger;
     @FXML
     private Label txtCurrentWindow;

@@ -1,6 +1,9 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -8,7 +11,6 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.SpareParts;
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 
 @Stateless
 public class NeedSparePartsService implements NeedSparePartsServiceLocal,NeedSparePartsServiceRemote {
@@ -57,6 +59,13 @@ public class NeedSparePartsService implements NeedSparePartsServiceLocal,NeedSpa
 		}
 
 		return null;
+	}
+
+	@Override
+	public List<SpareParts> displayAll() {
+		TypedQuery<SpareParts> query=em.createQuery("from SpareParts", SpareParts.class);
+		List<SpareParts> SpareParts=query.getResultList();
+		return SpareParts;
 	}
 
 
