@@ -1,5 +1,7 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.test;
 
+import java.util.HashMap;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -40,6 +42,15 @@ public class TestArticle extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
+		/*String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+		Context context = new InitialContext();
+		ArticleServiceRemote ArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
+		
+		
+		
+		System.out.println(ArticleProxy.getArticlesByType("Produit Fini").get(0).getType());*/
+		
+	
 		Parent parent =FXMLLoader.load(getClass().getResource("/views/Article.fxml"));
 		Scene scene=new Scene(parent);
 		primaryStage.setScene(scene);
