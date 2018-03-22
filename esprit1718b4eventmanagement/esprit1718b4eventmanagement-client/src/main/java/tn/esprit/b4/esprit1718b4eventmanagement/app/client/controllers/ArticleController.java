@@ -21,19 +21,24 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import javafx.beans.property.SimpleStringProperty;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TreeTableColumn.CellDataFeatures;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote;
@@ -78,6 +83,24 @@ public class ArticleController implements Initializable {
     private JFXButton BtnAddArticleChild;
     @FXML
     private JFXTextField txtChildQuantity;
+    @FXML
+    private Tab tabArticleTree1;
+    @FXML
+    private TableView<Article> tableAllArticles;
+    @FXML
+    private TableColumn<Article,String> tArticlePrice;
+    @FXML
+    private TableColumn<Article,String> tArticleCode;
+    @FXML
+    private TableColumn<Article,String> tArticleDescription;
+    @FXML
+    private TableColumn<Article,String> tArticleQuantity;
+    @FXML
+    private TableColumn<Article,String> tArticleType;
+    @FXML
+    private TableColumn<Article,String> tUnitCode;
+    @FXML
+    private JFXTextField txtArticleSearchFromTable;
   
     
     
@@ -88,11 +111,13 @@ public class ArticleController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
     	try {
-			fillTableView("all");
+    		fillTreeTableView("all");
+    		fillTableView("all");
 		} catch (NamingException e) {
-			
-		
-		}
+			}
+    	
+      
+          
 comboType.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Produit-Fini");
     	Article article1=new Article();
     	article1.setDescription("article1");
@@ -143,7 +168,10 @@ comboType.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Produit-Fi
     	BtnAddArticleChild.setDisable(false);
     }
     
-private void fillTableView(String code) throws NamingException {
+    
+    
+    
+private void fillTreeTableView(String code) throws NamingException {
 	
 	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
 	Context context = new InitialContext();
@@ -191,10 +219,40 @@ private void fillTableView(String code) throws NamingException {
  
 }
 
+private void fillTableView(String code) {
+	ObservableList<Article> ObsListArticles;
+	if(code.equals("all")) {
+		ObsListArticles = FXCollections.observableArrayList(ArticleProxy.getAllArticles());
+	}
+	else {
+		ObsListArticles = FXCollections.observableArrayList(ArticleProxy.findArticleByCodeAndType(code,"Produit-Fini"));
+	}
+	
+	tableAllArticles.setItems(ObsListArticles);
+      
+      
+      tArticleCode.setCellValueFactory(new PropertyValueFactory<>("ArticleCode"));
+      tArticleDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
+      tArticlePrice.setCellValueFactory(new PropertyValueFactory<>("Pmp"));
+      tArticleQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+      tArticleType.setCellValueFactory(new PropertyValueFactory<>("Type"));
+      tUnitCode.setCellValueFactory(new PropertyValueFactory<>("UnitCode"));
+}
+
     @FXML
     private void SearchArticleAction(KeyEvent event) throws NamingException {
-    	fillTableView(txtArticleSearch.getText());
+    	fillTreeTableView(txtArticleSearch.getText());
     }
+
+    @FXML
+    private void SearchArticleFromTableAction(KeyEvent event) {
+    	fillTableView(txtArticleSearchFromTable.getText());
+    }
+
+  
+    
+
+  
 
     
 }
