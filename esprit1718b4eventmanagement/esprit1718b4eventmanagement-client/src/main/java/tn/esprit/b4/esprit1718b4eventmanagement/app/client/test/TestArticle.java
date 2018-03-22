@@ -26,10 +26,10 @@ public class TestArticle extends Application {
 		/*String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
 		Context context = new InitialContext();
 		ArticleServiceRemote ArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
+		Article article =ArticleProxy.findArticle(5);
 		
 		
-		
-		System.out.println(ArticleProxy.getArticlesByType("Produit Fini").get(0).getType());*/
+		ArticleProxy.DeleteArticle(7);*/
 		
 	
 		Parent parent =FXMLLoader.load(getClass().getResource("/views/Article.fxml"));

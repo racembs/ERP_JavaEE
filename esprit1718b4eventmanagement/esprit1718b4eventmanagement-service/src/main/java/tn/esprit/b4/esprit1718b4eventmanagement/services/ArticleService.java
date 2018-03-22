@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NomenclaturePk;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 
 
 @Stateless
@@ -24,6 +25,12 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 		em.persist(article);
 		return article.getId();
 		}
+	@Override
+	public void DeleteArticle(int idArticle) {
+		Article article =this.findArticle(idArticle);
+		em.remove(article);
+		
+	}
 
 	
 	@Override
@@ -49,8 +56,15 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 
 
 	@Override
-	public void updateArticle(Article article) {
-		em.merge(article);
+	public void updateArticle(Article newArticle) {
+		Article article =findArticleByCode(newArticle.getArticleCode());
+		article.setArticleCode(newArticle.getArticleCode());
+		article.setDescription(newArticle.getDescription());
+		article.setPmp(newArticle.getPmp());
+		article.setQuantity(newArticle.getQuantity());
+		article.setType(newArticle.getType());
+		article.setUnitCode(newArticle.getUnitCode());
+		
 	}
 
 
@@ -133,6 +147,9 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 		List<Article> article=query.getResultList();
 		return article;
 	}
+
+
+	
 	
 	
 
