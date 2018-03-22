@@ -94,11 +94,13 @@ public class MenuuGPAOController implements Initializable {
             
             Parent parent= null;
 	    	try {
-				parent  =FXMLLoader.load(getClass().getResource("/views/MenuGPAO.fxml"));
+				parent  =FXMLLoader.load(getClass().getResource("/views/OperatingRange.fxml"));
 				Scene scene=new Scene(parent);
 				Stage primaryStage= new Stage(); 
 				primaryStage.setScene(scene);
 				primaryStage.show();
+				idOR.getScene().getWindow().hide();
+
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -108,14 +110,57 @@ public class MenuuGPAOController implements Initializable {
     	
     	idM.setOnMouseClicked((MouseEvent e) -> {
             System.out.println("Manufacturing Clicked!"); // change functionality
+            
+            Parent parent= null;
+	    	try {
+				parent  =FXMLLoader.load(getClass().getResource("/views/MenuGPAO.fxml"));
+				Scene scene=new Scene(parent);
+				Stage primaryStage= new Stage(); 
+				primaryStage.setScene(scene);
+				primaryStage.show();
+				idM.getScene().getWindow().hide();
+
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+            
         });
     	
     	idO.setOnMouseClicked((MouseEvent e) -> {
             System.out.println("Ordres Clicked!"); // change functionality
+            
+            Parent parent= null;
+	    	try {
+				parent  =FXMLLoader.load(getClass().getResource("/views/MenuGPAO.fxml"));
+				Scene scene=new Scene(parent);
+				Stage primaryStage= new Stage(); 
+				primaryStage.setScene(scene);
+				primaryStage.show();
+				idO.getScene().getWindow().hide();
+
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
         });
     	
     	idC.setOnMouseClicked((MouseEvent e) -> {
             System.out.println("Client Clicked!"); // change functionality
+            
+            Parent parent= null;
+	    	try {
+				parent  =FXMLLoader.load(getClass().getResource("/views/MenuGPAO.fxml"));
+				Scene scene=new Scene(parent);
+				Stage primaryStage= new Stage(); 
+				primaryStage.setScene(scene);
+				primaryStage.show();
+				idC.getScene().getWindow().hide();
+
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
         });
     	
     	
