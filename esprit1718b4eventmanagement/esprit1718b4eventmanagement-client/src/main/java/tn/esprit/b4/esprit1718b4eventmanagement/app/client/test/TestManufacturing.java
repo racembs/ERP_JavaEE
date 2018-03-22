@@ -8,12 +8,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingOrder;
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.Orders;
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItem;
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItemPk;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.*;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ManufacturingServiceRemote;
 
@@ -63,12 +58,17 @@ public class TestManufacturing {
 		Father.setCode(1200);
 		Father.setQuantity(7);
 		Father.setOrderItem(orderItem2);
-		manufactProxy.addManufactOrder(Father);
+		Father.setMO_article(orderItem2.getArticle());
+		Father.setId(manufactProxy.addManufactOrder(Father));
+		
 		ManufacturingOrder Child = new ManufacturingOrder();
 		Child.setCode(4600);
 		Child.setQuantity(2);
-		Child.setOrderItem(orderItem2);
-		manufactProxy.addManufactOrder(Child);
+		Child.setOrderItem(Father.getOrderItem());
+		Child.setMO_article(orderItem2.getArticle());
+		Child.setId(manufactProxy.addManufactOrder(Child));
+		
+		ManufactOrderNomenclature nomenclature = manufactProxy.addnomenclature(Father.getId(), Child.getId(), 0);
 		
 		
 		
