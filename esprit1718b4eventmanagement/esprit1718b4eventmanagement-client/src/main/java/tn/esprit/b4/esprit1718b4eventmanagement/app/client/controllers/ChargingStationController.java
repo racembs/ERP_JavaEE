@@ -21,7 +21,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
@@ -30,22 +29,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TreeView;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
-import tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote;
-import tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote;
 
 /**
  * FXML Controller class
@@ -53,7 +42,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote;
  * @author Ons
  */
 
-public class OperatingRangeController implements Initializable {
+public class ChargingStationController implements Initializable {
 	private JFXHamburger hamburger;
     @FXML
     private Label txtCurrentWindow;
@@ -108,8 +97,6 @@ public class OperatingRangeController implements Initializable {
     private Button idFind;
     @FXML
     private JFXTextField idoptfind;
-    @FXML
-    private TreeView<String> idCheckTree;
 
     /**
      * Initializes the controller class.
@@ -119,10 +106,6 @@ public class OperatingRangeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    	
-    	
-    
-    	
     	idStakingCond.getItems().addAll("Consecutive","Overlap","With staking delay","Parallel");
     	idStakingCond.getSelectionModel().selectLast();
     	
@@ -132,83 +115,15 @@ public class OperatingRangeController implements Initializable {
 			String OperatingRangejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
 	        OperatingRangeServiceRemote proxy =  (OperatingRangeServiceRemote) context.lookup(OperatingRangejndiName);
 
-			String jndiNameOperation = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperationService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote";
-			Context contextOperation = new InitialContext();
-			OperationServiceRemote proxyOperation = (OperationServiceRemote) contextOperation.lookup(jndiNameOperation);
-			//Operation opt = new Operation();
-			
-			
-			String jndiNameChargingStation = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ChargingStationService!tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote";
-			Context contextChargingStation = new InitialContext();
-			ChargingStationServiceRemote proxyChargingStation = (ChargingStationServiceRemote) contextChargingStation.lookup(jndiNameChargingStation);
-			ChargingStation ch = new ChargingStation();
-			
-			
-			
-			
 	        idCodeTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("code"));
 	        idDesignationTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("designation"));
 	        idDeadlineTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, Integer>("deadline"));
 	        idStakingCondTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("stakingcondition"));
 	        
 	        List<OperatingRange> list = proxy.DisplayOperatingRange();
-	        List<Operation> listOpt = proxyOperation.DisplayOperation();
-
-	        //Long N = proxy.CountOperatingRange();
-//	        ObservableList<OperatingRange> items = FXCollections.observableArrayList(list);
-//	        System.out.println(items.get(0).getDesignation());
-//	        idTab.setItems(items);
-	         for (int i = 0; i < list.size(); i++) {
-	 	        ObservableList<OperatingRange> items = FXCollections.observableArrayList(list);
-		        System.out.println(items.get(i).getCode());
-		        idTab.setItems(items);
-		        
-		        CheckBoxTreeItem<String> Article1 = new CheckBoxTreeItem<String>("Article1");
-		    	Article1.setExpanded(true);
-		    	for (int j = 0; j < list.size(); j++) {
-		        Article1.getChildren().addAll(new CheckBoxTreeItem<String>(items.get(j).getCode()));
-		        CheckBoxTreeItem<String> Gamme1 = new CheckBoxTreeItem<String>(items.get(j).getCode());
-
-		       
-//		        for (int k = 0; k < listOpt.size(); k++) {
-//		        	
-//		 	        ObservableList<Operation> itemss = FXCollections.observableArrayList(listOpt);
-//		 	        if(items.get(j).getIdoptrange()==itemss.get(k).getOperationPK().getId()){
-//			     //   System.out.println(itemss.get(k).getDescription());}
-//                //	  System.out.println(items.get(j).getIdoptrange());
-//                //	  System.out.println(itemss.get(k).getOperationPK().getId());
-//				        String S=items.get(j).getCode();
-//		
-//				        Gamme1.getChildren().add(new CheckBoxTreeItem<String>(itemss.get(k).getDescription()));
-//				
-//			}
-//		        }
-		        idCheckTree.setRoot(Article1);
-		    	 idCheckTree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
-		    	 }}
-	        
-
-	        
-//	   	 CheckBoxTreeItem<String> G1 = new CheckBoxTreeItem<String>("Gamme1");
-//    	 CheckBoxTreeItem<String> G2 = new CheckBoxTreeItem<String>("Gamme2");
-//    	 CheckBoxTreeItem<String> G3 = new CheckBoxTreeItem<String>("Gamme3");
-//    	 CheckBoxTreeItem<String> G4 = new CheckBoxTreeItem<String>("Gamme4");
-//    	 CheckBoxTreeItem<String> G5 = new CheckBoxTreeItem<String>("Gamme5");
-//    	 
-//    	 CheckBoxTreeItem<String> O1 = new CheckBoxTreeItem<String>("Operation1");
-//    	 CheckBoxTreeItem<String> O2 = new CheckBoxTreeItem<String>("Operation2");
-//    	 
-//    	 CheckBoxTreeItem<String> Article1 = new CheckBoxTreeItem<String>("Article1");
-//    	 Article1.setExpanded(true);
-//    	 Article1.getChildren().addAll(G1, G2, G3, G4, G5);
-//    	 G1.getChildren().addAll(O1,O2);
-    	 
-//    	 
-//    	 idCheckTree.setRoot(Article1);
-//    	 idCheckTree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
-    	
-    	
-    	
+	        ObservableList<OperatingRange> items = FXCollections.observableArrayList(list);
+	        System.out.println(items.get(0).getDesignation());
+	        idTab.setItems(items);
 
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
