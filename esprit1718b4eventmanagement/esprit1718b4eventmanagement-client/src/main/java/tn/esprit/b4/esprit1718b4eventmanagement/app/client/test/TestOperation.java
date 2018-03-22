@@ -47,8 +47,8 @@ public class TestOperation {
 			proxy.updateOperation(1, chpk1);
 			System.out.println("modified");
 			
-//			proxy.deleteOperation(1, chpk1);
-//			System.out.println("deleted");
+			proxy.deleteOperation(1, chpk1);
+			System.out.println("deleted");
 	}
 
 }

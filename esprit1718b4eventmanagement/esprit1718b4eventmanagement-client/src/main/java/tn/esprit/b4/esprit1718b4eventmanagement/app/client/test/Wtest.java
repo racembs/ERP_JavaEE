@@ -32,7 +32,7 @@ public class Wtest {
     	context = new InitialContext();
     	UserServiceRemote userService = (UserServiceRemote) context
 				.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
-   // 	User user = userService.findByLogin("sarra");
+    	User user = userService.findByLogin("sarra");
     	
     String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
     	
@@ -53,7 +53,6 @@ public class Wtest {
         List<Works> list = proxy.displayWRB();
        // ObservableList<Works> items = FXCollections.observableArrayList(list);
         System.out.println(list.get(0).getDescription());
-      User s=  userService.userbyfstlstname("k k");
-      System.out.println("heloooooooooo"+s.getEmail());
+			
 	}
 }

@@ -1,7 +1,6 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.test;
 
 import java.text.ParseException;
-import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -31,21 +30,20 @@ public class TestNeeds {
 		//System.out.println("SparePart created");
 		
 		//SpareParts newSpare = proxy2.findSparePartsByRef("refff");
-		//SpareParts newSpare = proxy2.findSparePartsById(6);
-		//System.out.println("hola");
-		//newSpare.setQuantity(newSpare.getQuantity()+1);
-		//proxy2.updateSpareParts(newSpare);
-		//System.out.println("SparePart updated");
+		SpareParts newSpare = proxy2.findSparePartsById(6);
+		System.out.println("hola");
+		newSpare.setQuantity(newSpare.getQuantity()+1);
+		proxy2.updateSpareParts(newSpare);
+		System.out.println("SparePart updated");
 		
-		List<Tool> list = proxy.displayAll();
-	       // ObservableList<Works> items = FXCollections.observableArrayList(list);
-		  System.out.println("hola");
-		  
-		 for( int i=0 ; i < list.size() ; i++)
-		 {
-			 System.out.println(list.get(i).getDescription());
-		 }
-	        
+//		proxy.deleteOperatingRange(1);
+//		System.out.println("deleted");
+		
+//		proxy.updateOperatingRange(1);
+//		System.out.println("modified");
+		
+		//String des=proxy.findOperatingRange(1);
+		//System.out.println(des);
 		
 	}
 }

@@ -1,15 +1,11 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
-import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 @Stateless
 public class OperatingRangeService implements OperatingRangeServiceLocal, OperatingRangeServiceRemote {
 	@PersistenceContext
@@ -39,15 +35,6 @@ public class OperatingRangeService implements OperatingRangeServiceLocal, Operat
 				"select o.designation from OperatingRange o where o.id=:idOptR", String.class);
 		query.setParameter("idOptR", idOptR);
 		return query.getSingleResult();
-	}
-	
-
-	@Override
-	public List<OperatingRange> DisplayOperatingRange() {
-
-		TypedQuery<OperatingRange> query=em.createQuery("SELECT o FROM OperatingRange o",OperatingRange.class);
-		List <OperatingRange> result= query.getResultList();
-		return result;
 	}
 
 }

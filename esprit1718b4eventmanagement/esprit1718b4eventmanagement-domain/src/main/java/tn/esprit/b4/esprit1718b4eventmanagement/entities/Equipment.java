@@ -1,6 +1,5 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -8,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -31,19 +28,10 @@ public class Equipment implements Serializable {
 	@Column(name = "State")
 	private String State;
 	@Column(name = "EISDate")
-	private Date EISDate;
-	@Column(name = "Fabriquant")
-	private String Fabriquant;
-	@Column(name = "Marque")
-	private String Marque;
+	private String EISDate;
+	
 	
 
-	
-	
-	
-	
-	
-	
 	@OneToMany(mappedBy="equipement")
 	private List <ChargingStation> chargingstations;
 	
@@ -71,17 +59,17 @@ public class Equipment implements Serializable {
 	public void setState(String state) {
 		State = state;
 	}
-	public Date getEISDate() {
+	public String getEISDate() {
 		return EISDate;
 	}
-	public void setEISDate(Date eISDate) {
+	public void setEISDate(String eISDate) {
 		EISDate = eISDate;
 	}
 	
 	public Equipment() {
 		super();
 	}
-	public Equipment( String serialNum, String description, String state, Date eISDate) {
+	public Equipment( String serialNum, String description, String state, String eISDate) {
 		super();
 		
 		SerialNum = serialNum;

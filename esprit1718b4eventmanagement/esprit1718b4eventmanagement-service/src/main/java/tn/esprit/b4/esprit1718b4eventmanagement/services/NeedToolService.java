@@ -1,14 +1,11 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
 import javax.persistence.EntityManager;
-
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.SpareParts;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Tool;
-
-import java.util.List;
-
 import javax.ejb.Stateless;
 
 
@@ -34,8 +31,8 @@ public class NeedToolService implements NeedToolServiceLocal,NeedToolServiceRemo
 		
 	}
 	@Override
-	public Tool findToolById(int idTool) {
-		TypedQuery<Tool> query=em.createQuery("SELECT S FROM Tool S WHERE S.id_Need= :n",Tool.class);
+	public SpareParts findToolById(int idTool) {
+		TypedQuery<SpareParts> query=em.createQuery("SELECT S FROM tab_need S WHERE S.id_Need= :n And DTYPE = 'SpareParts' ",SpareParts.class);
 		System.out.println("yalaaaaa");
         query.setParameter("n", idTool);
 		return query.getSingleResult();
@@ -43,30 +40,10 @@ public class NeedToolService implements NeedToolServiceLocal,NeedToolServiceRemo
 	}
 
 	@Override
-	public Tool findToolByRef(String ref) {
-		TypedQuery<Tool> query=em.createQuery("SELECT S FROM Tool S WHERE S.Reference= :n",Tool.class);
+	public SpareParts findToolByRef(String ref) {
+		TypedQuery<SpareParts> query=em.createQuery("SELECT S FROM tab_need S WHERE S.Reference= :n And DTYPE = 'SpareParts' ",SpareParts.class);
 		System.out.println("yalaaaaa");
         query.setParameter("n", ref);
 		return query.getSingleResult();
-	}
-
-	@Override
-	public List<Tool> displayAvailability(boolean av) {
-		String AVv;
-		if (av) { AVv = "available" ;}
-		else AVv = "non available" ;
-		
-		TypedQuery<Tool> query=em.createQuery("select n from Tool n where n.Availability=:a", Tool.class);
-		query.setParameter("a", AVv);
-		List<Tool> Tool=query.getResultList();
-		return Tool;
-		
-	}
-
-	@Override
-	public List<Tool> displayAll() {
-		TypedQuery<Tool> query=em.createQuery("from Tool", Tool.class);
-		List<Tool> Tool=query.getResultList();
-		return Tool;
 	}
 }

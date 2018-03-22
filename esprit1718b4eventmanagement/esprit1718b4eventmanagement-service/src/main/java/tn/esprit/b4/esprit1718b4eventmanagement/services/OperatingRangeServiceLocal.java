@@ -1,7 +1,5 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
-import java.util.List;
-
 import javax.ejb.Local;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
@@ -12,6 +10,5 @@ public interface OperatingRangeServiceLocal {
 	public void deleteOperatingRange(int idOptR);
 	public void updateOperatingRange(int idOptR);
 	public String findOperatingRange(int idOptR);
-	public List<OperatingRange> DisplayOperatingRange();
 
 }

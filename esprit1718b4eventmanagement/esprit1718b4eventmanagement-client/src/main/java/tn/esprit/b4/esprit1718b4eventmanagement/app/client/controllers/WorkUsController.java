@@ -115,7 +115,7 @@ public class WorkUsController implements Initializable {
     @SuppressWarnings({ "finally", "null" })
 	@Override
     public void initialize(URL url, ResourceBundle rb){
-    	
+    	 UsualWork xxx=new UsualWork();
    	 tableview.setEditable(true);
     	UserServiceRemote userService2;
     
@@ -145,9 +145,10 @@ public class WorkUsController implements Initializable {
 			C8.setOnEditCommit((CellEditEvent<Works, String> event) -> {
 String s =event.getNewValue(); //HERE
 System.out.println(event.getNewValue());
-/*User tech =userService2.userbyfstlstname(s);
+User tech =userService2.userbyfstlstname(s);
+xxx.setUser(tech);
 System.out.println(tech.getRole());
-showdetails(tech);*/
+showdetails(tech);
 	        });
 		} catch (NamingException e2) {
 			// TODO Auto-generated catch block
@@ -236,15 +237,17 @@ showdetails(tech);*/
 			 
 			         int row = pos.getRow();
 			            Works www = event.getTableView().getItems().get(row);
-			 UsualWork xxx=(UsualWork)www;
+			// xxx=(UsualWork)www;
 			 xxx.setState(state);
 			 xxx.setWODate(new Date());
-			 proxy.updateWork(xxx);
+			 xxx.setWorksPK(www.getWorksPK());
+			
 			        });
 	    	        List<Works> list = proxy.displayWRB();
 	    	        ObservableList<Works> items = FXCollections.observableArrayList(list);
 	    	        System.out.println(items.get(0).getDescription());
 	    	       tableview.setItems(items);
+	    	       proxy.updateWork(xxx);
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
