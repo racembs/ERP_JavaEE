@@ -11,7 +11,7 @@
          <image>
             <Image url="@image/cover.jpg" />
          </image></ImageView>
-      <JFXButton fx:id="homeBtn" accessibleText="WorkRequest" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="WorkRequest" />
+      <JFXButton fx:id="homeBtn" accessibleText="homeMenu" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Home" />
       <JFXButton fx:id="ProfileBtn" accessibleText="doctorMenu" layoutX="10.0" layoutY="10.0" onAction="#onProfileClik" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Profile" />
       <JFXButton fx:id="appointmentBtn" accessibleText="appointmentMenu" layoutX="10.0" layoutY="53.0" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Appointments" />
       <JFXButton fx:id="paymentBtn" accessibleText="paymentMenu" layoutX="10.0" layoutY="96.0" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Payments" />
