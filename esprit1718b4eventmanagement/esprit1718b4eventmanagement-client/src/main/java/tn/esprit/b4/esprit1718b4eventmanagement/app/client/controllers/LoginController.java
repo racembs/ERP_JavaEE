@@ -150,7 +150,7 @@ user.setNb("0");
 					
 					userService.update(user);
 			    	Parent parent= null;
-			    	parent  =FXMLLoader.load(getClass().getResource("/views/MenuGPAO.fxml"));
+			    	parent  =FXMLLoader.load(getClass().getResource("/views/MenuuGPAO.fxml"));
 					Scene scene=new Scene(parent);
 					Stage primaryStage= new Stage(); 
 					primaryStage.setScene(scene);
