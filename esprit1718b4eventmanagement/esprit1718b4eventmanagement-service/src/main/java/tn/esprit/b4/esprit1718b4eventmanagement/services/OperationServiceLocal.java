@@ -1,5 +1,7 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
+import java.util.List;
+
 import javax.ejb.Local;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
@@ -16,5 +18,7 @@ public interface OperationServiceLocal {
 	public void updateOperation(int idOperatingRange, ChargingStationPK WorkStationPK);
 	
 	public Operation findOperation(int idOperatingRange, ChargingStationPK WorkStationPK);
+	
+	public List<Operation> DisplayOperation();
 	
 }

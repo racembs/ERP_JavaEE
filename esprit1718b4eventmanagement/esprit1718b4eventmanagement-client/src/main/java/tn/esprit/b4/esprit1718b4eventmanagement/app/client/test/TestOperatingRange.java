@@ -24,15 +24,18 @@ public class TestOperatingRange {
 		System.out.println("created");
 		
 	
+//		
+//		proxy.updateOperatingRange(2);
+//		System.out.println("modified");
+//		
+//		String des=proxy.findOperatingRange(2);
+//		System.out.println(des);
 		
-		proxy.updateOperatingRange(2);
-		System.out.println("modified");
+		Long c = proxy.CountOperatingRange();
+		System.out.println(c);
 		
-		String des=proxy.findOperatingRange(2);
-		System.out.println(des);
-		
-		proxy.deleteOperatingRange(3);
-		System.out.println("deleted");
+//		proxy.deleteOperatingRange(3);
+//		System.out.println("deleted");
 		
 	}
 

@@ -49,5 +49,12 @@ public class OperatingRangeService implements OperatingRangeServiceLocal, Operat
 		List <OperatingRange> result= query.getResultList();
 		return result;
 	}
+	
+	public Long CountOperatingRange() {
+
+		TypedQuery<Long> query=em.createQuery("SELECT COUNT(o) FROM OperatingRange o",Long.class);
+		Long result= query.getSingleResult();
+		return result;
+	}
 
 }

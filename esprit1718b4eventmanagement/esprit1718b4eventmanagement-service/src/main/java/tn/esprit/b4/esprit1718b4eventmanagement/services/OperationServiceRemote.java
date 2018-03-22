@@ -1,5 +1,7 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
@@ -17,4 +19,5 @@ public OperationPK addOperation(int idOperatingRange, ChargingStationPK WorkStat
 	
 	public Operation findOperation(int idOperatingRange, ChargingStationPK WorkStationPK);
 
+	public List<Operation> DisplayOperation();
 }

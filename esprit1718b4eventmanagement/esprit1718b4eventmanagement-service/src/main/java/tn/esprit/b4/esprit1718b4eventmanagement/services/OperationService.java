@@ -1,11 +1,14 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
+import javax.persistence.TypedQuery;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperationPK;
 
@@ -46,6 +49,14 @@ public class OperationService implements OperationServiceLocal, OperationService
 		Optpk.setId(idOperatingRange);
 		Optpk.setIdChargingStation(idChargingStation);
 		return em.find(Operation.class, Optpk);
+	}
+	
+	@Override
+	public List<Operation> DisplayOperation() {
+
+		TypedQuery<Operation> query=em.createQuery("SELECT o FROM Operation o",Operation.class);
+		List <Operation> result= query.getResultList();
+		return result;
 	}
 
 }

@@ -13,5 +13,6 @@ public interface OperatingRangeServiceLocal {
 	public void updateOperatingRange(int idOptR);
 	public String findOperatingRange(int idOptR);
 	public List<OperatingRange> DisplayOperatingRange();
+	public Long CountOperatingRange();
 
 }
