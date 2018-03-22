@@ -71,7 +71,7 @@ public class HomeViewController implements Initializable {
         });
         try {
             VBox sidePane = FXMLLoader.load(getClass().getResource("/views/Drawer.fxml"));
-            
+            AnchorPane wrPane = FXMLLoader.load(getClass().getResource("/views/WorkUs.fxml"));
             
             drawer.setSidePane(sidePane);
 
@@ -79,10 +79,11 @@ public class HomeViewController implements Initializable {
                 if (node.getAccessibleText() != null) {
                     node.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent ev) -> {
                         switch (node.getAccessibleText()) {
-                            case "homeMenu":
-                                drawer.close();
-                                
-                                break;
+                        
+                                                  case "WorkRequest":
+                                                  	 drawer.close();                               
+                                                   setNode(wrPane);
+                                                    break;
                             case "doctorMenu":
                                 drawer.close();                               
                                
