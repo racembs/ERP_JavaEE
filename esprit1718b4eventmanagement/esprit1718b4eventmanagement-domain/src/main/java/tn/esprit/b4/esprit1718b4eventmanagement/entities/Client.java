@@ -21,6 +21,8 @@ public class Client implements Serializable {
 	private int id;
 	private int code;
 	private String company;
+	private String email;
+	private long phoneNumber;
 	@OneToMany(mappedBy="client")
 	private List<Orders> orders = new ArrayList<>();
 	private static final long serialVersionUID = 1L;

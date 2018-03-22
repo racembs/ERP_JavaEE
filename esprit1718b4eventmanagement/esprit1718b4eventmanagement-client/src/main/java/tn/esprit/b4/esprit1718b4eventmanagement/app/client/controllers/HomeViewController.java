@@ -56,12 +56,12 @@ public class HomeViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        
-        HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(hamburger);
+ HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(hamburger);
         transition.setRate(-1);
         hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
             transition.setRate(transition.getRate() * -1);
             transition.play();
-           
+
             if (drawer.isShown()) {
                 drawer.close();
             } else {
@@ -70,26 +70,31 @@ public class HomeViewController implements Initializable {
 
         });
         try {
-        	AnchorPane wrPane = FXMLLoader.load(getClass().getResource("/views/WorkUs.fxml"));
             VBox sidePane = FXMLLoader.load(getClass().getResource("/views/Drawer.fxml"));
-           
-          
+            
+            
             drawer.setSidePane(sidePane);
 
             for (Node node : sidePane.getChildren()) {
                 if (node.getAccessibleText() != null) {
                     node.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent ev) -> {
                         switch (node.getAccessibleText()) {
-                            case "WorkRequest":
-                            	 drawer.close();                               
-                              setNode(wrPane);
-                               break;
+                            case "homeMenu":
+                                drawer.close();
+                                
+                                break;
                             case "doctorMenu":
-                            	
-                            case "paymentMenu":
+                                drawer.close();                               
                                
+                                break;
+                            case "paymentMenu":
+                                drawer.close();
+                             
+                                break;
                             case "appointmentMenu":
-                                                          
+                                drawer.close();                                
+                               
+                                break;                                
                         }
                     });
                 }

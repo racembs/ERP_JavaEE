@@ -13,6 +13,8 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufactOrderNomenclature;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufactOrderNomenclaturePk;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingOrder;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Orders;
@@ -27,7 +29,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 public class ManufacturingService implements ManufacturingServiceLocal, ManufacturingServiceRemote {
 
 	@EJB
-	private ArticleServiceLocal ar ;;
+	private ArticleServiceLocal ar ;
 	@PersistenceContext
 	EntityManager em;
 
@@ -88,6 +90,18 @@ public class ManufacturingService implements ManufacturingServiceLocal, Manufact
 	public ManufacturingOrder addManufactChild(ManufacturingOrder ManufFadher) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ManufactOrderNomenclature addnomenclature(int idParent, int idChild, int level) {
+		ManufactOrderNomenclaturePk id = new ManufactOrderNomenclaturePk();
+		id.setIdParent(idParent);
+		id.setIdChild(idChild);
+		ManufactOrderNomenclature nomenclature = new ManufactOrderNomenclature();
+		nomenclature.setManufactOrderNomenclaturePk(id);
+		nomenclature.setLevel(level);
+		em.persist(nomenclature);
+		return nomenclature;
 	}
 
 //	@Override
