@@ -3,8 +3,12 @@ package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 import java.io.Serializable;
 import java.lang.String;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -32,6 +36,16 @@ public class ManufacturingOrder implements Serializable {
 	
 	@ManyToOne
 	private OrdredItem orderItem;
+	
+	@OneToOne
+	private Article MO_article;
+	
+	@OneToMany(mappedBy="parent",fetch=FetchType.EAGER)
+	private List<ManufactOrderNomenclature> nomenclatures;
+	
+	@OneToMany(mappedBy="child",fetch=FetchType.EAGER)
+	private List<ManufactOrderNomenclature> nomenclatures1;
+	
 	
 	private static final long serialVersionUID = 1L;
 
@@ -104,6 +118,26 @@ public class ManufacturingOrder implements Serializable {
 	public void setOrderItem(OrdredItem orderItem) {
 		this.orderItem = orderItem;
 	}
+	public Article getMO_article() {
+		return MO_article;
+	}
+	public void setMO_article(Article mO_article) {
+		MO_article = mO_article;
+	}
+	public List<ManufactOrderNomenclature> getNomenclatures() {
+		return nomenclatures;
+	}
+	public void setNomenclatures(List<ManufactOrderNomenclature> nomenclatures) {
+		this.nomenclatures = nomenclatures;
+	}
+	public List<ManufactOrderNomenclature> getNomenclatures1() {
+		return nomenclatures1;
+	}
+	public void setNomenclatures1(List<ManufactOrderNomenclature> nomenclatures1) {
+		this.nomenclatures1 = nomenclatures1;
+	}
+	
+	
 
    
 }
