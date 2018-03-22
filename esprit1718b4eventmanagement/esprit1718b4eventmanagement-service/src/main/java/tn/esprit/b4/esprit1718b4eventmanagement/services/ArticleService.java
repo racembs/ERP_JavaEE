@@ -114,6 +114,17 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 		Article article=query.getSingleResult();
 		return article;
 	}
+
+
+	@Override
+	public List<Article> findArticleByCodeAndType(String code, String type) {
+		TypedQuery<Article> query
+		=em.createQuery("SELECT a FROM Article a WHERE a.ArticleCode LIKE :code AND a.Type= :type", Article.class);
+		query.setParameter("code","%"+code+"%");
+		query.setParameter("type",type);
+		List<Article> article=query.getResultList();
+		return article;
+	}
 	
 	
 

@@ -31,6 +31,8 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.TreeTableColumn.CellDataFeatures;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
@@ -89,7 +91,7 @@ public class ArticleController implements Initializable {
 			fillTableView("all");
 		} catch (NamingException e) {
 			
-			
+		
 		}
 comboType.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Produit-Fini");
     	Article article1=new Article();
@@ -142,15 +144,20 @@ comboType.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Produit-Fi
     }
     
 private void fillTableView(String code) throws NamingException {
+	
 	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
 	Context context = new InitialContext();
 	 ArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
 	 List<Nomenclature> listNomenclature=ArticleProxy.getFilsArticles(1);
 	 TreeItem<Article> root=new TreeItem<>();
 	// System.out.println(listNomenclature.get(0).getArticleFils().getDescription());
- 	
+	 List<Article> produitFini;
+ if(code.equals("all")) {
+	produitFini=ArticleProxy.getArticlesByType("Produit-Fini");
+ }else {
+	produitFini=ArticleProxy.findArticleByCodeAndType(code,"Produit-Fini");
+ }
  
- 	List<Article> produitFini=ArticleProxy.getArticlesByType("Produit-Fini");
  	TreeItem<Article> newItemarticlePere;
  	TreeItem<Article> newItemarticleFils=null;
  for(int i=0;i<produitFini.size();i++) {
@@ -183,6 +190,11 @@ private void fillTableView(String code) throws NamingException {
  	ArticleTableView.setShowRoot(false);
  
 }
+
+    @FXML
+    private void SearchArticleAction(KeyEvent event) throws NamingException {
+    	fillTableView(txtArticleSearch.getText());
+    }
 
     
 }
