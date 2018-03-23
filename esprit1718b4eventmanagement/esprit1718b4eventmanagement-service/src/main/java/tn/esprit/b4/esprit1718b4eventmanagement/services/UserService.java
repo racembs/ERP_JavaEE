@@ -92,6 +92,32 @@ public class UserService extends GenericDAO<User> implements UserServiceRemote, 
 	
 	}
 
-
+	@Override
+	public List<User> SearchMail(String login) {
+	TypedQuery<User> query
+		=em.createQuery("select n from User n where n.email=:Login", User.class);
+		query.setParameter("Login", login);
+		List<User> user=query.getResultList();
+		return user;
+	
+	}
+	@Override
+	public List<User> SearchFirstName(String login) {
+	TypedQuery<User> query
+		=em.createQuery("select n from User n where n.firstname=:Login", User.class);
+		query.setParameter("Login", login);
+		List<User> user=query.getResultList();
+		return user;
+	
+	}
+	@Override
+	public List<User> SearchStatut(String sta) {
+	TypedQuery<User> query
+		=em.createQuery("select n from User n where n.statut=:Login", User.class);
+		query.setParameter("Login", sta);
+		List<User> user=query.getResultList();
+		return user;
+	
+	}
 
 }
