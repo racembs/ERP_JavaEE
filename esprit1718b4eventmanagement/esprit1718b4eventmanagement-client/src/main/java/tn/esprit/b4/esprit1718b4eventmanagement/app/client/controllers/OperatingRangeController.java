@@ -290,6 +290,23 @@ public class OperatingRangeController implements Initializable {
 
     @FXML
     private void UpdateOperatingRange(ActionEvent event) {
+    	
+    	
+   		Context context2;
+		try {
+			context2 = new InitialContext();
+			String OperatingRangejndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
+	        OperatingRangeServiceRemote proxy2 =  (OperatingRangeServiceRemote) context2.lookup(OperatingRangejndiName2);
+
+		Integer id= idTab.getSelectionModel().getSelectedItem().getIdoptrange();
+		proxy2.updateOperatingRange(id);
+		System.out.println("modif");
+		   List<OperatingRange> list = proxy2.DisplayOperatingRange();
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
     }
 
     @FXML
@@ -334,5 +351,24 @@ public class OperatingRangeController implements Initializable {
 
     @FXML
     private void FindOperatingRange(ActionEvent event) {
+    	
+    	
+   		Context context1;
+		try {
+			context1 = new InitialContext();
+			String OperatingRangejndiName1 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
+	        OperatingRangeServiceRemote proxy1 =  (OperatingRangeServiceRemote) context1.lookup(OperatingRangejndiName1);
+	        List<OperatingRange> list1 = proxy1.find("Gamme1");
+	        ObservableList<OperatingRange> items1 = FXCollections.observableArrayList(list1);
+	       // System.out.println(items1.get(0).getDesignation());
+	        idTab.setItems(items1);
+		 
+		  
+		} catch (NamingException e) {
+			
+			e.printStackTrace();
+		}
+	
+    	
     }
 }
