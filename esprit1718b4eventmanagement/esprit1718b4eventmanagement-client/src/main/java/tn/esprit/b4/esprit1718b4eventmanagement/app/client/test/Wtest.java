@@ -22,7 +22,6 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.WorksPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote;
-import tn.esprit.b4.esprit1718b4eventmanagement.services.ManufacturingServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote;
 
