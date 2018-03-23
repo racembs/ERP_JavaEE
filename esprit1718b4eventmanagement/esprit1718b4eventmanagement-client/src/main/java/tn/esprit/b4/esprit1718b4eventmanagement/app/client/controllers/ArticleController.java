@@ -140,10 +140,6 @@ public class ArticleController implements Initializable {
     @FXML
     private Tab tabProcuremrnt;
     @FXML
-    private Tab tabAddNewRticle1;
-    @FXML
-    private Tab tabArticleTree21;
-    @FXML
     private JFXButton BtnAddOrder;
     @FXML
     private DatePicker AlarmDate;
@@ -155,6 +151,18 @@ public class ArticleController implements Initializable {
     private DatePicker ReceptionDate;
     @FXML
     private DatePicker RequestDate;
+    @FXML
+    private Tab tabAddNewOrder;
+    @FXML
+    private Tab tabOrdreSettings;
+    @FXML
+    private JFXTextField txtDailyConsuption;
+    @FXML
+    private JFXTextField txtSearchArticleAutoOrdre;
+    @FXML
+    private JFXTextField txtDeliveryTime;
+    @FXML
+    private JFXButton BtnAddOrder1;
   
     
     
@@ -262,9 +270,9 @@ private void fillTreeTableView(String code) throws NamingException {
 	 root.getChildren().add(newItemarticlePere);
 	 List<Nomenclature> filsList;
 	 int size;
-	 do{
+	
 	 filsList= ArticleProxy.getFilsArticles(articlePere.get(i).getId());
-	 size=filsList.size();
+	
 	 
 	 for(int j=0;j<filsList.size();j++) {
 		 newItemarticleFils=new TreeItem<>(filsList.get(j).getArticleFils());
@@ -273,8 +281,7 @@ private void fillTreeTableView(String code) throws NamingException {
 	 }
 	 
 	 newItemarticlePere=newItemarticleFils;
-	 size--;
-	 } while(size>0);
+	 
 	
  }
  	
