@@ -10,7 +10,10 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -31,6 +34,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
 
@@ -111,7 +115,41 @@ public class EquipementController implements Initializable {
     }
 
     @FXML
-    private void OnAddClick(ActionEvent event) {
+    private void OnAddClick(ActionEvent event) throws NamingException {
+    	
+
+		String jndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/EquipementService!tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote";
+		Context context = new InitialContext();
+
+	
+
+	EquipementServiceRemote Proxy = (EquipementServiceRemote) context.lookup(jndiName);
+	
+	
+
+	//System.out.println(	Proxy1.findArboresence(4).getId());
+		
+		 
+    String serie =serialnum.getText();
+	
+    String fab =fabriquant.getText();
+	
+    String marq =marque.getText();
+	
+    String desc =descrsption.getText();
+	
+    String stat =State.getText();
+	
+
+
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+Calendar date = Calendar.getInstance();
+String dateF = df.format(date.getTime());
+
+    Equipment eq=new Equipment(serie ,desc,stat,dateF,fab,marq);
+    
+    
+    Proxy.addEquippement(eq);
     }
 
     @FXML
