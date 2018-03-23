@@ -242,6 +242,50 @@ public class ChargingStationController implements Initializable {
 	
 
 		    });
+		  
+		  
+		  idAdd.setOnMouseClicked((MouseEvent e) -> { 
+			  
+			  
+			  
+			  ChargingStation charginstation = new ChargingStation();
+			  int code=Integer.parseInt(idCode.getText());
+			  charginstation.setCode(code);	  
+			  charginstation.setDescription(idDEscription.getText());
+			  charginstation.setNaturepost(idNaturePost.getText());
+			  int nbd=Integer.parseInt(idNbDays.getText());
+			  int nbh=Integer.parseInt(idNbHours.getText());		  
+			  charginstation.setNbday(nbd);
+			  charginstation.setNbhours(nbh);
+			
+//			  int idE = idEquipement.getValue().getId();
+//			  int idU = idUser.getValue().getId();
+			 
+			  //int idU = Integer.parseInt(idUser.getValue().toString());
+			  
+			  
+			 // idE=proxyEquipment.findEquipementByNumDesc("bb","aaa").getId();
+		    	
+//			  System.out.println("hello");
+//		    	String a= String.valueOf(idE);
+//		    	String b= String.valueOf(idU);
+//			  System.out.println(a+""+b);
+			  
+			  
+			  proxyChargingStation.addChargingStation(1, 3, charginstation);
+				System.out.println("created");
+				
+//				   List<OperatingRange> list = proxy.DisplayOperatingRange();
+//			        ObservableList<OperatingRange> items = FXCollections.observableArrayList(list);
+//			        System.out.println(items.get(0).getDesignation());
+//			        idTab.setItems(items);
+			        
+			        
+				 Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("ChargingStation Added");
+					alert.setHeaderText("Succesful");
+					alert.showAndWait();
+		  });
     } catch (NamingException e1) {
 		// TODO Auto-generated catch block
 		

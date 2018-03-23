@@ -83,5 +83,10 @@ public class EquipementService extends GenericDAO<Equipment>  implements Equipem
 			List <Equipment> result= query.getResultList();
 			return result;
 		}
+		
+		
+
+		
+
 	
 }
