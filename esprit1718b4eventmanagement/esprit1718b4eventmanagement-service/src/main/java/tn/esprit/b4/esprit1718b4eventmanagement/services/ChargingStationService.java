@@ -1,5 +1,7 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -7,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 
 
 @Stateless
@@ -68,5 +71,11 @@ public class ChargingStationService implements ChargingStationServiceLocal, Char
 		
 	}
 
+	public List<ChargingStation> DisplayChargingStation() {
+
+		TypedQuery<ChargingStation> query=em.createQuery("SELECT o FROM ChargingStation o",ChargingStation.class);
+		List <ChargingStation> result= query.getResultList();
+		return result;
+	}
 
 }
