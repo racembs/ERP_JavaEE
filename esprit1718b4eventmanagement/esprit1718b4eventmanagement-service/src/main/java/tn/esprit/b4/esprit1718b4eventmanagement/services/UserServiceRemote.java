@@ -10,7 +10,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.utilities.IGenericDAO;
 
 @Remote
 public interface UserServiceRemote extends IGenericDAO<User> {
-
+	public List<User> DisplayUser() ;
 
 	public void update1(User u);
 	public List<User> SearchLogin(String login);
