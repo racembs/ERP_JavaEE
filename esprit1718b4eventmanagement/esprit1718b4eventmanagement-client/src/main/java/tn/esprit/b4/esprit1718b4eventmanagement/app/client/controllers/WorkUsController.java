@@ -5,7 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-
+import com.jfoenix.controls.JFXTreeView;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import javafx.scene.control.TreeItem;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,6 +32,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.TreeItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
@@ -42,7 +44,8 @@ import tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
@@ -62,8 +65,7 @@ public class WorkUsController implements Initializable {
 
     @FXML
     private JFXComboBox<String> comboSpecialization;
-    @FXML
-    private JFXComboBox<String> comboDepartment;
+
     @FXML
     private ToggleGroup q;
     @FXML
@@ -106,16 +108,34 @@ public class WorkUsController implements Initializable {
     private JFXTextField f6;
     @FXML
     private JFXTextField f7;
+    @FXML
+    private JFXTreeView<String> treeviewEq;
     /**
      * Initializes the controller class.
      * @param url
      * @param rb
      */
 
-    @SuppressWarnings({ "finally", "null" })
+    @SuppressWarnings({ "finally", "null", "unchecked" })
 	@Override
     public void initialize(URL url, ResourceBundle rb){
-    	
+    	 Image icon = new Image (
+    			   getClass().getResourceAsStream("/views/imgs/equi.png"));
+    			
+    			  TreeItem<String> equii =  new TreeItem<>("Entreprise", new ImageView(icon));
+    			  equii.setExpanded(true);
+
+    			  TreeItem<String> nodeA = new TreeItem<>("arbo 1", new ImageView(icon));
+    			  TreeItem<String> nodeB = new TreeItem<>("arbo 2", new ImageView(icon));
+    			  TreeItem<String> nodeC = new TreeItem<>("arbo 3", new ImageView(icon));
+    			  equii.getChildren().addAll(nodeA,nodeB,nodeC);
+    			  nodeA.setExpanded(true);
+    			  
+    			  TreeItem<String> nodeA1 = new TreeItem<>("arbo1:room 1", new ImageView(icon));
+    			  TreeItem<String> nodeB1 = new TreeItem<>("arbo1:room 2", new ImageView(icon));
+    			  TreeItem<String> nodeC1 = new TreeItem<>("arbo1:room 3", new ImageView(icon));
+    			  nodeA.getChildren().addAll(nodeA1,nodeB1,nodeC1);
+    			  treeviewEq.setRoot(equii);
    	 tableview.setEditable(true);
     	//UserServiceRemote userService2;
     
@@ -246,8 +266,8 @@ public class WorkUsController implements Initializable {
         ,"unspecified");
         comboSpecialization.getSelectionModel().selectLast();
         
-        comboDepartment.getItems().addAll("eq1","eq2");
-        comboDepartment.getSelectionModel().selectLast();
+      //  comboDepartment.getItems().addAll("eq1","eq2");
+     //   comboDepartment.getSelectionModel().selectLast();
     	Context context;
     	try {
 			context = new InitialContext();
@@ -359,7 +379,7 @@ public class WorkUsController implements Initializable {
     	uw.setObjet(object.getText());
     	uw.setDescription(adInfo.getText());
     	uw.setTechnology(comboSpecialization.getValue().toString());
-      
+      uw.setWRDate(new Date());
   
         RadioButton selectedRadioButton = (RadioButton) q.getSelectedToggle();
         String toogleGroupValue = selectedRadioButton.getText();
