@@ -54,7 +54,7 @@ public class Article implements Serializable {
 		@Column(name = "Quantity")
 		private int Quantity;
 		@Column(name = "ReservedQuantity")
-		private int ReservedQuantity;
+		private int ReservedQuantity=0;
 		public int getId() {
 			return Id;
 		}

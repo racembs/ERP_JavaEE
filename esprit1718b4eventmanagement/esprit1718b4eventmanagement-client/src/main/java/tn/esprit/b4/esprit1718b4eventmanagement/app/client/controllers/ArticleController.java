@@ -165,12 +165,14 @@ comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Prod
 
     @FXML
     private void OnAddAction(ActionEvent event) throws NamingException {
-    
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
         
     	
 		Article article=new Article(txtArticleCode.getText(),txtDescription.getText(),
 		txtUnitCode.getText(),comboType.getValue(),Float.valueOf(txtArticlePrice.getText()),Integer.valueOf(txtArticleQuantity.getText()));
-	    ArticleProxy.addArticle(article);
+		aArticleProxy.addArticle(article);
 	
     }
 
