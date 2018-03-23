@@ -15,6 +15,7 @@ public interface ArticleServiceLocal {
 	public void updateArticle(Article article);
 	public void incrementArticleQuantity (int idArticle,int Quantity);
 	public Article findArticle(int idArticle);
+	public void DeleteArticle(int idArticle);
 	
 	public void addNomenclature(int idArticlePere,int idArticleFils,int Quantity);
 	public void updateNomeclature(int idArticlePere, int idArticleFils, int Quantity);
@@ -23,5 +24,6 @@ public interface ArticleServiceLocal {
 	public List<Article> getArticlesByType(String type);
 	public Article findArticleByCode(String code);
 	public List<Article> findArticleByCodeAndType(String code,String type);
-
+	public List<Article> getArticleListByCode(String code);
+	public List<Article> DisplayArticle() ;
 }

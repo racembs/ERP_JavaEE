@@ -12,6 +12,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,10 +32,17 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote;
 
 /**
@@ -43,183 +52,143 @@ import tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRe
  */
 
 public class ChargingStationController implements Initializable {
-	private JFXHamburger hamburger;
+	  
+    private Label label;
     @FXML
     private Label txtCurrentWindow;
     @FXML
     private AnchorPane holderPane;
-    private JFXDrawer drawer;
     @FXML
-    private Tab idArticle;
+    private TableView<ChargingStation> idTab;
     @FXML
-    private Tab idChargingStation;
+    private TableColumn<ChargingStation, String> idUserTab;
     @FXML
-    private Tab idOperatingRange;
+    private TableColumn<ChargingStation, String> idEquipementTab;
     @FXML
-    private Tab idManufacturing;
+    private TableColumn<ChargingStation, Integer> idCodeTab;
     @FXML
-    private Tab idClient;
+    private TableColumn<ChargingStation, String> idDescriptionTab;
     @FXML
-    private Tab idChargingStation12;
+    private TableColumn<ChargingStation, String> idNaturePostTab;
     @FXML
-    private MenuBar idMenuArticle;
+    private TableColumn<ChargingStation, Integer> idNbDaysTab;
     @FXML
-    private MenuBar idMenuManufacturing;
+    private TableColumn<ChargingStation, Integer> idNbHoursTab;
     @FXML
-    private MenuBar idMenuOrders;
+    private ImageView idAdd;
     @FXML
-    private MenuBar idMenuClient;
+    private ImageView idUpdate;
+    @FXML
+    private ImageView idDelete;
+    @FXML
+    private ImageView idFind;
+    @FXML
+    private JFXTextField idoptrange;
+    @FXML
+    private ComboBox<User> idUser;
+    @FXML
+    private ComboBox<?> idEquipement;
     @FXML
     private TextField idCode;
     @FXML
-    private TextArea idDesignation;
+    private TextField idNaturePost;
     @FXML
-    private TextField idDeadline;
+    private TextField idNbDays;
     @FXML
-    private ComboBox<String> idStakingCond;
+    private TextField idNbHours;
     @FXML
-    private TableView<OperatingRange> idTab;
+    private TextArea idDEscription;
     @FXML
-    private TableColumn<OperatingRange, String> idCodeTab;
+    private ImageView idCalendar;
     @FXML
-    private TableColumn<OperatingRange, String> idDesignationTab;
-    @FXML
-    private TableColumn<OperatingRange, Integer> idDeadlineTab;
-    @FXML
-    private TableColumn<OperatingRange, String> idStakingCondTab;
-    @FXML
-    private Button idAdd;
-    @FXML
-    private Button idUpdate;
-    @FXML
-    private Button idDelete;
-    @FXML
-    private Button idFind;
-    @FXML
-    private JFXTextField idoptfind;
-
-    /**
-     * Initializes the controller class.
-     *
-     * @param url
-     * @param rb
-     */
+    private ImageView idStatistics;
+    
+    private void handleButtonAction(ActionEvent event) {
+        System.out.println("You clicked me!");
+        label.setText("Hello World!");
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    	idStakingCond.getItems().addAll("Consecutive","Overlap","With staking delay","Parallel");
-    	idStakingCond.getSelectionModel().selectLast();
+        // TODO
     	
     	Context context;
-		try {
-			context = new InitialContext();
-			String OperatingRangejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
-	        OperatingRangeServiceRemote proxy =  (OperatingRangeServiceRemote) context.lookup(OperatingRangejndiName);
-
-	        idCodeTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("code"));
-	        idDesignationTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("designation"));
-	        idDeadlineTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, Integer>("deadline"));
-	        idStakingCondTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("stakingcondition"));
-	        
-	        List<OperatingRange> list = proxy.DisplayOperatingRange();
-	        ObservableList<OperatingRange> items = FXCollections.observableArrayList(list);
-	        System.out.println(items.get(0).getDesignation());
-	        idTab.setItems(items);
-
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-		}
-    
-
-    }
-
-    private void setNode(Node node) {
-        holderPane.getChildren().clear();
-        holderPane.getChildren().add((Node) node);
-    }
-
-    @FXML
-    private void AddOperatingRange(ActionEvent event) {
     	
-    	
-		String OperatingRangejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
-
-		Context context;
 		try {
-			context = new InitialContext();
-			OperatingRangeServiceRemote proxy =  (OperatingRangeServiceRemote) context.lookup(OperatingRangejndiName);
-			//OperatingRange optrange1 = new OperatingRange("AR","Table mount","Series",30);
-			OperatingRange optrange = new OperatingRange();
-			optrange.setCode(idCode.getText());
-			optrange.setDesignation(idDesignation.getText());
-			int Deadline = Integer.parseInt(idDeadline.getText());
-			optrange.setDeadline(Deadline);
-			optrange.setStakingcondition(idStakingCond.getValue().toString());
-						
-			proxy.addOperatingRange(optrange);
-			//System.out.println("created");
-			
-			   List<OperatingRange> list = proxy.DisplayOperatingRange();
-		        ObservableList<OperatingRange> items = FXCollections.observableArrayList(list);
-		        System.out.println(items.get(0).getDesignation());
-		        idTab.setItems(items);
-		        
-		        
-			 Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Operating Range Added");
-				alert.setHeaderText("Succesful");
-				alert.showAndWait();
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			
-		}
+			String jndiNameChargingStation = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ChargingStationService!tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote";
+			Context contextChargingStation;
+			contextChargingStation = new InitialContext();
+			ChargingStationServiceRemote proxyChargingStation = (ChargingStationServiceRemote) contextChargingStation.lookup(jndiNameChargingStation);
+			ChargingStation ch = new ChargingStation();
 		
-    }
+		
+		
+			idUserTab.setCellValueFactory(new Callback<CellDataFeatures<ChargingStation,String>,ObservableValue<String>>(){
 
-    @FXML
-    private void UpdateOperatingRange(ActionEvent event) {
-    }
+	              @Override
+	              public ObservableValue<String> call(CellDataFeatures<ChargingStation, String> param) {
+	                  return new SimpleStringProperty(param.getValue().getUser().getFirstname()+"-"+param.getValue().getUser().getLastname());
+	              }
+	          }); 
+			idEquipementTab.setCellValueFactory(new Callback<CellDataFeatures<ChargingStation,String>,ObservableValue<String>>(){
 
-    @FXML
-    private void DeleteOperatingRange(ActionEvent event) {
-    	
-    	Alert alert = new Alert(AlertType.CONFIRMATION);
-    	alert.setTitle("WARNING");
-		alert.setHeaderText("Are You Sure?");
-    	
-    	if (alert.showAndWait().get () == ButtonType.OK)
-    	{
-    		
-    		try {
-        		Context context;
-    			context = new InitialContext();
-    			String OperatingRangejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
-    	        OperatingRangeServiceRemote proxy =  (OperatingRangeServiceRemote) context.lookup(OperatingRangejndiName);
+	              @Override
+	              public ObservableValue<String> call(CellDataFeatures<ChargingStation, String> param) {
+	                  return new SimpleStringProperty(param.getValue().getEquipement().getSerialNum()+"-"+param.getValue().getEquipement().getDescription());
+	              }
+	          }); 
+			idCodeTab.setCellValueFactory(new PropertyValueFactory<ChargingStation, Integer>("code"));
+			idDescriptionTab.setCellValueFactory(new PropertyValueFactory<ChargingStation, String>("description"));
+			idNaturePostTab.setCellValueFactory(new PropertyValueFactory<ChargingStation, String>("naturepost"));
+			idNbDaysTab.setCellValueFactory(new PropertyValueFactory<ChargingStation, Integer>("nbday"));
+			idNbHoursTab.setCellValueFactory(new PropertyValueFactory<ChargingStation, Integer>("nbhours"));
+			
+			
+			   List<ChargingStation> list = proxyChargingStation.DisplayChargingStation();
+		        ObservableList<ChargingStation> items = FXCollections.observableArrayList(list);
+		        idTab.setItems(items);
+	
+		
+		  idDelete.setOnMouseClicked((MouseEvent e) -> { 
+		    	
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+		    	alert.setTitle("WARNING");
+				alert.setHeaderText("Are You Sure?");
+		    	
+		    	if (alert.showAndWait().get () == ButtonType.OK)
+		    	{
 
-        	Integer id= idTab.getSelectionModel().getSelectedItem().getIdoptrange();
-        	proxy.deleteOperatingRange(id);
-        	
-    		   List<OperatingRange> list = proxy.DisplayOperatingRange();
-    	        ObservableList<OperatingRange> items = FXCollections.observableArrayList(list);
-    	        System.out.println(items.get(0).getDesignation());
-    	        idTab.setItems(items);
-    	        
-    	        
-    		 Alert alert1 = new Alert(AlertType.INFORMATION);
-    			alert1.setTitle("Operating Range Deleted");
-    			alert1.setHeaderText("Succesful");
-    			alert1.showAndWait();
-    		//System.out.println("deleted");
-        	
-        	} catch (NamingException e) {
-    			// TODO Auto-generated catch block
-    			
-    		}
-    		
-    	}
+	        	Integer idE= idTab.getSelectionModel().getSelectedItem().getChargingstationPK().getId_equipment();
+	        	Integer idU= idTab.getSelectionModel().getSelectedItem().getChargingstationPK().getIdUser();
+	        	proxyChargingStation.deleteChargingStation(idE, idU);
+	        	System.out.println("deleted");
+	    		   List<ChargingStation> list1 = proxyChargingStation.DisplayChargingStation();
+	    	        ObservableList<ChargingStation> items1 = FXCollections.observableArrayList(list1);
+	    	        
+	    	        idTab.setItems(items1);
+	    	        
+	    	        
+	    		 Alert alert1 = new Alert(AlertType.INFORMATION);
+	    			alert1.setTitle("Charging Station Deleted");
+	    			alert1.setHeaderText("Succesful");
+	    			alert1.showAndWait();
+	    		//System.out.println("deleted");
+	        	
+	        
+	    		
+	    	}
+		    	
+		    });
+    } catch (NamingException e1) {
+		// TODO Auto-generated catch block
+		
+	}
+		}
     
-    }
+  
+    
+    
+    }    
 
-    @FXML
-    private void FindOperatingRange(ActionEvent event) {
-    }
-}
+    
+

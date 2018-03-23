@@ -97,7 +97,21 @@ public class MenuuGPAOController implements Initializable {
     	
     	idCH.setOnMouseClicked((MouseEvent e) -> {
             System.out.println("Charging Station Clicked!"); // change functionality
-        }); 
+            Parent parent= null;
+	    	try {
+				parent  =FXMLLoader.load(getClass().getResource("/views/ChargingStation.fxml"));
+				Scene scene=new Scene(parent);
+				Stage primaryStage= new Stage(); 
+				primaryStage.setScene(scene);
+				primaryStage.show();
+				idOR.getScene().getWindow().hide();
+
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+        });
     	
     	idOR.setOnMouseClicked((MouseEvent e) -> {
             System.out.println("Operating Range Clicked!"); // change functionality
@@ -155,23 +169,20 @@ public class MenuuGPAOController implements Initializable {
 			}
         });
     	
-    	idC.setOnMouseClicked((MouseEvent e) -> {
-            System.out.println("Client Clicked!"); // change functionality
-            
-            Parent parent= null;
-	    	try {
-				parent  =FXMLLoader.load(getClass().getResource("/views/MenuGPAO.fxml"));
-				Scene scene=new Scene(parent);
-				Stage primaryStage= new Stage(); 
-				primaryStage.setScene(scene);
-				primaryStage.show();
-				idC.getScene().getWindow().hide();
-
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-        });
+    	
+	    	idC.setOnMouseClicked((MouseEvent e) -> {
+	    		  Parent parent= null;
+	  	    	try {
+	  				parent  =FXMLLoader.load(getClass().getResource("/views/Client.fxml"));
+	  				Scene scene=new Scene(parent);
+	  				Stage primaryStage= new Stage(); 
+	  				primaryStage.setScene(scene);
+	  				primaryStage.show();
+	  			} catch (Exception e1) {
+	  				// TODO Auto-generated catch block
+	  				e1.printStackTrace();
+	  			}
+	        });
     	
     	
     	

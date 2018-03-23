@@ -19,7 +19,7 @@ public class Client implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int code;
+	private String code;
 	private String company;
 	private String email;
 	private long phoneNumber;
@@ -37,11 +37,11 @@ public class Client implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}   
-	public int getCode() {
+	public String getCode() {
 		return this.code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(String code) {
 		this.code = code;
 	}   
 	public String getCompany() {
@@ -51,10 +51,29 @@ public class Client implements Serializable {
 	public void setCompany(String company) {
 		this.company = company;
 	}
-	public Client(int code, String company) {
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public long getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(long phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	public List<Orders> getOrders() {
+		return orders;
+	}
+	public void setOrders(List<Orders> orders) {
+		this.orders = orders;
+	}
+	public Client(String company, String email, long phoneNumber) {
 		super();
-		this.code = code;
 		this.company = company;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
 	}
    
 }

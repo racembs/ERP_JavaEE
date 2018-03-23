@@ -39,10 +39,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote;
@@ -143,7 +145,9 @@ public class OperatingRangeController implements Initializable {
 			ChargingStationServiceRemote proxyChargingStation = (ChargingStationServiceRemote) contextChargingStation.lookup(jndiNameChargingStation);
 			ChargingStation ch = new ChargingStation();
 			
-			
+			String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+			Context contextArticle = new InitialContext();
+			ArticleServiceRemote ArticleProxy = (ArticleServiceRemote) contextArticle.lookup(ArticlejndiName);
 			
 			
 	        idCodeTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("code"));
@@ -153,41 +157,65 @@ public class OperatingRangeController implements Initializable {
 	        
 	        List<OperatingRange> list = proxy.DisplayOperatingRange();
 	        List<Operation> listOpt = proxyOperation.DisplayOperation();
+	        List<Article> listA = ArticleProxy.DisplayArticle();
 
 	        //Long N = proxy.CountOperatingRange();
 //	        ObservableList<OperatingRange> items = FXCollections.observableArrayList(list);
 //	        System.out.println(items.get(0).getDesignation());
 //	        idTab.setItems(items);
+	        
+	        CheckBoxTreeItem<String> GPAO = new CheckBoxTreeItem<String>("GPAO");
+	        
+	        for (int a = 0; a < listA.size(); a++) {
+	        	ObservableList<Article> itemsA = FXCollections.observableArrayList(listA);
+		        System.out.println(itemsA.get(a).getArticleCode());
+		        //String A=("Article"+a);
+
+		        CheckBoxTreeItem<String> Article = new CheckBoxTreeItem<String>(itemsA.get(a).getArticleCode());
+		        Article.setValue(itemsA.get(a).getArticleCode());
+
 	         for (int i = 0; i < list.size(); i++) {
+			        //Article.setExpanded(true);
+			        
 	 	        ObservableList<OperatingRange> items = FXCollections.observableArrayList(list);
 		        System.out.println(items.get(i).getCode());
 		        idTab.setItems(items);
+		    	CheckBoxTreeItem<String> Gammes = new CheckBoxTreeItem<String>(items.get(i).getCode());
+	    		Gammes.setValue(items.get(i).getCode());
 		        
-		        CheckBoxTreeItem<String> Article1 = new CheckBoxTreeItem<String>("Article1");
-		    	Article1.setExpanded(true);
-		    	for (int j = 0; j < list.size(); j++) {
-		        Article1.getChildren().addAll(new CheckBoxTreeItem<String>(items.get(j).getCode()));
-		        CheckBoxTreeItem<String> Gamme1 = new CheckBoxTreeItem<String>(items.get(j).getCode());
-
-		       
-//		        for (int k = 0; k < listOpt.size(); k++) {
-//		        	
-//		 	        ObservableList<Operation> itemss = FXCollections.observableArrayList(listOpt);
-//		 	        if(items.get(j).getIdoptrange()==itemss.get(k).getOperationPK().getId()){
-//			     //   System.out.println(itemss.get(k).getDescription());}
-//                //	  System.out.println(items.get(j).getIdoptrange());
-//                //	  System.out.println(itemss.get(k).getOperationPK().getId());
-//				        String S=items.get(j).getCode();
-//		
-//				        Gamme1.getChildren().add(new CheckBoxTreeItem<String>(itemss.get(k).getDescription()));
-//				
-//			}
-//		        }
-		        idCheckTree.setRoot(Article1);
-		    	 idCheckTree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
-		    	 }}
-	        
-
+		        String G=("Gamme"+i);
+		        //CheckBoxTreeItem<String> Gamme1 = new CheckBoxTreeItem<String>(G);
+		    	
+		    	
+		    	
+		     //   Article1.getChildren().addAll(new CheckBoxTreeItem<String>(items.get(j).getCode()),Gamme1);
+		       // CheckBoxTreeItem<String> Gamme1 = new CheckBoxTreeItem<String>(items.get(j).getCode());
+		    		
+		            for (int k = 0; k < listOpt.size(); k++) {
+			        	
+			 	        ObservableList<Operation> itemss = FXCollections.observableArrayList(listOpt);
+			 	      //  if(items.get(j).getIdoptrange()==itemss.get(k).getOperationPK().getId()){
+				     //   System.out.println(itemss.get(k).getDescription());}
+	                //	  System.out.println(items.get(j).getIdoptrange());
+	                //	  System.out.println(itemss.get(k).getOperationPK().getId());
+					    
+			
+					        Gammes.getChildren().add(new CheckBoxTreeItem<String>(itemss.get(k).getDescription()));
+					
+				//}
+			        }
+		            
+		        
+		    	 
+		    	Article.getChildren().addAll(Gammes);
+	         }
+	         
+		        
+	         GPAO.getChildren().addAll(Article);
+	 	    		 idCheckTree.setRoot(GPAO);
+	 		    	 idCheckTree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
+		      
+	        }
 	        
 //	   	 CheckBoxTreeItem<String> G1 = new CheckBoxTreeItem<String>("Gamme1");
 //    	 CheckBoxTreeItem<String> G2 = new CheckBoxTreeItem<String>("Gamme2");

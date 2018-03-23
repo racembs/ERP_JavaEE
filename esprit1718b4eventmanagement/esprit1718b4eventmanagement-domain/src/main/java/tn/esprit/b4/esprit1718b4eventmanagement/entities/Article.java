@@ -53,6 +53,8 @@ public class Article implements Serializable {
 		private float Pmp;
 		@Column(name = "Quantity")
 		private int Quantity;
+		@Column(name = "ReservedQuantity")
+		private int ReservedQuantity=0;
 		public int getId() {
 			return Id;
 		}
@@ -130,6 +132,12 @@ public class Article implements Serializable {
 		}
 		public List<OperatingRange> getOperatingranges() {
 			return operatingranges;
+		}
+		public int getReservedQuantity() {
+			return ReservedQuantity;
+		}
+		public void setReservedQuantity(int reservedQuantity) {
+			ReservedQuantity = reservedQuantity;
 		}
 		
 		
