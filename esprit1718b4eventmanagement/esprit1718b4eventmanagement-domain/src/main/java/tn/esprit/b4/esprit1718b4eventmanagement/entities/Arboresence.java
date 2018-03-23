@@ -13,11 +13,7 @@ public class Arboresence implements Serializable {
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
-	@OneToMany(mappedBy="arboFils",fetch=FetchType.EAGER)
-	private List<ArboPereFis> arbo;
-	
-	@OneToMany(mappedBy="arboPere",fetch=FetchType.EAGER)
-	private List<ArboPereFis> arbos;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Id")
