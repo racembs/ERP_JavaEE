@@ -134,7 +134,15 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 		return article;
 	}
 	
+	//*************************Done By ONS****************************//
 	
+	@Override
+	public List<Article> DisplayArticle() {
+
+		TypedQuery<Article> query=em.createQuery("SELECT a FROM Article a",Article.class);
+		List <Article> result= query.getResultList();
+		return result;
+	}
 
 	
 }
