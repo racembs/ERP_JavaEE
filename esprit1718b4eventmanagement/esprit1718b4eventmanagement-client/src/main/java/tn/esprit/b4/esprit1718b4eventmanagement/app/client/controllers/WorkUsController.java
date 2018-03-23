@@ -31,7 +31,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleGroup;
-
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
@@ -117,17 +117,108 @@ public class WorkUsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb){
     	
    	 tableview.setEditable(true);
-    	UserServiceRemote userService2;
+    	//UserServiceRemote userService2;
     
 		try {
-		
-			userService2 = (UserServiceRemote) new InitialContext()
+			UsualWork xxx=new UsualWork();
+			Context context;
+			context = new InitialContext();
+	    	UserServiceRemote userService2 = (UserServiceRemote) context
 					.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
+
 			List<String>lun = new ArrayList<>();
 			for(int i=0;i<userService2.findAll().size();i++)
 			{
-			lun.add(userService2.findAll().get(i).getFirstname()+" "+userService2.findAll().get(i).getLastname());}
+			lun.add(userService2.findAll().get(i).getFirstname()+" "+userService2.findAll().get(i).getLastname());
+			}
+			C4.setOnEditCommit((CellEditEvent<Works, String> event) -> {
+				try {
+				
+					 String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
+					 WorksUsServiceRemote proxy=(WorksUsServiceRemote) context.lookup(jndiName);
+					
+					  	TablePosition<Works, String> pos = event.getTablePosition();
+			            
+			            String state = event.getNewValue();
+			            System.out.println("combo"+state);
+			 
+			            int row = pos.getRow();
+			            UsualWork www=(UsualWork) event.getTableView().getItems().get(row);
+			            xxx.setNature(Nature.WorkOrder);
+			            xxx.setDescription(www.getDescription());
+			            xxx.setEmmergency(www.getEmmergency());
+			            xxx.setObjet(www.getObjet());
+			            xxx.setState(state);
+			    	    xxx.setWODate(new Date());
+			    	    xxx.setWorksPK(www.getWorksPK()); 
 
+			    	
+
+		
+			    	
+			    		
+			    		 proxy.updateWork(xxx);
+
+			
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+	        });
+       		C8.setOnEditCommit((CellEditEvent<Works, String> eventk) -> {
+       			UserServiceRemote userServicej;
+				try {
+					userServicej = (UserServiceRemote) context
+							.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
+					 String jndiNamec8="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
+					 WorksUsServiceRemote proxyc8=(WorksUsServiceRemote) context.lookup(jndiNamec8);
+					
+					  	TablePosition<Works, String> pos = eventk.getTablePosition();
+				
+					User tech =userServicej.userbyfstlstname(eventk.getNewValue());
+				       int row = pos.getRow();
+				  
+				    UsualWork www=(UsualWork) eventk.getTableView().getItems().get(row);
+				
+					System.out.println(eventk.getNewValue());
+		    	   	showdetails(tech);
+		    	
+		    	
+		    	    xxx.setWorksPK(www.getWorksPK()); 
+		    	   	xxx.setTechnicianId(tech.getId());
+		    		proxyc8.updateWork(xxx);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+	    	   
+    });
+       		C3.setOnEditCommit((CellEditEvent<Works, String> eventb) -> {
+       		 String jndiNamec3="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
+			 WorksUsServiceRemote proxyc3;
+			try {
+				proxyc3 = (WorksUsServiceRemote) context.lookup(jndiNamec3);
+				TablePosition<Works, String> pos = eventb.getTablePosition();
+				System.out.println(eventb.getNewValue());
+			       int row = pos.getRow();
+			    UsualWork www=(UsualWork) eventb.getTableView().getItems().get(row);
+					
+			    xxx.setWorksPK(www.getWorksPK()); 
+							System.out.println(eventb.getNewValue());
+							xxx.setTechnology(eventb.getNewValue());
+							proxyc3.updateWork(xxx);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			  
+					
+
+
+		        });
     		C8.setCellValueFactory(cellData
                     -> {
                         return new SimpleStringProperty(cellData.getValue().getUser().getFirstname()+" "+cellData.getValue().getUser().getLastname());
@@ -142,13 +233,7 @@ public class WorkUsController implements Initializable {
             	C8.setEditable(true);
                 return ct2;
             });
-			C8.setOnEditCommit((CellEditEvent<Works, String> event) -> {
-String s =event.getNewValue(); //HERE
-System.out.println(event.getNewValue());
-/*User tech =userService2.userbyfstlstname(s);
-System.out.println(tech.getRole());
-showdetails(tech);*/
-	        });
+
 		} catch (NamingException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -228,40 +313,29 @@ showdetails(tech);*/
 		    		ObservableList<String> genderList = FXCollections.observableArrayList("approuved","not approuved");
 			        // Populate Comboboxe with static options,
 		    		C4.setCellFactory(ComboBoxTableCell.forTableColumn(genderList));
-					C4.setOnEditCommit((CellEditEvent<Works, String> event) -> {
-			            TablePosition<Works, String> pos = event.getTablePosition();
-			            
-			            String state = event.getNewValue();
-			 System.out.println("combo"+state);
-			 
-			         int row = pos.getRow();
-			            Works www = event.getTableView().getItems().get(row);
-			 UsualWork xxx=(UsualWork)www;
-			 xxx.setState(state);
-			 xxx.setWODate(new Date());
-			 proxy.updateWork(xxx);
-			        });
+				
 	    	        List<Works> list = proxy.displayWRB();
 	    	        ObservableList<Works> items = FXCollections.observableArrayList(list);
-	    	        System.out.println(items.get(0).getDescription());
+	    	      //  System.out.println(items.get(0).getDescription());
 	    	       tableview.setItems(items);
+	    	   
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
 		tableview.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
-			//showdetails(newValue);
+			
 		}));
     }  
 	private void showdetails(User trader) {
 
-		// Level comblevel = trader.getLevel();
-		f1.setText(trader.getFirstname());
-		f2.setText(trader.getLastname());
-		f3.setText(trader.getNumtel());
-	f4.setText(trader.getRole());
-		f5.setText(trader.getEmail());
+	
+		f1.setText("Firstname: "+trader.getFirstname());
+		f2.setText("Lastname: "+trader.getLastname());
+		f3.setText("Tel: "+trader.getNumtel());
+		f4.setText("Departement: "+trader.getRole());
+		f5.setText("Email: "+trader.getEmail());
 
 	}
 	
@@ -270,27 +344,21 @@ showdetails(tech);*/
     	
     	Context context;
     	context = new InitialContext();
-    	/*UserServiceRemote userService = (UserServiceRemote) context
-				.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
-    	User user = LoginController.user;
-    	*/
+    	
     String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
     	
     	WorksUsServiceRemote proxy=(WorksUsServiceRemote) context.lookup(jndiName);
     	WorksPK worksPK =new WorksPK();
-    	worksPK.setIdUser(1);
+    	worksPK.setIdUser(LoginController.user.getId());
     	worksPK.setIdEquipment(1);
     	
     	UsualWork uw =new UsualWork();
-    	/*UsualWork w=new UsualWork ("text", "text", "comboSpecialization.getValue().toString()",
-    			 worksPK,user ,
-    			eq,"ok", "En cours",new Date(),
-    			 Nature.WorkRequest);*/
+    
     	uw.setWorksPK(worksPK);
-    	//System.out.println(.getDescription());
-    uw.setObjet(object.getText());
-    uw.setDescription(adInfo.getText());
-    uw.setTechnology(comboSpecialization.getValue().toString());
+
+    	uw.setObjet(object.getText());
+    	uw.setDescription(adInfo.getText());
+    	uw.setTechnology(comboSpecialization.getValue().toString());
       
   
         RadioButton selectedRadioButton = (RadioButton) q.getSelectedToggle();

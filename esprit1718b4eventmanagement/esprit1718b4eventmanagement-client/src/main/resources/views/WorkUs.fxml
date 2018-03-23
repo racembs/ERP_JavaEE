@@ -171,17 +171,17 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label text="Personal Details" />
-                                                <JFXTextField fx:id="f1"  prefHeight="20.0" prefWidth="83.0" text="Contacts" GridPane.rowIndex="4" />
-                                                <JFXTextField fx:id="f2"  prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="ID No 30229182" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <JFXTextField fx:id="f3"  prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="Doctor" GridPane.columnIndex="1" />
-                                                <JFXTextField fx:id="f4"  prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="Daniel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <JFXTextField fx:id="f5"  prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="Mungatana" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <JFXTextField fx:id="f6"  prefHeight="20.0" prefWidth="300.0" styleClass="green-label" text="0717160344" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <JFXTextField fx:id="f7"  prefHeight="20.0" prefWidth="300.0" styleClass="green-label" text="danmlayah@gmail.com" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Label text="Selected Technician Personal Details" />
+                                               
+                                                <JFXTextField fx:id="f1"  prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <JFXTextField fx:id="f2"  prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="" GridPane.columnIndex="1" />
+                                                <JFXTextField fx:id="f3"  prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <JFXTextField fx:id="f4"  prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <JFXTextField fx:id="f5"  prefHeight="20.0" prefWidth="300.0" styleClass="green-label" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <JFXTextField fx:id="f6"  prefHeight="20.0" prefWidth="300.0" styleClass="green-label" text="" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                              </children>
                                           </GridPane>
-                                          <GridPane prefHeight="219.0" prefWidth="520.0" styleClass="card">
+                                          <GridPane visible="false" prefHeight="219.0" prefWidth="520.0" styleClass="card">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="186.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" prefWidth="302.0" />

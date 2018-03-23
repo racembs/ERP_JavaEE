@@ -51,5 +51,8 @@ public class WorksPK implements Serializable{
 			return false;
 		return true;
 	}
+	public WorksPK() {
+		super();
+	}
 	
 }

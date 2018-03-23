@@ -38,22 +38,19 @@ public class Wtest {
     	
     	WorksUsServiceRemote proxy=(WorksUsServiceRemote) context.lookup(jndiName);
     	WorksPK worksPK =new WorksPK();
-    	worksPK.setIdUser(1);
+    	worksPK.setIdUser(2);
     	worksPK.setIdEquipment(1);
     	
-    //	UsualWork uw =new UsualWork();
-    	/*UsualWork w=new UsualWork ("text", "text", "comboSpecialization.getValue().toString()",
-    			 worksPK,user ,
-    			eq,"ok", "En cours",new Date(),
-    			 Nature.WorkRequest);*/
-    //	uw.setWorksPK(worksPK);
+    	UsualWork uw =new UsualWork();
+
+   	uw.setWorksPK(worksPK);
     	//System.out.println(.getDescription());
     
-      //  proxy.addWR(uw);
-        List<Works> list = proxy.displayWRB();
+      proxy.addWR(uw);
+       // List<Works> list = proxy.displayWRB();
        // ObservableList<Works> items = FXCollections.observableArrayList(list);
-        System.out.println(list.get(0).getDescription());
-      User s=  userService.userbyfstlstname("k k");
-      System.out.println("heloooooooooo"+s.getEmail());
+      //  System.out.println(list.get(0).getDescription());
+   //   User s=  userService.userbyfstlstname("k k");
+   //   System.out.println("heloooooooooo"+s.getEmail());
 	}
 }

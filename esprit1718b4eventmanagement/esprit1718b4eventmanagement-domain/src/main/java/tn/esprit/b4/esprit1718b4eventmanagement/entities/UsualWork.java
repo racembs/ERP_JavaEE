@@ -25,6 +25,13 @@ public class UsualWork  extends Works implements Serializable{
 	private Date WODate;
 	@Enumerated(EnumType.STRING)
 	private Nature nature;
+	private int technicianId;
+	
+
+	public UsualWork() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public String getEmmergency() {
 		return emmergency;
 	}
@@ -55,5 +62,10 @@ public class UsualWork  extends Works implements Serializable{
 	public void setNature(Nature nature) {
 		this.nature = nature;
 	}
-
+	public int getTechnicianId() {
+		return technicianId;
+	}
+	public void setTechnicianId(int technicianId) {
+		this.technicianId = technicianId;
+	}
 }

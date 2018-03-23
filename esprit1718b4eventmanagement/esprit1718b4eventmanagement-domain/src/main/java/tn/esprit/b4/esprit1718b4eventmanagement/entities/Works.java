@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Null;
 
 
 @Entity
@@ -33,7 +34,8 @@ public class Works implements Serializable {
 	private Date endDate;
 	@Column(name = "STATE")
 	private String state;
-	
+
+
 	@EmbeddedId
 	private WorksPK worksPK;
 	
@@ -125,5 +127,8 @@ public class Works implements Serializable {
 			public void setEquipement(Equipment equipement) {
 				this.equipement = equipement;
 			}
+
 			
+
+		
 }
