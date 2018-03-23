@@ -30,6 +30,14 @@ public class Arboresence implements Serializable {
 	@Column(name = "name")
 	private String name;
 	
+	
+	@OneToMany(mappedBy="arboresence")
+	private List <Equipment> equipments;
+	
+	
+	
+	
+	
 	@JoinTable(name = "Parent_Child_Tree", joinColumns = {
 			 @JoinColumn(name = "Parent", referencedColumnName = "Id", nullable = false)}, inverseJoinColumns = {
 			 @JoinColumn(name = "Child", referencedColumnName = "Id", nullable = false)})
