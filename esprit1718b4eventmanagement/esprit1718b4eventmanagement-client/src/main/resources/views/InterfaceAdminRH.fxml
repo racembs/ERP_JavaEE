@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -102,6 +103,7 @@
                                     </TableView>
                                     <JFXButton fx:id="btndeconnexion" buttonType="RAISED" layoutX="40.0" layoutY="11.0" onAction="#OnDeconnexionAction" prefHeight="37.0" prefWidth="184.0" ripplerFill="#53eb11" styleClass="blue-btn" text="Deconnexion" />
                                     <JFXButton buttonType="RAISED" layoutX="934.0" layoutY="12.0" onAction="#OnSearchAction" prefHeight="37.0" prefWidth="144.0" ripplerFill="#53eb11" styleClass="blue-btn" text="Search" />
+                                    <JFXComboBox fx:id="Combocheck" layoutX="491.0" layoutY="11.0" prefHeight="40.0" prefWidth="121.0" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="1103.0">
