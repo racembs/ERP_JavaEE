@@ -41,6 +41,15 @@ public class OperatingRangeService implements OperatingRangeServiceLocal, Operat
 		return query.getSingleResult();
 	}
 	
+	
+	@Override
+	public List<OperatingRange> find(String code) {
+		TypedQuery<OperatingRange> query=em.createQuery(
+				"select o from OperatingRange o where o.code=:code", OperatingRange.class);
+		query.setParameter("code", code);
+		List <OperatingRange> result= query.getResultList();
+		return result;
+	}
 
 	@Override
 	public List<OperatingRange> DisplayOperatingRange() {

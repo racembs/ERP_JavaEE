@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 
 
@@ -77,5 +78,9 @@ public class ChargingStationService implements ChargingStationServiceLocal, Char
 		List <ChargingStation> result= query.getResultList();
 		return result;
 	}
+	
+	
+
+
 
 }

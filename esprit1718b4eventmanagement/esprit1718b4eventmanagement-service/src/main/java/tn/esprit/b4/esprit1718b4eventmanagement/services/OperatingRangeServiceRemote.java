@@ -14,5 +14,5 @@ public interface OperatingRangeServiceRemote {
 	public String findOperatingRange(int idOptR);
 	public List<OperatingRange> DisplayOperatingRange();
 	public Long CountOperatingRange();
-
+	public List<OperatingRange> find(String code);
 }

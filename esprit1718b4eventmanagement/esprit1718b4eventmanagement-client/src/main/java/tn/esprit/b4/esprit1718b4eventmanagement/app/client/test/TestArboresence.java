@@ -59,7 +59,7 @@ public class TestArboresence extends Application {
 	
 	
 	
-	System.out.println(	c.getId());
+	//System.out.println(	c.getId());
 	 Equipment e =Proxy.findEquipementBySerie("2");
 		System.out.println(	e.getId());
 	// e.setArboresence(c);
