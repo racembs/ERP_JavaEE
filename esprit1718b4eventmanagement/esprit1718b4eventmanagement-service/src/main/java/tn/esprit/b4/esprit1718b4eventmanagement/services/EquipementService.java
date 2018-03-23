@@ -1,0 +1,78 @@
+package tn.esprit.b4.esprit1718b4eventmanagement.services;
+
+import java.util.HashMap;
+import java.util.List;
+
+import javax.ejb.Stateless;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
+import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
+
+
+
+@Stateless
+public class EquipementService extends GenericDAO<Equipment>  implements EquipementServiceLocal,EquipementServiceRemote{
+	@PersistenceContext 
+	EntityManager em;
+	  public EquipementService() {
+			// TODO Auto-generated constructor stub
+			 super(Equipment.class);
+		}
+		@Override
+		public Equipment findEquipementBySerie(String serie) {
+			TypedQuery<Equipment> query
+			=em.createQuery("SELECT a FROM Equipment a WHERE a.SerialNum= :code", Equipment.class);
+			query.setParameter("code",serie);
+			Equipment equipment=query.getSingleResult();
+			return equipment ;
+		}
+	  
+		@Override
+		public void updateEquipment(Equipment e) {
+			em.merge(e);
+		}
+
+		@Override
+		public int addEquippement(Equipment equipement) {
+			em.persist(equipement);
+			return equipement.getId();
+			}
+	
+		@Override
+		public List<Equipment> getAllEquipment() {
+			TypedQuery<Equipment> query
+			=em.createQuery("select n from Equipment n", Equipment.class);
+			
+			List<Equipment> equi=query.getResultList();
+			return equi;
+		
+		}
+
+
+		@Override
+		public List<Equipment> findEquipementFab(String type) {
+			TypedQuery<Equipment> query
+			=em.createQuery("SELECT a FROM Equipment a WHERE a.Fabriquant= :type", Equipment.class);
+			query.setParameter("type", type);
+			List<Equipment> equi=query.getResultList();
+			return equi;
+		}
+
+
+		@Override
+		public List<Equipment> findEquipementMarque(String marque ) {
+			TypedQuery<Equipment > query
+			=em.createQuery("SELECT a FROM Equipment  a WHERE a.Marque= :code", Equipment.class);
+			query.setParameter("code", marque );
+			List<Equipment> equipment=query.getResultList();
+			return equipment;
+		}
+		
+	
+}

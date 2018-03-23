@@ -53,7 +53,36 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="DETAILS">
+            <Tab text="ADD Arborecence">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="23.0" layoutY="33.0" prefHeight="141.0" prefWidth="372.0" spacing="30.0" />
+                        <AnchorPane fx:id="arbo1" layoutX="4.0" layoutY="-13.0" prefHeight="648.0" prefWidth="1098.0" styleClass="card-unpadded">
+                           <children>
+                              <JFXTextField fx:id="name" focusColor="#00add8" labelFloat="true" layoutX="89.0" layoutY="139.0" prefHeight="30.0" prefWidth="242.0" promptText="Name" unFocusColor="#868282" />
+                              <JFXButton fx:id="btncancel1" layoutX="878.0" layoutY="561.0" onAction="#OnCancelArboClick" styleClass="cancel-button" text="Cancel" />
+                              <JFXButton layoutX="576.0" layoutY="564.0" prefHeight="27.0" prefWidth="78.0" styleClass="green-btn" text="Edit" />
+                              <JFXButton fx:id="btnadd1" layoutX="733.0" layoutY="563.0" onAction="#OnAddArboClick" prefHeight="37.0" prefWidth="100.0" styleClass="blue-btn" text="add" />
+                              <AnchorPane layoutX="504.0" layoutY="125.0" prefHeight="268.0" prefWidth="539.0" style="-fx-background-color: rgb(0, 173, 216);" styleClass="rgb(0, 192, 239)">
+                                 <children>
+                                    <JFXComboBox fx:id="Combo11" layoutX="3.0" layoutY="44.0" prefHeight="40.0" prefWidth="415.0" />
+                                    <JFXComboBox fx:id="Combo21" layoutX="38.0" layoutY="87.0" prefHeight="40.0" prefWidth="433.0" />
+                                    <JFXComboBox fx:id="Combo31" layoutX="75.0" layoutY="142.0" prefHeight="40.0" prefWidth="426.0" />
+                                    <JFXComboBox fx:id="Combo41" layoutX="109.0" layoutY="194.0" prefHeight="40.0" prefWidth="422.0" />
+                                    <Label layoutX="22.0" layoutY="6.0" prefHeight="49.0" prefWidth="259.0" text="Votre arboresence :" />
+                                 </children>
+                              </AnchorPane>
+                              <JFXTextArea layoutX="562.0" layoutY="413.0" maxWidth="404.0" minWidth="280.0" prefHeight="114.0" prefWidth="280.0" promptText="arboresence" />
+                              <JFXComboBox fx:id="combarbotype" layoutX="66.0" layoutY="247.0" prefHeight="40.0" prefWidth="274.0" />
+                              <Label layoutX="38.0" layoutY="201.0" prefHeight="46.0" prefWidth="258.0" text="Type D'arborecence" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+          <Tab fx:id="btndetail" onSelectionChanged="#OnDetailAction" text="DETAILS">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -62,12 +91,13 @@
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
                                  <children>
                                     <TextField layoutX="787.0" layoutY="14.0" prefHeight="30.0" prefWidth="302.0" promptText="Search doctor by name" styleClass="search-box" />
-                                    <TableView layoutX="11.0" layoutY="53.0" prefHeight="326.0" prefWidth="1080.0">
+                                    <TableView fx:id="tableau" layoutY="55.0" prefHeight="326.0" prefWidth="1080.0">
                                       <columns>
-                                        <TableColumn editable="false" prefWidth="389.0" text="C1" />
-                                          <TableColumn editable="false" prefWidth="168.0" sortable="false" text="C2" />
-                                          <TableColumn editable="false" prefWidth="171.0" sortable="false" text="C2" />
-                                          <TableColumn editable="false" prefWidth="250.0" sortable="false" text="C2" />
+                                        <TableColumn fx:id="colSerialNum" editable="false" prefWidth="129.0" text="SerialNum" />
+                                          <TableColumn fx:id="colFabriquant" editable="false" prefWidth="126.0" sortable="false" text="Fabriquant" />
+                                          <TableColumn fx:id="colMarque" editable="false" prefWidth="110.0" sortable="false" text="Marque" />
+                                          <TableColumn fx:id="colState" editable="false" maxWidth="289.0" minWidth="-1.0" prefWidth="106.0" sortable="false" text="State" />
+                                          <TableColumn fx:id="colDescription" editable="false" prefWidth="339.0" text="Description" />
                                       </columns>
                                     </TableView>
                                  </children>
