@@ -112,6 +112,18 @@ public class EquipementController implements Initializable {
 
     @FXML
     private void OnCancelClick(ActionEvent event) {
+    	
+    	 serialnum.setText("");
+    		
+    	fabriquant.setText("");
+    		
+    	    marque.setText("");
+    		
+    	descrsption.setText("");
+    		
+    	   State.setText("");
+    	
+    	
     }
 
     @FXML
@@ -151,6 +163,8 @@ String dateF = df.format(date.getTime());
     
     Proxy.addEquippement(eq);
     }
+    
+    
 
     @FXML
     private void OnCancelArboClick(ActionEvent event) {
