@@ -18,4 +18,6 @@ public interface EquipementServiceRemote {
 	public List<Equipment> findEquipementFab(String type);
 	public List<Equipment> getAllEquipment() ;
 	public void updateEquipment(Equipment e) ;
+	
+	public List<Equipment> DisplayEquipment();
 	}

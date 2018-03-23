@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -38,12 +39,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
 
 /**
  * FXML Controller class
@@ -87,7 +92,7 @@ public class ChargingStationController implements Initializable {
     @FXML
     private ComboBox<User> idUser;
     @FXML
-    private ComboBox<?> idEquipement;
+    private ComboBox<Equipment> idEquipement;
     @FXML
     private TextField idCode;
     @FXML
@@ -122,7 +127,46 @@ public class ChargingStationController implements Initializable {
 			ChargingStation ch = new ChargingStation();
 		
 		
-		
+	
+			Context contextUser;
+			contextUser = new InitialContext();
+	    	UserServiceRemote proxyuser = (UserServiceRemote) contextUser.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
+	    	User user = new User();
+	    	List<User> listU = proxyuser.DisplayUser();
+			List<String>listuser = new ArrayList<>();
+			
+			
+			for(int i=0;i<listU.size();i++)
+			{
+				listuser.add(listU.get(i).getFirstname()+" "+listU.get(i).getLastname());
+			}
+
+             ObservableList obList = FXCollections.observableList(listuser);
+    		//idUser.getItems().clear();
+             idUser.setItems(obList);
+             idUser.getSelectionModel().selectLast();
+			
+			
+             
+ 			Context contextEquipment;
+ 			contextEquipment = new InitialContext();
+ 			EquipementServiceRemote proxyEquipment = (EquipementServiceRemote) contextEquipment.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/EquipementService!tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote");
+ 	    	Equipment equipment = new Equipment();
+ 	    	List<Equipment> listE = proxyEquipment.DisplayEquipment();
+ 			List<String>listeq = new ArrayList<>();
+ 			
+ 			
+ 			for(int i=0;i<listE.size();i++)
+ 			{
+ 				listeq.add(listE.get(i).getDescription()+" "+listE.get(i).getSerialNum());
+ 			}
+
+              ObservableList obListeq = FXCollections.observableList(listeq);
+     		//idUser.getItems().clear();
+              idEquipement.setItems(obListeq);
+              idEquipement.getSelectionModel().selectLast();
+			
+			
 			idUserTab.setCellValueFactory(new Callback<CellDataFeatures<ChargingStation,String>,ObservableValue<String>>(){
 
 	              @Override
@@ -151,33 +195,52 @@ public class ChargingStationController implements Initializable {
 		
 		  idDelete.setOnMouseClicked((MouseEvent e) -> { 
 		    	
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-		    	alert.setTitle("WARNING");
-				alert.setHeaderText("Are You Sure?");
-		    	
-		    	if (alert.showAndWait().get () == ButtonType.OK)
-		    	{
+			  
+				try {
 
-	        	Integer idE= idTab.getSelectionModel().getSelectedItem().getChargingstationPK().getId_equipment();
-	        	Integer idU= idTab.getSelectionModel().getSelectedItem().getChargingstationPK().getIdUser();
-	        	proxyChargingStation.deleteChargingStation(idE, idU);
-	        	System.out.println("deleted");
-	    		   List<ChargingStation> list1 = proxyChargingStation.DisplayChargingStation();
-	    	        ObservableList<ChargingStation> items1 = FXCollections.observableArrayList(list1);
-	    	        
-	    	        idTab.setItems(items1);
-	    	        
-	    	        
-	    		 Alert alert1 = new Alert(AlertType.INFORMATION);
-	    			alert1.setTitle("Charging Station Deleted");
-	    			alert1.setHeaderText("Succesful");
-	    			alert1.showAndWait();
-	    		//System.out.println("deleted");
-	        	
-	        
-	    		
-	    	}
-		    	
+					String jndiNameChargingStation1 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ChargingStationService!tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote";
+					Context contextChargingStation1;
+					contextChargingStation1 = new InitialContext();
+					
+					ChargingStationServiceRemote proxyChargingStation1 = (ChargingStationServiceRemote) contextChargingStation1.lookup(jndiNameChargingStation1);
+					ChargingStation ch1 = new ChargingStation(); 
+					
+				  	Alert alert = new Alert(AlertType.CONFIRMATION);
+			    	alert.setTitle("WARNING");
+					alert.setHeaderText("Are You Sure?");
+			    	
+			    	if (alert.showAndWait().get () == ButtonType.OK)
+			    	{
+			    		
+			    	
+			    		
+			        	Integer idE= idTab.getSelectionModel().getSelectedItem().getEquipement().getId();
+			        	Integer idU= idTab.getSelectionModel().getSelectedItem().getUser().getId();
+			        	System.out.println(idE);
+			        	System.out.println(idU);
+			        	proxyChargingStation1.deleteChargingStation(idE,idU);
+			        	
+			    		   List<ChargingStation> listch = proxyChargingStation1.DisplayChargingStation();
+			    	        ObservableList<ChargingStation> itemsch = FXCollections.observableArrayList(listch);
+			    	        System.out.println(itemsch.get(0).getDescription());
+			    	        idTab.setItems(itemsch);
+			    	        
+			    	        
+			    		 Alert alert1 = new Alert(AlertType.INFORMATION);
+			    			alert1.setTitle("ChargingStation Deleted");
+			    			alert1.setHeaderText("Succesful");
+			    			alert1.showAndWait();
+			    		//System.out.println("deleted");
+			        	
+			     
+			    		
+			    	}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	
+
 		    });
     } catch (NamingException e1) {
 		// TODO Auto-generated catch block

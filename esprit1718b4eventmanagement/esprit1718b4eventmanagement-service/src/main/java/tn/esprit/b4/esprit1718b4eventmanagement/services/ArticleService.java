@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NomenclaturePk;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 
 
@@ -156,10 +157,10 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 	@Override
 	public List<Article> DisplayArticle() {
 
-		TypedQuery<Article> query=em.createQuery("SELECT a FROM Article a",Article.class);
-		List <Article> result= query.getResultList();
+		TypedQuery<Article> query1=em.createQuery("SELECT a FROM Article a",Article.class);
+		List <Article> result= query1.getResultList();
 		return result;
 	}
-
+	
 	
 }
