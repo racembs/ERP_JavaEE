@@ -40,6 +40,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote;
@@ -84,7 +85,7 @@ public class ChargingStationController implements Initializable {
     @FXML
     private JFXTextField idoptrange;
     @FXML
-    private ComboBox<?> idUser;
+    private ComboBox<User> idUser;
     @FXML
     private ComboBox<?> idEquipement;
     @FXML
@@ -111,7 +112,80 @@ public class ChargingStationController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     	
-    }
+    	Context context;
+    	
+		try {
+			String jndiNameChargingStation = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ChargingStationService!tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote";
+			Context contextChargingStation;
+			contextChargingStation = new InitialContext();
+			ChargingStationServiceRemote proxyChargingStation = (ChargingStationServiceRemote) contextChargingStation.lookup(jndiNameChargingStation);
+			ChargingStation ch = new ChargingStation();
+		
+		
+		
+			idUserTab.setCellValueFactory(new Callback<CellDataFeatures<ChargingStation,String>,ObservableValue<String>>(){
+
+	              @Override
+	              public ObservableValue<String> call(CellDataFeatures<ChargingStation, String> param) {
+	                  return new SimpleStringProperty(param.getValue().getUser().getFirstname()+"-"+param.getValue().getUser().getLastname());
+	              }
+	          }); 
+			idEquipementTab.setCellValueFactory(new Callback<CellDataFeatures<ChargingStation,String>,ObservableValue<String>>(){
+
+	              @Override
+	              public ObservableValue<String> call(CellDataFeatures<ChargingStation, String> param) {
+	                  return new SimpleStringProperty(param.getValue().getEquipement().getSerialNum()+"-"+param.getValue().getEquipement().getDescription());
+	              }
+	          }); 
+			idCodeTab.setCellValueFactory(new PropertyValueFactory<ChargingStation, Integer>("code"));
+			idDescriptionTab.setCellValueFactory(new PropertyValueFactory<ChargingStation, String>("description"));
+			idNaturePostTab.setCellValueFactory(new PropertyValueFactory<ChargingStation, String>("naturepost"));
+			idNbDaysTab.setCellValueFactory(new PropertyValueFactory<ChargingStation, Integer>("nbday"));
+			idNbHoursTab.setCellValueFactory(new PropertyValueFactory<ChargingStation, Integer>("nbhours"));
+			
+			
+			   List<ChargingStation> list = proxyChargingStation.DisplayChargingStation();
+		        ObservableList<ChargingStation> items = FXCollections.observableArrayList(list);
+		        idTab.setItems(items);
+	
+		
+		  idDelete.setOnMouseClicked((MouseEvent e) -> { 
+		    	
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+		    	alert.setTitle("WARNING");
+				alert.setHeaderText("Are You Sure?");
+		    	
+		    	if (alert.showAndWait().get () == ButtonType.OK)
+		    	{
+
+	        	Integer idE= idTab.getSelectionModel().getSelectedItem().getChargingstationPK().getId_equipment();
+	        	Integer idU= idTab.getSelectionModel().getSelectedItem().getChargingstationPK().getIdUser();
+	        	proxyChargingStation.deleteChargingStation(idE, idU);
+	        	System.out.println("deleted");
+	    		   List<ChargingStation> list1 = proxyChargingStation.DisplayChargingStation();
+	    	        ObservableList<ChargingStation> items1 = FXCollections.observableArrayList(list1);
+	    	        
+	    	        idTab.setItems(items1);
+	    	        
+	    	        
+	    		 Alert alert1 = new Alert(AlertType.INFORMATION);
+	    			alert1.setTitle("Charging Station Deleted");
+	    			alert1.setHeaderText("Succesful");
+	    			alert1.showAndWait();
+	    		//System.out.println("deleted");
+	        	
+	        
+	    		
+	    	}
+		    	
+		    });
+    } catch (NamingException e1) {
+		// TODO Auto-generated catch block
+		
+	}
+		}
+    
+  
     
     
     }    
