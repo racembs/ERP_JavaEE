@@ -11,6 +11,7 @@ import javax.ejb.LocalBean;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.MvtApprov;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
@@ -92,6 +93,7 @@ public class UserService extends GenericDAO<User> implements UserServiceRemote, 
 	
 	}
 
+
 	@Override
 	public List<User> SearchMail(String login) {
 	TypedQuery<User> query
@@ -101,23 +103,38 @@ public class UserService extends GenericDAO<User> implements UserServiceRemote, 
 		return user;
 	
 	}
+	
+
+	
+
+	//*************************Done By ONS****************************//
+	
+	@Override
+	public List<User> DisplayUser() {
+
+		TypedQuery<User> query=em.createQuery("SELECT a FROM User a",User.class);
+		List <User> result= query.getResultList();
+		return result;
+	}
+
+
+
+
 	@Override
 	public List<User> SearchFirstName(String login) {
-	TypedQuery<User> query
-		=em.createQuery("select n from User n where n.firstname=:Login", User.class);
-		query.setParameter("Login", login);
-		List<User> user=query.getResultList();
-		return user;
-	
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+
+
+
 	@Override
 	public List<User> SearchStatut(String sta) {
-	TypedQuery<User> query
-		=em.createQuery("select n from User n where n.statut=:Login", User.class);
-		query.setParameter("Login", sta);
-		List<User> user=query.getResultList();
-		return user;
-	
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+
 
 }

@@ -19,7 +19,7 @@ public class TestChargingStation {
 		
 
 	
-		proxy.addChargingStation(1, 1, ch);
+		proxy.addChargingStation(2, 2, ch);
 		System.out.println("created");
 		
 		
@@ -29,11 +29,11 @@ public class TestChargingStation {
 		System.out.println(chs.getCode());
 		
 		
-		proxy.updateChargingStation(1, 1);
+		proxy.updateChargingStation(2, 2);
 		System.out.println("modified");
 		
 		
-		proxy.deleteChargingStation(1, 1);
+		proxy.deleteChargingStation(2, 2);
 		System.out.println("deleted");
 		
 		

@@ -6,6 +6,7 @@ import javax.ejb.Local;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 
 @Local
 public interface ChargingStationServiceLocal {
@@ -21,4 +22,5 @@ public interface ChargingStationServiceLocal {
 	public ChargingStation findChargingStationByUser(int idUser);
 	
 	public List<ChargingStation> DisplayChargingStation();
+	
 }

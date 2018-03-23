@@ -8,7 +8,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.utilities.IGenericDAO;
 
 @Local
 public interface UserServiceLocal extends IGenericDAO<User> {
-
+	public List<User> DisplayUser() ;
 	User login(String login, String password);
 	public List<User> SearchFirstName(String login);
 	public List<User> SearchMail(String login);

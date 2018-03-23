@@ -74,5 +74,19 @@ public class EquipementService extends GenericDAO<Equipment>  implements Equipem
 			return equipment;
 		}
 		
+		
+		//***********************************ONS*****************************//
+		@Override
+		public List<Equipment> DisplayEquipment() {
+
+			TypedQuery<Equipment> query=em.createQuery("SELECT a FROM Equipment a",Equipment.class);
+			List <Equipment> result= query.getResultList();
+			return result;
+		}
+		
+		
+
+		
+
 	
 }
