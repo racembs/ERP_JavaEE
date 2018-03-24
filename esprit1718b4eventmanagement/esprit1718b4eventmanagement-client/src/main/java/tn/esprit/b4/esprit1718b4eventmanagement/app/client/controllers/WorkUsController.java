@@ -120,7 +120,7 @@ public class WorkUsController implements Initializable {
 	@Override
     public void initialize(URL url, ResourceBundle rb){
     	 Image icon = new Image (
-    			   getClass().getResourceAsStream("/views/imgs/equi.png"));
+    			   getClass().getResourceAsStream("/views/image/chs.png"));
     			
     			  TreeItem<String> equii =  new TreeItem<>("Entreprise", new ImageView(icon));
     			  equii.setExpanded(true);

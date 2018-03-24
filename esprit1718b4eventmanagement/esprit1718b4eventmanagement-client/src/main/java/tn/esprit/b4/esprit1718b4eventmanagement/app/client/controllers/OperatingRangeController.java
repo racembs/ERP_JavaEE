@@ -125,8 +125,7 @@ public class OperatingRangeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     	
-    	
-    
+   
     	
     	idStakingCond.getItems().addAll("Consecutive","Overlap","With staking delay","Parallel");
     	idStakingCond.getSelectionModel().selectLast();

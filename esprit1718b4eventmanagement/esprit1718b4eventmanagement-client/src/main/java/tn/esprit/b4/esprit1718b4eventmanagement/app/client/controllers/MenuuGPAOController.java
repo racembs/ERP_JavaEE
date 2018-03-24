@@ -99,7 +99,7 @@ public class MenuuGPAOController implements Initializable {
             System.out.println("Charging Station Clicked!"); // change functionality
             Parent parent= null;
 	    	try {
-				parent  =FXMLLoader.load(getClass().getResource("/views/ChargingStation.fxml"));
+				parent  =FXMLLoader.load(getClass().getResource("/views/ChargingStationMenu.fxml"));
 				Scene scene=new Scene(parent);
 				Stage primaryStage= new Stage(); 
 				primaryStage.setScene(scene);
