@@ -11,5 +11,6 @@ import tn.esprit.b4.esprit1718b4eventmanagement.utilities.IGenericDAO;
 public interface ClientServiceLocal extends IGenericDAO<Client> {
 	public int addClient(Client client);
 	public List<Client> searchClient(String input);
+	public Client findByCompany(String company);
 
 }

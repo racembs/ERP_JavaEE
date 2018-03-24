@@ -19,14 +19,14 @@ public class Orders implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int reference;
+	private long reference;
 	@Temporal(TemporalType.DATE)
 	private Date order_date;
 	@Temporal(TemporalType.DATE)
 	private Date delivery_date;
 	private String statut;
 	
-	@OneToMany(mappedBy="order")
+	@OneToMany(mappedBy="order",cascade=CascadeType.REMOVE)
 	private List<OrdredItem> order_Item = new ArrayList<>();
 	
 	@ManyToOne
@@ -44,10 +44,10 @@ public class Orders implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getReference() {
+	public long getReference() {
 		return reference;
 	}
-	public void setReference(int reference) {
+	public void setReference(long reference) {
 		this.reference = reference;
 	}
 	public Date getOrder_date() {
@@ -80,7 +80,7 @@ public class Orders implements Serializable {
 	public void setClient(Client client) {
 		this.client = client;
 	}
-	public Orders(int reference, Date order_date, Date delivery_date, String statut) {
+	public Orders(long reference, Date order_date, Date delivery_date, String statut) {
 		super();
 		this.reference = reference;
 		this.order_date = order_date;

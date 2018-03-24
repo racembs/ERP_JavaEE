@@ -26,4 +26,5 @@ public interface ArticleServiceLocal {
 	public List<Article> findArticleByCodeAndType(String code,String type);
 	public List<Article> getArticleListByCode(String code);
 	public List<Article> DisplayArticle() ;
+	public List<Article> findArticleByCodeORDescription(String input);
 }

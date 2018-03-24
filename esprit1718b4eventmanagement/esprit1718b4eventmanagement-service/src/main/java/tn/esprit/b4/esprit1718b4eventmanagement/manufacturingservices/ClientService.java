@@ -39,5 +39,12 @@ public class ClientService extends GenericDAO<Client> implements ClientServiceRe
     	List<Client> results = query.getResultList();
     	return results;
     }
+	@Override
+	public Client findByCompany(String company) {
+		TypedQuery<Client> query = em.createQuery("SELECT c FROM Client c WHERE c.company=:company",Client.class);
+    	query.setParameter("company",company);
+    	Client results = query.getSingleResult();
+    	return results;
+	}
 
 }

@@ -1,10 +1,15 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices;
 
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItemPk;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
@@ -46,6 +51,21 @@ public class OrderItemService extends GenericDAO<OrdredItem> implements OrderIte
 	@Override
 	public OrdredItem reatach(OrdredItem ordredItem) {
 		return em.find(OrdredItem.class, ordredItem.getOrdredItemPk());
+	}
+
+	@Override
+	public List<OrdredItem> findItemsOfAnOrder(int idOrder) {
+		TypedQuery<OrdredItem> query
+		=em.createQuery("SELECT o FROM OrdredItem o WHERE o.ordredItemPk.id_Order =:idOrder", OrdredItem.class);
+		query.setParameter("idOrder",idOrder);
+		List<OrdredItem> list=query.getResultList();
+		return list;
+	}
+
+	@Override
+	public void deleteAllByOrder(int idOrder) {
+		Query query = em.createQuery("DELETE FROM OrdredItem o WHERE o.ordredItemPk.id_Order =:idOrder");
+		int deletedCount = query.setParameter("idOrder",idOrder).executeUpdate();
 	}
 
 }

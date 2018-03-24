@@ -161,5 +161,15 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 		return result;
 	}
 
-	
+	//********************Methode for Orders interface***************//
+	@Override
+	public List<Article> findArticleByCodeORDescription(String input) {
+		String type = "Produit-Fini";
+		TypedQuery<Article> query
+		=em.createQuery("SELECT a FROM Article a WHERE a.ArticleCode LIKE :input AND a.Type= :type OR a.Description LIKE :input AND a.Type= :type", Article.class);
+		query.setParameter("input","%"+input+"%");
+		query.setParameter("type",type);
+		List<Article> article=query.getResultList();
+		return article;
+	}
 }
