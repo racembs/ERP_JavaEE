@@ -73,6 +73,7 @@ public class HomeViewController implements Initializable {
             VBox sidePane = FXMLLoader.load(getClass().getResource("/views/Drawer.fxml"));
             AnchorPane wrPane = FXMLLoader.load(getClass().getResource("/views/WorkUs.fxml"));
             AnchorPane woPane = FXMLLoader.load(getClass().getResource("/views/WorkOs.fxml"));
+            AnchorPane Profile = FXMLLoader.load(getClass().getResource("/views/Profile.fxml"));
             drawer.setSidePane(sidePane);
 
             for (Node node : sidePane.getChildren()) {
@@ -86,7 +87,7 @@ public class HomeViewController implements Initializable {
                                                     break;
                             case "doctorMenu":
                                 drawer.close();                               
-                               
+                                setNode(Profile);
                                 break;
                             case "WorkOrder":
                              	 drawer.close();                               
@@ -94,7 +95,7 @@ public class HomeViewController implements Initializable {
                                break;
                             case "appointmentMenu":
                                 drawer.close();                                
-                               
+                                setNode(Profile);
                                 break;                                
                         }
                     });

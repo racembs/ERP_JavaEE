@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeView?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
@@ -18,7 +19,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" prefHeight="684.0" prefWidth="1105.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.EquipementController">
+<AnchorPane id="AnchorPane" prefHeight="684.0" prefWidth="1105.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.EquipmentsController">
    <children>
       <JFXTabPane layoutX="138.0" layoutY="100.0" prefHeight="684.0" prefWidth="1105.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -36,17 +37,9 @@
                               <JFXButton layoutX="576.0" layoutY="564.0" prefHeight="27.0" prefWidth="78.0" styleClass="green-btn" text="Edit" />
                               <JFXButton fx:id="btnadd" layoutX="733.0" layoutY="563.0" onAction="#OnAddClick" prefHeight="37.0" prefWidth="100.0" styleClass="blue-btn" text="add" />
                               <JFXTextField fx:id="State" focusColor="#00add8" labelFloat="true" layoutX="89.0" layoutY="198.0" prefHeight="30.0" prefWidth="249.0" promptText="State" unFocusColor="#868282" />
-                              <AnchorPane layoutX="504.0" layoutY="125.0" prefHeight="268.0" prefWidth="539.0" style="-fx-background-color: rgb(0, 173, 216);" styleClass="rgb(0, 192, 239)">
-                                 <children>
-                                    <JFXComboBox fx:id="Combo1" layoutX="3.0" layoutY="44.0" prefHeight="40.0" prefWidth="415.0" />
-                                    <JFXComboBox fx:id="Combo2" layoutX="38.0" layoutY="87.0" prefHeight="40.0" prefWidth="433.0" />
-                                    <JFXComboBox fx:id="Combo3" layoutX="75.0" layoutY="142.0" prefHeight="40.0" prefWidth="426.0" />
-                                    <JFXComboBox fx:id="Combo4" layoutX="109.0" layoutY="194.0" prefHeight="40.0" prefWidth="422.0" />
-                                    <Label layoutX="22.0" layoutY="6.0" prefHeight="49.0" prefWidth="259.0" text="Votre arboresence :" />
-                                 </children>
-                              </AnchorPane>
                               <JFXTextArea fx:id="descrsption" layoutX="86.0" layoutY="377.0" maxWidth="404.0" minWidth="280.0" prefHeight="114.0" prefWidth="280.0" promptText="Descreption" />
                               <JFXTextArea layoutX="562.0" layoutY="413.0" maxWidth="404.0" minWidth="280.0" prefHeight="114.0" prefWidth="280.0" promptText="arboresence" />
+                              <JFXTreeView fx:id="treeviewEq" accessibleText="Equipement" editable="true" layoutX="472.0" layoutY="167.0" prefHeight="186.0" prefWidth="404.0" styleClass="jfx-decorator" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -64,18 +57,10 @@
                               <JFXButton fx:id="btncancel1" layoutX="878.0" layoutY="561.0" onAction="#OnCancelArboClick" styleClass="cancel-button" text="Cancel" />
                               <JFXButton layoutX="576.0" layoutY="564.0" prefHeight="27.0" prefWidth="78.0" styleClass="green-btn" text="Edit" />
                               <JFXButton fx:id="btnadd1" layoutX="733.0" layoutY="563.0" onAction="#OnAddArboClick" prefHeight="37.0" prefWidth="100.0" styleClass="blue-btn" text="add" />
-                              <AnchorPane layoutX="504.0" layoutY="125.0" prefHeight="268.0" prefWidth="539.0" style="-fx-background-color: rgb(0, 173, 216);" styleClass="rgb(0, 192, 239)">
-                                 <children>
-                                    <JFXComboBox fx:id="Combo11" layoutX="3.0" layoutY="44.0" prefHeight="40.0" prefWidth="415.0" />
-                                    <JFXComboBox fx:id="Combo21" layoutX="38.0" layoutY="87.0" prefHeight="40.0" prefWidth="433.0" />
-                                    <JFXComboBox fx:id="Combo31" layoutX="75.0" layoutY="142.0" prefHeight="40.0" prefWidth="426.0" />
-                                    <JFXComboBox fx:id="Combo41" layoutX="109.0" layoutY="194.0" prefHeight="40.0" prefWidth="422.0" />
-                                    <Label layoutX="22.0" layoutY="6.0" prefHeight="49.0" prefWidth="259.0" text="Votre arboresence :" />
-                                 </children>
-                              </AnchorPane>
                               <JFXTextArea layoutX="562.0" layoutY="413.0" maxWidth="404.0" minWidth="280.0" prefHeight="114.0" prefWidth="280.0" promptText="arboresence" />
                               <JFXComboBox fx:id="combarbotype" layoutX="66.0" layoutY="247.0" prefHeight="40.0" prefWidth="274.0" />
                               <Label layoutX="38.0" layoutY="201.0" prefHeight="46.0" prefWidth="258.0" text="Type D'arborecence" />
+                              <JFXTreeView fx:id="treeviewArbo" accessibleText="Equipement" editable="true" layoutX="410.0" layoutY="137.0" prefHeight="186.0" prefWidth="404.0" styleClass="jfx-decorator" />
                            </children>
                         </AnchorPane>
                      </children>

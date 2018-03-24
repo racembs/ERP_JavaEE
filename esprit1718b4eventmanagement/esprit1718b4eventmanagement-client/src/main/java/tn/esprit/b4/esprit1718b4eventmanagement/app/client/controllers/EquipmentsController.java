@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTreeView;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,20 +31,26 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Arboresence;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
 
+
 /**
  * FXML Controller class
  *
  * @author Asus
  */
-public class EquipementController implements Initializable {
+public class EquipmentsController implements Initializable {
+
 
     @FXML
     private AnchorPane arbo;
@@ -60,14 +67,6 @@ public class EquipementController implements Initializable {
     @FXML
     private JFXTextField State;
     @FXML
-    private JFXComboBox<?> Combo1;
-    @FXML
-    private JFXComboBox<?> Combo2;
-    @FXML
-    private JFXComboBox<?> Combo3;
-    @FXML
-    private JFXComboBox<?> Combo4;
-    @FXML
     private JFXTextArea descrsption;
     @FXML
     private AnchorPane arbo1;
@@ -78,15 +77,7 @@ public class EquipementController implements Initializable {
     @FXML
     private JFXButton btnadd1;
     @FXML
-    private JFXComboBox<?> Combo11;
-    @FXML
-    private JFXComboBox<?> Combo21;
-    @FXML
-    private JFXComboBox<?> Combo31;
-    @FXML
-    private JFXComboBox<?> Combo41;
-    @FXML
-    private JFXComboBox<?> combarbotype;
+    private JFXComboBox<String> combarbotype;
     @FXML
     private Tab btndetail;
     @FXML
@@ -101,6 +92,10 @@ public class EquipementController implements Initializable {
     private TableColumn<Equipment,String>  colState;
     @FXML
     private TableColumn<Equipment,String>  colDescription;
+    @FXML
+    private JFXTreeView<String> treeviewEq;
+    @FXML
+    private JFXTreeView<String> treeviewArbo;
 
     /**
      * Initializes the controller class.
@@ -108,6 +103,29 @@ public class EquipementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+    	combarbotype.getItems().addAll("Principale","Secondaire");
+    	combarbotype.getSelectionModel().selectLast();
+    	
+    	 Image icon = new Image (
+  			   getClass().getResourceAsStream("/views/imgs/equi.png"));
+  			
+  			  TreeItem<String> equii =  new TreeItem<>("Entreprise", new ImageView(icon));
+  			  equii.setExpanded(true);
+
+  			  TreeItem<String> nodeA = new TreeItem<>("arbo 1", new ImageView(icon));
+  			  TreeItem<String> nodeB = new TreeItem<>("arbo 2", new ImageView(icon));
+  			  TreeItem<String> nodeC = new TreeItem<>("arbo 3", new ImageView(icon));
+  			  equii.getChildren().addAll(nodeA,nodeB,nodeC);
+  			  nodeA.setExpanded(true);
+  			  
+  			  TreeItem<String> nodeA1 = new TreeItem<>("arbo1:room 1", new ImageView(icon));
+  			  TreeItem<String> nodeB1 = new TreeItem<>("arbo1:room 2", new ImageView(icon));
+  			  TreeItem<String> nodeC1 = new TreeItem<>("arbo1:room 3", new ImageView(icon));
+  			  nodeA.getChildren().addAll(nodeA1,nodeB1,nodeC1);
+  			  treeviewEq.setRoot(equii);
+  			treeviewEq.setEditable(true);
+  		  treeviewArbo.setRoot(equii);
+			treeviewArbo.setEditable(true);
     }    
 
     @FXML
@@ -171,7 +189,20 @@ String dateF = df.format(date.getTime());
     }
 
     @FXML
-    private void OnAddArboClick(ActionEvent event) {
+    private void OnAddArboClick(ActionEvent event) throws NamingException {
+    	
+
+    	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
+    	Context context1 = new InitialContext();
+    	
+    	ArboresenceServiceRemote Proxy = (ArboresenceServiceRemote) context1.lookup(jndiName2);
+    	String namee=name.getText();
+    	String type=combarbotype.getValue();
+    	Arboresence arbo=new Arboresence(namee,type);
+    	Proxy.addArbo(arbo);
+    	
+    	Proxy.addArbo(9,10);
+    	
     	
     	
     	
@@ -209,5 +240,4 @@ String dateF = df.format(date.getTime());
     	
     	
     }
-    
 }
