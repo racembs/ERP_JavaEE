@@ -132,45 +132,63 @@ public class ChargingStationController implements Initializable {
 			contextUser = new InitialContext();
 	    	UserServiceRemote proxyuser = (UserServiceRemote) contextUser.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
 	    	User user = new User();
-	    	List<User> listU = proxyuser.DisplayUser();
-			List<String>listuser = new ArrayList<>();
+	    	//List<User> listU = proxyuser.DisplayUser();
+			List<User>listu = proxyuser.DisplayUser();
 			
-			
-			for(int i=0;i<listU.size();i++)
-			{
-				listuser.add(listU.get(i).getFirstname()+" "+listU.get(i).getLastname());
-			}
-
-             ObservableList obList = FXCollections.observableList(listuser);
-    		//idUser.getItems().clear();
-             idUser.setItems(obList);
-             idUser.getSelectionModel().selectLast();
-			
-			
+//			
+//			for(int i=0;i<listU.size();i++)
+//			{
+//				listuser.add(listU.get(i).getFirstname()+" "+listU.get(i).getLastname());
+//			}
+//
+//             ObservableList obList = FXCollections.observableList(listuser);
+//    		//idUser.getItems().clear();
+//             idUser.setItems(obList);
+//             idUser.getSelectionModel().selectLast();
+ 	
              
  			Context contextEquipment;
  			contextEquipment = new InitialContext();
  			EquipementServiceRemote proxyEquipment = (EquipementServiceRemote) contextEquipment.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/EquipementService!tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote");
  	    	Equipment equipment = new Equipment();
  	    	List<Equipment> listE = proxyEquipment.DisplayEquipment();
- 			List<String>listeq = new ArrayList<>();
- 			
- 			
- 			for(int i=0;i<listE.size();i++)
- 			{
- 				listeq.add(listE.get(i).getDescription()+" "+listE.get(i).getSerialNum());
- 			}
+// 			List<String>listeq = new ArrayList<>();
+// 			
+// 			
+// 			for(int i=0;i<listE.size();i++)
+// 			{
+// 				listeq.add(listE.get(i).getDescription()+" "+listE.get(i).getSerialNum());
+// 			}
 
-              ObservableList obListeq = FXCollections.observableList(listeq);
+              ObservableList<Equipment> obListeq = FXCollections.observableList(listE);
+              ObservableList<User> obListu = FXCollections.observableList(listu);
      		//idUser.getItems().clear();
               idEquipement.setItems(obListeq);
+              idEquipement.valueProperty().addListener((obs, oldVal, newVal) -> {
+                  String selectionText =  newVal.getSerialNum() + "-" + newVal.getDescription();
+
+                  System.out.println(selectionText);
+                 // textNamePrice.setText(selectionText);
+              });
               idEquipement.getSelectionModel().selectLast();
 			
-			
+ 			 
+             idUser.setItems(obListu);
+             idUser.valueProperty().addListener((obs, oldVal, newVal) -> {
+                 String selectionText =  newVal.getFirstname() + "-" + newVal.getLastname();
+
+                 System.out.println(selectionText);
+                // textNamePrice.setText(selectionText);
+             });
+           
+             idUser.getSelectionModel().selectLast();	
+              
 			idUserTab.setCellValueFactory(new Callback<CellDataFeatures<ChargingStation,String>,ObservableValue<String>>(){
 
 	              @Override
 	              public ObservableValue<String> call(CellDataFeatures<ChargingStation, String> param) {
+//	            	  String f= param.getValue().getUser().getFirstname();
+//	            	  String l= param.getValue().getUser().getLastname();
 	                  return new SimpleStringProperty(param.getValue().getUser().getFirstname()+"-"+param.getValue().getUser().getLastname());
 	              }
 	          }); 
@@ -258,9 +276,11 @@ public class ChargingStationController implements Initializable {
 			  charginstation.setNbday(nbd);
 			  charginstation.setNbhours(nbh);
 			
-//			  int idE = idEquipement.getValue().getId();
-//			  int idU = idUser.getValue().getId();
-			 
+			  int idE = idEquipement.getSelectionModel().getSelectedItem().getId();
+			  int idU = idUser.getSelectionModel().getSelectedItem().getId();
+			  System.out.println(idE);
+			  System.out.println(idU);
+			//  System.out.println(idU);
 			  //int idU = Integer.parseInt(idUser.getValue().toString());
 			  
 			  
@@ -270,10 +290,15 @@ public class ChargingStationController implements Initializable {
 //		    	String a= String.valueOf(idE);
 //		    	String b= String.valueOf(idU);
 //			  System.out.println(a+""+b);
-			  
-			  
-			  proxyChargingStation.addChargingStation(1, 3, charginstation);
+			  try {
+				String jndiNameChargingStation22 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ChargingStationService!tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote";
+				Context contextChargingStation22;
+				contextChargingStation22 = new InitialContext();
+				ChargingStationServiceRemote proxyChargingStation22 = (ChargingStationServiceRemote) contextChargingStation22.lookup(jndiNameChargingStation22);
+				
+			  proxyChargingStation22.addChargingStation(idE, idU, charginstation);
 				System.out.println("created");
+				
 				
 //				   List<OperatingRange> list = proxy.DisplayOperatingRange();
 //			        ObservableList<OperatingRange> items = FXCollections.observableArrayList(list);
@@ -285,6 +310,10 @@ public class ChargingStationController implements Initializable {
 					alert.setTitle("ChargingStation Added");
 					alert.setHeaderText("Succesful");
 					alert.showAndWait();
+		} catch (NamingException n) {
+					
+					n.printStackTrace();
+				}
 		  });
 		  
 		  
