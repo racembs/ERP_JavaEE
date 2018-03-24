@@ -15,7 +15,7 @@ public interface ChargingStationServiceLocal {
 	
 	public void deleteChargingStation(int idEquipement , int idUser);
 	
-	public void updateChargingStation(int idEquipement, int idUser);
+	public void updateChargingStation(int idEquipement, int idUser, ChargingStation ChS);
 	
 	public ChargingStation findChargingStation(int idEquipement, int idUser);
 	public ChargingStation findChargingStationByEquipement(int idEquipement);

@@ -39,9 +39,12 @@ public class ChargingStationService implements ChargingStationServiceLocal, Char
 	
 	
 	@Override
-	public void updateChargingStation(int idEquipement, int idUser) {
-		ChargingStation Chs = findChargingStation(idEquipement, idUser);
-		Chs.setDescription("desc");
+	public void updateChargingStation(int idEquipement, int idUser, ChargingStation ChS) {
+		ChargingStationPK ChSpk = new ChargingStationPK();
+		ChSpk.setId_equipment(idEquipement);
+		ChSpk.setIdUser(idUser);
+		ChS.setChargingstationPK(ChSpk);
+		em.merge(ChS);
 		
 	}
 	@Override

@@ -17,24 +17,24 @@ public class TestChargingStation {
 		
 		ch.setCode(10);
 		
-
-	
-		proxy.addChargingStation(2, 2, ch);
-		System.out.println("created");
+//
+//	
+//		proxy.addChargingStation(2, 2, ch);
+//		System.out.println("created");
+//		
+//		
+//		
+//		
+//		ChargingStation chs=proxy.findChargingStation(1,1);
+//		System.out.println(chs.getCode());
+//		
 		
-		
-		
-		
-		ChargingStation chs=proxy.findChargingStation(1,1);
-		System.out.println(chs.getCode());
-		
-		
-		proxy.updateChargingStation(2, 2);
+		proxy.updateChargingStation(2,2,ch);
 		System.out.println("modified");
 		
 		
-		proxy.deleteChargingStation(2, 2);
-		System.out.println("deleted");
+//		proxy.deleteChargingStation(2, 2);
+//		System.out.println("deleted");
 		
 		
 	}

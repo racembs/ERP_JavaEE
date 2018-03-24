@@ -5,6 +5,10 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -41,8 +45,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Orders;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote;
@@ -107,6 +114,10 @@ public class ChargingStationController implements Initializable {
     private ImageView idCalendar;
     @FXML
     private ImageView idStatistics;
+    @FXML
+    private ImageView idsubmit;
+    @FXML
+    private ImageView idcancel;
     
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
@@ -349,6 +360,61 @@ public class ChargingStationController implements Initializable {
 		  
 			
 		  idUpdate.setOnMouseClicked((MouseEvent e) -> { 
+			  
+			  
+				if(idTab.getSelectionModel().getSelectedItem()!=null){
+
+					ChargingStation chs = idTab.getSelectionModel().getSelectedItem();
+					String c= String.valueOf(chs.getCode());
+					String d= String.valueOf(chs.getNbday());
+					String h= String.valueOf(chs.getNbhours());
+		    		idCode.setText(c);    
+		    		idDEscription.setText(chs.getDescription());
+		    		idNaturePost.setText(chs.getNaturepost());
+		    		idNbDays.setText(d);
+		    		idNbHours.setText(h);
+		    		
+		    		idsubmit.setOnMouseClicked((MouseEvent a) -> { 
+		    			
+		    			Context context55;
+						try {
+							context55 = new InitialContext();
+							String ChargingStationjndiName55 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ChargingStationService!tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote";
+							ChargingStationServiceRemote proxyChargingStation55 =  (ChargingStationServiceRemote) context55.lookup(ChargingStationjndiName55);
+//					       
+					
+//		    			int ide=chs.getEquipement().getId();
+//		    			int idu=chs.getUser().getId();
+							
+							// ChargingStation charginstation = new ChargingStation();
+							  int code=Integer.parseInt(idCode.getText());
+							  chs.setCode(code);	  
+							  chs.setDescription(idDEscription.getText());
+							  chs.setNaturepost(idNaturePost.getText());
+							  int nbd=Integer.parseInt(idNbDays.getText());
+							  int nbh=Integer.parseInt(idNbHours.getText());		  
+							  chs.setNbday(nbd);
+							  chs.setNbhours(nbh);
+							
+							  int idE = idEquipement.getSelectionModel().getSelectedItem().getId();
+							  int idU = idUser.getSelectionModel().getSelectedItem().getId();
+							  System.out.println(idE);
+							  System.out.println(idU);
+							  
+							  ChargingStationPK charginstationpk = new ChargingStationPK();
+							  charginstationpk.setId_equipment(idE);
+							  charginstationpk.setIdUser(idU);
+							  chs.setChargingstationPK(charginstationpk);
+							  proxyChargingStation55.deleteChargingStation(idE,idU);
+		    			proxyChargingStation55.updateChargingStation(idE,idU,chs);
+		    			System.out.println("okkkkk");
+		    			
+						} catch (NamingException n) {
+							
+							n.printStackTrace();
+						}
+		    		 });
+		    	}
 		
 		  });
 		  
