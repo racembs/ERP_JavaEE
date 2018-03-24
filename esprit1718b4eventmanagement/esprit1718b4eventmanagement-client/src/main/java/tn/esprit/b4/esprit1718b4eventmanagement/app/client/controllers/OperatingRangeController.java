@@ -109,7 +109,7 @@ public class OperatingRangeController implements Initializable {
     @FXML
     private Button idFind;
     @FXML
-    private JFXTextField idoptfind;
+    private JFXTextField idoptrange;
     @FXML
     private TreeView<String> idCheckTree;
 
@@ -160,9 +160,9 @@ public class OperatingRangeController implements Initializable {
 	        List<Article> listA = ArticleProxy.DisplayArticle();
 
 	        //Long N = proxy.CountOperatingRange();
-//	        ObservableList<OperatingRange> items = FXCollections.observableArrayList(list);
-//	        System.out.println(items.get(0).getDesignation());
-//	        idTab.setItems(items);
+	        ObservableList<OperatingRange> items22 = FXCollections.observableArrayList(list);
+	        System.out.println(items22.get(0).getDesignation());
+	        idTab.setItems(items22);
 	        
 	        CheckBoxTreeItem<String> GPAO = new CheckBoxTreeItem<String>("GPAO");
 	        
@@ -358,10 +358,12 @@ public class OperatingRangeController implements Initializable {
 			context1 = new InitialContext();
 			String OperatingRangejndiName1 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
 	        OperatingRangeServiceRemote proxy1 =  (OperatingRangeServiceRemote) context1.lookup(OperatingRangejndiName1);
-	        List<OperatingRange> list1 = proxy1.find("Gamme1");
+	        List<OperatingRange> list1 = proxy1.find(idoptrange.getText());
+	        
 	        ObservableList<OperatingRange> items1 = FXCollections.observableArrayList(list1);
 	       // System.out.println(items1.get(0).getDesignation());
 	        idTab.setItems(items1);
+	        System.out.println(idoptrange.getText());
 		 
 		  
 		} catch (NamingException e) {

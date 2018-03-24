@@ -70,7 +70,7 @@
                         <TableColumn fx:id="idNbHoursTab" prefWidth="91.0" text="Nb Hours" />
                     </columns>
                   </TableView>
-                  <JFXTextField fx:id="idoptrange" layoutX="466.0" layoutY="46.0" />
+                  <JFXTextField fx:id="idchs" layoutX="466.0" layoutY="46.0" />
                   <ComboBox fx:id="idUser" layoutX="204.0" layoutY="97.0" prefWidth="150.0" />
                   <ComboBox fx:id="idEquipement" layoutX="204.0" layoutY="136.0" prefWidth="150.0" />
                   <Label layoutX="103.0" layoutY="185.0" text="Code" />

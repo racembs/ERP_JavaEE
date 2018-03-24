@@ -79,7 +79,14 @@ public class ChargingStationService implements ChargingStationServiceLocal, Char
 		return result;
 	}
 	
-	
+	@Override
+	public List<ChargingStation> find(int code) {
+		TypedQuery<ChargingStation> query=em.createQuery(
+				"select o from ChargingStation o where o.code=:code", ChargingStation.class);
+		query.setParameter("code", code);
+		List <ChargingStation> result= query.getResultList();
+		return result;
+	}
 
 
 

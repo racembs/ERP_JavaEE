@@ -88,7 +88,7 @@ public class ChargingStationController implements Initializable {
     @FXML
     private ImageView idFind;
     @FXML
-    private JFXTextField idoptrange;
+    private JFXTextField idchs;
     @FXML
     private ComboBox<User> idUser;
     @FXML
@@ -286,6 +286,43 @@ public class ChargingStationController implements Initializable {
 					alert.setHeaderText("Succesful");
 					alert.showAndWait();
 		  });
+		  
+		  
+		  
+		  idFind.setOnMouseClicked((MouseEvent e) -> { 
+			
+		  		Context context55;
+				try {
+					context55 = new InitialContext();
+					String ChargingStationjndiName55 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ChargingStationService!tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote";
+					ChargingStationServiceRemote proxyChargingStation55 =  (ChargingStationServiceRemote) context55.lookup(ChargingStationjndiName55);
+			       
+			  int c=Integer.parseInt(idchs.getText());	  
+			  System.out.println(idchs.getText());
+			  List<ChargingStation> listch22 =proxyChargingStation55.find(c);
+				        
+			    	        ObservableList<ChargingStation> itemsch22 = FXCollections.observableArrayList(listch22);
+			    	        System.out.println(itemsch22.get(0).getDescription());
+			    	        idTab.setItems(itemsch22);
+			    			  
+				} catch (NamingException n) {
+					
+					n.printStackTrace();
+				}
+				
+				  
+				  
+				  
+				  
+		});
+		  
+		  
+		  
+			
+		  idUpdate.setOnMouseClicked((MouseEvent e) -> { 
+		
+		  });
+		  
     } catch (NamingException e1) {
 		// TODO Auto-generated catch block
 		

@@ -21,5 +21,5 @@ public interface ChargingStationServiceRemote {
 	public ChargingStation findChargingStationByUser(int idUser);
 	
 	public List<ChargingStation> DisplayChargingStation();
-
+	public List<ChargingStation> find(int code);
 }
