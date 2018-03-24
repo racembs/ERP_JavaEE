@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NomenclaturePk;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 
 
@@ -57,13 +58,15 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 
 	@Override
 	public void updateArticle(Article newArticle) {
-		Article article =findArticleByCode(newArticle.getArticleCode());
+		Article article =findArticleByCode(newArticle.getArticleCode()).get(0);
 		article.setArticleCode(newArticle.getArticleCode());
 		article.setDescription(newArticle.getDescription());
 		article.setPmp(newArticle.getPmp());
 		article.setQuantity(newArticle.getQuantity());
 		article.setType(newArticle.getType());
 		article.setUnitCode(newArticle.getUnitCode());
+		article.setDailyConsumption(newArticle.getDailyConsumption());
+		article.setDeliveryTime(newArticle.getDeliveryTime());
 		
 	}
 
@@ -121,11 +124,12 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 
 
 	@Override
-	public Article findArticleByCode(String code) {
+	public List<Article> findArticleByCode(String code) {
 		TypedQuery<Article> query
-		=em.createQuery("SELECT a FROM Article a WHERE a.ArticleCode= :code", Article.class);
+		=em.createQuery("SELECT a FROM Article a WHERE a.ArticleCode LIKE :code", Article.class);
 		query.setParameter("code",code);
-		Article article=query.getSingleResult();
+		List<Article> article=query.getResultList();
+		
 		return article;
 	}
 
@@ -156,8 +160,8 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 	@Override
 	public List<Article> DisplayArticle() {
 
-		TypedQuery<Article> query=em.createQuery("SELECT a FROM Article a",Article.class);
-		List <Article> result= query.getResultList();
+		TypedQuery<Article> query1=em.createQuery("SELECT a FROM Article a",Article.class);
+		List <Article> result= query1.getResultList();
 		return result;
 	}
 
@@ -172,4 +176,5 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 		List<Article> article=query.getResultList();
 		return article;
 	}
+
 }

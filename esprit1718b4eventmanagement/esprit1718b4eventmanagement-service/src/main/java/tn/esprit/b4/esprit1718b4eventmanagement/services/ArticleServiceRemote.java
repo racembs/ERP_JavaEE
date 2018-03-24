@@ -22,7 +22,7 @@ public interface ArticleServiceRemote {
 	public List<Nomenclature> getFilsArticles(int idArticlePere);
 	public List<Article> getAllArticles();
 	public List<Article> getArticlesByType(String type);
-	public Article findArticleByCode(String code);
+	public List<Article>  findArticleByCode(String code);
 	public List<Article> findArticleByCodeAndType(String code,String type);
 	public List<Article> getArticleListByCode(String code);
 	public List<Article> DisplayArticle();

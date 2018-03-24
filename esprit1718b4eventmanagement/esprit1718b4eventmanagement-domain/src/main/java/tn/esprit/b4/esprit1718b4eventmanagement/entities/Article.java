@@ -55,6 +55,23 @@ public class Article implements Serializable {
 		private int Quantity;
 		@Column(name = "ReservedQuantity")
 		private int ReservedQuantity=0;
+		@Column(name = "DailyConsumption")
+		private int DailyConsumption=0;
+		@Column(name = "DeliveryTime")
+		private int DeliveryTime=0;
+		
+		public int getDailyConsumption() {
+			return DailyConsumption;
+		}
+		public void setDailyConsumption(int dailyConsumption) {
+			DailyConsumption = dailyConsumption;
+		}
+		public int getDeliveryTime() {
+			return DeliveryTime;
+		}
+		public void setDeliveryTime(int deliveryTime) {
+			DeliveryTime = deliveryTime;
+		}
 		public int getId() {
 			return Id;
 		}

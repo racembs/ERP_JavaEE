@@ -11,9 +11,10 @@
          <image>
             <Image url="@image/cover.jpg" />
          </image></ImageView>
+          <JFXButton fx:id="ProfileBtn" accessibleText="doctorMenu" layoutX="10.0" layoutY="10.0" onAction="#onProfileClik" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Profile" />
       <JFXButton fx:id="homeBtn" accessibleText="WorkRequest" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Work Request" />
-      <JFXButton fx:id="ProfileBtn" accessibleText="doctorMenu" layoutX="10.0" layoutY="10.0" onAction="#onProfileClik" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Profile" />
-      <JFXButton fx:id="appointmentBtn" accessibleText="appointmentMenu" layoutX="10.0" layoutY="53.0" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Appointments" />
+     
+      <JFXButton fx:id="appointmentBtn" accessibleText="WorkOrder" layoutX="10.0" layoutY="53.0" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Work Orders" />
       <JFXButton fx:id="paymentBtn" accessibleText="paymentMenu" layoutX="10.0" layoutY="96.0" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Payments" />
       <JFXButton fx:id="logoutBtn" accessibleText="logoutMenu" layoutX="10.0" layoutY="182.0" onAction="#logOut" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Log out" />
       <JFXButton fx:id="exitBtn" accessibleText="exitMenu" layoutX="10.0" layoutY="182.0" onAction="#exit" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Exit" />

@@ -8,6 +8,7 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 import com.google.common.base.Optional;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXButton.ButtonType;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
@@ -124,6 +125,8 @@ public class AdminRHController implements Initializable {
     private JFXButton btndeconnexion1;
     @FXML
     private TextField txtsearch;
+    @FXML
+    private JFXComboBox<String> Combocheck;
 
     /**
      * Initializes the controller class.
@@ -131,7 +134,8 @@ public class AdminRHController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    	
+    	Combocheck.getItems().addAll("Mail","Statut","Name","Login");
+    	Combocheck.getSelectionModel().selectLast();
     	BtnConfirme.setVisible(false);
     	chekVal.setVisible(false);
     	CheckBloc.setVisible(false);
@@ -505,7 +509,7 @@ labrole.setText(p7);
         
         
         List<User> list=new ArrayList<>();
-        
+      String val=  Combocheck.getValue();
     	String login=	txtsearch.getText();
     	if (txtsearch.getText().equals(""))
     	{
@@ -515,7 +519,7 @@ labrole.setText(p7);
     		 tableau.setItems(items);
  	       
     	}
-    	else 
+    	else if (val.equals("Login")) 
     	{
     	User user1 = proxy.findByLogin(login);
       
@@ -523,7 +527,28 @@ labrole.setText(p7);
 	        ObservableList<User> items = FXCollections.observableArrayList(list);
 	        tableau.setItems(items);
 	        }
-
+    	else if (val.equals("Mail")) 
+    	{
+    		List<User> list1=proxy.SearchMail(login);
+    		
+   		 ObservableList<User> items = FXCollections.observableArrayList(list1);
+   		 tableau.setItems(items);
+	        }
+    	else if (val.equals("Name")) 
+	    	{
+    		List<User> list12=proxy.SearchFirstName(login);
+    		
+   		 ObservableList<User> items = FXCollections.observableArrayList(list12);
+   		 tableau.setItems(items);
+	    	        }
+    	
+    	else if (val.equals("Statut")) 
+	    	    	{
+    		List<User> list12=proxy.SearchStatut(login);
+    		
+   		 ObservableList<User> items = FXCollections.observableArrayList(list12);
+   		 tableau.setItems(items);
+	    	    	        }
     	//     List<User> list=proxy.SearchLogin(login);
     	        
     	    

@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -38,11 +39,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
 
 /**
  * FXML Controller class
@@ -84,9 +90,9 @@ public class ChargingStationController implements Initializable {
     @FXML
     private JFXTextField idoptrange;
     @FXML
-    private ComboBox<?> idUser;
+    private ComboBox<User> idUser;
     @FXML
-    private ComboBox<?> idEquipement;
+    private ComboBox<Equipment> idEquipement;
     @FXML
     private TextField idCode;
     @FXML
@@ -111,7 +117,182 @@ public class ChargingStationController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     	
-    }
+    	Context context;
+    	
+		try {
+			String jndiNameChargingStation = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ChargingStationService!tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote";
+			Context contextChargingStation;
+			contextChargingStation = new InitialContext();
+			ChargingStationServiceRemote proxyChargingStation = (ChargingStationServiceRemote) contextChargingStation.lookup(jndiNameChargingStation);
+			ChargingStation ch = new ChargingStation();
+		
+		
+	
+			Context contextUser;
+			contextUser = new InitialContext();
+	    	UserServiceRemote proxyuser = (UserServiceRemote) contextUser.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
+	    	User user = new User();
+	    	List<User> listU = proxyuser.DisplayUser();
+			List<String>listuser = new ArrayList<>();
+			
+			
+			for(int i=0;i<listU.size();i++)
+			{
+				listuser.add(listU.get(i).getFirstname()+" "+listU.get(i).getLastname());
+			}
+
+             ObservableList obList = FXCollections.observableList(listuser);
+    		//idUser.getItems().clear();
+             idUser.setItems(obList);
+             idUser.getSelectionModel().selectLast();
+			
+			
+             
+ 			Context contextEquipment;
+ 			contextEquipment = new InitialContext();
+ 			EquipementServiceRemote proxyEquipment = (EquipementServiceRemote) contextEquipment.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/EquipementService!tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote");
+ 	    	Equipment equipment = new Equipment();
+ 	    	List<Equipment> listE = proxyEquipment.DisplayEquipment();
+ 			List<String>listeq = new ArrayList<>();
+ 			
+ 			
+ 			for(int i=0;i<listE.size();i++)
+ 			{
+ 				listeq.add(listE.get(i).getDescription()+" "+listE.get(i).getSerialNum());
+ 			}
+
+              ObservableList obListeq = FXCollections.observableList(listeq);
+     		//idUser.getItems().clear();
+              idEquipement.setItems(obListeq);
+              idEquipement.getSelectionModel().selectLast();
+			
+			
+			idUserTab.setCellValueFactory(new Callback<CellDataFeatures<ChargingStation,String>,ObservableValue<String>>(){
+
+	              @Override
+	              public ObservableValue<String> call(CellDataFeatures<ChargingStation, String> param) {
+	                  return new SimpleStringProperty(param.getValue().getUser().getFirstname()+"-"+param.getValue().getUser().getLastname());
+	              }
+	          }); 
+			idEquipementTab.setCellValueFactory(new Callback<CellDataFeatures<ChargingStation,String>,ObservableValue<String>>(){
+
+	              @Override
+	              public ObservableValue<String> call(CellDataFeatures<ChargingStation, String> param) {
+	                  return new SimpleStringProperty(param.getValue().getEquipement().getSerialNum()+"-"+param.getValue().getEquipement().getDescription());
+	              }
+	          }); 
+			idCodeTab.setCellValueFactory(new PropertyValueFactory<ChargingStation, Integer>("code"));
+			idDescriptionTab.setCellValueFactory(new PropertyValueFactory<ChargingStation, String>("description"));
+			idNaturePostTab.setCellValueFactory(new PropertyValueFactory<ChargingStation, String>("naturepost"));
+			idNbDaysTab.setCellValueFactory(new PropertyValueFactory<ChargingStation, Integer>("nbday"));
+			idNbHoursTab.setCellValueFactory(new PropertyValueFactory<ChargingStation, Integer>("nbhours"));
+			
+			
+			   List<ChargingStation> list = proxyChargingStation.DisplayChargingStation();
+		        ObservableList<ChargingStation> items = FXCollections.observableArrayList(list);
+		        idTab.setItems(items);
+	
+		
+		  idDelete.setOnMouseClicked((MouseEvent e) -> { 
+		    	
+			  
+				try {
+
+					String jndiNameChargingStation1 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ChargingStationService!tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote";
+					Context contextChargingStation1;
+					contextChargingStation1 = new InitialContext();
+					
+					ChargingStationServiceRemote proxyChargingStation1 = (ChargingStationServiceRemote) contextChargingStation1.lookup(jndiNameChargingStation1);
+					ChargingStation ch1 = new ChargingStation(); 
+					
+				  	Alert alert = new Alert(AlertType.CONFIRMATION);
+			    	alert.setTitle("WARNING");
+					alert.setHeaderText("Are You Sure?");
+			    	
+			    	if (alert.showAndWait().get () == ButtonType.OK)
+			    	{
+			    		
+			    	
+			    		
+			        	Integer idE= idTab.getSelectionModel().getSelectedItem().getEquipement().getId();
+			        	Integer idU= idTab.getSelectionModel().getSelectedItem().getUser().getId();
+			        	System.out.println(idE);
+			        	System.out.println(idU);
+			        	proxyChargingStation1.deleteChargingStation(idE,idU);
+			        	
+			    		   List<ChargingStation> listch = proxyChargingStation1.DisplayChargingStation();
+			    	        ObservableList<ChargingStation> itemsch = FXCollections.observableArrayList(listch);
+			    	        System.out.println(itemsch.get(0).getDescription());
+			    	        idTab.setItems(itemsch);
+			    	        
+			    	        
+			    		 Alert alert1 = new Alert(AlertType.INFORMATION);
+			    			alert1.setTitle("ChargingStation Deleted");
+			    			alert1.setHeaderText("Succesful");
+			    			alert1.showAndWait();
+			    		//System.out.println("deleted");
+			        	
+			     
+			    		
+			    	}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	
+
+		    });
+		  
+		  
+		  idAdd.setOnMouseClicked((MouseEvent e) -> { 
+			  
+			  
+			  
+			  ChargingStation charginstation = new ChargingStation();
+			  int code=Integer.parseInt(idCode.getText());
+			  charginstation.setCode(code);	  
+			  charginstation.setDescription(idDEscription.getText());
+			  charginstation.setNaturepost(idNaturePost.getText());
+			  int nbd=Integer.parseInt(idNbDays.getText());
+			  int nbh=Integer.parseInt(idNbHours.getText());		  
+			  charginstation.setNbday(nbd);
+			  charginstation.setNbhours(nbh);
+			
+//			  int idE = idEquipement.getValue().getId();
+//			  int idU = idUser.getValue().getId();
+			 
+			  //int idU = Integer.parseInt(idUser.getValue().toString());
+			  
+			  
+			 // idE=proxyEquipment.findEquipementByNumDesc("bb","aaa").getId();
+		    	
+//			  System.out.println("hello");
+//		    	String a= String.valueOf(idE);
+//		    	String b= String.valueOf(idU);
+//			  System.out.println(a+""+b);
+			  
+			  
+			  proxyChargingStation.addChargingStation(1, 3, charginstation);
+				System.out.println("created");
+				
+//				   List<OperatingRange> list = proxy.DisplayOperatingRange();
+//			        ObservableList<OperatingRange> items = FXCollections.observableArrayList(list);
+//			        System.out.println(items.get(0).getDesignation());
+//			        idTab.setItems(items);
+			        
+			        
+				 Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("ChargingStation Added");
+					alert.setHeaderText("Succesful");
+					alert.showAndWait();
+		  });
+    } catch (NamingException e1) {
+		// TODO Auto-generated catch block
+		
+	}
+		}
+    
+  
     
     
     }    

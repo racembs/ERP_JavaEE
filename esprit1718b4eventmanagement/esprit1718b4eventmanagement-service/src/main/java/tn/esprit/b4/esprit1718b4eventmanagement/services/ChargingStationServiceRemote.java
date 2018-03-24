@@ -6,6 +6,7 @@ import javax.ejb.Remote;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 
 @Remote
 public interface ChargingStationServiceRemote {
@@ -20,4 +21,5 @@ public interface ChargingStationServiceRemote {
 	public ChargingStation findChargingStationByUser(int idUser);
 	
 	public List<ChargingStation> DisplayChargingStation();
+
 }

@@ -15,6 +15,13 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
 import java.net.URL;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,6 +39,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
@@ -46,8 +54,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.MvtApprov;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.MvtApprovServiceRemote;
 
 /**
  * FXML Controller class
@@ -127,6 +137,32 @@ public class ArticleController implements Initializable {
     private JFXTextField txtArticleCodeUpdate;
     @FXML
     private JFXTextField txtUnitCodeUpdate;
+    @FXML
+    private Tab tabProcuremrnt;
+    @FXML
+    private JFXButton BtnAddOrder;
+    @FXML
+    private DatePicker AlarmDate;
+    @FXML
+    private JFXTextField txtArticleCodeForOrder;
+    @FXML
+    private JFXTextField txtQuantityForOrder;
+    @FXML
+    private DatePicker ReceptionDate;
+    @FXML
+    private DatePicker RequestDate;
+    @FXML
+    private Tab tabAddNewOrder;
+    @FXML
+    private Tab tabOrdreSettings;
+    @FXML
+    private JFXTextField txtDailyConsuption;
+    @FXML
+    private JFXTextField txtSearchArticleAutoOrdre;
+    @FXML
+    private JFXTextField txtDeliveryTime;
+    @FXML
+    private JFXButton BtnAutoOrdreUpdate;
   
     
     
@@ -179,6 +215,7 @@ comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Prod
     @FXML
     private void OnTabArticleTreeSelected(Event event) throws NamingException {
     fillTreeTableView("all");
+    fillTableView("all");
     	
      	
     }
@@ -196,7 +233,7 @@ comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Prod
     	TreeItem<Article> selectedItem = ArticleTableView.getSelectionModel().getSelectedItem();
     	
     	
-    	aArticleProxy.addNomenclature(selectedItem.getValue().getId(),aArticleProxy.findArticleByCode(txtArticleChild.getText()).getId(),Integer.parseInt(txtChildQuantity.getText()));
+    	aArticleProxy.addNomenclature(selectedItem.getValue().getId(),aArticleProxy.findArticleByCode(txtArticleChild.getText()).get(0).getId(),Integer.parseInt(txtChildQuantity.getText()));
     	
   
     }
@@ -233,9 +270,9 @@ private void fillTreeTableView(String code) throws NamingException {
 	 root.getChildren().add(newItemarticlePere);
 	 List<Nomenclature> filsList;
 	 int size;
-	 do{
+	
 	 filsList= ArticleProxy.getFilsArticles(articlePere.get(i).getId());
-	 size=filsList.size();
+	
 	 
 	 for(int j=0;j<filsList.size();j++) {
 		 newItemarticleFils=new TreeItem<>(filsList.get(j).getArticleFils());
@@ -244,8 +281,7 @@ private void fillTreeTableView(String code) throws NamingException {
 	 }
 	 
 	 newItemarticlePere=newItemarticleFils;
-	 size--;
-	 } while(size>0);
+	 
 	
  }
  	
@@ -379,6 +415,95 @@ private void fillTableView(String code) throws NamingException {
     
 
   
+////////////////////////////////////////////////////////****Procrutment****///////////////////////////////////////////
+   
 
+  
+
+    @FXML
+    private void OnAddOrdreClicked(ActionEvent event) throws NamingException, ParseException {
+    	String jndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/MvtApprovService!tn.esprit.b4.esprit1718b4eventmanagement.services.MvtApprovServiceRemote";
+    	Context context1 = new InitialContext();
+    	MvtApprovServiceRemote OrdreProxy = (MvtApprovServiceRemote) context1.lookup(jndiName);
+    	
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context2 = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context2.lookup(ArticlejndiName);
+    	
+    	
+    	 Article article=aArticleProxy.findArticleByCode(txtArticleCodeForOrder.getText()).get(0);
+    	 LocalDate  localDateAlarm = AlarmDate.getValue();
+    	 Date AlarmTypeDate = java.sql.Date.valueOf(localDateAlarm);
+    			 
+    	LocalDate  localDateReception = ReceptionDate.getValue();
+    	 Date ReceptionTypeDate = java.sql.Date.valueOf(localDateReception);
+    			 
+    	LocalDate  localDateRequest = RequestDate.getValue();
+    	 Date RequestTypeDate = java.sql.Date.valueOf(localDateRequest);
+    	 Alert alert = new Alert(Alert.AlertType.WARNING);
+        java.util.Date CurrentDate=new java.util.Date();
+    	 if(AlarmTypeDate.compareTo(CurrentDate)<=0) {
+    		
+             alert.setTitle("Wrong Date");
+             alert.setHeaderText("Alarm Date is wrong");
+             java.util.Optional<javafx.scene.control.ButtonType> result = alert.showAndWait();
+            
+    	 }else if(ReceptionTypeDate.compareTo(CurrentDate)<=0) {
+    		
+    		 alert.setTitle("Wrong Date");
+             alert.setHeaderText("Local Date is wrong");
+             java.util.Optional<javafx.scene.control.ButtonType> result = alert.showAndWait();
+    	 }else if(RequestTypeDate.compareTo(CurrentDate)<=0){
+    	
+    		 alert.setTitle("Wrong Date");
+             alert.setHeaderText("Request Date is wrong");
+             java.util.Optional<javafx.scene.control.ButtonType> result = alert.showAndWait();
+    	 }else {
+    		 MvtApprov mvtApprov=new MvtApprov(article,null,Integer.valueOf(txtQuantityForOrder.getText()),AlarmTypeDate,RequestTypeDate,ReceptionTypeDate);
+             OrdreProxy.addMvtApprov(mvtApprov);
+    	 }
+      
+   
+       
+        
+    }
+
+    @FXML
+    private void OnSearchArticleAutoOrderReleased(KeyEvent event) throws NamingException {
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context2 = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context2.lookup(ArticlejndiName);
+    	BtnAutoOrdreUpdate.setDisable(true);
+		txtDailyConsuption.setDisable(true);
+    	txtDeliveryTime.setDisable(true);
+    	txtDailyConsuption.setText("");
+    	txtDeliveryTime.setText("");
+    	Article article=aArticleProxy.findArticleByCode(txtSearchArticleAutoOrdre.getText()).get(0);
+    	
+    	if(article!=null) {
+    		BtnAutoOrdreUpdate.setDisable(false);
+    		txtDailyConsuption.setDisable(false);
+        	txtDeliveryTime.setDisable(false);
+        	txtDailyConsuption.setText(String.valueOf(article.getDailyConsumption()));
+        	txtDeliveryTime.setText(String.valueOf(article.getDeliveryTime()));
+        	
+    	}
+    	
+    	
+    }
+
+    @FXML
+    private void OnChangeAutoSettingsClicked(ActionEvent event) throws NamingException {
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context2 = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context2.lookup(ArticlejndiName);
+    	Article article=aArticleProxy.findArticleByCode(txtSearchArticleAutoOrdre.getText()).get(0);
+    	article.setDeliveryTime(Integer.valueOf(txtDeliveryTime.getText()));
+    	article.setDailyConsumption(Integer.valueOf(txtDailyConsuption.getText()));
+    	aArticleProxy.updateArticle(article);
+    	
+    	
+    }
+   
     
 }

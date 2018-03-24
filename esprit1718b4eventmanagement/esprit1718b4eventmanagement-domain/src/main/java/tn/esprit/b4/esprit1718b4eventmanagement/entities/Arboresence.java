@@ -5,15 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.*;
 
 @Entity
@@ -30,22 +21,21 @@ public class Arboresence implements Serializable {
 	@Column(name = "name")
 	private String name;
 	
-	@JoinTable(name = "Parent_Child_Tree", joinColumns = {
-			 @JoinColumn(name = "Parent", referencedColumnName = "Id", nullable = false)}, inverseJoinColumns = {
-			 @JoinColumn(name = "Child", referencedColumnName = "Id", nullable = false)})
-	@ManyToMany
-	private List<Arboresence> parent = new ArrayList<>();
 	
-	@ManyToMany(mappedBy = "parent")
-    private List<Arboresence> child;
+	
+	
+	
+	
 
-	public int getId() {
-		return Id;
-	}
+	@OneToMany(mappedBy="arboresence")
+	private List <Equipment> equipments;
+	
+	
+	
+	
+	
 
-	public void setId(int id) {
-		Id = id;
-	}
+	
 
 	public String getName() {
 		return name;
@@ -55,23 +45,26 @@ public class Arboresence implements Serializable {
 		this.name = name;
 	}
 
-	public List<Arboresence> getParent() {
-		return parent;
+	public List<Equipment> getEquipments() {
+		return equipments;
 	}
 
-	public void setParent(List<Arboresence> parent) {
-		this.parent = parent;
+	public void setEquipments(List<Equipment> equipments) {
+		this.equipments = equipments;
 	}
 
-	public List<Arboresence> getChild() {
-		return child;
-	}
 
-	public void setChild(List<Arboresence> child) {
-		this.child = child;
-	}
 	
+
+
+
 	
+
+
+
+
+	
+
 	
 	
 	
