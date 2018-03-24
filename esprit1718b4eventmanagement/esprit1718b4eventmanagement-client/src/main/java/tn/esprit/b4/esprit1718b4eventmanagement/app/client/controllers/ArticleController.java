@@ -162,7 +162,7 @@ public class ArticleController implements Initializable {
     @FXML
     private JFXTextField txtDeliveryTime;
     @FXML
-    private JFXButton BtnAddOrder1;
+    private JFXButton BtnAutoOrdreUpdate;
   
     
     
@@ -233,7 +233,7 @@ comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Prod
     	TreeItem<Article> selectedItem = ArticleTableView.getSelectionModel().getSelectedItem();
     	
     	
-    	aArticleProxy.addNomenclature(selectedItem.getValue().getId(),aArticleProxy.findArticleByCode(txtArticleChild.getText()).getId(),Integer.parseInt(txtChildQuantity.getText()));
+    	aArticleProxy.addNomenclature(selectedItem.getValue().getId(),aArticleProxy.findArticleByCode(txtArticleChild.getText()).get(0).getId(),Integer.parseInt(txtChildQuantity.getText()));
     	
   
     }
@@ -431,7 +431,7 @@ private void fillTableView(String code) throws NamingException {
     	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context2.lookup(ArticlejndiName);
     	
     	
-    	 Article article=aArticleProxy.findArticleByCode(txtArticleCodeForOrder.getText());
+    	 Article article=aArticleProxy.findArticleByCode(txtArticleCodeForOrder.getText()).get(0);
     	 LocalDate  localDateAlarm = AlarmDate.getValue();
     	 Date AlarmTypeDate = java.sql.Date.valueOf(localDateAlarm);
     			 
@@ -466,6 +466,43 @@ private void fillTableView(String code) throws NamingException {
    
        
         
+    }
+
+    @FXML
+    private void OnSearchArticleAutoOrderReleased(KeyEvent event) throws NamingException {
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context2 = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context2.lookup(ArticlejndiName);
+    	BtnAutoOrdreUpdate.setDisable(true);
+		txtDailyConsuption.setDisable(true);
+    	txtDeliveryTime.setDisable(true);
+    	txtDailyConsuption.setText("");
+    	txtDeliveryTime.setText("");
+    	Article article=aArticleProxy.findArticleByCode(txtSearchArticleAutoOrdre.getText()).get(0);
+    	
+    	if(article!=null) {
+    		BtnAutoOrdreUpdate.setDisable(false);
+    		txtDailyConsuption.setDisable(false);
+        	txtDeliveryTime.setDisable(false);
+        	txtDailyConsuption.setText(String.valueOf(article.getDailyConsumption()));
+        	txtDeliveryTime.setText(String.valueOf(article.getDeliveryTime()));
+        	
+    	}
+    	
+    	
+    }
+
+    @FXML
+    private void OnChangeAutoSettingsClicked(ActionEvent event) throws NamingException {
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context2 = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context2.lookup(ArticlejndiName);
+    	Article article=aArticleProxy.findArticleByCode(txtSearchArticleAutoOrdre.getText()).get(0);
+    	article.setDeliveryTime(Integer.valueOf(txtDeliveryTime.getText()));
+    	article.setDailyConsumption(Integer.valueOf(txtDailyConsuption.getText()));
+    	aArticleProxy.updateArticle(article);
+    	
+    	
     }
    
     
