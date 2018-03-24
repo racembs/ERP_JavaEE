@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
@@ -27,9 +28,8 @@ public class OperatingRangeService implements OperatingRangeServiceLocal, Operat
 		
 	}
 	@Override
-	public void updateOperatingRange(int idOptR) {
-		OperatingRange OptRange = em.find(OperatingRange.class, idOptR);
-		OptRange.setDeadline(50);
+	public void updateOperatingRange(OperatingRange OptRange) {
+			em.merge(OptRange);
 		
 		
 	}

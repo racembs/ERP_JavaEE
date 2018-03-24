@@ -36,6 +36,7 @@ import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -112,6 +113,8 @@ public class OperatingRangeController implements Initializable {
     private JFXTextField idoptrange;
     @FXML
     private TreeView<String> idCheckTree;
+    @FXML
+    private ImageView idupimg;
 
     /**
      * Initializes the controller class.
@@ -298,10 +301,29 @@ public class OperatingRangeController implements Initializable {
 			String OperatingRangejndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
 	        OperatingRangeServiceRemote proxy2 =  (OperatingRangeServiceRemote) context2.lookup(OperatingRangejndiName2);
 
-		Integer id= idTab.getSelectionModel().getSelectedItem().getIdoptrange();
-		proxy2.updateOperatingRange(id);
-		System.out.println("modif");
-		   List<OperatingRange> list = proxy2.DisplayOperatingRange();
+	        OperatingRange opt= idTab.getSelectionModel().getSelectedItem();
+	        String c= String.valueOf(opt.getCode());
+	        String d= String.valueOf(opt.getDeadline());
+	        idCode.setText(c);
+	        idDeadline.setText(d);
+	        idDesignation.setText(opt.getDesignation());
+	        idStakingCond.setValue(opt.getStakingcondition());
+	        
+	        idupimg.setOnMouseClicked((MouseEvent a) -> {
+	        	opt.setCode(idCode.getText());
+	        	opt.setDesignation(idDesignation.getText());
+				int Deadline = Integer.parseInt(idDeadline.getText());
+				opt.setDeadline(Deadline);
+				opt.setStakingcondition(idStakingCond.getValue().toString());
+							
+				proxy2.updateOperatingRange(opt);
+				
+				System.out.println("modif");
+				   List<OperatingRange> list = proxy2.DisplayOperatingRange();
+	        });
+	        
+	        
+
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

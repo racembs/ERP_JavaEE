@@ -11,10 +11,13 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckTreeView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 
 <AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1200.0" stylesheets="@../views/styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.OperatingRangeController">
   <children>
@@ -32,7 +35,7 @@
       </JFXToolbar>
       <AnchorPane fx:id="holderPane" layoutX="-3.0" layoutY="40.0" prefHeight="702.0" prefWidth="1189.0">
          <children>
-            <AnchorPane layoutX="340.0" layoutY="44.0" prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane fx:id="idsubmit" layoutX="302.0" layoutY="44.0" prefHeight="579.0" prefWidth="865.0">
                <children>
                   <Label layoutX="45.0" layoutY="45.0" prefHeight="27.0" prefWidth="202.0" text="Add Operating Range">
                      <font>
@@ -61,6 +64,12 @@
                   <Button fx:id="idDelete" layoutX="763.0" layoutY="315.0" mnemonicParsing="false" onAction="#DeleteOperatingRange" text="Delete" />
                   <Button fx:id="idFind" layoutX="633.0" layoutY="46.0" mnemonicParsing="false" onAction="#FindOperatingRange" text="Find" />
                   <JFXTextField fx:id="idoptrange" layoutX="466.0" layoutY="46.0" />
+                  <ImageView fx:id="idupimg" fitHeight="84.0" fitWidth="87.0" layoutX="45.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                  <Image url="views/image/submit.png" />
+               </image>
+                 </ImageView>
+                  
                   </children>
             </AnchorPane>
             <CheckTreeView fx:id="idCheckTree" layoutX="55.0" layoutY="58.0" />
