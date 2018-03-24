@@ -21,8 +21,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayDeque;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Queue;
 import java.util.ResourceBundle;
 
 import javax.naming.Context;
@@ -234,6 +237,7 @@ comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Prod
     	
     	
     	aArticleProxy.addNomenclature(selectedItem.getValue().getId(),aArticleProxy.findArticleByCode(txtArticleChild.getText()).get(0).getId(),Integer.parseInt(txtChildQuantity.getText()));
+    	fillTreeTableView("all");
     	
   
     }
@@ -268,19 +272,38 @@ private void fillTreeTableView(String code) throws NamingException {
 	 
 	 newItemarticlePere=new TreeItem<>(articlePere.get(i));
 	 root.getChildren().add(newItemarticlePere);
-	 List<Nomenclature> filsList;
-	 int size;
+	 
 	
-	 filsList= ArticleProxy.getFilsArticles(articlePere.get(i).getId());
 	
 	 
-	 for(int j=0;j<filsList.size();j++) {
+	 ArrayDeque <TreeItem<Article>> queue=new ArrayDeque<>();
+	 queue.add(newItemarticlePere);
+	
+	 while(!queue.isEmpty()) {
+		 
+	
+		TreeItem<Article> TreeItemHead=queue.getFirst();
+		 queue.removeFirst();
+		
+		 List<Nomenclature> listNomenclatureFils=ArticleProxy.getFilsArticles(TreeItemHead.getValue().getId());
+		 for(int j=0;j<listNomenclatureFils.size();j++) {
+			 newItemarticleFils=new TreeItem<>(listNomenclatureFils.get(j).getArticleFils());
+			 TreeItemHead.getChildren().add(newItemarticleFils);
+			 queue.addLast(newItemarticleFils);
+			 
+	
+	
+		 }
+	 }
+	 
+	 
+	/* for(int j=0;j<filsList.size();j++) {
 		 newItemarticleFils=new TreeItem<>(filsList.get(j).getArticleFils());
 		 newItemarticlePere.getChildren().add(newItemarticleFils);
 		 
-	 }
+	 }*/
 	 
-	 newItemarticlePere=newItemarticleFils;
+	// newItemarticlePere=newItemarticleFils;
 	 
 	
  }
@@ -504,6 +527,7 @@ private void fillTableView(String code) throws NamingException {
     	
     	
     }
+
    
     
 }
