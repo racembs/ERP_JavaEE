@@ -39,7 +39,11 @@
                               <JFXTextField fx:id="State" focusColor="#00add8" labelFloat="true" layoutX="89.0" layoutY="198.0" prefHeight="30.0" prefWidth="249.0" promptText="State" unFocusColor="#868282" />
                               <JFXTextArea fx:id="descrsption" layoutX="86.0" layoutY="377.0" maxWidth="404.0" minWidth="280.0" prefHeight="114.0" prefWidth="280.0" promptText="Descreption" />
                               <JFXTextArea layoutX="562.0" layoutY="413.0" maxWidth="404.0" minWidth="280.0" prefHeight="114.0" prefWidth="280.0" promptText="arboresence" />
-                              <JFXTreeView fx:id="treeviewEq" accessibleText="Equipement" editable="true" layoutX="472.0" layoutY="167.0" prefHeight="186.0" prefWidth="404.0" styleClass="jfx-decorator" />
+                              <JFXComboBox fx:id="ComboEqui" layoutX="448.0" layoutY="89.0" onAction="#ComboEquiAction" prefHeight="40.0" prefWidth="178.0" />
+                              <JFXComboBox fx:id="ComboEqui1" layoutX="472.0" layoutY="149.0" onMouseClicked="#Combo2Action" prefHeight="40.0" prefWidth="186.0" />
+                              <JFXComboBox fx:id="ComboEqui2" layoutX="495.0" layoutY="208.0" onMouseClicked="#Combo3Action" prefHeight="40.0" prefWidth="195.0" />
+                              <JFXComboBox fx:id="ComboEqui3" layoutX="522.0" layoutY="267.0" onMouseClicked="#ComboEqui3Acyion" prefHeight="40.0" prefWidth="209.0" />
+                              <JFXComboBox fx:id="ComboEqui4" layoutX="549.0" layoutY="326.0" prefHeight="40.0" prefWidth="215.0" />
                            </children>
                         </AnchorPane>
                      </children>

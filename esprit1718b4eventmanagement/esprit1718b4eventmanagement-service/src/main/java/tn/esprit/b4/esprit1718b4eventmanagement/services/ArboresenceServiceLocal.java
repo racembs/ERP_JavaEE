@@ -19,4 +19,6 @@ public interface ArboresenceServiceLocal {
 	public void addArbo(int idArboPere, int idArboFils);
 	public void updateArbo(int idArboPere, int idArboFils);
 	public List<ArboPereFis> getFilsArbo(int idArboPere);
+	public List<Arboresence> getPereArbo(String type);
+	public Arboresence getArbo(String name) ;
 }

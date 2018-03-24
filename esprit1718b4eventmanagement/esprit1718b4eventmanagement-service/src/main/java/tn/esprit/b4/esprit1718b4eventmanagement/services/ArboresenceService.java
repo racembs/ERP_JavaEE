@@ -83,6 +83,26 @@ public class ArboresenceService implements ArboresenceServiceLocal,ArboresenceSe
 		
 	}
 	
+
+	@Override
+	public List<Arboresence> getPereArbo(String type) {
+		TypedQuery<Arboresence> query
+		=em.createQuery("select n from Arboresence n where n.type=:idPere", Arboresence.class);
+		query.setParameter("idPere", type);
+		List<Arboresence> arbo=query.getResultList();
+		return arbo;
+		
+	}
+	@Override
+	public Arboresence getArbo(String name) {
+		TypedQuery<Arboresence> query
+		=em.createQuery("select n from Arboresence n where n.name=:idPere", Arboresence.class);
+		query.setParameter("idPere", name);
+		Arboresence arbo=query.getSingleResult();
+		return arbo;
+		
+	}
+	
 	
 	
 }
