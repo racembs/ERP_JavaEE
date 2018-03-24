@@ -59,6 +59,7 @@ public class Article implements Serializable {
 		private int DailyConsumption=0;
 		@Column(name = "DeliveryTime")
 		private int DeliveryTime=0;
+		
 		public int getDailyConsumption() {
 			return DailyConsumption;
 		}
