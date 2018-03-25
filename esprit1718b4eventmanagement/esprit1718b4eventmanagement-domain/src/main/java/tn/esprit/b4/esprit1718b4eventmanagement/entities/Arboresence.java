@@ -78,6 +78,7 @@ public class Arboresence implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 
 	public Arboresence(String name, String type) {
 		super();

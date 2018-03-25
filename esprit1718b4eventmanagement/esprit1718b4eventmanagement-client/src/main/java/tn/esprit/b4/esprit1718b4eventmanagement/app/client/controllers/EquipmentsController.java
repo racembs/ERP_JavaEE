@@ -28,6 +28,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -96,8 +97,6 @@ public class EquipmentsController implements Initializable {
     private TableColumn<Equipment,String>  colDescription;
  
     @FXML
-    private JFXTreeView<String> treeviewArbo;
-    @FXML
     private JFXComboBox<String> ComboEqui;
     @FXML
     private JFXComboBox<String> ComboEqui1;
@@ -107,6 +106,24 @@ public class EquipmentsController implements Initializable {
     private JFXComboBox<String> ComboEqui3;
     @FXML
     private JFXComboBox<String> ComboEqui4;
+    @FXML
+    private JFXTextArea arboarea;
+    @FXML
+    private Label arbofinal;
+    @FXML
+    private JFXTextArea arbo2;
+    @FXML
+    private JFXComboBox<String> ComboEquii;
+    @FXML
+    private JFXComboBox<String> ComboEqui11;
+    @FXML
+    private JFXComboBox<String> ComboEqui21;
+    @FXML
+    private JFXComboBox<String> ComboEqui31;
+    @FXML
+    private JFXComboBox<String> ComboEqui41;
+    @FXML
+    private Label adarb;
 
     /**
      * Initializes the controller class.
@@ -114,7 +131,14 @@ public class EquipmentsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     	
-    	
+    	 ComboEqui11.setVisible(false);
+    	 
+  	   ComboEqui21.setVisible(false);
+  	 
+
+  	   ComboEqui31.setVisible(false);
+  
+  	   ComboEqui41.setVisible(false);
     	   ComboEqui1.setVisible(false);
     	 
     	   ComboEqui2.setVisible(false);
@@ -123,7 +147,7 @@ public class EquipmentsController implements Initializable {
     	   ComboEqui3.setVisible(false);
     
     	   ComboEqui4.setVisible(false);
-    	 
+    	  // arbofinal.setVisible(false);
     	
     	
         // TODO
@@ -132,44 +156,29 @@ public class EquipmentsController implements Initializable {
     	
     	 Image icon = new Image (
   			   getClass().getResourceAsStream("/views/imgs/equi.png"));
-    	 
-/////jndi
+
      	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
      	Context context1;
 		try {
 			context1 = new InitialContext();
 
 	     	ArboresenceServiceRemote Proxy = (ArboresenceServiceRemote) context1.lookup(jndiName2);
-///////////////////////////////////////////
+
      	
-     	
-  			//  TreeItem<String> equii =  new TreeItem<>("Entreprise", new ImageView(icon));
-  			 // equii.setExpanded(true);
   		 	List<Arboresence> list1 = Proxy.getPereArbo("Principale") ;
 	          for (Arboresence u: list1)
 	         {
 	        	   
 	        	  ComboEqui.getItems().addAll(u.getName());
 	          	ComboEqui.getSelectionModel().selectLast();
-	        	  
+	            
+	        	  ComboEquii.getItems().addAll(u.getName());
+	          	ComboEquii.getSelectionModel().selectLast();
 	        	  
 	        	  
 	      }
-	        
-  		
-  			//  nodeA.setExpanded(true);
-  			  
-  			 // TreeItem<String> nodeA1 = new TreeItem<>("arbo1:room 1", new ImageView(icon));
-  			 // TreeItem<String> nodeB1 = new TreeItem<>("arbo1:room 2", new ImageView(icon));
-  			 // TreeItem<String> nodeC1 = new TreeItem<>("arbo1:room 3", new ImageView(icon));
-  			  //nodeA.getChildren().addAll(nodeA1,nodeB1,nodeC1);
-  			
-  			
-  			
-  			
-  			
-  		  //treeviewArbo.setRoot(equii);
-			//treeviewArbo.setEditable(true);
+	          arboarea.setText(ComboEqui.getValue());
+  
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -218,13 +227,19 @@ public class EquipmentsController implements Initializable {
 	
     String stat =State.getText();
 	
-
+    String lieu=arboarea.getText();
 
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-Calendar date = Calendar.getInstance();
-String dateF = df.format(date.getTime());
+      Calendar date = Calendar.getInstance();
+      String dateF = df.format(date.getTime());
+        String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
+         Context context1 = new InitialContext();
 
-    Equipment eq=new Equipment(serie ,desc,stat,dateF,fab,marq);
+ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
+
+Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
+
+    Equipment eq=new Equipment(serie ,desc,stat,dateF,fab,marq,lieu,arbo1);
     
     
     Proxy.addEquippement(eq);
@@ -249,12 +264,10 @@ String dateF = df.format(date.getTime());
     	Arboresence arbo=new Arboresence(namee,type);
     	Proxy.addArbo(arbo);
     	
-    	Proxy.addArbo(9,10);
+    
+    	Proxy.addArbo(Proxy.getArbo(  adarb.getText()).getId(),	Proxy.getArbo(namee).getId());
     	
-    	//List<User> list1 = proxy1.getCandidat("candidate") ;
-      //  for (User u: list1)
-        	//{String cin5=(Integer.toString(u.getCin()));
-        //comboEmloyee.getItems().addAll(cin5);}
+   
     	
     	
     	
@@ -303,8 +316,8 @@ String dateF = df.format(date.getTime());
 
 	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
    Arboresence arbo= Proxy1.getArbo(ComboEqui.getValue());
- 
- 
+   arbofinal.setText(ComboEqui.getValue());
+   arboarea.setText(ComboEqui.getValue());
    ComboEqui1.getItems().clear();
    ComboEqui1.setValue(null);
    ComboEqui2.getItems().clear();
@@ -343,7 +356,8 @@ String dateF = df.format(date.getTime());
 
     	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
        Arboresence arbo= Proxy1.getArbo(ComboEqui1.getValue());
-      
+       arboarea.setText(ComboEqui.getValue()+"/"+ComboEqui1.getValue());
+       arbofinal.setText(ComboEqui1.getValue());
        ComboEqui2.getItems().clear();
        ComboEqui2.setValue(null);
 
@@ -381,7 +395,8 @@ String dateF = df.format(date.getTime());
 
     	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
        Arboresence arbo= Proxy1.getArbo(ComboEqui2.getValue());
-       
+       arboarea.setText(ComboEqui.getValue()+"/"+ComboEqui1.getValue()+"/"+ComboEqui2.getValue());
+       arbofinal.setText(ComboEqui2.getValue());
        ComboEqui3.getItems().clear();
        ComboEqui3.setValue(null);
        ComboEqui4.getItems().clear();
@@ -409,8 +424,8 @@ String dateF = df.format(date.getTime());
 
     	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
        Arboresence arbo= Proxy1.getArbo(ComboEqui3.getValue());
-   
-       
+       arboarea.setText(ComboEqui.getValue()+"/"+ComboEqui1.getValue()+"/"+ComboEqui2.getValue()+"/"+ComboEqui3.getValue());
+       arbofinal.setText(ComboEqui3.getValue());
        ComboEqui4.getItems().clear();
        ComboEqui4.setValue(null);
     	
@@ -428,6 +443,149 @@ String dateF = df.format(date.getTime());
         ComboEqui4.setVisible(true);
     	
     }
+
+    @FXML
+    private void ComboEquiiAction(ActionEvent event) throws NamingException {
+    	
+
+    	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
+    	Context context1 = new InitialContext();
+
+    	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
+       Arboresence arbo= Proxy1.getArbo(ComboEquii.getValue());
+       arbo2.setText(ComboEquii.getValue());
+       adarb.setText(ComboEquii.getValue());
+       ComboEqui11.getItems().clear();
+       ComboEqui11.setValue(null);
+       ComboEqui21.getItems().clear();
+       ComboEqui21.setValue(null);
+
+       ComboEqui31.getItems().clear();
+       ComboEqui31.setValue(null);
+       ComboEqui41.getItems().clear();
+       ComboEqui41.setValue(null);
+       
+     	List<ArboPereFis> list= Proxy1.getFilsArbo(arbo.getId());
+        for (ArboPereFis u: list)
+       {
+      	   
+      	  ComboEqui11.getItems().addAll(u.getArboFils().getName());
+        	ComboEqui11.getSelectionModel().selectLast();
+      	  
+      	  
+      	  
+    }
+     
+        ComboEqui11.setVisible(true);
+        ComboEqui21.setVisible(false);
+        ComboEqui31.setVisible(false);
+        ComboEqui41.setVisible(false);
+        	
+    	
+    }
+
+    @FXML
+    private void Combo11Action(MouseEvent event) throws NamingException {
+    	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
+    	Context context1 = new InitialContext();
+
+    	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
+       Arboresence arbo= Proxy1.getArbo(ComboEqui11.getValue());
+       arbo2.setText(ComboEquii.getValue()+"/"+ComboEqui11.getValue());
+       adarb.setText(ComboEqui11.getValue());
+       ComboEqui21.getItems().clear();
+       ComboEqui21.setValue(null);
+
+       ComboEqui31.getItems().clear();
+       ComboEqui31.setValue(null);
+       ComboEqui41.getItems().clear();
+       ComboEqui41.setValue(null);
+     	List<ArboPereFis> list= Proxy1.getFilsArbo(arbo.getId());
+        for (ArboPereFis u: list)
+       {
+      	   
+      	  ComboEqui21.getItems().addAll(u.getArboFils().getName());
+        	ComboEqui21.getSelectionModel().selectLast();
+      	  
+      	  
+      	  
+    }
+    	
+        ComboEqui21.setVisible(true);
+        ComboEqui31.setVisible(false);
+        ComboEqui41.setVisible(false);
+    	
+    	
+    	
+    }
+
+    @FXML
+    private void Combo21Action(MouseEvent event) throws NamingException {
+    	
+
+
+    	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
+    	Context context1 = new InitialContext();
+
+    	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
+       Arboresence arbo= Proxy1.getArbo(ComboEqui21.getValue());
+       arbo2.setText(ComboEquii.getValue()+"/"+ComboEqui11.getValue()+"/"+ComboEqui21.getValue());
+       adarb.setText(ComboEqui21.getValue());
+       ComboEqui31.getItems().clear();
+       ComboEqui31.setValue(null);
+       ComboEqui41.getItems().clear();
+       ComboEqui41.setValue(null);
+     	List<ArboPereFis> list= Proxy1.getFilsArbo(arbo.getId());
+        for (ArboPereFis u: list)
+       {
+      	   
+      	  ComboEqui31.getItems().addAll(u.getArboFils().getName());
+        	ComboEqui31.getSelectionModel().selectLast();
+      	  
+      	  
+      	  
+    }
+        ComboEqui31.setVisible(true);
+        ComboEqui41.setVisible(false);
+    }
+
+    @FXML
+    private void ComboEqui31Acyion(MouseEvent event) throws NamingException {
+    	
+    	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
+    	Context context1 = new InitialContext();
+
+    	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
+       Arboresence arbo= Proxy1.getArbo(ComboEqui21.getValue());
+       arbo2.setText(ComboEquii.getValue()+"/"+ComboEqui11.getValue()+"/"+ComboEqui21.getValue()+"/"+ComboEqui31.getValue());
+      adarb.setText(ComboEqui21.getValue());
+       ComboEqui31.getItems().clear();
+       ComboEqui31.setValue(null);
+       ComboEqui41.getItems().clear();
+       ComboEqui41.setValue(null);
+     	List<ArboPereFis> list= Proxy1.getFilsArbo(arbo.getId());
+        for (ArboPereFis u: list)
+       {
+      	   
+      	  ComboEqui31.getItems().addAll(u.getArboFils().getName());
+        	ComboEqui31.getSelectionModel().selectLast();
+      	  
+      	  
+      	  
+    }
+        ComboEqui31.setVisible(true);
+        ComboEqui41.setVisible(false);
+    }
+
+    @FXML
+    private void combarbotypeAction(MouseEvent event) {
+        
+        
+        
+        
+        
+    }
+
     
 
  

@@ -29,20 +29,27 @@ public class Equipment implements Serializable {
 	private String Fabriquant;
 	@Column(name = "Marque")
 	private String Marque;
-	
+	@Column(name = "Lieu")
+	private String Lieu;
 	
 	
 	@OneToMany(mappedBy="equipement")
 	private List <ChargingStation> chargingstations;
 	
 	@ManyToOne
-	@JoinColumn(name="id_Arboe",referencedColumnName="Id",insertable=false,updatable=false)
+	@JoinColumn(name="id_Arboe",referencedColumnName="Id",insertable=true,updatable=true)
 	private Arboresence arboresence;
 	
 	
 	
 	
 	
+	public String getLieu() {
+		return Lieu;
+	}
+	public void setLieu(String lieu) {
+		Lieu = lieu;
+	}
 	public Equipment(String serialNum, String description, String state, String eISDate, String fabriquant,
 			String marque, Arboresence arboresence) {
 		super();
@@ -171,6 +178,18 @@ public class Equipment implements Serializable {
 		EISDate = eISDate;
 		Fabriquant = fabriquant;
 		Marque = marque;
+	}
+	public Equipment(String serialNum, String description, String state, String eISDate, String fabriquant,
+			String marque, String lieu, Arboresence arboresence) {
+		super();
+		SerialNum = serialNum;
+		Description = description;
+		State = state;
+		EISDate = eISDate;
+		Fabriquant = fabriquant;
+		Marque = marque;
+		Lieu = lieu;
+		this.arboresence = arboresence;
 	}
 
 
