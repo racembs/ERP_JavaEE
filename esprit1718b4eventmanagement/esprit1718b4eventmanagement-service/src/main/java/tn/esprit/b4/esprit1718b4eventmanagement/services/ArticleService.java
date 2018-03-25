@@ -102,6 +102,7 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 	}
 
 
+
 	@Override
 	public List<Article> getAllArticles() {
 		TypedQuery<Article> query

@@ -6,9 +6,7 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
 
-import com.google.common.base.Optional;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXButton.ButtonType;
 import com.jfoenix.controls.JFXComboBox;
 
 import com.jfoenix.controls.JFXTextArea;
@@ -16,16 +14,12 @@ import com.jfoenix.controls.JFXTextField;
 
 import java.net.URL;
 import java.sql.Date;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayDeque;
-import java.util.Calendar;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Queue;
+
 import java.util.ResourceBundle;
 
 import javax.naming.Context;
@@ -51,11 +45,10 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.TreeTableColumn.CellDataFeatures;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.MvtApprov;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
@@ -89,7 +82,9 @@ public class ArticleController implements Initializable {
     private TreeTableColumn<Article,String> articleColumn;
     @FXML
     private TreeTableColumn<Article,String> quantityColumn;
+    
     public static ArticleServiceRemote ArticleProxy ;
+    
     @FXML
     private Tab tabArticleTree;
     @FXML
@@ -174,31 +169,26 @@ public class ArticleController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+    
+    	
     	try {
     		fillTreeTableView("all");
-    	
+    		fillTableView("all");
     		
 		} catch (NamingException e) {
 			}
-    	
+    	tableAllArticles.setEditable(true);
+    	tArticleDescription.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tArticleCode.setCellFactory(TextFieldTableCell.forTableColumn());
+    	//tArticlePrice.setCellFactory(TextFieldTableCell.forTableColumn());
+    	//tArticleQuantity.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tArticleType.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tUnitCode.setCellFactory(TextFieldTableCell.forTableColumn());
  
-          
+
 comboType.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Produit-Fini");
 comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Produit-Fini");
 
-    	Article article1=new Article();
-    	article1.setDescription("article1");
-    	article1.setQuantity(10);
-    	Article article2=new Article();
-    	article2.setDescription("article2");
-    	article2.setQuantity(20);
-    
-    	try {
-			fillTableView("all");
-		} catch (NamingException e) {
-			
-		}
     	
     }    
 
@@ -217,16 +207,19 @@ comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Prod
 
     @FXML
     private void OnTabArticleTreeSelected(Event event) throws NamingException {
-    fillTreeTableView("all");
-    fillTableView("all");
+  
+    fillTreeTableView("all");	
+    
     	
      	
     }
-
     @FXML
-    private void OntabAddNewRticleSelected(Event event) {
-    	
+    private void OnTabAllArticleSelected(Event event) throws NamingException {
+    	fillTableView("all");
     }
+
+
+   
 
     @FXML
     private void OnAddChildAction(ActionEvent event) throws NamingException {
@@ -236,6 +229,7 @@ comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Prod
     	TreeItem<Article> selectedItem = ArticleTableView.getSelectionModel().getSelectedItem();
     	
     	
+    	
     	aArticleProxy.addNomenclature(selectedItem.getValue().getId(),aArticleProxy.findArticleByCode(txtArticleChild.getText()).get(0).getId(),Integer.parseInt(txtChildQuantity.getText()));
     	fillTreeTableView("all");
     	
@@ -243,8 +237,20 @@ comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Prod
     }
 
     @FXML
-    private void itemSelected(MouseEvent event) {
-    	BtnAddArticleChild.setDisable(false);
+    private void itemSelected(MouseEvent event) throws NamingException {
+    	txtArticleChild.setText("");
+    	TreeItem<Article> selectedItem = ArticleTableView.getSelectionModel().getSelectedItem();
+    	if(!selectedItem.getValue().getType().equals("Matiére-Premiére")) {
+    		txtArticleChild.setDisable(false);
+    		
+    		
+    	}else {
+    		txtArticleChild.setDisable(true);
+    		txtChildQuantity.setDisable(true);
+    		BtnAddArticleChild.setDisable(true);
+    		
+    	}
+   	   
     }
     
     
@@ -255,9 +261,7 @@ private void fillTreeTableView(String code) throws NamingException {
 	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
 	Context context = new InitialContext();
 	 ArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
-	 List<Nomenclature> listNomenclature=ArticleProxy.getFilsArticles(1);
 	 TreeItem<Article> root=new TreeItem<>();
-	// System.out.println(listNomenclature.get(0).getArticleFils().getDescription());
 	 List<Article> produitFini;
  if(code.equals("all")) {
 	produitFini=ArticleProxy.getArticlesByType("Produit-Fini");
@@ -297,19 +301,11 @@ private void fillTreeTableView(String code) throws NamingException {
 	 }
 	 
 	 
-	/* for(int j=0;j<filsList.size();j++) {
-		 newItemarticleFils=new TreeItem<>(filsList.get(j).getArticleFils());
-		 newItemarticlePere.getChildren().add(newItemarticleFils);
-		 
-	 }*/
-	 
-	// newItemarticlePere=newItemarticleFils;
-	 
 	
  }
  	
 
-     articleColumn.setCellValueFactory((CellDataFeatures<Article, String> param) -> new SimpleStringProperty(param.getValue().getValue().getDescription()));
+    articleColumn.setCellValueFactory((CellDataFeatures<Article, String> param) -> new SimpleStringProperty(param.getValue().getValue().getDescription()));
  	quantityColumn.setCellValueFactory((CellDataFeatures<Article, String> param) -> new SimpleStringProperty(String.valueOf(param.getValue().getValue().getQuantity())));
  	ArticleTableView.setRoot(root);
  	ArticleTableView.setShowRoot(false);
@@ -374,7 +370,7 @@ private void fillTableView(String code) throws NamingException {
     	}
     	
     	alert.setTitle("Deleting Article");
-    	alert.setContentText("Are you sure want to delete the article:"+article.getDescription());
+    	alert.setContentText("Are you sure want to delete the "+article.getDescription());
     	java.util.Optional<javafx.scene.control.ButtonType> answer=alert.showAndWait();
     	if(answer.get()==javafx.scene.control.ButtonType.OK) {
     		aArticleProxy.DeleteArticle(article.getId());
@@ -436,8 +432,92 @@ private void fillTableView(String code) throws NamingException {
 
   
     
+    @FXML
+    private void OnSearchNewChildForTreeReleased(KeyEvent event) throws NamingException {
+    	BtnAddArticleChild.setDisable(true);
+		txtChildQuantity.setDisable(true);
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
+    	Article article=aArticleProxy.findArticleByCode(txtArticleChild.getText()).get(0);
+    	if(article!=null&&!article.getType().equals("Produit-Fini")) {
+    		BtnAddArticleChild.setDisable(false);
+    		txtChildQuantity.setDisable(false);
+    	}
+    	
+    }
+ 
+    
+////////////////////////////////////////////////////////****Update From Table****/////////////////////////////////////
+    
+    
+    @FXML
+    private void ChangeDescriptionFromTable(TableColumn.CellEditEvent event) throws NamingException {
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
+    	Article article=ArticleTableView.getSelectionModel().getSelectedItem().getValue();
+    	article.setDescription(event.getNewValue().toString());
+    	System.out.println(event.getNewValue().toString());
+    	aArticleProxy.updateArticle(article);
+    	fillTableView("all");
+    }
 
-  
+    @FXML
+    private void ChangeArticleCodeFromTable(TableColumn.CellEditEvent event) throws NamingException {
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
+    	Article article=ArticleTableView.getSelectionModel().getSelectedItem().getValue();
+    	article.setArticleCode(event.getNewValue().toString());
+    	aArticleProxy.updateArticle(article);
+    	fillTableView("all");
+    }
+
+    @FXML
+    private void ChangePriceFromTable(TableColumn.CellEditEvent event) throws NamingException {
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
+    	Article article=ArticleTableView.getSelectionModel().getSelectedItem().getValue();
+    	article.setPmp(Float.valueOf(event.getNewValue().toString()));
+    	aArticleProxy.updateArticle(article);
+    	fillTableView("all");
+    }
+
+    @FXML
+    private void ChangeQuantityFromTable(TableColumn.CellEditEvent event) throws NamingException {
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
+    	Article article=ArticleTableView.getSelectionModel().getSelectedItem().getValue();
+    	article.setQuantity(Integer.valueOf(event.getNewValue().toString()));
+    	aArticleProxy.updateArticle(article);
+    	fillTableView("all");
+    }
+
+    @FXML
+    private void ChangeTypeFromTable(TableColumn.CellEditEvent event) throws NamingException {
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
+    	Article article=ArticleTableView.getSelectionModel().getSelectedItem().getValue();
+    	article.setType(event.getNewValue().toString());
+    	aArticleProxy.updateArticle(article);
+    	fillTableView("all");
+    }
+
+    @FXML
+    private void ChangeUnitCodeFromTable(TableColumn.CellEditEvent event) throws NamingException {
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
+    	Article article=ArticleTableView.getSelectionModel().getSelectedItem().getValue();
+    	article.setUnitCode(event.getNewValue().toString());
+    	aArticleProxy.updateArticle(article);
+    	fillTableView("all");
+    }
+    
 ////////////////////////////////////////////////////////****Procrutment****///////////////////////////////////////////
    
 
@@ -469,18 +549,18 @@ private void fillTableView(String code) throws NamingException {
     		
              alert.setTitle("Wrong Date");
              alert.setHeaderText("Alarm Date is wrong");
-             java.util.Optional<javafx.scene.control.ButtonType> result = alert.showAndWait();
+            alert.showAndWait();
             
     	 }else if(ReceptionTypeDate.compareTo(CurrentDate)<=0) {
     		
     		 alert.setTitle("Wrong Date");
              alert.setHeaderText("Local Date is wrong");
-             java.util.Optional<javafx.scene.control.ButtonType> result = alert.showAndWait();
+            alert.showAndWait();
     	 }else if(RequestTypeDate.compareTo(CurrentDate)<=0){
     	
     		 alert.setTitle("Wrong Date");
              alert.setHeaderText("Request Date is wrong");
-             java.util.Optional<javafx.scene.control.ButtonType> result = alert.showAndWait();
+            alert.showAndWait();
     	 }else {
     		 MvtApprov mvtApprov=new MvtApprov(article,null,Integer.valueOf(txtQuantityForOrder.getText()),AlarmTypeDate,RequestTypeDate,ReceptionTypeDate);
              OrdreProxy.addMvtApprov(mvtApprov);
@@ -527,6 +607,11 @@ private void fillTableView(String code) throws NamingException {
     	
     	
     }
+
+   
+
+
+
 
    
     

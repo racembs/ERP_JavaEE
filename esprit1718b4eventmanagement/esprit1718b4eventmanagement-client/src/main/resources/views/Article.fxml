@@ -29,7 +29,7 @@
    <children>
       <JFXTabPane layoutX="138.0" layoutY="100.0" prefHeight="684.0" prefWidth="1105.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab fx:id="tabAddNewRticle" onSelectionChanged="#OntabAddNewRticleSelected" text="Add New Article">
+          <Tab fx:id="tabAddNewRticle" text="Add New Article">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -44,7 +44,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="tabArticleTree1" onSelectionChanged="#OnTabArticleTreeSelected" text="All Articles">
+            <Tab fx:id="tabArticleTree1" onSelectionChanged="#OnTabAllArticleSelected" text="All Articles">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -54,12 +54,12 @@
                                  <children>
                                     <TableView fx:id="tableAllArticles" layoutX="33.0" layoutY="211.0" prefHeight="323.0" prefWidth="692.0">
                                       <columns>
-                                        <TableColumn fx:id="tArticleCode" prefWidth="114.0" text="ArticleCode" />
-                                        <TableColumn fx:id="tArticleDescription" minWidth="5.0" prefWidth="132.0" text="Description" />
-                                          <TableColumn fx:id="tArticlePrice" prefWidth="97.0" text="     Price" />
-                                          <TableColumn fx:id="tArticleQuantity" prefWidth="93.0" text="Quantity" />
-                                          <TableColumn fx:id="tArticleType" prefWidth="129.0" text="        Type" />
-                                          <TableColumn fx:id="tUnitCode" prefWidth="122.0" text="     UnitCode" />
+                                        <TableColumn fx:id="tArticleCode" onEditCommit="#ChangeArticleCodeFromTable" prefWidth="114.0" text="ArticleCode" />
+                                        <TableColumn fx:id="tArticleDescription" minWidth="5.0" onEditCommit="#ChangeDescriptionFromTable" prefWidth="132.0" text="Description" />
+                                          <TableColumn fx:id="tArticlePrice" onEditCommit="#ChangePriceFromTable" prefWidth="97.0" text="     Price" />
+                                          <TableColumn fx:id="tArticleQuantity" onEditCommit="#ChangeQuantityFromTable" prefWidth="87.0" text="Quantity" />
+                                          <TableColumn fx:id="tArticleType" onEditCommit="#ChangeTypeFromTable" prefWidth="147.0" text="        Type" />
+                                          <TableColumn fx:id="tUnitCode" onEditCommit="#ChangeUnitCodeFromTable" prefWidth="110.0" text="     UnitCode" />
                                       </columns>
                                        <contextMenu>
                                           <ContextMenu fx:id="contextMenu">
@@ -94,16 +94,16 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
                                  <children>
-                                    <JFXTextField fx:id="txtArticleSearch" focusColor="#00add8" labelFloat="true" layoutX="186.0" layoutY="47.0" onKeyReleased="#SearchArticleAction" prefHeight="42.0" prefWidth="208.0" promptText="Search Final Article" unFocusColor="#868282" />
-                                    <JFXTextField fx:id="txtArticleChild" focusColor="#00add8" labelFloat="true" layoutX="739.0" layoutY="231.0" prefHeight="42.0" prefWidth="212.0" promptText="Code of the new Child" unFocusColor="#868282" AnchorPane.leftAnchor="739.0" AnchorPane.topAnchor="231.0" />
-                                    <TreeTableView fx:id="ArticleTableView" layoutX="67.0" layoutY="120.0" onMouseClicked="#itemSelected" prefHeight="386.0" prefWidth="531.0">
+                                    <JFXTextField fx:id="txtArticleSearch" focusColor="#00add8" labelFloat="true" layoutX="226.0" layoutY="47.0" onKeyReleased="#SearchArticleAction" prefHeight="42.0" prefWidth="208.0" promptText="Search Final Article" unFocusColor="#868282" />
+                                    <JFXTextField fx:id="txtArticleChild" disable="true" focusColor="#00add8" labelFloat="true" layoutX="739.0" layoutY="231.0" onKeyReleased="#OnSearchNewChildForTreeReleased" prefHeight="42.0" prefWidth="212.0" promptText="Code of the new Child" unFocusColor="#868282" AnchorPane.leftAnchor="739.0" AnchorPane.topAnchor="231.0" />
+                                    <TreeTableView fx:id="ArticleTableView" layoutX="67.0" layoutY="120.0" onMouseClicked="#itemSelected" prefHeight="433.0" prefWidth="569.0">
                                       <columns>
-                                        <TreeTableColumn fx:id="articleColumn" prefWidth="399.0" text="Article" />
-                                        <TreeTableColumn fx:id="quantityColumn" prefWidth="131.0" text="Quantity" />
+                                        <TreeTableColumn fx:id="articleColumn" prefWidth="476.0" text="Article" />
+                                        <TreeTableColumn fx:id="quantityColumn" prefWidth="92.0" text="Quantity" />
                                       </columns>
                                     </TreeTableView>
                                     <JFXButton fx:id="BtnAddArticleChild" buttonType="RAISED" disable="true" layoutX="796.0" layoutY="382.0" onAction="#OnAddChildAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: rgb(0,180,212); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="Add Child" />
-                                    <JFXTextField fx:id="txtChildQuantity" focusColor="#00add8" labelFloat="true" layoutX="741.0" layoutY="304.0" prefHeight="42.0" prefWidth="208.0" promptText="Quantity" unFocusColor="#868282" />
+                                    <JFXTextField fx:id="txtChildQuantity" disable="true" focusColor="#00add8" labelFloat="true" layoutX="741.0" layoutY="304.0" prefHeight="42.0" prefWidth="208.0" promptText="Quantity" unFocusColor="#868282" />
                                  </children></AnchorPane>
                           </items>
                         </SplitPane>
@@ -111,7 +111,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="tabProcuremrnt" onSelectionChanged="#OnTabArticleTreeSelected" text="Procurement &amp;&amp; Orders">
+            <Tab fx:id="tabProcuremrnt" text="Procurement &amp;&amp; Orders">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
