@@ -67,6 +67,8 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 		article.setUnitCode(newArticle.getUnitCode());
 		article.setDailyConsumption(newArticle.getDailyConsumption());
 		article.setDeliveryTime(newArticle.getDeliveryTime());
+		article.setEtatOrdre(newArticle.getEtatOrdre());
+		article.setPricipalQuantity(newArticle.getPricipalQuantity());
 		
 	}
 
