@@ -64,8 +64,14 @@ import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
  */
 
 public class ChargingStationController implements Initializable {
-	  
+	@FXML  
     private Label label;
+	@FXML 
+    private Label idAddlb;
+	@FXML 
+    private Label idUplb;
+	@FXML 
+    private Label idDellb;
     @FXML
     private Label txtCurrentWindow;
     @FXML
@@ -94,6 +100,8 @@ public class ChargingStationController implements Initializable {
     private ImageView idDelete;
     @FXML
     private ImageView idFind;
+    @FXML
+    private ImageView idicone;
     @FXML
     private JFXTextField idchs;
     @FXML
