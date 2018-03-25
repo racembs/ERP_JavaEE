@@ -115,6 +115,64 @@ public class OperatingRangeController implements Initializable {
     private TreeView<String> idCheckTree;
     @FXML
     private ImageView idupimg;
+ 
+    @FXML
+    private AnchorPane idsubmit;
+
+    @FXML
+    private TableView<?> opt;
+    @FXML
+    private TableColumn<?, ?> ORtab;
+    @FXML
+    private TableColumn<?, ?> Utab;
+    @FXML
+    private TableColumn<?, ?> Etab;
+    @FXML
+    private TableColumn<?, ?> Dtab;
+    @FXML
+    private TableColumn<?, ?> PNtab;
+    @FXML
+    private TableColumn<?, ?> UPToptab;
+    @FXML
+    private ComboBox<?> ORop;
+    @FXML
+    private ComboBox<?> Uop;
+    @FXML
+    private ComboBox<?> Eop;
+    @FXML
+    private TextArea Dop;
+    @FXML
+    private TextField PNop;
+    @FXML
+    private TextField UPTop;
+    @FXML
+    private ImageView addop;
+    @FXML
+    private ImageView uoop;
+    @FXML
+    private ImageView delop;
+    @FXML
+    private ImageView ok;
+    @FXML
+    private ImageView cancel;
+    @FXML
+    private JFXTextField find;
+    @FXML
+    private ImageView findbt;
+    @FXML
+    private ImageView addop1;
+    @FXML
+    private ImageView uoop1;
+    @FXML
+    private ImageView delop1;
+    @FXML
+    private ImageView ok1;
+    @FXML
+    private ImageView cancel1;
+    @FXML
+    private JFXTextField find1;
+    @FXML
+    private ImageView findbt1;
 
     /**
      * Initializes the controller class.

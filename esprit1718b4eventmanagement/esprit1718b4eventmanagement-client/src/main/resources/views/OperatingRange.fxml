@@ -11,13 +11,13 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckTreeView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 
 <AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1200.0" stylesheets="@../views/styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.OperatingRangeController">
   <children>
@@ -35,44 +35,186 @@
       </JFXToolbar>
       <AnchorPane fx:id="holderPane" layoutX="-3.0" layoutY="40.0" prefHeight="702.0" prefWidth="1189.0">
          <children>
-            <AnchorPane fx:id="idsubmit" layoutX="302.0" layoutY="44.0" prefHeight="579.0" prefWidth="865.0">
+            <AnchorPane fx:id="idsubmit" layoutX="1.0" prefHeight="702.0" prefWidth="1200.0">
                <children>
-                  <Label layoutX="45.0" layoutY="45.0" prefHeight="27.0" prefWidth="202.0" text="Add Operating Range">
+                  <Label layoutX="315.0" layoutY="19.0" prefHeight="30.0" prefWidth="382.0" text="Operating Range" textFill="#300ce1">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="36.0" />
                      </font>
                   </Label>
-                  <Label layoutX="103.0" layoutY="101.0" prefHeight="17.0" prefWidth="64.0" text="Code" />
-                  <Label layoutX="103.0" layoutY="135.0" prefHeight="17.0" prefWidth="87.0" text="Designation" />
-                  <Label layoutX="438.0" layoutY="101.0" text="Deadline" />
-                  <Label layoutX="438.0" layoutY="144.0" text="Staking Condition" />
-                  <TextField fx:id="idCode" layoutX="190.0" layoutY="97.0" prefHeight="25.0" prefWidth="176.0" />
-                  <TextArea fx:id="idDesignation" layoutX="190.0" layoutY="135.0" prefHeight="49.0" prefWidth="178.0" />
-                  <TextField fx:id="idDeadline" layoutX="558.0" layoutY="97.0" />
-                  <ComboBox fx:id="idStakingCond" layoutX="558.0" layoutY="140.0" prefWidth="150.0" />
-                  <Separator layoutX="419.0" layoutY="91.0" orientation="VERTICAL" prefHeight="102.0" prefWidth="5.0" />
-                  <TableView fx:id="idTab" layoutX="160.0" layoutY="218.0" prefHeight="189.0" prefWidth="524.0">
+                  <Label layoutX="310.0" layoutY="94.0" prefHeight="17.0" prefWidth="64.0" text="Code" />
+                  <Label layoutX="310.0" layoutY="135.0" prefHeight="17.0" prefWidth="87.0" text="Designation" />
+                  <Label layoutX="315.0" layoutY="207.0" text="Deadline" />
+                  <Label layoutX="314.0" layoutY="252.0" text="Staking Condition" />
+                  <TextField fx:id="idCode" layoutX="434.0" layoutY="89.0" prefHeight="30.0" prefWidth="209.0" />
+                  <TextArea fx:id="idDesignation" layoutX="434.0" layoutY="135.0" prefHeight="49.0" prefWidth="209.0" />
+                  <TextField fx:id="idDeadline" layoutX="434.0" layoutY="202.0" prefHeight="30.0" prefWidth="209.0" />
+                  <ComboBox fx:id="idStakingCond" layoutX="434.0" layoutY="247.0" prefHeight="30.0" prefWidth="216.0" />
+                  <TableView fx:id="idTab" layoutX="657.0" layoutY="65.0" prefHeight="192.0" prefWidth="546.0">
                     <columns>
                       <TableColumn fx:id="idCodeTab" prefWidth="75.0" text="Code" />
-                      <TableColumn fx:id="idDesignationTab" prefWidth="215.0" text="Designation" />
-                        <TableColumn fx:id="idDeadlineTab" prefWidth="107.0" text="Deadline" />
-                        <TableColumn fx:id="idStakingCondTab" prefWidth="126.0" text="Staking Condition" />
+                      <TableColumn fx:id="idDesignationTab" prefWidth="150.0" text="Designation" />
+                        <TableColumn fx:id="idDeadlineTab" prefWidth="132.0" text="Deadline" />
+                        <TableColumn fx:id="idStakingCondTab" prefWidth="181.0" text="Staking Condition" />
                     </columns>
                   </TableView>
-                  <Button fx:id="idAdd" layoutX="789.0" layoutY="123.0" mnemonicParsing="false" onAction="#AddOperatingRange" text="Add" />
-                  <Button fx:id="idUpdate" layoutX="763.0" layoutY="268.0" mnemonicParsing="false" onAction="#UpdateOperatingRange" text="Update" />
-                  <Button fx:id="idDelete" layoutX="763.0" layoutY="315.0" mnemonicParsing="false" onAction="#DeleteOperatingRange" text="Delete" />
-                  <Button fx:id="idFind" layoutX="633.0" layoutY="46.0" mnemonicParsing="false" onAction="#FindOperatingRange" text="Find" />
-                  <JFXTextField fx:id="idoptrange" layoutX="466.0" layoutY="46.0" />
-                  <ImageView fx:id="idupimg" fitHeight="84.0" fitWidth="87.0" layoutX="45.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
+                  <Button fx:id="idAdd" layoutX="644.0" layoutY="14.0" mnemonicParsing="false" onAction="#AddOperatingRange" text="Add" />
+                  <Button fx:id="idUpdate" layoutX="773.0" layoutY="15.0" mnemonicParsing="false" onAction="#UpdateOperatingRange" text="Update" />
+                  <Button fx:id="idDelete" layoutX="700.0" layoutY="14.0" mnemonicParsing="false" onAction="#DeleteOperatingRange" text="Delete" />
+                  <Button fx:id="idFind" layoutX="887.0" layoutY="14.0" mnemonicParsing="false" onAction="#FindOperatingRange" text="Find" />
+                  <JFXTextField fx:id="idoptrange" layoutX="982.0" layoutY="30.0" />
+                  <ImageView fx:id="idupimg" fitHeight="53.0" fitWidth="36.0" layoutX="598.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                   <Image url="views/image/submit.png" />
                </image>
                  </ImageView>
+                  <CheckTreeView fx:id="idCheckTree" layoutX="21.0" layoutY="20.0" prefHeight="306.0" prefWidth="240.0" />
+                  <Separator layoutX="13.0" layoutY="342.0" prefHeight="1.0" prefWidth="1170.0">
+                     <effect>
+                        <ColorAdjust />
+                     </effect>
+                  </Separator>
+                  <Label layoutX="45.0" layoutY="349.0" prefHeight="30.0" prefWidth="382.0" text="Operation" textFill="#2d08eb">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="opt" layoutX="13.0" layoutY="410.0" prefHeight="200.0" prefWidth="738.0">
+                    <columns>
+                      <TableColumn fx:id="ORtab" prefWidth="139.00003051757812" text="OperatingRange" />
+                      <TableColumn fx:id="Utab" prefWidth="69.0" text="User" />
+                        <TableColumn fx:id="Etab" prefWidth="121.0" text="Equipement" />
+                        <TableColumn fx:id="Dtab" prefWidth="108.0" text="Description" />
+                        <TableColumn fx:id="PNtab" prefWidth="130.0" text="PhaseNumber" />
+                        <TableColumn fx:id="UPToptab" prefWidth="172.0" text="UnitProductionTime" />
+                    </columns>
+                  </TableView>
+                  <Label layoutX="821.0" layoutY="409.0" text="Operating Range" />
+                  <Label layoutX="819.0" layoutY="550.0" text="Description" />
+                  <Label layoutX="821.0" layoutY="451.0" text="User" />
+                  <Label layoutX="821.0" layoutY="500.0" prefHeight="20.0" prefWidth="87.0" text="Equipement" />
+                  <Label layoutX="819.0" layoutY="616.0" text="Phase Number" />
+                  <Label layoutX="821.0" layoutY="664.0" text="Unit Production Time" />
+                  <ComboBox fx:id="ORop" layoutX="956.0" layoutY="404.0" prefHeight="20.0" prefWidth="150.0" />
+                  <ComboBox fx:id="Uop" layoutX="956.0" layoutY="454.0" prefHeight="3.0" prefWidth="150.0" />
+                  <ComboBox fx:id="Eop" layoutX="956.0" layoutY="500.0" prefHeight="20.0" prefWidth="150.0" />
+                  <TextArea fx:id="Dop" layoutX="956.0" layoutY="550.0" prefHeight="49.0" prefWidth="209.0" />
+                  <TextField fx:id="PNop" layoutX="957.0" layoutY="611.0" prefHeight="30.0" prefWidth="209.0" />
+                  <TextField fx:id="UPTop" layoutX="957.0" layoutY="659.0" prefHeight="30.0" prefWidth="209.0" />
+                  <ImageView fx:id="addop" fitHeight="68.0" fitWidth="55.0" layoutX="141.0" layoutY="619.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                        <Image url="views/image/add2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="uoop" fitHeight="75.0" fitWidth="55.0" layoutX="255.0" layoutY="619.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                        <Image url="views/image/updates.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="delop" fitHeight="76.0" fitWidth="55.0" layoutX="354.0" layoutY="618.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                        <Image url="views/image/Delete1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="ok" fitHeight="68.0" fitWidth="60.0" layoutX="589.0" layoutY="619.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                        <Image url="views/image/okk.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="cancel" fitHeight="71.0" fitWidth="55.0" layoutX="695.0" layoutY="619.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                        <Image url="views/image/cancel.png" />
+                     </image>
+                  </ImageView>
+                  <JFXTextField fx:id="find" layoutX="561.0" layoutY="367.0" />
+                  <ImageView fx:id="findbt" fitHeight="53.0" fitWidth="36.0" layoutX="722.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="views/image/searching.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="150.0" layoutY="670.0" prefHeight="53.0" prefWidth="55.0" text="Add" textFill="#0a0a0a">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="243.0" layoutY="670.0" prefHeight="53.0" prefWidth="87.0" text="Update" textFill="#0a0a0a">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="347.0" layoutY="670.0" prefHeight="53.0" prefWidth="87.0" text="Delete" textFill="#0a0a0a">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="580.0" layoutY="670.0" prefHeight="53.0" prefWidth="87.0" text="Submit" textFill="#079e25">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="686.0" layoutY="670.0" prefHeight="53.0" prefWidth="87.0" text="Cancel" textFill="#f21313">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="addop1" fitHeight="49.0" fitWidth="46.0" layoutX="677.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="views/image/add2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="uoop1" fitHeight="49.0" fitWidth="55.0" layoutX="754.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="views/image/updates.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="delop1" fitHeight="44.0" fitWidth="40.0" layoutX="856.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="views/image/Delete1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="ok1" fitHeight="49.0" fitWidth="40.0" layoutX="1042.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="views/image/okk.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="cancel1" fitHeight="49.0" fitWidth="47.0" layoutX="1125.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="views/image/cancel.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="667.0" layoutY="305.0" prefHeight="35.0" prefWidth="60.0" text="Add" textFill="#0a0a0a">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="730.0" layoutY="305.0" prefHeight="30.0" prefWidth="87.0" text="Update" textFill="#0a0a0a">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="835.0" layoutY="305.0" prefHeight="30.0" prefWidth="78.0" text="Delete" textFill="#0a0a0a">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1018.0" layoutY="305.0" prefHeight="35.0" prefWidth="87.0" text="Submit" textFill="#079e25">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1106.0" layoutY="305.0" prefHeight="28.0" prefWidth="78.0" text="Cancel" textFill="#f21313">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="findbt1" fitHeight="53.0" fitWidth="36.0" layoutX="1147.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="views/image/searching.png" />
+                     </image>
+                  </ImageView>
                   
                   </children>
             </AnchorPane>
-            <CheckTreeView fx:id="idCheckTree" layoutX="55.0" layoutY="58.0" />
          </children></AnchorPane>
    </children>
    
