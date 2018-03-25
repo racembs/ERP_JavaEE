@@ -183,7 +183,6 @@ public class OperatingRangeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     	
-   
     	
     	idStakingCond.getItems().addAll("Consecutive","Overlap","With staking delay","Parallel");
     	idStakingCond.getSelectionModel().selectLast();
@@ -294,14 +293,152 @@ public class OperatingRangeController implements Initializable {
 //    	 
 //    	 idCheckTree.setRoot(Article1);
 //    	 idCheckTree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
-    	
-    	
-    	
+    
+	        
+	        
+	        
+///////////////////////////////////////////////***************///////////////////////////////
+	        addop1.setOnMouseClicked((MouseEvent e) -> {
+	
+				try {
+					String OperatingRangejndiName42 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
 
+					Context context42;
+					context42 = new InitialContext();
+					OperatingRangeServiceRemote proxy42 =  (OperatingRangeServiceRemote) context42.lookup(OperatingRangejndiName42);
+					//OperatingRange optrange1 = new OperatingRange("AR","Table mount","Series",30);
+					OperatingRange optrange = new OperatingRange();
+					optrange.setCode(idCode.getText());
+					optrange.setDesignation(idDesignation.getText());
+					int Deadline = Integer.parseInt(idDeadline.getText());
+					optrange.setDeadline(Deadline);
+					optrange.setStakingcondition(idStakingCond.getValue().toString());
+								
+					proxy42.addOperatingRange(optrange);
+					//System.out.println("created");
+					
+					   List<OperatingRange> list12 = proxy42.DisplayOperatingRange();
+				        ObservableList<OperatingRange> items12 = FXCollections.observableArrayList(list12);
+				        System.out.println(items12.get(0).getDesignation());
+				        idTab.setItems(items12);
+				        
+				        
+					    Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Operating Range Added");
+						alert.setHeaderText("Succesful");
+						alert.showAndWait();
+				} catch (NamingException p) {
+					// TODO Auto-generated catch block
+					
+				}
+    	
+			 });
+	        
+	        
+	        delop1.setOnMouseClicked((MouseEvent e) -> {
+	           	Alert alert = new Alert(AlertType.CONFIRMATION);
+	        	alert.setTitle("WARNING");
+	    		alert.setHeaderText("Are You Sure?");
+	        	
+	        	if (alert.showAndWait().get () == ButtonType.OK)
+	        	{
+	        		
+	        		try {
+	        			String OpRangejndiName55 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
+
+	            		Context context55;
+	        			context55 = new InitialContext();
+	        			
+	        	        OperatingRangeServiceRemote proxy55 =  (OperatingRangeServiceRemote) context55.lookup(OpRangejndiName55);
+
+	            	Integer id= idTab.getSelectionModel().getSelectedItem().getIdoptrange();
+	            	proxy55.deleteOperatingRange(id);
+	            	
+	        		   List<OperatingRange> list55 = proxy55.DisplayOperatingRange();
+	        	        ObservableList<OperatingRange> items55 = FXCollections.observableArrayList(list55);
+	        	        System.out.println(items55.get(0).getDesignation());
+	        	        idTab.setItems(items55);
+	        	        
+	        	        
+	        		 Alert alert1 = new Alert(AlertType.INFORMATION);
+	        			alert1.setTitle("Operating Range Deleted");
+	        			alert1.setHeaderText("Succesful");
+	        			alert1.showAndWait();
+	        		//System.out.println("deleted");
+	            	
+	            	} catch (NamingException a) {
+	        			// TODO Auto-generated catch block
+	        			
+	        		}
+	        		
+	        	}
+	    	  });
+	        
+	        uoop1.setOnMouseClicked((MouseEvent e) -> {
+	        	Context context2;
+	    		try {
+	    			context2 = new InitialContext();
+	    			String OperatingRangejndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
+	    	        OperatingRangeServiceRemote proxy2 =  (OperatingRangeServiceRemote) context2.lookup(OperatingRangejndiName2);
+
+	    	        OperatingRange opt= idTab.getSelectionModel().getSelectedItem();
+	    	        String c= String.valueOf(opt.getCode());
+	    	        String d= String.valueOf(opt.getDeadline());
+	    	        idCode.setText(c);
+	    	        idDeadline.setText(d);
+	    	        idDesignation.setText(opt.getDesignation());
+	    	        idStakingCond.setValue(opt.getStakingcondition());
+	    	        
+	    	        idupimg.setOnMouseClicked((MouseEvent a) -> {
+	    	        	opt.setCode(idCode.getText());
+	    	        	opt.setDesignation(idDesignation.getText());
+	    				int Deadline = Integer.parseInt(idDeadline.getText());
+	    				opt.setDeadline(Deadline);
+	    				opt.setStakingcondition(idStakingCond.getValue().toString());
+	    							
+	    				proxy2.updateOperatingRange(opt);
+	    				
+	    				System.out.println("modif");
+	    				   List<OperatingRange> list2 = proxy2.DisplayOperatingRange();
+	    	        });
+	    	        
+	    	        
+
+	    		} catch (NamingException b) {
+	    			// TODO Auto-generated catch block
+	    			b.printStackTrace();
+	    		}
+	    	  });
+	        
+	        findbt1.setOnMouseClicked((MouseEvent e) -> {
+	       		Context context1;
+	    		try {
+	    			context1 = new InitialContext();
+	    			String OperatingRangejndiName1 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
+	    	        OperatingRangeServiceRemote proxy1 =  (OperatingRangeServiceRemote) context1.lookup(OperatingRangejndiName1);
+	    	        List<OperatingRange> list1 = proxy1.find(idoptrange.getText());
+	    	        
+	    	        ObservableList<OperatingRange> items1 = FXCollections.observableArrayList(list1);
+	    	       // System.out.println(items1.get(0).getDesignation());
+	    	        idTab.setItems(items1);
+	    	        System.out.println(idoptrange.getText());
+	    		 
+	    		  
+	    		} catch (NamingException x) {
+	    			
+	    			
+	    		}
+	    	  });
+	        
+	        
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 		}
-    
+   
+		
+		
+    	
+
 
     }
 
@@ -310,146 +447,4 @@ public class OperatingRangeController implements Initializable {
         holderPane.getChildren().add((Node) node);
     }
 
-    @FXML
-    private void AddOperatingRange(ActionEvent event) {
-    	
-    	
-		String OperatingRangejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
-
-		Context context;
-		try {
-			context = new InitialContext();
-			OperatingRangeServiceRemote proxy =  (OperatingRangeServiceRemote) context.lookup(OperatingRangejndiName);
-			//OperatingRange optrange1 = new OperatingRange("AR","Table mount","Series",30);
-			OperatingRange optrange = new OperatingRange();
-			optrange.setCode(idCode.getText());
-			optrange.setDesignation(idDesignation.getText());
-			int Deadline = Integer.parseInt(idDeadline.getText());
-			optrange.setDeadline(Deadline);
-			optrange.setStakingcondition(idStakingCond.getValue().toString());
-						
-			proxy.addOperatingRange(optrange);
-			//System.out.println("created");
-			
-			   List<OperatingRange> list = proxy.DisplayOperatingRange();
-		        ObservableList<OperatingRange> items = FXCollections.observableArrayList(list);
-		        System.out.println(items.get(0).getDesignation());
-		        idTab.setItems(items);
-		        
-		        
-			 Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Operating Range Added");
-				alert.setHeaderText("Succesful");
-				alert.showAndWait();
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			
-		}
-		
-    }
-
-    @FXML
-    private void UpdateOperatingRange(ActionEvent event) {
-    	
-    	
-   		Context context2;
-		try {
-			context2 = new InitialContext();
-			String OperatingRangejndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
-	        OperatingRangeServiceRemote proxy2 =  (OperatingRangeServiceRemote) context2.lookup(OperatingRangejndiName2);
-
-	        OperatingRange opt= idTab.getSelectionModel().getSelectedItem();
-	        String c= String.valueOf(opt.getCode());
-	        String d= String.valueOf(opt.getDeadline());
-	        idCode.setText(c);
-	        idDeadline.setText(d);
-	        idDesignation.setText(opt.getDesignation());
-	        idStakingCond.setValue(opt.getStakingcondition());
-	        
-	        idupimg.setOnMouseClicked((MouseEvent a) -> {
-	        	opt.setCode(idCode.getText());
-	        	opt.setDesignation(idDesignation.getText());
-				int Deadline = Integer.parseInt(idDeadline.getText());
-				opt.setDeadline(Deadline);
-				opt.setStakingcondition(idStakingCond.getValue().toString());
-							
-				proxy2.updateOperatingRange(opt);
-				
-				System.out.println("modif");
-				   List<OperatingRange> list = proxy2.DisplayOperatingRange();
-	        });
-	        
-	        
-
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-    }
-
-    @FXML
-    private void DeleteOperatingRange(ActionEvent event) {
-    	
-    	Alert alert = new Alert(AlertType.CONFIRMATION);
-    	alert.setTitle("WARNING");
-		alert.setHeaderText("Are You Sure?");
-    	
-    	if (alert.showAndWait().get () == ButtonType.OK)
-    	{
-    		
-    		try {
-        		Context context;
-    			context = new InitialContext();
-    			String OperatingRangejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
-    	        OperatingRangeServiceRemote proxy =  (OperatingRangeServiceRemote) context.lookup(OperatingRangejndiName);
-
-        	Integer id= idTab.getSelectionModel().getSelectedItem().getIdoptrange();
-        	proxy.deleteOperatingRange(id);
-        	
-    		   List<OperatingRange> list = proxy.DisplayOperatingRange();
-    	        ObservableList<OperatingRange> items = FXCollections.observableArrayList(list);
-    	        System.out.println(items.get(0).getDesignation());
-    	        idTab.setItems(items);
-    	        
-    	        
-    		 Alert alert1 = new Alert(AlertType.INFORMATION);
-    			alert1.setTitle("Operating Range Deleted");
-    			alert1.setHeaderText("Succesful");
-    			alert1.showAndWait();
-    		//System.out.println("deleted");
-        	
-        	} catch (NamingException e) {
-    			// TODO Auto-generated catch block
-    			
-    		}
-    		
-    	}
-    
-    }
-
-    @FXML
-    private void FindOperatingRange(ActionEvent event) {
-    	
-    	
-   		Context context1;
-		try {
-			context1 = new InitialContext();
-			String OperatingRangejndiName1 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
-	        OperatingRangeServiceRemote proxy1 =  (OperatingRangeServiceRemote) context1.lookup(OperatingRangejndiName1);
-	        List<OperatingRange> list1 = proxy1.find(idoptrange.getText());
-	        
-	        ObservableList<OperatingRange> items1 = FXCollections.observableArrayList(list1);
-	       // System.out.println(items1.get(0).getDesignation());
-	        idTab.setItems(items1);
-	        System.out.println(idoptrange.getText());
-		 
-		  
-		} catch (NamingException e) {
-			
-			e.printStackTrace();
-		}
-	
-    	
-    }
 }
