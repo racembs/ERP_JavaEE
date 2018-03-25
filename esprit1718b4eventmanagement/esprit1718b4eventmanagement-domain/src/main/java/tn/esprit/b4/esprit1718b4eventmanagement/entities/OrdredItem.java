@@ -35,7 +35,7 @@ public class OrdredItem implements Serializable {
 	private Article article;
 	
 	@OneToMany(mappedBy="orderItem")
-	private List<ManufacturingOrder> ManufacturingList = new ArrayList<>();
+	private List<NeededItem> ManufacturingList = new ArrayList<>();
 	
 	public OrdredItem() {
 		super();
@@ -89,11 +89,11 @@ public class OrdredItem implements Serializable {
 		this.article = article;
 	}
 
-	public List<ManufacturingOrder> getManufacturingList() {
+	public List<NeededItem> getManufacturingList() {
 		return ManufacturingList;
 	}
 
-	public void setManufacturingList(List<ManufacturingOrder> manufacturingList) {
+	public void setManufacturingList(List<NeededItem> manufacturingList) {
 		ManufacturingList = manufacturingList;
 	}
    

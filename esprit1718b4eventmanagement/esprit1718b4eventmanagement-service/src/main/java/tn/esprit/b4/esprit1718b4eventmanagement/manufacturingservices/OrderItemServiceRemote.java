@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingOrder;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeededItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItemPk;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.IGenericDAO;

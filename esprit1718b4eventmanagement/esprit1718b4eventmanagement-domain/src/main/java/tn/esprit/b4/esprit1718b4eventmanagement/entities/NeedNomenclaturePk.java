@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class ManufactOrderNomenclaturePk implements Serializable{
+public class NeedNomenclaturePk implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Column(name="idParent")
 	private Integer idParent;
@@ -24,12 +24,12 @@ public class ManufactOrderNomenclaturePk implements Serializable{
 	public void setIdChild(Integer idChild) {
 		this.idChild = idChild;
 	}
-	public ManufactOrderNomenclaturePk(Integer idParent, Integer idChild) {
+	public NeedNomenclaturePk(Integer idParent, Integer idChild) {
 		super();
 		this.idParent = idParent;
 		this.idChild = idChild;
 	}
-	public ManufactOrderNomenclaturePk() {
+	public NeedNomenclaturePk() {
 		super();
 	}
 	@Override
@@ -48,7 +48,7 @@ public class ManufactOrderNomenclaturePk implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ManufactOrderNomenclaturePk other = (ManufactOrderNomenclaturePk) obj;
+		NeedNomenclaturePk other = (NeedNomenclaturePk) obj;
 		if (idChild == null) {
 			if (other.idChild != null)
 				return false;

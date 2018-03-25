@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingOrder;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeededItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Orders;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;

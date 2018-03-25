@@ -31,6 +31,9 @@ public class Article implements Serializable {
 		@OneToMany(mappedBy="article",fetch=FetchType.EAGER)
 		private List<OrdredItem> orderItem = new ArrayList<>();
 		
+		@OneToMany(mappedBy="needed_article",fetch=FetchType.EAGER)
+		private List<NeededItem> neededItem = new ArrayList<>();
+		
 		@ManyToMany(fetch=FetchType.EAGER)
 		private List <OperatingRange> operatingranges;
 		
