@@ -22,22 +22,30 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ArboPereFis;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Arboresence;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
@@ -124,13 +132,36 @@ public class EquipmentsController implements Initializable {
     private JFXComboBox<String> ComboEqui41;
     @FXML
     private Label adarb;
-
+    @FXML
+    private TextField searchtraining;
+ 
+    @FXML
+    private Label txtfabr;
+    @FXML
+    private Label txtserial;
+    @FXML
+    private Label txtdate;
+    @FXML
+    private Label txtmarque;
+    @FXML
+    private Label txtetat;
+ 
+    @FXML
+    private Label txtdesc1;
+    @FXML
+    private Label txtarbo12;
+   
+		
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    	
+
+
+	
+  		
+       
     	 ComboEqui11.setVisible(false);
     	 
   	   ComboEqui21.setVisible(false);
@@ -154,8 +185,7 @@ public class EquipmentsController implements Initializable {
     	combarbotype.getItems().addAll("Principale","Secondaire");
     	combarbotype.getSelectionModel().selectLast();
     	
-    	 Image icon = new Image (
-  			   getClass().getResourceAsStream("/views/imgs/equi.png"));
+    	
 
      	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
      	Context context1;
@@ -297,13 +327,85 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
         List<Equipment> list = proxy.getAllEquipment();
     	        ObservableList<Equipment> items = FXCollections.observableArrayList(list);
     	        tableau.setItems(items);
-    	
-    	
-    	
-    	
-    	
-    	
+    	        
+    	        tableau.setRowFactory(new Callback<TableView<Equipment>, TableRow<Equipment>>() {
+                    @Override
+                    public TableRow<Equipment> call(TableView<Equipment> param) {
+                        final TableRow<Equipment> row = new TableRow<>();
+                        final ContextMenu contextMenu = new ContextMenu();
+                        final MenuItem MenuItem = new MenuItem("Afficher");
+                        final MenuItem removeMenuItem = new MenuItem("Supprimer");
+                        MenuItem.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                            
+                          
+                                 
+                                 String serie=tableau.getSelectionModel().getSelectedItem().getSerialNum();
+                                txtserial.setText(serie);
+                                 String date=tableau.getSelectionModel().getSelectedItem().getEISDate();
+                                 txtdate.setText(date);
+                                 String fabriquant=tableau.getSelectionModel().getSelectedItem().getFabriquant();
+                                 txtfabr.setText(fabriquant);
+                                 String lieu=tableau.getSelectionModel().getSelectedItem().getLieu();
+                                 String desc =tableau.getSelectionModel().getSelectedItem().getDescription();
+                                 txtdesc1.setText(desc);
+                                 String marque=tableau.getSelectionModel().getSelectedItem().getMarque();
+                                 txtmarque.setText(marque);
+                                 String state=tableau.getSelectionModel().getSelectedItem().getState();
+                                 txtetat.setText(state);
+                                 Integer idarbo=tableau.getSelectionModel().getSelectedItem().getArboresence().getId();
+                                 
+                                
+                   txtarbo12.setText(lieu);
+               
+                              	
+                            	
+                            }
+                            
+                        });
+                        ////////remove
+                        removeMenuItem.setOnAction(new  EventHandler<ActionEvent>() {
+
+    						@Override
+    						public void handle(ActionEvent event) {
+    							
+    							   
+    							
+    					    	
+    						
+    							
+    						}
+                        	
+                       
+    					});
+                        
+                        
+                        
+      contextMenu.getItems().add(removeMenuItem);
+                        
+                        row.contextMenuProperty().bind(
+                                Bindings.when(row.emptyProperty())
+                                        .then((ContextMenu) null)
+                                        .otherwise(contextMenu));
+                        
+                        
+                        
+                        contextMenu.getItems().add(MenuItem);
+                        
+                        row.contextMenuProperty().bind(
+                                Bindings.when(row.emptyProperty())
+                                        .then((ContextMenu) null)
+                                        .otherwise(contextMenu)
+                        );
+                        
+                        return row;
+
+                    }
+                } );
+ 	        
     }
+    	      
 
     @FXML
     private void ComboEquiAction(ActionEvent event) throws NamingException {
@@ -558,7 +660,7 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
        Arboresence arbo= Proxy1.getArbo(ComboEqui21.getValue());
        arbo2.setText(ComboEquii.getValue()+"/"+ComboEqui11.getValue()+"/"+ComboEqui21.getValue()+"/"+ComboEqui31.getValue());
-      adarb.setText(ComboEqui21.getValue());
+      adarb.setText(ComboEqui31.getValue());
        ComboEqui31.getItems().clear();
        ComboEqui31.setValue(null);
        ComboEqui41.getItems().clear();
@@ -585,6 +687,33 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
         
         
     }
+
+    @FXML
+    private void OnSerarchReleased(KeyEvent event) throws NamingException {
+    	
+    	
+    	String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/EquipementService!tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote";
+    	Context context;
+
+    		
+    			context= new InitialContext();
+
+    		EquipementServiceRemote proxy=(EquipementServiceRemote) context.lookup(jndiName);
+    		List<Equipment> list2=new ArrayList<>();
+    	    	
+    		colSerialNum.setCellValueFactory(new PropertyValueFactory<Equipment, String>("SerialNum"));
+    		colFabriquant.setCellValueFactory(new PropertyValueFactory<Equipment, String>("Fabriquant"));
+    		colMarque.setCellValueFactory(new PropertyValueFactory<Equipment, String>("Marque"));
+    		colState.setCellValueFactory(new PropertyValueFactory<Equipment, String>("State"));
+    		 colDescription.setCellValueFactory(new PropertyValueFactory<Equipment, String>("Description"));
+        
+    		String input =searchtraining.getText();
+        List<Equipment> list = proxy.searchEquipment(input);
+    	        ObservableList<Equipment> items = FXCollections.observableArrayList(list);
+    	        tableau.setItems(items);
+    	
+    }
+
 
     
 

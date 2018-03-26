@@ -46,6 +46,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
@@ -552,6 +553,12 @@ labrole.setText(p7);
     	//     List<User> list=proxy.SearchLogin(login);
     	        
     	    
+    	
+    	
+    }
+
+    @FXML
+    private void searchreleased(KeyEvent event) {
     	
     	
     }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 
 
@@ -18,6 +19,6 @@ public interface EquipementServiceRemote {
 	public List<Equipment> findEquipementFab(String type);
 	public List<Equipment> getAllEquipment() ;
 	public void updateEquipment(Equipment e) ;
-	
+	public List<Equipment> searchEquipment(String input);
 	public List<Equipment> DisplayEquipment();
 	}
