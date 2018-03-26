@@ -1,5 +1,9 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -7,6 +11,7 @@ import javax.persistence.PersistenceContext;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeedNomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeedNomenclaturePk;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeededItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 
 /**
@@ -37,5 +42,18 @@ public class NeedNomenclatureService extends GenericDAO<NeedNomenclature> implem
 		em.persist(nomenclature);
 		return nomenclature;
 	}
-
+	
+	@Override
+	public List<NeedNomenclature> SaveNeedItemTreeNomenclature(Map<NeededItem, List<NeededItem>> map) {
+		List <NeedNomenclature> list = new ArrayList<>();
+		for (Map.Entry<NeededItem, List<NeededItem>> entry1 : map.entrySet()) {
+			if(!entry1.getValue().isEmpty()){
+				for (NeededItem ChildNeededItem : entry1.getValue()) {
+					list.add(addnomenclature(entry1.getKey().getId()
+							, ChildNeededItem.getId(), ChildNeededItem.getNetNeed()));
+				}
+			}
+		}
+		return list;
+	}
 }

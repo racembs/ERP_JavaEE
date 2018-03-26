@@ -134,16 +134,12 @@ public class NeededItem implements Serializable {
 		return grossNeed;
 	}
 
-	public void setGrossNeed(int grossNeed) {
-		grossNeed = grossNeed;
-	}
-
 	public int getNetNeed() {
 		return netNeed;
 	}
 
 	public void setNetNeed(int netNeed) {
-		netNeed = netNeed;
+		this.netNeed = netNeed;
 	}
 
 	public int getReadyLotNumber() {
@@ -151,7 +147,11 @@ public class NeededItem implements Serializable {
 	}
 
 	public void setReadyLotNumber(int readyLotNumber) {
-		readyLotNumber = readyLotNumber;
+		this.readyLotNumber = readyLotNumber;
+	}
+
+	public void setGrossNeed(int grossNeed) {
+		this.grossNeed = grossNeed;
 	}
 
 	public List<ManufacturingPlanning> getManufacturingPlanning() {

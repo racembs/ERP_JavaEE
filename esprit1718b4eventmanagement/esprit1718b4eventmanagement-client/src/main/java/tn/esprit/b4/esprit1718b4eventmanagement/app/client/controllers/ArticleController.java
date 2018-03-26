@@ -176,7 +176,7 @@ public class ArticleController implements Initializable {
     	try {
     		fillTreeTableView("all");
     		fillTableView("all");
-    		AuoOrderCreation();
+    		//AuoOrderCreation();
     		
 		} catch (NamingException e) {
 			}
@@ -606,41 +606,41 @@ private void fillTableView(String code) throws NamingException {
     }
 
    
-private void AuoOrderCreation() throws NamingException {
-	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
-	Context context2 = new InitialContext();
-	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context2.lookup(ArticlejndiName);
-	
-	List<Article> articles=aArticleProxy.getAllArticles();
-	
-	String jndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/MvtApprovService!tn.esprit.b4.esprit1718b4eventmanagement.services.MvtApprovServiceRemote";
-	Context context1 = new InitialContext();
-	MvtApprovServiceRemote OrdreProxy = (MvtApprovServiceRemote) context1.lookup(jndiName);
-	
-	
-	for(int i=0;i<articles.size();i++) {
-	int joursRestant=articles.get(i).getQuantity()/articles.get(i).getDailyConsumption();
-	 
-	
-	Date dateT=java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
-	Date currentDate =java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
-
-
-	int day= dateT.getDate();
-
-	dateT.setDate(day+joursRestant-articles.get(i).getDeliveryTime());
-	if(dateT.compareTo(currentDate)<=0 && articles.get(i).getEtatOrdre()==0) {
-		MvtApprov mvtApprov=new MvtApprov(articles.get(i),null,articles.get(i).getPricipalQuantity()-articles.get(i).getQuantity(),null,dateT,null);
-		OrdreProxy.addMvtApprov(mvtApprov);
-		articles.get(i).setEtatOrdre(1);
-		aArticleProxy.updateArticle(articles.get(i));
-	}
-	
-	
-	
-	
-	}
-}
+//private void AuoOrderCreation() throws NamingException {
+//	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+//	Context context2 = new InitialContext();
+//	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context2.lookup(ArticlejndiName);
+//	
+//	List<Article> articles=aArticleProxy.getAllArticles();
+//	
+//	String jndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/MvtApprovService!tn.esprit.b4.esprit1718b4eventmanagement.services.MvtApprovServiceRemote";
+//	Context context1 = new InitialContext();
+//	MvtApprovServiceRemote OrdreProxy = (MvtApprovServiceRemote) context1.lookup(jndiName);
+//	
+//	
+//	for(int i=0;i<articles.size();i++) {
+//	int joursRestant=articles.get(i).getQuantity()/articles.get(i).getDailyConsumption();
+//	 
+//	
+//	Date dateT=java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
+//	Date currentDate =java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
+//
+//
+//	int day= dateT.getDate();
+//
+//	dateT.setDate(day+joursRestant-articles.get(i).getDeliveryTime());
+//	if(dateT.compareTo(currentDate)<=0 && articles.get(i).getEtatOrdre()==0) {
+//		MvtApprov mvtApprov=new MvtApprov(articles.get(i),null,articles.get(i).getPricipalQuantity()-articles.get(i).getQuantity(),null,dateT,null);
+//		OrdreProxy.addMvtApprov(mvtApprov);
+//		articles.get(i).setEtatOrdre(1);
+//		aArticleProxy.updateArticle(articles.get(i));
+//	}
+//	
+//	
+//	
+//	
+//	}
+//}
 
 
 

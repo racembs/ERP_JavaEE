@@ -2,7 +2,11 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -36,10 +40,10 @@ public class TestManufacturing {
 		OrdersServiceRemote proxyOrders=(OrdersServiceRemote) s.getProxy(jndiNameOrders);
 		ArticleServiceRemote proxyArticleServiceRemote=(ArticleServiceRemote) s.getProxy(jndiNameArticle);
 		
-		Client client = new Client("1798","PSE",22827736);
-		client.setId(proxyClientServiceRemote.addClient(client));
+//		Client client = new Client("1798","PSE",22827736);
+//		client.setId(proxyClientServiceRemote.addClient(client));
 		
-//		Client client=manufactProxy.findClientById(1);
+//		Client client=proxyClientServiceRemote.find(1);
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy");
 		Date orderDat = dateFormat.parse("18/03/2018");
@@ -47,18 +51,18 @@ public class TestManufacturing {
 		Orders order = new Orders(1818,orderDat,deliveryDat,"en attente");
 		Orders order2 = new Orders(1818,orderDat,deliveryDat,"en attente");
 		
-		order.setClient(client);
-		int idOrder = proxyOrders.addOrders(order);
-		int idOrder2 = proxyOrders.addOrders(order2);
+//		order.setClient(client);
+//		int idOrder = proxyOrders.addOrders(order);
+//		int idOrder2 = proxyOrders.addOrders(order2);
 		
 		Article PF = new Article("ARM200", "Armoire", "unit", "Produit fini", 540, 10);
-		PF.setId(proxyArticleServiceRemote.addArticle(PF));
+		//PF.setId(proxyArticleServiceRemote.addArticle(PF));
 		
 		OrdredItem ordredItem = new OrdredItem();
 		ordredItem.setCode(4518);
 		ordredItem.setQuantity(10);
-		ordredItem.setStatus("en attente");
-		//proxyOrdredItem.addOrdredItem(1, 1, ordredItem);
+		ordredItem.setStatus("Pending");
+//		proxyOrdredItem.addOrdredItem(1, 1, ordredItem);
 		
 		OrdredItem orderItem2 = proxyOrdredItem.findOrdredItemById(1,1);
 		System.out.println(orderItem2.getArticle().getDescription());
@@ -68,22 +72,40 @@ public class TestManufacturing {
 //		NeededItem searchMan2 = manufactProxy.addManufactChild(searchMan);
 //		System.out.println(searchMan2.getSonsMO().get(0).getManufacturingOrderPk().getId_Article());
 
-		NeededItem Father = new NeededItem();
-		Father.setOrderItem(orderItem2);
-		Father.setNeeded_article(orderItem2.getArticle());
-		Father.setId(proxyNeededItem.addNeededItem(Father));
+//		NeededItem Father = new NeededItem();
+//		Father.setOrderItem(orderItem2);
+//		Father.setNeeded_article(orderItem2.getArticle());
+//		Father.setId(proxyNeededItem.addNeededItem(Father));
+//		
+//		NeededItem Child = new NeededItem();
+//		Child.setOrderItem(Father.getOrderItem());
+//		Child.setNeeded_article(orderItem2.getArticle());
+//		Child.setId(proxyNeededItem.addNeededItem(Child));
+//		
+//		NeedNomenclature nomenclature = proxyNomenclature.addnomenclature(Father.getId(), Child.getId(), 10);
 		
-		NeededItem Child = new NeededItem();
-		Child.setOrderItem(Father.getOrderItem());
-		Child.setNeeded_article(orderItem2.getArticle());
-		Child.setId(proxyNeededItem.addNeededItem(Child));
+		NeededItem Parent = new NeededItem();
+		Parent.setOrderItem(orderItem2);
+		Parent.setNeeded_article(orderItem2.getArticle());
+		Parent.setGrossNeed(orderItem2.getQuantity());
+		Parent.setNetNeed(Parent.getGrossNeed()-Parent.getNeeded_article().getQuantity());
+		//Parent.setReadyLotNumber();
+		Parent.setStatus("Pending");
+		//Parent.setId(proxyNeededItem.addNeededItem(Parent));
 		
-		NeedNomenclature nomenclature = proxyNomenclature.addnomenclature(Father.getId(), Child.getId(), 10);
-		
-		
-		
-			
+		Map<NeededItem, List<NeededItem>> map = new HashMap<>();
+		List<NeedNomenclature> needNomenclatureList = new ArrayList<>();
+		map = proxyNeededItem.InitialiseMap();
+		map= proxyNeededItem.CreateNeedItemTree(Parent);
+		map=proxyNeededItem.SaveNeedItemTree(map);
+		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
 	}
+//to create a nomenclature mono level	
+//	Map<NeededItem, NeedNomenclature> map = proxyNeededItem.addChildrenNeededItem(Parent);
+//	for (Map.Entry<NeededItem, NeedNomenclature> e : map.entrySet()) {
+//		e.getValue().getNeedNomenclaturePk().setIdChild(proxyNeededItem.addNeededItem(e.getKey()));
+//		proxyNomenclature.save(e.getValue());		
+//	}
 
 }
 
