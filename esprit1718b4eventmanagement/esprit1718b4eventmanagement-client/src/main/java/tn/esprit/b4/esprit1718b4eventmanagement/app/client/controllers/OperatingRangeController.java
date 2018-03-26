@@ -102,7 +102,7 @@ public class OperatingRangeController implements Initializable {
     @FXML
     private TableColumn<OperatingRange, String> idStakingCondTab;
     @FXML
-    private Button idAdd;
+    private Button show;
     @FXML
     private Button idUpdate;
     @FXML
@@ -118,7 +118,8 @@ public class OperatingRangeController implements Initializable {
  
     @FXML
     private AnchorPane idsubmit;
-
+    @FXML
+    private AnchorPane idoptA;
     @FXML
     private TableView<?> opt;
     @FXML
@@ -183,7 +184,7 @@ public class OperatingRangeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     	
-    	
+    	idoptA.setVisible(false);
     	idStakingCond.getItems().addAll("Consecutive","Overlap","With staking delay","Parallel");
     	idStakingCond.getSelectionModel().selectLast();
     	
@@ -430,7 +431,10 @@ public class OperatingRangeController implements Initializable {
 	    		}
 	    	  });
 	        
-	        
+	        idupimg.setOnMouseClicked((MouseEvent e) -> {
+	
+	        	idoptA.setVisible(true);
+	    	  });
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 		}
@@ -442,9 +446,8 @@ public class OperatingRangeController implements Initializable {
 
     }
 
-    private void setNode(Node node) {
-        holderPane.getChildren().clear();
-        holderPane.getChildren().add((Node) node);
-    }
+    
+  
+  
 
 }
