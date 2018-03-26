@@ -200,6 +200,26 @@ public class ChargingStationMenuController implements Initializable {
     		idtreeU.setVisible(false);
     		idtreeE.setVisible(false);
     	  });
+    	
+    	
+		  
+    	idCal.setOnMouseClicked((MouseEvent e) -> { 
+			  
+			  System.out.println("Calendar Clicked!"); // change functionality
+	            Parent parent= null;
+		    	try {
+					parent  =FXMLLoader.load(getClass().getResource("/views/Calendar.fxml"));
+					Scene scene=new Scene(parent);
+					Stage primaryStage= new Stage(); 
+					primaryStage.setScene(scene);
+					primaryStage.show();
+					idCal.getScene().getWindow().hide();
+
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		  });
     	}
     }    
     
