@@ -31,6 +31,9 @@ public class Article implements Serializable {
 		@OneToMany(mappedBy="article",fetch=FetchType.EAGER)
 		private List<OrdredItem> orderItem = new ArrayList<>();
 		
+		@OneToMany(mappedBy="needed_article",fetch=FetchType.EAGER)
+		private List<NeededItem> neededItem = new ArrayList<>();
+		
 		@ManyToMany(fetch=FetchType.EAGER)
 		private List <OperatingRange> operatingranges;
 		
@@ -59,6 +62,24 @@ public class Article implements Serializable {
 		private int DailyConsumption=0;
 		@Column(name = "DeliveryTime")
 		private int DeliveryTime=0;
+		@Column(name = "PricipalQuantity",columnDefinition = "int default 100")
+		private int PricipalQuantity=100;
+		@Column(name = "etatOrdre",columnDefinition = "int default 0")
+		private int etatOrdre=0;
+	
+		public int getEtatOrdre() {
+			return etatOrdre;
+		}
+		public void setEtatOrdre(int etatOrdre) {
+			this.etatOrdre = etatOrdre;
+		}
+		public int getPricipalQuantity() {
+			return PricipalQuantity;
+		}
+		public void setPricipalQuantity(int pricipalQuantity) {
+			PricipalQuantity = pricipalQuantity;
+		}
+		
 		
 		public int getDailyConsumption() {
 			return DailyConsumption;

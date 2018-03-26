@@ -14,8 +14,11 @@ import com.jfoenix.controls.JFXTextField;
 
 import java.net.URL;
 import java.sql.Date;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayDeque;
 
 import java.util.List;
@@ -145,8 +148,7 @@ public class ArticleController implements Initializable {
     private JFXTextField txtArticleCodeForOrder;
     @FXML
     private JFXTextField txtQuantityForOrder;
-    @FXML
-    private DatePicker ReceptionDate;
+  
     @FXML
     private DatePicker RequestDate;
     @FXML
@@ -174,6 +176,7 @@ public class ArticleController implements Initializable {
     	try {
     		fillTreeTableView("all");
     		fillTableView("all");
+    		AuoOrderCreation();
     		
 		} catch (NamingException e) {
 			}
@@ -538,8 +541,7 @@ private void fillTableView(String code) throws NamingException {
     	 LocalDate  localDateAlarm = AlarmDate.getValue();
     	 Date AlarmTypeDate = java.sql.Date.valueOf(localDateAlarm);
     			 
-    	LocalDate  localDateReception = ReceptionDate.getValue();
-    	 Date ReceptionTypeDate = java.sql.Date.valueOf(localDateReception);
+    	
     			 
     	LocalDate  localDateRequest = RequestDate.getValue();
     	 Date RequestTypeDate = java.sql.Date.valueOf(localDateRequest);
@@ -551,18 +553,13 @@ private void fillTableView(String code) throws NamingException {
              alert.setHeaderText("Alarm Date is wrong");
             alert.showAndWait();
             
-    	 }else if(ReceptionTypeDate.compareTo(CurrentDate)<=0) {
-    		
-    		 alert.setTitle("Wrong Date");
-             alert.setHeaderText("Local Date is wrong");
-            alert.showAndWait();
     	 }else if(RequestTypeDate.compareTo(CurrentDate)<=0){
     	
     		 alert.setTitle("Wrong Date");
              alert.setHeaderText("Request Date is wrong");
             alert.showAndWait();
     	 }else {
-    		 MvtApprov mvtApprov=new MvtApprov(article,null,Integer.valueOf(txtQuantityForOrder.getText()),AlarmTypeDate,RequestTypeDate,ReceptionTypeDate);
+    		 MvtApprov mvtApprov=new MvtApprov(article,null,Integer.valueOf(txtQuantityForOrder.getText()),AlarmTypeDate,RequestTypeDate,null);
              OrdreProxy.addMvtApprov(mvtApprov);
     	 }
       
@@ -609,7 +606,41 @@ private void fillTableView(String code) throws NamingException {
     }
 
    
+private void AuoOrderCreation() throws NamingException {
+	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+	Context context2 = new InitialContext();
+	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context2.lookup(ArticlejndiName);
+	
+	List<Article> articles=aArticleProxy.getAllArticles();
+	
+	String jndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/MvtApprovService!tn.esprit.b4.esprit1718b4eventmanagement.services.MvtApprovServiceRemote";
+	Context context1 = new InitialContext();
+	MvtApprovServiceRemote OrdreProxy = (MvtApprovServiceRemote) context1.lookup(jndiName);
+	
+	
+	for(int i=0;i<articles.size();i++) {
+	int joursRestant=articles.get(i).getQuantity()/articles.get(i).getDailyConsumption();
+	 
+	
+	Date dateT=java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
+	Date currentDate =java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
 
+
+	int day= dateT.getDate();
+
+	dateT.setDate(day+joursRestant-articles.get(i).getDeliveryTime());
+	if(dateT.compareTo(currentDate)<=0 && articles.get(i).getEtatOrdre()==0) {
+		MvtApprov mvtApprov=new MvtApprov(articles.get(i),null,articles.get(i).getPricipalQuantity()-articles.get(i).getQuantity(),null,dateT,null);
+		OrdreProxy.addMvtApprov(mvtApprov);
+		articles.get(i).setEtatOrdre(1);
+		aArticleProxy.updateArticle(articles.get(i));
+	}
+	
+	
+	
+	
+	}
+}
 
 
 

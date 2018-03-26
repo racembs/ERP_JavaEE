@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
@@ -84,7 +85,13 @@ public class EquipementService extends GenericDAO<Equipment>  implements Equipem
 			return result;
 		}
 		
-		
+		  
+	    public List<Equipment> searchEquipment(String input){
+	    	TypedQuery<Equipment> query = em.createQuery("SELECT c FROM Equipment c WHERE c.SerialNum LIKE :input OR c.State LIKE :input OR c.Fabriquant LIKE :input OR c.Marque LIKE :input",Equipment.class);
+	    	query.setParameter("input", "%" + input + "%");
+	    	List<Equipment> results = query.getResultList();
+	    	return results;
+	    }
 
 		
 

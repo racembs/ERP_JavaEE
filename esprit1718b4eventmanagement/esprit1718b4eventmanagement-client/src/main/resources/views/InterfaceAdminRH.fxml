@@ -90,7 +90,7 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
                                  <children>
-                                    <TextField fx:id="txtsearch" layoutX="632.0" layoutY="15.0" prefHeight="30.0" prefWidth="302.0" promptText="Search by Login" styleClass="search-box" />
+                                    <TextField fx:id="txtsearch" layoutX="632.0" layoutY="15.0" onKeyReleased="#searchreleased" prefHeight="30.0" prefWidth="302.0" promptText="Search by Login" styleClass="search-box" />
                                     <TableView fx:id="tableau" layoutX="49.0" layoutY="55.0" prefHeight="326.0" prefWidth="1080.0">
                                       <columns>
                                           <TableColumn fx:id="ColLogin" editable="false" maxWidth="143.666748046875" minWidth="-1.0" prefWidth="143.666748046875" sortable="false" text="Login" />

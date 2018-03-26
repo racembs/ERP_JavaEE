@@ -20,9 +20,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ClientServiceRemote;
-import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ManufactNomenclatureService;
-import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ManufactNomenclatureServiceRemote;
-import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ManufacturingOrderServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeedNomenclatureService;
+import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeedNomenclatureServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeededItemServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrderItemService;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrderItemServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrdersServiceRemote;
@@ -33,15 +33,17 @@ import javafx.fxml.Initializable;
 public class ClientController implements Initializable {
 	
 	String jndiNameClient = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ClientService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ClientServiceRemote";
-	String jndiNameNomenclature = "exported/esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ManufactNomenclatureService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ManufactNomenclatureServiceRemote";
-	String jndiNameManufacturingOrder = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ManufacturingOrderService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ManufacturingOrderServiceRemote";
+	String jndiNameNomenclature = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/NeedNomenclatureService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeedNomenclatureServiceRemote";
+	String jndiNameNeededItem = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/NeededItemService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeededItemServiceRemote";
+	String jndiNameManufacturingPlan = "exported/esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ManufacturingPlanningService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ManufacturingPlanningServiceRemote";
 	String jndiNameOrdredItem = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OrderItemService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrderItemServiceRemote";
 	String jndiNameOrders= "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OrdersService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrdersServiceRemote";
 	String jndiNameArticle = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
 	ServiceLocator s=ServiceLocator.getInstance(); 
 	ClientServiceRemote proxyClientServiceRemote=(ClientServiceRemote) s.getProxy(jndiNameClient);
-	ManufactNomenclatureServiceRemote proxyNomenclature=(ManufactNomenclatureServiceRemote) s.getProxy(jndiNameNomenclature);
-	ManufacturingOrderServiceRemote proxyManufacturing=(ManufacturingOrderServiceRemote) s.getProxy(jndiNameManufacturingOrder);
+	NeedNomenclatureServiceRemote proxyNomenclature=(NeedNomenclatureServiceRemote) s.getProxy(jndiNameNomenclature);
+	NeededItemServiceRemote proxyNeededItem=(NeededItemServiceRemote) s.getProxy(jndiNameNeededItem);
+	NeededItemServiceRemote proxyManufacturing=(NeededItemServiceRemote) s.getProxy(jndiNameManufacturingPlan);
 	OrderItemServiceRemote proxyOrdredItem=(OrderItemServiceRemote) s.getProxy(jndiNameOrdredItem);
 	OrdersServiceRemote proxyOrders=(OrdersServiceRemote) s.getProxy(jndiNameOrders);
 	ArticleServiceRemote proxyArticleServiceRemote=(ArticleServiceRemote) s.getProxy(jndiNameArticle);
@@ -152,6 +154,9 @@ public class ClientController implements Initializable {
 		client.setCode(codess+(client.getId()*12+7));
 		proxyClientServiceRemote.update(client);
 		displayAllClient();
+		CompanyText.clear();
+		PhoneText.clear();
+		EmailText.clear();
 		
     }
 	
@@ -244,6 +249,7 @@ public class ClientController implements Initializable {
     		CompanyText1.setVisible(true);
     		PhoneText1.setVisible(true);
     		EmailText1.setVisible(true);
+    		update.setText("Cancel");
     	}
     	else{
     		submit.setVisible(false);
@@ -253,6 +259,7 @@ public class ClientController implements Initializable {
     		CompanyText1.setVisible(false);
     		PhoneText1.setVisible(false);
     		EmailText1.setVisible(false);
+    		update.setText("Update");
     	}
     }
     
