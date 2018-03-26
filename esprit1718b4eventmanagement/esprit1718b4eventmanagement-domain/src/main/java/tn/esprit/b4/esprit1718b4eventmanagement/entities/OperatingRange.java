@@ -120,6 +120,10 @@ public class OperatingRange implements Serializable {
 		super();
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 
 	
 }

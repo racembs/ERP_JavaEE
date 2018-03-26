@@ -12,6 +12,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,6 +34,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -40,6 +43,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
+import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
@@ -121,19 +125,19 @@ public class OperatingRangeController implements Initializable {
     @FXML
     private AnchorPane idoptA;
     @FXML
-    private TableView<?> opt;
+    private TableView<Operation> opt;
     @FXML
-    private TableColumn<?, ?> ORtab;
+    private TableColumn<Operation, Integer> ORtab;
     @FXML
-    private TableColumn<?, ?> Utab;
+    private TableColumn<Operation, Integer> Utab;
     @FXML
-    private TableColumn<?, ?> Etab;
+    private TableColumn<Operation, Integer> Etab;
     @FXML
-    private TableColumn<?, ?> Dtab;
+    private TableColumn<Operation, String> Dtab;
     @FXML
-    private TableColumn<?, ?> PNtab;
+    private TableColumn<Operation, Integer> PNtab;
     @FXML
-    private TableColumn<?, ?> UPToptab;
+    private TableColumn<Operation, Integer> UPToptab;
     @FXML
     private ComboBox<?> ORop;
     @FXML
@@ -409,6 +413,7 @@ public class OperatingRangeController implements Initializable {
 	    			// TODO Auto-generated catch block
 	    			b.printStackTrace();
 	    		}
+	    		
 	    	  });
 	        
 	        findbt1.setOnMouseClicked((MouseEvent e) -> {
@@ -432,8 +437,67 @@ public class OperatingRangeController implements Initializable {
 	    	  });
 	        
 	        idupimg.setOnMouseClicked((MouseEvent e) -> {
-	
+	        	if(idTab.getSelectionModel().getSelectedItem()==null){
+	        		 Alert alert1 = new Alert(AlertType.INFORMATION);
+	        			alert1.setTitle("Please choose An Operating Range");
+	        			alert1.setHeaderText("Choose");
+	        			alert1.showAndWait();
+	        	}
+	        	else if(idTab.getSelectionModel().getSelectedItem()!=null){
 	        	idoptA.setVisible(true);
+	        	
+	      		try {
+        			String OpRangejndiName55 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
+            		Context context55;
+        			context55 = new InitialContext();
+                    OperatingRangeServiceRemote proxy55 =  (OperatingRangeServiceRemote) context55.lookup(OpRangejndiName55);
+
+                	String jndiNameOperation1 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperationService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote";
+        			Context contextOperation1 = new InitialContext();
+        			OperationServiceRemote proxyOperation1 = (OperationServiceRemote) contextOperation1.lookup(jndiNameOperation1);
+        			Operation opt2 = new Operation();
+        			
+
+
+//        		    ORtab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
+//
+//        	              @Override
+//        	              public ObservableValue<String> call(CellDataFeatures<Operation, String> param) {
+//        	                  return new SimpleStringProperty(param.getValue().getOptrange().getCode());
+//        	              }
+//        	          }); 
+//        			Utab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
+//
+//      	              @Override
+//      	              public ObservableValue<String> call(CellDataFeatures<Operation, String> param) {
+//      	                  return new SimpleStringProperty(param.getValue().getChargingstations().getUser().getFirstname());
+//      	              }
+//      	          }); 
+//      			Etab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
+//
+//      	              @Override
+//      	              public ObservableValue<String> call(CellDataFeatures<Operation, String> param) {
+//      	                  return new SimpleStringProperty(param.getValue().getChargingstations().getEquipement().getSerialNum()+"-"+param.getValue().getChargingstations().getEquipement().getDescription());
+//      	              }
+//      	          }); 
+        		    Dtab.setCellValueFactory(new PropertyValueFactory<Operation, String>("description"));
+        		    PNtab.setCellValueFactory(new PropertyValueFactory<Operation, Integer>("phasenumber"));
+        		    UPToptab.setCellValueFactory(new PropertyValueFactory<Operation, Integer>("unitproductiontime"));
+        			
+            	    Integer id= idTab.getSelectionModel().getSelectedItem().getIdoptrange();
+            	  System.out.println(id);
+//            	    List<Operation> listopt=  proxyOperation1.find(id);
+            	    List<Operation> listopt=  proxyOperation1.DisplayOperation();
+	    	        
+	    	        ObservableList<Operation> itemsopt = FXCollections.observableArrayList(listopt);
+	    	        opt.setItems(itemsopt);
+            	
+	    	   
+            	} catch (NamingException a) {
+        			// TODO Auto-generated catch block
+        			
+        		}
+	        }
 	    	  });
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block

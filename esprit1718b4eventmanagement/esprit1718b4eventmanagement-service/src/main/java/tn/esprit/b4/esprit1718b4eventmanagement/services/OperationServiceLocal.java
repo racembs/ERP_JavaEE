@@ -20,5 +20,6 @@ public interface OperationServiceLocal {
 	public Operation findOperation(int idOperatingRange, ChargingStationPK WorkStationPK);
 	
 	public List<Operation> DisplayOperation();
+	public List<Operation> find(int code);
 	
 }

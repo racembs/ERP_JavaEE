@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
@@ -58,5 +59,16 @@ public class OperationService implements OperationServiceLocal, OperationService
 		List <Operation> result= query.getResultList();
 		return result;
 	}
+	
+	
+	@Override
+	public List<Operation> find(int code) {
+		TypedQuery<Operation> query=em.createQuery(
+				"select o from Operation o where o.PhaseNumber=:code", Operation.class);
+		query.setParameter("PhaseNumber", code);
+		List <Operation> result= query.getResultList();
+		return result;
+	}
+
 
 }
