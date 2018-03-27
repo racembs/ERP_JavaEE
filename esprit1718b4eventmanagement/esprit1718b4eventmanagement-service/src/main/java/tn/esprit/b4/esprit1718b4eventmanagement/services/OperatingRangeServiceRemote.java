@@ -5,9 +5,10 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
+import tn.esprit.b4.esprit1718b4eventmanagement.utilities.IGenericDAO;
 
 @Remote
-public interface OperatingRangeServiceRemote {
+public interface OperatingRangeServiceRemote  extends IGenericDAO<OperatingRange> {
 	public int addOperatingRange(OperatingRange operatingranges);
 	public void deleteOperatingRange(int idOptR);
 	void updateOperatingRange(OperatingRange OptRange);

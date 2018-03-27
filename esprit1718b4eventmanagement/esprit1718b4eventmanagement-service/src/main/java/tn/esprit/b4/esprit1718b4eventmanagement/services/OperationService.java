@@ -12,12 +12,18 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItem;
+import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 
 @Stateless
-public class OperationService implements OperationServiceLocal, OperationServiceRemote {
+public class OperationService extends GenericDAO<Operation> implements OperationServiceLocal, OperationServiceRemote {
+	
+
 	@PersistenceContext
 	EntityManager em;
-	
+	public OperationService() {
+		super(Operation.class);
+		// TODO Auto-generated constructor stub
+	}
 	@Override
 	public OperationPK addOperation(int idOperatingRange, ChargingStationPK idChargingStation, Operation operations) {
 

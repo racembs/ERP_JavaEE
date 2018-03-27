@@ -4,11 +4,12 @@ import java.util.List;
 
 import javax.ejb.Local;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperationPK;
+import tn.esprit.b4.esprit1718b4eventmanagement.utilities.IGenericDAO;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
 
 @Local
-public interface OperationServiceLocal {
+public interface OperationServiceLocal  extends IGenericDAO<Operation> {
 
 	
 	public OperationPK addOperation(int idOperatingRange, ChargingStationPK WorkStationPK, Operation operations);

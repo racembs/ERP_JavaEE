@@ -7,14 +7,22 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
+import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 @Stateless
-public class OperatingRangeService implements OperatingRangeServiceLocal, OperatingRangeServiceRemote {
+public class OperatingRangeService extends GenericDAO<OperatingRange> implements OperatingRangeServiceLocal, OperatingRangeServiceRemote {
+
+
 	@PersistenceContext
 	EntityManager em;
+	public OperatingRangeService() {
+		super(OperatingRange.class);
+		// TODO Auto-generated constructor stub
+	}
 	@Override
 	public int addOperatingRange(OperatingRange operatingranges) {
 		em.persist(operatingranges);

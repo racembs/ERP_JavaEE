@@ -356,18 +356,16 @@ public class OperatingRangeController implements Initializable {
 	        		
 	        		try {
 	        			String OpRangejndiName55 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
-
 	            		Context context55;
-	        			context55 = new InitialContext();
-	        			
+	        			context55 = new InitialContext();      			
 	        	        OperatingRangeServiceRemote proxy55 =  (OperatingRangeServiceRemote) context55.lookup(OpRangejndiName55);
-
-	            	Integer id= idTab.getSelectionModel().getSelectedItem().getIdoptrange();
-	            	proxy55.deleteOperatingRange(id);
+	        	        
+	        	        proxy55.delete(idTab.getSelectionModel().getSelectedItem());
+	            	
 	            	
 	        		   List<OperatingRange> list55 = proxy55.DisplayOperatingRange();
 	        	        ObservableList<OperatingRange> items55 = FXCollections.observableArrayList(list55);
-	        	        System.out.println(items55.get(0).getDesignation());
+	        	        //System.out.println(items55.get(0).getDesignation());
 	        	        idTab.setItems(items55);
 	        	        
 	        	        
@@ -407,10 +405,19 @@ public class OperatingRangeController implements Initializable {
 	    				opt.setDeadline(Deadline);
 	    				opt.setStakingcondition(idStakingCond.getValue().toString());
 	    							
-	    				proxy2.updateOperatingRange(opt);
+	    				proxy2.update(idTab.getSelectionModel().getSelectedItem());
 	    				
 	    				System.out.println("modif");
 	    				   List<OperatingRange> list2 = proxy2.DisplayOperatingRange();
+	    	      	        ObservableList<OperatingRange> items55 = FXCollections.observableArrayList(list2);
+		        	     
+		        	        idTab.setItems(items55);
+		        	        
+		        	        
+		        		 Alert alert1 = new Alert(AlertType.INFORMATION);
+		        			alert1.setTitle("Operating Range Modified");
+		        			alert1.setHeaderText("Succesful");
+		        			alert1.showAndWait();
 	    	        });
 	    	        
 	    	        
