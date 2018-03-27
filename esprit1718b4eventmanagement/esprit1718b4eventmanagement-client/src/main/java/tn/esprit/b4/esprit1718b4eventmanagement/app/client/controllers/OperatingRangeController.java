@@ -46,9 +46,11 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote;
@@ -467,43 +469,204 @@ public class OperatingRangeController implements Initializable {
 			                
 			              });
 			              ORop.getSelectionModel().selectLast();
+			              
+			              
+				        	ORtab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
+
+					              @Override
+					              public ObservableValue<String> call(CellDataFeatures<Operation, String> param) {
+					                  return new SimpleStringProperty(param.getValue().getOptrange().getCode().toString());
+					              }
+					          }); 
+				        	 Etab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
+
+					              @Override
+					              public ObservableValue<String> call(CellDataFeatures<Operation, String> param) {
+					                  return new SimpleStringProperty(param.getValue().getChargingstations().getEquipement().getSerialNum()+"-"+param.getValue().getChargingstations().getEquipement().getDescription());
+					              }
+					          }); 
+				        	 Utab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
+
+					              @Override
+					              public ObservableValue<String> call(CellDataFeatures<Operation, String> param) {
+					                  return new SimpleStringProperty(param.getValue().getChargingstations().getUser().getFirstname()+"-"+param.getValue().getChargingstations().getUser().getLastname());
+					              }
+					          }); 
+				        	 Dtab.setCellValueFactory(new PropertyValueFactory<Operation, String>("description"));
+				        	 PNtab.setCellValueFactory(new PropertyValueFactory<Operation, Integer>("phasenumber"));
+				        	 UPToptab.setCellValueFactory(new PropertyValueFactory<Operation, Integer>("unitproductiontime"));
+				        	 
+				        		String jndiNameOperation1 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperationService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote";
+				    			Context contextOperation1 = new InitialContext();
+				    			OperationServiceRemote proxyOperation1 = (OperationServiceRemote) contextOperation1.lookup(jndiNameOperation1);
+				    			//Operation opt = new Operation();
+							   List<Operation> listopt1 = proxyOperation1.findOprationByChargId(idTab.getSelectionModel().getSelectedItem().getIdoptrange());
+						        ObservableList<Operation> itemsopt1 = FXCollections.observableArrayList(listopt1);
+						        opt.setItems(itemsopt1);
+						        
+						        
+						        addop.setOnMouseClicked((MouseEvent u) -> {
+						        
+									try {
+										String jndiNameOperation2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperationService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote";
+						    			Context contextOperation2;
+										contextOperation2 = new InitialContext();
+						    			OperationServiceRemote proxyOperation2 = (OperationServiceRemote) contextOperation2.lookup(jndiNameOperation2);
+						    			
+										
+										
+										Operation operation = new Operation();
+										ChargingStationPK pk = new ChargingStationPK();
+										
+										operation.setDescription(Dop.getText());
+										int a=Integer.parseInt(PNop.getText());
+										operation.setPhasenumber(a);
+										int b=Integer.parseInt(UPTop.getText());
+										operation.setUnitproductiontime(b);
+										int idoptr = ORop.getSelectionModel().getSelectedItem().getIdoptrange();	
+										
+										  int idE = Eop.getSelectionModel().getSelectedItem().getId();
+										  int idU = Uop.getSelectionModel().getSelectedItem().getId();
+										pk.setId_equipment(idE);
+										pk.setIdUser(idU);
+										proxyOperation2.addOperation(idoptr, pk, operation);
+										System.out.println("created");
+										
+										   List<Operation> list12 = proxyOperation2.DisplayOperation();
+									        ObservableList<Operation> items12 = FXCollections.observableArrayList(list12);
+									 
+									        opt.setItems(items12);
+									        
+									        
+										    Alert alert = new Alert(AlertType.INFORMATION);
+											alert.setTitle("Operation Added");
+											alert.setHeaderText("Succesful");
+											alert.showAndWait();
+									} catch (Exception e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+				
+								
+				    	
+							 });
+						        
+						     delop.setOnMouseClicked((MouseEvent u) -> {
+							        
+									try {
+										Alert alert = new Alert(AlertType.CONFIRMATION);
+								    	alert.setTitle("WARNING");
+										alert.setHeaderText("Are You Sure?");
+								    	
+								    	if (alert.showAndWait().get () == ButtonType.OK)
+								    	{
+										String jndiNameOperation3 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperationService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote";
+						    			Context contextOperation3;
+										contextOperation3 = new InitialContext();
+						    			OperationServiceRemote proxyOperation3 = (OperationServiceRemote) contextOperation3.lookup(jndiNameOperation3);
+						    			
+										
+										proxyOperation3.delete(opt.getSelectionModel().getSelectedItem());
+										
+										
+										   List<Operation> list13 = proxyOperation3.DisplayOperation();
+									        ObservableList<Operation> items13 = FXCollections.observableArrayList(list13);
+									 
+									        opt.setItems(items13);
+									        
+									        
+									        Alert alert1 = new Alert(AlertType.INFORMATION);
+							    			alert1.setTitle("Operation Deleted");
+							    			alert1.setHeaderText("Succesful");
+							    			alert1.showAndWait();
+											
+								    	}
+									} catch (Exception e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+				
+								
+				    	
+							 });
+						     
+						     
+						     uoop.setOnMouseClicked((MouseEvent u) -> {
+						    	 if(opt.getSelectionModel().getSelectedItem()!=null){
+									try {
+									
+										String jndiNameOperation4 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperationService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote";
+						    			Context contextOperation4;
+										contextOperation4 = new InitialContext();
+						    			OperationServiceRemote proxyOperation4 = (OperationServiceRemote) contextOperation4.lookup(jndiNameOperation4);
+						    			
+										
+						    			Operation chs = opt.getSelectionModel().getSelectedItem();
+										String c= String.valueOf(chs.getPhasenumber());
+										String d= String.valueOf(chs.getUnitproductiontime());
+							    		  
+							    		Dop.setText(chs.getDescription());
+							    		PNop.setText(c);
+							    		UPTop.setText(d);
+							    		
+							    		ORop.getSelectionModel().select(chs.getOptrange().getIdoptrange());
+							    		Eop.getSelectionModel().select(chs.getChargingstations().getEquipement().getId());
+							    		Uop.getSelectionModel().select(chs.getChargingstations().getUser().getId());
+						    			
+							    		 ok.setOnMouseClicked((MouseEvent a) -> {	
+							    		
+							 				 
+											chs.setDescription(Dop.getText());
+											
+											int x=Integer.parseInt(PNop.getText());
+											int y=Integer.parseInt(UPTop.getText());		  
+											chs.setPhasenumber(x);
+											chs.setUnitproductiontime(y);
+													
+											int idE = Eop.getSelectionModel().getSelectedItem().getId();
+											int idU = Uop.getSelectionModel().getSelectedItem().getId();
+											int idOptR = ORop.getSelectionModel().getSelectedItem().getIdoptrange();
+											
+											OperationPK operationpk = new OperationPK();	
+											
+											ChargingStationPK charginstationpk = new ChargingStationPK();
+											charginstationpk.setId_equipment(idE);
+											charginstationpk.setIdUser(idU);
+											
+											operationpk.setIdChargingStation(charginstationpk);
+											operationpk.setId(idOptR);
+											chs.setOperationPK(operationpk);
+							    			 
+							    			 
+							    			 proxyOperation4.update(opt.getSelectionModel().getSelectedItem());
+										
+										
+										   List<Operation> list14 = proxyOperation4.DisplayOperation();
+									        ObservableList<Operation> items14 = FXCollections.observableArrayList(list14);
+									 
+									        opt.setItems(items14);
+									        
+									        
+									        Alert alert1 = new Alert(AlertType.INFORMATION);
+							    			alert1.setTitle("Operation Modified");
+							    			alert1.setHeaderText("Succesful");
+							    			alert1.showAndWait();
+											
+							    		 });	
+									} catch (Exception e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+				
+						    	 
+						    	 }
+							 });
+						        
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-	        	
-	        	ORtab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
-
-		              @Override
-		              public ObservableValue<String> call(CellDataFeatures<Operation, String> param) {
-		                  return new SimpleStringProperty(param.getValue().getOptrange().getCode().toString());
-		              }
-		          }); 
-	        	 Etab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
-
-		              @Override
-		              public ObservableValue<String> call(CellDataFeatures<Operation, String> param) {
-		                  return new SimpleStringProperty(param.getValue().getChargingstations().getEquipement().getSerialNum()+"-"+param.getValue().getChargingstations().getEquipement().getDescription());
-		              }
-		          }); 
-	        	 Utab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
-
-		              @Override
-		              public ObservableValue<String> call(CellDataFeatures<Operation, String> param) {
-		                  return new SimpleStringProperty(param.getValue().getChargingstations().getUser().getFirstname()+"-"+param.getValue().getChargingstations().getUser().getLastname());
-		              }
-		          }); 
-	        	 Dtab.setCellValueFactory(new PropertyValueFactory<Operation, String>("description"));
-	        	 PNtab.setCellValueFactory(new PropertyValueFactory<Operation, Integer>("phasenumber"));
-	        	 UPToptab.setCellValueFactory(new PropertyValueFactory<Operation, Integer>("unitproductiontime"));
-	        	 
-
-				   //List<Operation> listopt = proxyOperation.DisplayOperation();
-				   List<Operation> listopt = proxyOperation.findOprationByChargId(idTab.getSelectionModel().getSelectedItem().getIdoptrange());
-			        ObservableList<Operation> itemsopt = FXCollections.observableArrayList(listopt);
-			        opt.setItems(itemsopt);
-		
-			        
+	        	      
 			        
 			        
 
