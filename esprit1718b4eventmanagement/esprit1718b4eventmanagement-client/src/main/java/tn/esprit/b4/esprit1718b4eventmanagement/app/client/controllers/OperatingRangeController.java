@@ -18,8 +18,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -43,6 +46,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
@@ -184,6 +188,8 @@ public class OperatingRangeController implements Initializable {
     private JFXTextField find1;
     @FXML
     private ImageView findbt1;
+    @FXML
+    private ImageView back;
 
     /**
      * Initializes the controller class.
@@ -354,7 +360,7 @@ public class OperatingRangeController implements Initializable {
 	    	        idDesignation.setText(opt.getDesignation());
 	    	        idStakingCond.setValue(opt.getStakingcondition());
 	    	        
-	    	        idupimg.setOnMouseClicked((MouseEvent a) -> {
+	    	        ok1.setOnMouseClicked((MouseEvent a) -> {
 	    	        	opt.setCode(idCode.getText());
 	    	        	opt.setDesignation(idDesignation.getText());
 	    				int Deadline = Integer.parseInt(idDeadline.getText());
@@ -661,6 +667,9 @@ public class OperatingRangeController implements Initializable {
 						    	 
 						    	 }
 							 });
+						     
+						     
+					
 						        
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -672,6 +681,36 @@ public class OperatingRangeController implements Initializable {
 
 	        	}
 	    	  });
+	        
+	        
+	        
+		     
+			back.setOnMouseClicked((MouseEvent a) -> { 
+				  Parent parent= null;
+				  	try {
+		  				parent  =FXMLLoader.load(getClass().getResource("/views/MenuuGPAO.fxml"));
+		  				Scene scene=new Scene(parent);
+		  				Stage primaryStage= new Stage(); 
+		  				primaryStage.setScene(scene);
+		  				primaryStage.show();
+		  				back.getScene().getWindow().hide();
+				  	} catch (Exception e1) {
+		  				// TODO Auto-generated catch block
+		  				e1.printStackTrace();
+		  			}
+			  });
+			
+			cancel1.setOnMouseClicked((MouseEvent a) -> { 
+					Dop.clear();
+					PNop.clear();
+					UPTop.clear();
+					
+					ORop.getSelectionModel().selectLast();
+					Uop.getSelectionModel().selectLast();
+					Eop.getSelectionModel().selectLast();
+			   	    
+				
+			  });
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 		}

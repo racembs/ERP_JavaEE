@@ -57,7 +57,7 @@
                         <TableColumn fx:id="idStakingCondTab" prefWidth="181.0" text="Staking Condition" />
                     </columns>
                   </TableView>
-                  <JFXTextField fx:id="idoptrange" layoutX="982.0" layoutY="30.0" />
+                  <JFXTextField fx:id="idoptrange" layoutX="918.0" layoutY="30.0" />
                   <ImageView fx:id="idupimg" fitHeight="53.0" fitWidth="36.0" layoutX="598.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                   <Image url="views/image/submit.png" />
@@ -119,9 +119,14 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <ImageView fx:id="findbt1" fitHeight="53.0" fitWidth="36.0" layoutX="1147.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="findbt1" fitHeight="53.0" fitWidth="36.0" layoutX="1083.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="views/image/searching.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="back" fitHeight="53.0" fitWidth="71.0" layoutX="1139.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="views/image/back.png" />
                      </image>
                   </ImageView>
                   
