@@ -7,11 +7,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperationPK;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItem;
 
 @Stateless
 public class OperationService implements OperationServiceLocal, OperationServiceRemote {
@@ -60,15 +60,13 @@ public class OperationService implements OperationServiceLocal, OperationService
 		return result;
 	}
 	
-	
 	@Override
-	public List<Operation> find(int code) {
-		TypedQuery<Operation> query=em.createQuery(
-				"select o from Operation o where o.PhaseNumber=:code", Operation.class);
-		query.setParameter("PhaseNumber", code);
-		List <Operation> result= query.getResultList();
-		return result;
+	public List<Operation> findOprationByChargId(int idOperationgRange) {
+		TypedQuery<Operation> query
+		=em.createQuery("SELECT o FROM Operation o WHERE o.operationPK.id =:idOperationgRange", Operation.class);
+		query.setParameter("idOperationgRange",idOperationgRange);
+		List<Operation> list=query.getResultList();
+		return list;
 	}
-
 
 }

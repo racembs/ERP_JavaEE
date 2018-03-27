@@ -38,11 +38,11 @@ public class ChargingStation implements Serializable {
 	@Column(name = "ChargingStationPK")
 	private ChargingStationPK chargingstationPK;
 	
-	@ManyToOne (cascade=CascadeType.ALL)
+	@ManyToOne 
 	@JoinColumn(name="idUser",referencedColumnName="id",insertable=false,updatable=false)
 	private User User;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="id_equipement",referencedColumnName="Id",insertable=false,updatable=false)
 	private Equipment equipement;
 	

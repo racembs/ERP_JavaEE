@@ -27,14 +27,14 @@ public class TestChargingStation {
 //		
 //		ChargingStation chs=proxy.findChargingStation(1,1);
 //		System.out.println(chs.getCode());
+////		
 //		
+//		proxy.updateChargingStation(2,2,ch);
+//		System.out.println("modified");
 		
-		proxy.updateChargingStation(2,2,ch);
-		System.out.println("modified");
 		
-		
-//		proxy.deleteChargingStation(2, 2);
-//		System.out.println("deleted");
+		//proxy.deleteChargingStation(1, 2);
+		System.out.println("deleted");
 		
 		
 	}

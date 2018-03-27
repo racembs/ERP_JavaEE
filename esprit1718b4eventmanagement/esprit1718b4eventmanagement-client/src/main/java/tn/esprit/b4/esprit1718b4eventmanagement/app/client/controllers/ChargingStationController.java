@@ -221,11 +221,12 @@ public class ChargingStationController implements Initializable {
 			    	
 			    	if (alert.showAndWait().get () == ButtonType.OK)
 			    	{
-			        	int idE= idTab.getSelectionModel().getSelectedItem().getEquipement().getId();
-			        	int idU= idTab.getSelectionModel().getSelectedItem().getUser().getId();
-			        	System.out.println(idE);
-			        	System.out.println(idU);
-			        	proxyChargingStation.deleteChargingStation(idE, idU);
+//			        	int idE= idTab.getSelectionModel().getSelectedItem().getEquipement().getId();
+//			        	int idU= idTab.getSelectionModel().getSelectedItem().getUser().getId();
+//			        	System.out.println(idE);
+//			        	System.out.println(idU);
+			        	proxyChargingStation.delete(idTab.getSelectionModel().getSelectedItem());
+			        	//proxyChargingStation.deleteChargingStation(idE, idU);
 			        	
 			    		    List<ChargingStation> listch = proxyChargingStation.DisplayChargingStation();
 			    	        ObservableList<ChargingStation> itemsch = FXCollections.observableArrayList(listch);
@@ -285,7 +286,7 @@ public class ChargingStationController implements Initializable {
 				       
 			  int c=Integer.parseInt(idchs.getText());	  
 			  System.out.println(idchs.getText());
-			  List<ChargingStation> listch22 =proxyChargingStation.find(c);
+			  List<ChargingStation> listch22 =proxyChargingStation.findd(c);
 				        
 			  ObservableList<ChargingStation> itemsch22 = FXCollections.observableArrayList(listch22);
 			 idTab.setItems(itemsch22);
@@ -333,7 +334,8 @@ public class ChargingStationController implements Initializable {
 					charginstationpk.setIdUser(idU);
 					chs.setChargingstationPK(charginstationpk);
 					//proxyChargingStation.deleteChargingStation(idE,idU);
-					proxyChargingStation.updateChargingStation(idE,idU,chs);
+					//proxyChargingStation.updateChargingStation(idE,idU,chs);
+					proxyChargingStation.update(idTab.getSelectionModel().getSelectedItem());
 		    		System.out.println("okkkkk");
 		    			
 

@@ -11,12 +11,19 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
+import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 
 
 @Stateless
-public class ChargingStationService implements ChargingStationServiceLocal, ChargingStationServiceRemote {
+public class ChargingStationService extends GenericDAO<ChargingStation> implements ChargingStationServiceLocal, ChargingStationServiceRemote {
+
+
 	@PersistenceContext
 	EntityManager em;
+	public ChargingStationService() {
+		super(ChargingStation.class);
+		// TODO Auto-generated constructor stub
+	}
 	@Override
 	public ChargingStationPK addChargingStation(int idEquipement, int idUser, ChargingStation ChS) {
 			
@@ -79,11 +86,11 @@ public class ChargingStationService implements ChargingStationServiceLocal, Char
 
 		TypedQuery<ChargingStation> query=em.createQuery("SELECT o FROM ChargingStation o",ChargingStation.class);
 		List <ChargingStation> result= query.getResultList();
-		return result; 
+		return result;
 	}
 	
 	@Override
-	public List<ChargingStation> find(int code) {
+	public List<ChargingStation> findd(int code) {
 		TypedQuery<ChargingStation> query=em.createQuery(
 				"select o from ChargingStation o where o.code=:code", ChargingStation.class);
 		query.setParameter("code", code);

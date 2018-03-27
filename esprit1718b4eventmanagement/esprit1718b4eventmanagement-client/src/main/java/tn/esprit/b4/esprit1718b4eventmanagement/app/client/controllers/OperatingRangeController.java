@@ -127,11 +127,11 @@ public class OperatingRangeController implements Initializable {
     @FXML
     private TableView<Operation> opt;
     @FXML
-    private TableColumn<Operation, Integer> ORtab;
+    private TableColumn<Operation, String> ORtab;
     @FXML
-    private TableColumn<Operation, Integer> Utab;
+    private TableColumn<Operation, String> Utab;
     @FXML
-    private TableColumn<Operation, Integer> Etab;
+    private TableColumn<Operation, String> Etab;
     @FXML
     private TableColumn<Operation, String> Dtab;
     @FXML
@@ -237,42 +237,48 @@ public class OperatingRangeController implements Initializable {
 
 		        CheckBoxTreeItem<String> Article = new CheckBoxTreeItem<String>(itemsA.get(a).getArticleCode());
 		        Article.setValue(itemsA.get(a).getArticleCode());
-
-	         for (int i = 0; i < list.size(); i++) {
-			        //Article.setExpanded(true);
-			        
-	 	        ObservableList<OperatingRange> items = FXCollections.observableArrayList(list);
-		        System.out.println(items.get(i).getCode());
-		        idTab.setItems(items);
-		    	CheckBoxTreeItem<String> Gammes = new CheckBoxTreeItem<String>(items.get(i).getCode());
-	    		Gammes.setValue(items.get(i).getCode());
 		        
-		        String G=("Gamme"+i);
-		        //CheckBoxTreeItem<String> Gamme1 = new CheckBoxTreeItem<String>(G);
-		    	
-		    	
-		    	
-		     //   Article1.getChildren().addAll(new CheckBoxTreeItem<String>(items.get(j).getCode()),Gamme1);
-		       // CheckBoxTreeItem<String> Gamme1 = new CheckBoxTreeItem<String>(items.get(j).getCode());
-		    		
-		            for (int k = 0; k < listOpt.size(); k++) {
-			        	
-			 	        ObservableList<Operation> itemss = FXCollections.observableArrayList(listOpt);
-			 	      //  if(items.get(j).getIdoptrange()==itemss.get(k).getOperationPK().getId()){
-				     //   System.out.println(itemss.get(k).getDescription());}
-	                //	  System.out.println(items.get(j).getIdoptrange());
-	                //	  System.out.println(itemss.get(k).getOperationPK().getId());
-					    
-			
-					        Gammes.getChildren().add(new CheckBoxTreeItem<String>(itemss.get(k).getDescription()));
-					
-				//}
-			        }
-		            
-		        
-		    	 
-		    	Article.getChildren().addAll(Gammes);
-	         }
+		        ObservableList<OperatingRange> items = FXCollections.observableArrayList(itemsA.get(a).getOperatingranges());
+		        for (OperatingRange operatingRange : items) {
+		        	CheckBoxTreeItem<String> Gammes = new CheckBoxTreeItem<String>(operatingRange.getCode());
+		    		Gammes.setValue(operatingRange.getCode());
+		    		Article.getChildren().addAll(Gammes);
+				}
+//	         for (int i = 0; i < list.size(); i++) {
+//			        //Article.setExpanded(true);
+//			        
+//	 	        
+//		        //System.out.println(items.get(i).getCode());
+//		        idTab.setItems(items);
+//		    	CheckBoxTreeItem<String> Gammes = new CheckBoxTreeItem<String>(items.get(i).getCode());
+//	    		Gammes.setValue(items.get(i).getCode());
+//		        
+//		        String G=("Gamme"+i);
+//		        //CheckBoxTreeItem<String> Gamme1 = new CheckBoxTreeItem<String>(G);
+//		    	
+//		    	
+//		    	
+//		     //   Article1.getChildren().addAll(new CheckBoxTreeItem<String>(items.get(j).getCode()),Gamme1);
+//		       // CheckBoxTreeItem<String> Gamme1 = new CheckBoxTreeItem<String>(items.get(j).getCode());
+//		    		
+//		            for (int k = 0; k < listOpt.size(); k++) {
+//			        	
+//			 	        ObservableList<Operation> itemss = FXCollections.observableArrayList(listOpt);
+//			 	      //  if(items.get(j).getIdoptrange()==itemss.get(k).getOperationPK().getId()){
+//				     //   System.out.println(itemss.get(k).getDescription());}
+//	                //	  System.out.println(items.get(j).getIdoptrange());
+//	                //	  System.out.println(itemss.get(k).getOperationPK().getId());
+//					    
+//			
+//					        Gammes.getChildren().add(new CheckBoxTreeItem<String>(itemss.get(k).getDescription()));
+//					
+//				//}
+//			        }
+//		            
+//		        
+//		    	 
+//		    	Article.getChildren().addAll(Gammes);
+//	         }
 	         
 		        
 	         GPAO.getChildren().addAll(Article);
@@ -413,7 +419,6 @@ public class OperatingRangeController implements Initializable {
 	    			// TODO Auto-generated catch block
 	    			b.printStackTrace();
 	    		}
-	    		
 	    	  });
 	        
 	        findbt1.setOnMouseClicked((MouseEvent e) -> {
@@ -437,67 +442,49 @@ public class OperatingRangeController implements Initializable {
 	    	  });
 	        
 	        idupimg.setOnMouseClicked((MouseEvent e) -> {
+	        	
+	        	
 	        	if(idTab.getSelectionModel().getSelectedItem()==null){
 	        		 Alert alert1 = new Alert(AlertType.INFORMATION);
-	        			alert1.setTitle("Please choose An Operating Range");
-	        			alert1.setHeaderText("Choose");
+	        			alert1.setTitle("Please Select an Operating Range");
+	        			alert1.setHeaderText("Please Select");
 	        			alert1.showAndWait();
 	        	}
 	        	else if(idTab.getSelectionModel().getSelectedItem()!=null){
 	        	idoptA.setVisible(true);
 	        	
-	      		try {
-        			String OpRangejndiName55 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
-            		Context context55;
-        			context55 = new InitialContext();
-                    OperatingRangeServiceRemote proxy55 =  (OperatingRangeServiceRemote) context55.lookup(OpRangejndiName55);
+	        	ORtab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
 
-                	String jndiNameOperation1 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperationService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote";
-        			Context contextOperation1 = new InitialContext();
-        			OperationServiceRemote proxyOperation1 = (OperationServiceRemote) contextOperation1.lookup(jndiNameOperation1);
-        			Operation opt2 = new Operation();
-        			
+		              @Override
+		              public ObservableValue<String> call(CellDataFeatures<Operation, String> param) {
+		                  return new SimpleStringProperty(param.getValue().getOptrange().getCode().toString());
+		              }
+		          }); 
+	        	 Etab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
 
+		              @Override
+		              public ObservableValue<String> call(CellDataFeatures<Operation, String> param) {
+		                  return new SimpleStringProperty(param.getValue().getChargingstations().getEquipement().getSerialNum()+"-"+param.getValue().getChargingstations().getEquipement().getDescription());
+		              }
+		          }); 
+	        	 Utab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
 
-//        		    ORtab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
-//
-//        	              @Override
-//        	              public ObservableValue<String> call(CellDataFeatures<Operation, String> param) {
-//        	                  return new SimpleStringProperty(param.getValue().getOptrange().getCode());
-//        	              }
-//        	          }); 
-//        			Utab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
-//
-//      	              @Override
-//      	              public ObservableValue<String> call(CellDataFeatures<Operation, String> param) {
-//      	                  return new SimpleStringProperty(param.getValue().getChargingstations().getUser().getFirstname());
-//      	              }
-//      	          }); 
-//      			Etab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
-//
-//      	              @Override
-//      	              public ObservableValue<String> call(CellDataFeatures<Operation, String> param) {
-//      	                  return new SimpleStringProperty(param.getValue().getChargingstations().getEquipement().getSerialNum()+"-"+param.getValue().getChargingstations().getEquipement().getDescription());
-//      	              }
-//      	          }); 
-        		    Dtab.setCellValueFactory(new PropertyValueFactory<Operation, String>("description"));
-        		    PNtab.setCellValueFactory(new PropertyValueFactory<Operation, Integer>("phasenumber"));
-        		    UPToptab.setCellValueFactory(new PropertyValueFactory<Operation, Integer>("unitproductiontime"));
-        			
-            	    Integer id= idTab.getSelectionModel().getSelectedItem().getIdoptrange();
-            	  System.out.println(id);
-//            	    List<Operation> listopt=  proxyOperation1.find(id);
-            	    List<Operation> listopt=  proxyOperation1.DisplayOperation();
-	    	        
-	    	        ObservableList<Operation> itemsopt = FXCollections.observableArrayList(listopt);
-	    	        opt.setItems(itemsopt);
-            	
-	    	   
-            	} catch (NamingException a) {
-        			// TODO Auto-generated catch block
-        			
-        		}
-	        }
+		              @Override
+		              public ObservableValue<String> call(CellDataFeatures<Operation, String> param) {
+		                  return new SimpleStringProperty(param.getValue().getChargingstations().getUser().getFirstname()+"-"+param.getValue().getChargingstations().getUser().getLastname());
+		              }
+		          }); 
+	        	 Dtab.setCellValueFactory(new PropertyValueFactory<Operation, String>("description"));
+	        	 PNtab.setCellValueFactory(new PropertyValueFactory<Operation, Integer>("phasenumber"));
+	        	 UPToptab.setCellValueFactory(new PropertyValueFactory<Operation, Integer>("unitproductiontime"));
+	        	 
+
+				   //List<Operation> listopt = proxyOperation.DisplayOperation();
+				   List<Operation> listopt = proxyOperation.findOprationByChargId(idTab.getSelectionModel().getSelectedItem().getIdoptrange());
+			        ObservableList<Operation> itemsopt = FXCollections.observableArrayList(listopt);
+			        opt.setItems(itemsopt);
+		
+	        	}
 	    	  });
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block

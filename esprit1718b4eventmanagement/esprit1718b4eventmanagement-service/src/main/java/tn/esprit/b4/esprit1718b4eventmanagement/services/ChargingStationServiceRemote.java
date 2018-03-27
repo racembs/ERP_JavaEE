@@ -7,9 +7,10 @@ import javax.ejb.Remote;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
+import tn.esprit.b4.esprit1718b4eventmanagement.utilities.IGenericDAO;
 
 @Remote
-public interface ChargingStationServiceRemote {
+public interface ChargingStationServiceRemote extends IGenericDAO<ChargingStation> {
 	public ChargingStationPK addChargingStation(int idEquipement, int idUser, ChargingStation ChS);
 	
 	public void deleteChargingStation(int idEquipement , int idUser);
@@ -21,5 +22,5 @@ public interface ChargingStationServiceRemote {
 	public ChargingStation findChargingStationByUser(int idUser);
 	
 	public List<ChargingStation> DisplayChargingStation();
-	public List<ChargingStation> find(int code);
+	public List<ChargingStation> findd(int code);
 }
