@@ -23,8 +23,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -42,6 +45,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
@@ -94,6 +98,8 @@ public class ChargingStationController implements Initializable {
     private TableColumn<ChargingStation, Integer> idNbHoursTab;
     @FXML
     private ImageView idAdd;
+    @FXML
+    private ImageView idBack;
     @FXML
     private ImageView idUpdate;
     @FXML
@@ -336,7 +342,16 @@ public class ChargingStationController implements Initializable {
 					//proxyChargingStation.deleteChargingStation(idE,idU);
 					//proxyChargingStation.updateChargingStation(idE,idU,chs);
 					proxyChargingStation.update(idTab.getSelectionModel().getSelectedItem());
-		    		System.out.println("okkkkk");
+		    	
+
+	    		    List<ChargingStation> listchu = proxyChargingStation.DisplayChargingStation();
+	    	        ObservableList<ChargingStation> itemschu = FXCollections.observableArrayList(listchu);
+	    	        idTab.setItems(itemschu);
+				        
+					    Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("ChargingStation Updated");
+						alert.setHeaderText("Succesful");
+						alert.showAndWait();
 		    			
 
 		    		 });
@@ -344,6 +359,34 @@ public class ChargingStationController implements Initializable {
 		
 		  });
 		  
+		  
+		  idBack.setOnMouseClicked((MouseEvent a) -> { 
+			  Parent parent= null;
+			  	try {
+	  				parent  =FXMLLoader.load(getClass().getResource("/views/ChargingStationMenu.fxml"));
+	  				Scene scene=new Scene(parent);
+	  				Stage primaryStage= new Stage(); 
+	  				primaryStage.setScene(scene);
+	  				primaryStage.show();
+	  				idBack.getScene().getWindow().hide();
+			  	} catch (Exception e1) {
+	  				// TODO Auto-generated catch block
+	  				e1.printStackTrace();
+	  			}
+		  });
+		  
+		  
+		  idcancel.setOnMouseClicked((MouseEvent a) -> { 
+				idCode.clear();
+				idDEscription.clear();
+				idNaturePost.clear();
+				idNbDays.clear();
+				idNbHours.clear();
+				idEquipement.getSelectionModel().selectLast();
+				idUser.getSelectionModel().selectLast();
+		   	    
+			
+		  });
     } catch (NamingException e1) {
 		// TODO Auto-generated catch block
 		

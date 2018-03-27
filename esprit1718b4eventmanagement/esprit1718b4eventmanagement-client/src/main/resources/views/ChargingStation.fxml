@@ -121,6 +121,11 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
+                  <ImageView fx:id="idBack" fitHeight="70.0" fitWidth="103.0" layoutX="1083.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" >
+                                     <image>
+                        <Image url="views/image/back.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </children></AnchorPane>

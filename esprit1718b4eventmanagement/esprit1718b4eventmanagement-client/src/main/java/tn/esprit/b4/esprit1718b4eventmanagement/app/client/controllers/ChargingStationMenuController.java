@@ -60,6 +60,8 @@ public class ChargingStationMenuController implements Initializable {
     @FXML
     private ImageView idref;
     @FXML
+    private ImageView idcancel;
+    @FXML
     private TreeView<String> idtreeU;
     @FXML
     private TreeView<String> idtreeE;
@@ -220,6 +222,22 @@ public class ChargingStationMenuController implements Initializable {
 					e1.printStackTrace();
 				}
 		  });
+    	
+    	idcancel.setOnMouseClicked((MouseEvent a) -> { 
+			  Parent parent= null;
+			  	try {
+	  				parent  =FXMLLoader.load(getClass().getResource("/views/MenuuGPAO.fxml"));
+	  				Scene scene=new Scene(parent);
+	  				Stage primaryStage= new Stage(); 
+	  				primaryStage.setScene(scene);
+	  				primaryStage.show();
+	  				idcancel.getScene().getWindow().hide();
+			  	} catch (Exception e1) {
+	  				// TODO Auto-generated catch block
+	  				e1.printStackTrace();
+	  			}
+		  });
+    	
     	}
     }    
     

@@ -88,9 +88,13 @@
             <Font size="36.0" />
          </font>
       </Label>
+      <ImageView fx:id="idcancel" fitHeight="93.0" fitWidth="112.0" layoutX="1066.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" >
+         <image>
+            <Image url="views/image/back.png" />
+         </image>
+      </ImageView>
    </children>
    
    
    
 </AnchorPane>
-

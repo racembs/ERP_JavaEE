@@ -46,13 +46,17 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
 
 /**
  * FXML Controller class
@@ -139,11 +143,11 @@ public class OperatingRangeController implements Initializable {
     @FXML
     private TableColumn<Operation, Integer> UPToptab;
     @FXML
-    private ComboBox<?> ORop;
+    private ComboBox<OperatingRange> ORop;
     @FXML
-    private ComboBox<?> Uop;
+    private ComboBox<User> Uop;
     @FXML
-    private ComboBox<?> Eop;
+    private ComboBox<Equipment> Eop;
     @FXML
     private TextArea Dop;
     @FXML
@@ -223,6 +227,7 @@ public class OperatingRangeController implements Initializable {
 	        List<Operation> listOpt = proxyOperation.DisplayOperation();
 	        List<Article> listA = ArticleProxy.DisplayArticle();
 
+	        ObservableList<Operation> items4 = FXCollections.observableArrayList(listOpt);
 	        //Long N = proxy.CountOperatingRange();
 	        ObservableList<OperatingRange> items22 = FXCollections.observableArrayList(list);
 	        System.out.println(items22.get(0).getDesignation());
@@ -243,42 +248,10 @@ public class OperatingRangeController implements Initializable {
 		        	CheckBoxTreeItem<String> Gammes = new CheckBoxTreeItem<String>(operatingRange.getCode());
 		    		Gammes.setValue(operatingRange.getCode());
 		    		Article.getChildren().addAll(Gammes);
+		    		
+		    	
 				}
-//	         for (int i = 0; i < list.size(); i++) {
-//			        //Article.setExpanded(true);
-//			        
-//	 	        
-//		        //System.out.println(items.get(i).getCode());
-//		        idTab.setItems(items);
-//		    	CheckBoxTreeItem<String> Gammes = new CheckBoxTreeItem<String>(items.get(i).getCode());
-//	    		Gammes.setValue(items.get(i).getCode());
-//		        
-//		        String G=("Gamme"+i);
-//		        //CheckBoxTreeItem<String> Gamme1 = new CheckBoxTreeItem<String>(G);
-//		    	
-//		    	
-//		    	
-//		     //   Article1.getChildren().addAll(new CheckBoxTreeItem<String>(items.get(j).getCode()),Gamme1);
-//		       // CheckBoxTreeItem<String> Gamme1 = new CheckBoxTreeItem<String>(items.get(j).getCode());
-//		    		
-//		            for (int k = 0; k < listOpt.size(); k++) {
-//			        	
-//			 	        ObservableList<Operation> itemss = FXCollections.observableArrayList(listOpt);
-//			 	      //  if(items.get(j).getIdoptrange()==itemss.get(k).getOperationPK().getId()){
-//				     //   System.out.println(itemss.get(k).getDescription());}
-//	                //	  System.out.println(items.get(j).getIdoptrange());
-//	                //	  System.out.println(itemss.get(k).getOperationPK().getId());
-//					    
-//			
-//					        Gammes.getChildren().add(new CheckBoxTreeItem<String>(itemss.get(k).getDescription()));
-//					
-//				//}
-//			        }
-//		            
-//		        
-//		    	 
-//		    	Article.getChildren().addAll(Gammes);
-//	         }
+
 	         
 		        
 	         GPAO.getChildren().addAll(Article);
@@ -287,28 +260,9 @@ public class OperatingRangeController implements Initializable {
 		      
 	        }
 	        
-//	   	 CheckBoxTreeItem<String> G1 = new CheckBoxTreeItem<String>("Gamme1");
-//    	 CheckBoxTreeItem<String> G2 = new CheckBoxTreeItem<String>("Gamme2");
-//    	 CheckBoxTreeItem<String> G3 = new CheckBoxTreeItem<String>("Gamme3");
-//    	 CheckBoxTreeItem<String> G4 = new CheckBoxTreeItem<String>("Gamme4");
-//    	 CheckBoxTreeItem<String> G5 = new CheckBoxTreeItem<String>("Gamme5");
-//    	 
-//    	 CheckBoxTreeItem<String> O1 = new CheckBoxTreeItem<String>("Operation1");
-//    	 CheckBoxTreeItem<String> O2 = new CheckBoxTreeItem<String>("Operation2");
-//    	 
-//    	 CheckBoxTreeItem<String> Article1 = new CheckBoxTreeItem<String>("Article1");
-//    	 Article1.setExpanded(true);
-//    	 Article1.getChildren().addAll(G1, G2, G3, G4, G5);
-//    	 G1.getChildren().addAll(O1,O2);
-    	 
-//    	 
-//    	 idCheckTree.setRoot(Article1);
-//    	 idCheckTree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
-    
+  
 	        
-	        
-	        
-///////////////////////////////////////////////***************///////////////////////////////
+
 	        addop1.setOnMouseClicked((MouseEvent e) -> {
 	
 				try {
@@ -383,12 +337,12 @@ public class OperatingRangeController implements Initializable {
 	        	}
 	    	  });
 	        
-	        uoop1.setOnMouseClicked((MouseEvent e) -> {
-	        	Context context2;
+	        uoop1.setOnMouseClicked((MouseEvent l) -> {
+	        	Context context25;
 	    		try {
-	    			context2 = new InitialContext();
-	    			String OperatingRangejndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
-	    	        OperatingRangeServiceRemote proxy2 =  (OperatingRangeServiceRemote) context2.lookup(OperatingRangejndiName2);
+	    			context25 = new InitialContext();
+	    			String OperatingRangejndiName25 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
+	    	        OperatingRangeServiceRemote proxy25 =  (OperatingRangeServiceRemote) context25.lookup(OperatingRangejndiName25);
 
 	    	        OperatingRange opt= idTab.getSelectionModel().getSelectedItem();
 	    	        String c= String.valueOf(opt.getCode());
@@ -405,13 +359,12 @@ public class OperatingRangeController implements Initializable {
 	    				opt.setDeadline(Deadline);
 	    				opt.setStakingcondition(idStakingCond.getValue().toString());
 	    							
-	    				proxy2.update(idTab.getSelectionModel().getSelectedItem());
+	    				proxy25.update(idTab.getSelectionModel().getSelectedItem());
 	    				
 	    				System.out.println("modif");
-	    				   List<OperatingRange> list2 = proxy2.DisplayOperatingRange();
-	    	      	        ObservableList<OperatingRange> items55 = FXCollections.observableArrayList(list2);
-		        	     
-		        	        idTab.setItems(items55);
+	    				   List<OperatingRange> list25 = proxy25.DisplayOperatingRange();
+	    	      	        ObservableList<OperatingRange> items25 = FXCollections.observableArrayList(list25);
+		        	        idTab.setItems(items25);
 		        	        
 		        	        
 		        		 Alert alert1 = new Alert(AlertType.INFORMATION);
@@ -422,9 +375,9 @@ public class OperatingRangeController implements Initializable {
 	    	        
 	    	        
 
-	    		} catch (NamingException b) {
+	    		} catch (NamingException m) {
 	    			// TODO Auto-generated catch block
-	    			b.printStackTrace();
+	    			m.printStackTrace();
 	    		}
 	    	  });
 	        
@@ -459,6 +412,65 @@ public class OperatingRangeController implements Initializable {
 	        	}
 	        	else if(idTab.getSelectionModel().getSelectedItem()!=null){
 	        	idoptA.setVisible(true);
+	  
+
+	  			Context contextUser;
+	  			Context contextEquipment;
+	  			Context contextOptR;
+	  			try {
+					contextUser = new InitialContext();
+					UserServiceRemote proxyuser = (UserServiceRemote) contextUser.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
+		  	    	User user = new User();
+		  			List<User>listu = proxyuser.DisplayUser();
+		  			
+		  		    //ComboBox User
+		  		    ObservableList<User> obListu = FXCollections.observableList(listu);
+		             Uop.setItems(obListu);
+		             Uop.valueProperty().addListener((obs, oldVal, newVal) -> {
+		                 String selectionText =  newVal.getFirstname() + "-" + newVal.getLastname();
+
+		                 System.out.println(selectionText);
+		               
+		             });
+		             Uop.getSelectionModel().selectLast();
+		             
+		             
+		  			contextEquipment = new InitialContext();
+		 			EquipementServiceRemote proxyEquipment = (EquipementServiceRemote) contextEquipment.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/EquipementService!tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote");
+		 	    	Equipment equipment = new Equipment();
+		 	    	List<Equipment> listE = proxyEquipment.DisplayEquipment();
+
+		 	    	//ComboBox Equipment
+		              ObservableList<Equipment> obListeq = FXCollections.observableList(listE);
+		              Eop.setItems(obListeq);
+		              Eop.valueProperty().addListener((obs, oldVal, newVal) -> {
+		                  String selectionText =  newVal.getSerialNum() + "-" + newVal.getDescription();
+		                  System.out.println(selectionText);
+		                
+		              });
+		              Eop.getSelectionModel().selectLast();
+		              
+		              
+		              
+		              
+		                contextOptR = new InitialContext();
+		                OperatingRangeServiceRemote proxyOptR = (OperatingRangeServiceRemote) contextOptR.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote");
+			 	    	OperatingRange operatingrange = new OperatingRange();
+			 	    	List<OperatingRange> listoptR = proxyOptR.DisplayOperatingRange();
+
+			 	    	//ComboBox Equipment
+			              ObservableList<OperatingRange> optR = FXCollections.observableList(listoptR);
+			              ORop.setItems(optR);
+			              ORop.valueProperty().addListener((obs, oldVal, newVal) -> {
+			                  String selectionText =  newVal.getCode() + "-" + newVal.getDesignation();
+			                  System.out.println(selectionText);
+			                
+			              });
+			              ORop.getSelectionModel().selectLast();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 	        	
 	        	ORtab.setCellValueFactory(new Callback<CellDataFeatures<Operation,String>,ObservableValue<String>>(){
 
@@ -491,6 +503,10 @@ public class OperatingRangeController implements Initializable {
 			        ObservableList<Operation> itemsopt = FXCollections.observableArrayList(listopt);
 			        opt.setItems(itemsopt);
 		
+			        
+			        
+			        
+
 	        	}
 	    	  });
 		} catch (NamingException e) {
