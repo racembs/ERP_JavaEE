@@ -93,7 +93,17 @@ public class EquipementService extends GenericDAO<Equipment>  implements Equipem
 	    	return results;
 	    }
 
-		
+		@Override
+		public Equipment findEqupment(int idArbo) {
+			Equipment arbo =em.find(Equipment.class,idArbo);
+			return arbo;
+		}
+		@Override
+		public void DeleteEqupment(int idArbo) {
+			Equipment arbo =this.findEqupment(idArbo);
+			em.remove(arbo);
+			
+		}
 
 	
 }

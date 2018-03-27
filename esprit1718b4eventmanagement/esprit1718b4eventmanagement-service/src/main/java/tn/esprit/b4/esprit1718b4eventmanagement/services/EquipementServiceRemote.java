@@ -21,4 +21,7 @@ public interface EquipementServiceRemote {
 	public void updateEquipment(Equipment e) ;
 	public List<Equipment> searchEquipment(String input);
 	public List<Equipment> DisplayEquipment();
+	
+	public Equipment findEqupment(int idArbo);
+	public void DeleteEqupment(int idArbo);
 	}
