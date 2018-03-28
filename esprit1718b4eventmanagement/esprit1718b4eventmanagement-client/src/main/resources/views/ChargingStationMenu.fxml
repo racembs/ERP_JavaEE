@@ -4,12 +4,12 @@
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
-<?import org.controlsfx.control.CheckTreeView?>
 
 <AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.ChargingStationMenuController">
   <children>
@@ -76,8 +76,8 @@
             <Image url="views/image/stat.png" />
          </image>
       </ImageView>
-      <CheckTreeView fx:id="idtreeU" layoutX="117.0" layoutY="353.0" prefHeight="311.0" prefWidth="510.0" />
-     <CheckTreeView fx:id="idtreeE" layoutX="117.0" layoutY="472.0" prefHeight="192.0" prefWidth="510.0" />
+      <TreeView fx:id="idtreeU" layoutX="117.0" layoutY="353.0" prefHeight="311.0" prefWidth="510.0" />
+     <TreeView fx:id="idtreeE" layoutX="117.0" layoutY="472.0" prefHeight="192.0" prefWidth="510.0" />
          <ImageView fx:id="idref" fitHeight="96.0" fitWidth="85.0" layoutX="983.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="views/image/refrech.png" />
@@ -88,7 +88,7 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <ImageView fx:id="idcancel" fitHeight="93.0" fitWidth="112.0" layoutX="1066.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" >
+      <ImageView fx:id="idcancel" fitHeight="93.0" fitWidth="112.0" layoutX="1066.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="views/image/back.png" />
          </image>
