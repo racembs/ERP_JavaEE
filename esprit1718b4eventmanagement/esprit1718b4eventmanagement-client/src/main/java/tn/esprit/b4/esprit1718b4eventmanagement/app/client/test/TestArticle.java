@@ -15,6 +15,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NomenclaturePk;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.MvtApprovServiceRemote;
 
 public class TestArticle extends Application {
 
@@ -30,9 +31,12 @@ public class TestArticle extends Application {
 		
 		
 		ArticleProxy.DeleteArticle(7);*/
-		
+		String jndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/MvtApprovService!tn.esprit.b4.esprit1718b4eventmanagement.services.MvtApprovServiceRemote";
+    	Context context1 = new InitialContext();
+    	MvtApprovServiceRemote OrdreProxy = (MvtApprovServiceRemote) context1.lookup(jndiName);
+    	//System.out.println(OrdreProxy.getOrderByArticle(1).getQuantity());
 	
-		Parent parent =FXMLLoader.load(getClass().getResource("/views/Article.fxml"));
+		Parent parent =FXMLLoader.load(getClass().getResource("/views/MgasinierGPAO.fxml"));
 		Scene scene=new Scene(parent);
 		primaryStage.setScene(scene);
 		primaryStage.show();
