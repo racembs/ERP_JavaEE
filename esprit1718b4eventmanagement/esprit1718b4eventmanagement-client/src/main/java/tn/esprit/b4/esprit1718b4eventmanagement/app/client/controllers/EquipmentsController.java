@@ -30,6 +30,8 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -39,6 +41,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -327,6 +330,13 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     
     
     Proxy.addEquippement(eq);
+	Alert alert = new Alert(AlertType.INFORMATION);
+	alert.setTitle("Information");
+	alert.setHeaderText("the equipment : " +serialnum.getText()+ "is add in :"+lieu+" with success");
+	alert.showAndWait();
+	  
+    	
+	
     }
     
     
@@ -351,7 +361,12 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     
     	Proxy.addArbo(Proxy.getArbo(  adarb.getText()).getId(),	Proxy.getArbo(namee).getId());
     	
-   
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Information");
+    	alert.setHeaderText("the arbo    : " +arbo2.getText()+"/"+name.getText()+ "is add  with success");
+    	alert.showAndWait();
+    	
+    	  
     	
     	
     	
@@ -426,11 +441,16 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     							
     							   
     							Integer id  =tableau.getSelectionModel().getSelectedItem().getId();
-                                
+    							Alert alert = new Alert(AlertType.CONFIRMATION);
+    					    	alert.setTitle("WARNING");
+    							alert.setHeaderText("Are You Sure to remove"+proxy.findEqupment(id).getSerialNum()+"?");
+    					    	
+    					    	if (alert.showAndWait().get () == ButtonType.OK)
+    					    	{    
                                 	
     					    	
     						proxy.DeleteEqupment(id);
-    						
+    					    	}
     						
     						
     						
@@ -878,10 +898,20 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
 
 	     	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
     	
-    equi.setArboresence(Proxy1.getArbo(LieuModif.getText()));	
+    equi.setArboresence(Proxy1.getArbo(LieuModif.getText()));
+    
+    
+	Alert alert = new Alert(AlertType.CONFIRMATION);
+	alert.setTitle("WARNING");
+	alert.setHeaderText("Are You Sure to Update   : "+proxy.findEqupment(id).getSerialNum()+"?");
+	
+	if (alert.showAndWait().get () == ButtonType.OK)
+	{    
+    	
+	
     	proxy.updateEquipment(equi);
     	
-   
+	}
 
     		
     		List<Equipment> list2=new ArrayList<>();

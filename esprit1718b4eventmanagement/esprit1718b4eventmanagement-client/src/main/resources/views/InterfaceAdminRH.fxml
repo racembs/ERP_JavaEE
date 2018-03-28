@@ -15,7 +15,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -39,11 +38,10 @@
                               <AnchorPane prefHeight="141.0" prefWidth="1086.0" style="-fx-background-color: #00ADD8;" styleClass="card-unpadded">
                                  <children>
                                     <Pane layoutX="-1.0" prefHeight="141.0" prefWidth="23.0" style="-fx-background-color: #007390;" />
-                                    <ImageView fitHeight="97.0" fitWidth="176.0" layoutX="33.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@image/contacts-256.png" />
-                                       </image>
-                                    </ImageView>
+                                    <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="161.0" layoutX="11.0" pickOnBounds="true" preserveRatio="true" />
+                                    <JFXButton fx:id="Browser" buttonType="RAISED" layoutX="264.0" layoutY="52.0" onAction="#OnBrowserAction" prefHeight="37.0" prefWidth="184.0" ripplerFill="#53eb11" styleClass="blue-btn" text="Change Statut" />
+                                    <Label fx:id="ss" layoutX="264.0" layoutY="107.0" prefHeight="20.0" prefWidth="162.0" />
+                                    <Label fx:id="fileSelected" layoutX="264.0" layoutY="21.0" prefHeight="20.0" prefWidth="120.0" />
                                  </children>
                               </AnchorPane>
                            </children>
