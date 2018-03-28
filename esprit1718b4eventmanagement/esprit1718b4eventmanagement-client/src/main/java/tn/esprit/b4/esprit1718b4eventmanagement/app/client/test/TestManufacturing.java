@@ -65,7 +65,7 @@ public class TestManufacturing {
 //		proxyOrdredItem.addOrdredItem(1, 1, ordredItem);
 		
 		OrdredItem orderItem2 = proxyOrdredItem.findOrdredItemById(1,1);
-		System.out.println(orderItem2.getArticle().getDescription());
+		System.out.println(orderItem2.getArticle().getType());
 		System.out.println(orderItem2.getOrdredItemPk().getId_Article());
 		
 		
