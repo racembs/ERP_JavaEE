@@ -123,6 +123,7 @@ public class WorkUsController implements Initializable {
      * @param rb
      */
     static UsualWork xxx;
+    
     @SuppressWarnings({ "finally", "null", "unchecked" })
 	@Override
     public void initialize(URL url, ResourceBundle rb){

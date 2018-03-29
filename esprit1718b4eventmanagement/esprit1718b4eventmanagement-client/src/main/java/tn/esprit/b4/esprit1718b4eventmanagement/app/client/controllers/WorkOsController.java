@@ -223,6 +223,7 @@ public class WorkOsController implements Initializable {
 		    		 Object val = tablePosition.getTableColumn().getCellData(tablePosition.getRow());
 		      l1.setVisible(true);
 		        System.out.println("Selected Value" + val);
+		        
 		        }
 
 		    }

@@ -96,6 +96,7 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
+                                             
                                                 
                                                 <JFXButton fx:id="start" onAction="#onclickStart" buttonType="RAISED" ripplerFill="#53eb11" styleClass="green-btn" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                              </children>

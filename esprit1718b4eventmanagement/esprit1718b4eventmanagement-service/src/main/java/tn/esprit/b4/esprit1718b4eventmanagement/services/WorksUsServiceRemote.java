@@ -21,5 +21,6 @@ public interface WorksUsServiceRemote {
 	//public Equipment findById(int id);
 	public List<Works> DisplayUSWorks();
 	public List<UsualWork> displayWO();
+	
 	public List<UsualWork> displayWObyTech(int idtech);
 }
