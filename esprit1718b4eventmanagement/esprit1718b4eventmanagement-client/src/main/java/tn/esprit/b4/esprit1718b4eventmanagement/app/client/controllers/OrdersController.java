@@ -387,7 +387,7 @@ public class OrdersController implements Initializable {
     		OrdredItem nouveau = new OrdredItem();
     		nouveau.setArticle(ArticleToAdd);
     		nouveau.setQuantity(Integer.parseInt(QuantityText.getText()));
-    		nouveau.setStatus("en attente");
+    		nouveau.setStatus("Pending");
     		listAdedItem.add(nouveau);
             ObservableList<OrdredItem> items = FXCollections.observableArrayList(listAdedItem);
             Table_Added_Item.setItems(items);
@@ -474,7 +474,16 @@ public class OrdersController implements Initializable {
     @FXML
     void RemoveItem(ActionEvent event) {
         ObservableList<OrdredItem> items = Table_Added_Item.getItems();
-        items.remove(Table_Added_Item.getSelectionModel().getSelectedIndex());
+        if(Table_Added_Item.getSelectionModel().getSelectedItem().getManufacturingList().isEmpty()){
+        	items.remove(Table_Added_Item.getSelectionModel().getSelectedIndex());
+        }
+        else{
+        	Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Failed");
+            alert.setContentText("You can't remove an Ordred Item which manufacturing process has being started");
+            alert.showAndWait();
+        }
     }
     
     @FXML
@@ -487,10 +496,24 @@ public class OrdersController implements Initializable {
 		order.setDelivery_date(Deliverydate);
 		Client client = proxyClientServiceRemote.findByCompany(CompanyText.getText());
 		order.setClient(client);
-		proxyOrdredItem.deleteAllByOrder(order.getId());
+		List<OrdredItem> listExist = proxyOrdredItem.findItemsOfAnOrder(order.getId());
+		for (OrdredItem ordredItem : listExist) {
+			boolean check = false;
+			for (OrdredItem newOrdredItem : listAdedItem) {
+				if(ordredItem.equals(newOrdredItem))
+					check=true;
+				else
+					check = (check || false);
+			}
+			if(!check){
+				proxyOrdredItem.delete(ordredItem);
+			}
+		}
 		proxyOrders.update(order);
 		for (OrdredItem ordredItem : listAdedItem) {
-			proxyOrdredItem.addOrdredItem(order.getId(), ordredItem.getArticle().getId(), ordredItem);
+			
+			proxyOrdredItem.mergeOrdredItem(order.getId(), ordredItem.getArticle().getId(), ordredItem);	
+			
 		}
 		CompanyText.clear();
 		DeliveryDatePicker.setValue(null);

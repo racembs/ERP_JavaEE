@@ -13,8 +13,10 @@ import tn.esprit.b4.esprit1718b4eventmanagement.utilities.IGenericDAO;
 public interface OrderItemServiceLocal extends IGenericDAO<OrdredItem> {
 	public OrdredItemPk addOrdredItem(int idOrder, int idArticle, OrdredItem ordredItem);
 	public OrdredItem findOrdredItemById(int idOrder, int idArticle);
+	public OrdredItem mergeOrdredItem(int idOrder, int idArticle,OrdredItem orderItem);
 	public OrdredItem reatach(OrdredItem ordredItem);
 	public List<OrdredItem> findItemsOfAnOrder(int idOrder);
+	public List<OrdredItem> findPendingItemsOfAnOrder(int idOrder);
 	public void deleteAllByOrder(int idOrder);
 
 }
