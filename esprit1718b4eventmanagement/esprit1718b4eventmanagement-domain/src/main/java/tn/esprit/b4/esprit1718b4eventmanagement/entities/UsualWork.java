@@ -18,7 +18,7 @@ public class UsualWork  extends Works implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String emmergency;
-	private String requeststate;
+	private String orderstate;
 	@Temporal(TemporalType.DATE)
 	private Date WRDate;
 	@Temporal(TemporalType.DATE)
@@ -38,11 +38,11 @@ public class UsualWork  extends Works implements Serializable{
 	public void setEmmergency(String emmergency) {
 		this.emmergency = emmergency;
 	}
-	public String getRequeststate() {
-		return requeststate;
+	public String getOrderstate() {
+		return orderstate;
 	}
-	public void setRequeststate(String requeststate) {
-		this.requeststate = requeststate;
+	public void setOrderstate(String orderstate) {
+		this.orderstate = orderstate;
 	}
 	public Date getWRDate() {
 		return WRDate;

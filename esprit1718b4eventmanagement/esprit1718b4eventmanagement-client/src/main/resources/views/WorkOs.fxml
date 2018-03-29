@@ -72,7 +72,7 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label text="Selected Technician Personal Details" />
+                                                <Label fx:id="l1" text="Selected equipment" visible="false"/>
                                                
                                                 <JFXTextField fx:id="f1" prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                 <JFXTextField fx:id="f2" prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="" GridPane.columnIndex="1" />
@@ -82,7 +82,7 @@
                                                 <JFXTextField fx:id="f6" prefHeight="20.0" prefWidth="300.0" styleClass="green-label" text="" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                              </children>
                                           </GridPane>
-                                          <GridPane prefHeight="219.0" prefWidth="520.0" styleClass="card" visible="false">
+                                          <GridPane fx:id="pane" prefHeight="219.0" prefWidth="520.0" styleClass="card" visible="false">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="186.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" prefWidth="302.0" />
@@ -96,19 +96,8 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label text="Speciality" />
-                                                <Label text="Taking Appointments ?" GridPane.rowIndex="2" />
-                                                <Label text="Pending Appointments" GridPane.rowIndex="3" />
-                                                <Label prefHeight="20.0" prefWidth="280.0" styleClass="yellow-label" text="Cardiologist" GridPane.columnIndex="1" />
-                                                <Label prefHeight="20.0" prefWidth="280.0" styleClass="yellow-label" text="Department of Cardiology" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Label prefHeight="20.0" prefWidth="279.0" styleClass="red-label" text="YES" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                                   <children>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="98.0" style="-fx-font-weight: bold;" styleClass="green-label" text="12" />
-                                                      <JFXButton buttonType="RAISED" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: rgb(0, 166, 90); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="View" />
-                                                   </children>
-                                                </HBox>
-                                                <JFXButton buttonType="RAISED" ripplerFill="#53eb11" styleClass="blue-btn" text="Edit Info" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                
+                                                <JFXButton fx:id="start" onAction="#onclickStart" buttonType="RAISED" ripplerFill="#53eb11" styleClass="green-btn" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                              </children>
                                           </GridPane>
                                        </children>

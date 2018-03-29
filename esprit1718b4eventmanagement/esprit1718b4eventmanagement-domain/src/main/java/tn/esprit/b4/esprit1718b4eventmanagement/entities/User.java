@@ -2,7 +2,7 @@ package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 
 import java.io.Serializable;
 import java.lang.String;
-import java.sql.Blob;
+
 import java.util.List;
 
 import javax.persistence.*;
@@ -44,7 +44,11 @@ public class User implements Serializable {
 	private String nb;
 	@Column(name = "image")
 	private String image;
+	@Column(name = "post")
+	private String post;
 	
+	@OneToMany(mappedBy="user")
+	private List <Works> works;
 	
 	
 	@OneToMany(mappedBy="User")
@@ -225,7 +229,18 @@ public class User implements Serializable {
 		this.image = image;
 	}
 
-
+public List<Works> getWorks() {
+		return works;
+	}
+	public void setWorks(List<Works> works) {
+		this.works = works;
+	}
+	public String getPost() {
+		return post;
+	}
+	public void setPost(String post) {
+		this.post = post;
+	}
 
 
 	

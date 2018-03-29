@@ -1,6 +1,6 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 import java.io.Serializable;
-import java.sql.Date;
+
 import java.util.List;
 import javax.persistence.*;
 
@@ -33,6 +33,7 @@ public class Equipment implements Serializable {
 	private String Lieu;
 	
 	
+	
 	@OneToMany(mappedBy="equipement")
 	private List <ChargingStation> chargingstations;
 	
@@ -40,7 +41,8 @@ public class Equipment implements Serializable {
 	@JoinColumn(name="id_Arboe",referencedColumnName="Id",insertable=true,updatable=true)
 	private Arboresence arboresence;
 	
-	
+@OneToMany(mappedBy="equipement")
+private List <Works> works;
 	
 	
 	
@@ -190,6 +192,12 @@ public class Equipment implements Serializable {
 		Marque = marque;
 		Lieu = lieu;
 		this.arboresence = arboresence;
+	}
+	public List<Works> getWorks() {
+		return works;
+	}
+	public void setWorks(List<Works> works) {
+		this.works = works;
 	}
 
 

@@ -30,13 +30,13 @@ private static final long serialVersionUID = 1L;
 
 	
 	////////////////////
-	@ManyToOne
+/*	@ManyToOne
 	@JoinColumns({
 			@JoinColumn(name="id_user",referencedColumnName="id_user",insertable=false,updatable=false),
 			@JoinColumn(name="id_equipement",referencedColumnName="id_equipement",insertable=false,updatable=false)})
 	private Works works;
 	
-	
+	*/
 	
 	@ManyToOne
 	@JoinColumn(name="id_Need",referencedColumnName="id_Need",insertable=false,updatable=false)
@@ -78,7 +78,7 @@ private static final long serialVersionUID = 1L;
 		this.bookingPK = bookingPK;
 	}
 
-
+/*
 
 	public Works getWorks() {
 		return works;
@@ -89,7 +89,7 @@ private static final long serialVersionUID = 1L;
 	public void setWorks(Works works) {
 		this.works = works;
 	}
-
+*/
 
 
 	public Need getNeed() {
@@ -110,14 +110,15 @@ private static final long serialVersionUID = 1L;
 
 
 
-	public Booking(Date bookDate, Date releaseDate, BookingPK bookingPK, Works works, Need need) {
+	/*public Booking(Date bookDate, Date releaseDate, BookingPK bookingPK, Works works, Need need) {
 		super();
 		BookDate = bookDate;
 		ReleaseDate = releaseDate;
 		this.bookingPK = bookingPK;
-		this.works = works;
+		//this.works = works;
 		this.need = need;
-	}
+	}*/
+	
 
 
 
