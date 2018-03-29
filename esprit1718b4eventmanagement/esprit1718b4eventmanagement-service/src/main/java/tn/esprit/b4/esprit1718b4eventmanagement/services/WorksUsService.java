@@ -9,7 +9,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.WorksPK;
+
 
 
 import javax.ejb.Stateless;
@@ -52,16 +52,16 @@ public class WorksUsService implements WorksUsServiceLocal, WorksUsServiceRemote
 		}
 	
 		@Override
-		public void deleteWork(WorksPK idw) {
+		public void deleteWork(int idw) {
 			UsualWork w=em.find(UsualWork.class,idw);
 			em.remove(w);
 			
 		}
 		@Override
-		public List<Works> displayWRB() {
+		public List<UsualWork> displayWRB() {
 		
-			TypedQuery<Works> query=em.createQuery("SELECT e FROM"
-					+ " Works e WHERE e.nature =:param",Works.class);
+			TypedQuery<UsualWork> query=em.createQuery("SELECT e FROM"
+					+ " UsualWork e WHERE e.nature =:param",UsualWork.class);
 			query.setParameter("param", Nature.WorkRequest);
 			return query.getResultList();
 		}
@@ -72,5 +72,22 @@ public class WorksUsService implements WorksUsServiceLocal, WorksUsServiceRemote
 		@Override
 		public List<Works> DisplayUSWorks() {
 			return em.createQuery("from Works", Works.class).getResultList();
+		}
+		@Override
+		public List<UsualWork> displayWO() {
+		
+			TypedQuery<UsualWork> query=em.createQuery("SELECT e FROM"
+					+ " UsualWork e WHERE e.nature =:param",UsualWork.class);
+			query.setParameter("param", Nature.WorkOrder);
+			return query.getResultList();
+		}
+		@Override
+		public List<UsualWork> displayWObyTech(int idtech) {
+		
+			TypedQuery<UsualWork> query=em.createQuery("SELECT e FROM"
+					+ " UsualWork e WHERE e.nature =:param AND e.technicianId =:param2 ",UsualWork.class);
+			query.setParameter("param", Nature.WorkOrder);
+			query.setParameter("param2", idtech);
+			return query.getResultList();
 		}
 }

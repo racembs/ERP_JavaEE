@@ -4,20 +4,29 @@ import java.util.Date;
 
 import javax.persistence.Column;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 
+
 @Entity
 public class Works implements Serializable {
 	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
+	
 
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
 	
 	@Column(name = "OBJET")
 	private String objet;
@@ -33,25 +42,17 @@ public class Works implements Serializable {
 	private Date endDate;
 	@Column(name = "STATE")
 	private String state;
-	
-	@EmbeddedId
-	private WorksPK worksPK;
-	
 
-	
-	////////////////////
+
+
 	@ManyToOne
 	@JoinColumn(name="id_user",
-	referencedColumnName="id",
-	insertable=false,
-	updatable=false)
+	referencedColumnName="id",insertable=true,updatable=true)
 	private User user;
 	
 	@ManyToOne
 	@JoinColumn(name="id_equipement",
-	referencedColumnName="Id",
-	insertable=false,
-	updatable=false)
+	referencedColumnName="Id",insertable=true,updatable=true)
 	private Equipment equipement;
 
 			public String getObjet() {
@@ -102,15 +103,17 @@ public class Works implements Serializable {
 				this.state = state;
 			}
 
-			public WorksPK getWorksPK() {
-				return worksPK;
+		
+		
+			public int getId() {
+				return id;
 			}
 
-			public void setWorksPK(WorksPK worksPK) {
-				this.worksPK = worksPK;
+			public void setId(int id) {
+				this.id = id;
 			}
 
-		public User getUser() {
+			public User getUser() {
 				return user;
 			}
 
@@ -125,5 +128,6 @@ public class Works implements Serializable {
 			public void setEquipement(Equipment equipement) {
 				this.equipement = equipement;
 			}
-			
+
+		
 }

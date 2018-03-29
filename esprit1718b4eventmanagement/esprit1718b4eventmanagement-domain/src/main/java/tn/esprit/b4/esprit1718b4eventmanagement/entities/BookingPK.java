@@ -7,16 +7,16 @@ import javax.persistence.Embeddable;
 public class BookingPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Column(name="id_Works")
-	private WorksPK id_works;
+	private Integer id_works;
 	
 	@Column(name="id_Need")
 	private Integer id_Need;
 
-	public WorksPK getId_works() {
+	public Integer getId_works() {
 		return id_works;
 	}
 
-	public void setId_works(WorksPK id_works) {
+	public void setId_works(Integer id_works) {
 		this.id_works = id_works;
 	}
 
@@ -33,7 +33,7 @@ public class BookingPK implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BookingPK(WorksPK id_works, Integer id_Need) {
+	public BookingPK(Integer id_works, Integer id_Need) {
 		super();
 		this.id_works = id_works;
 		this.id_Need = id_Need;

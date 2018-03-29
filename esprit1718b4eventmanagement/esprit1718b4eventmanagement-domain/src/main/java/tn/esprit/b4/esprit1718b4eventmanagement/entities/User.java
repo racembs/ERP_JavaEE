@@ -2,6 +2,7 @@ package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 
 import java.io.Serializable;
 import java.lang.String;
+
 import java.util.List;
 
 import javax.persistence.*;
@@ -22,10 +23,7 @@ public class User implements Serializable {
 	
 	@Column(name = "code")
 	private Long code;
-	
-	
-	
-	@Column(name = "fisrtname")
+    @Column(name = "fisrtname")
 	private String firstname;
 	@Column(name = "lastname")
 	private String lastname;
@@ -44,7 +42,15 @@ public class User implements Serializable {
 	private String statut;
 	@Column(name = "nb")
 	private String nb;
-
+	@Column(name = "image")
+	private String image;
+	@Column(name = "post")
+	private String post;
+	
+	@OneToMany(mappedBy="user")
+	private List <Works> works;
+	
+	
 	@OneToMany(mappedBy="User")
 	private List <ChargingStation> chargingstations;
 	
@@ -201,6 +207,39 @@ public class User implements Serializable {
 		this.role = role;
 		this.numtel = numtel;
 		this.statut = statut;
+	}
+	public User(String firstname, String lastname, String login, String password, String email, String role,
+			String numtel, String statut, String nb, String image) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.login = login;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.numtel = numtel;
+		this.statut = statut;
+		this.nb = nb;
+		this.image = image;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+public List<Works> getWorks() {
+		return works;
+	}
+	public void setWorks(List<Works> works) {
+		this.works = works;
+	}
+	public String getPost() {
+		return post;
+	}
+	public void setPost(String post) {
+		this.post = post;
 	}
 
 

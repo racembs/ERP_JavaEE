@@ -23,16 +23,15 @@ public class NeedToolService implements NeedToolServiceLocal,NeedToolServiceRemo
 
 	@Override
 	public void updateTool(Tool T) {
-		em.merge(T);
-		
+		em.merge(T);		
 	}
 
 	@Override
 	public void deleteTool(int idT) {
 		Tool T=em.find(Tool.class,idT);
-		em.remove(T);
-		
+		em.remove(T);	
 	}
+	
 	@Override
 	public Tool findToolById(int idTool) {
 		TypedQuery<Tool> query=em.createQuery("SELECT S FROM Tool S WHERE S.id_Need= :n",Tool.class);

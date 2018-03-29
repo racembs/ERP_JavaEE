@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXProgressBar?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import org.controlsfx.control.textfield.CustomTextField?>
+
+<AnchorPane id="AnchorPane" prefHeight="684.0" prefWidth="1105.0" stylesheets="@../views/styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.NeedsStockController">
+   <children>
+      <JFXTabPane layoutX="138.0" layoutY="100.0" prefHeight="684.0" prefWidth="1105.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Add stock">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="23.0" layoutY="33.0" prefWidth="1068.0" spacing="30.0">
+                           <children>
+                              <AnchorPane prefHeight="575.0" prefWidth="1057.0" styleClass="card-unpadded">
+                                 <children>
+                                    <VBox layoutX="21.0" layoutY="109.0" prefHeight="416.0" prefWidth="424.0" spacing="10.0">
+                                       <children>
+                                          <JFXTextField fx:id="reference" focusColor="#00add8" labelFloat="true" promptText="Reference" unFocusColor="#868282" />
+                                          <JFXTextArea fx:id="description" maxWidth="404.0" minWidth="404.0" prefHeight="98.0" prefWidth="404.0" promptText="Description" />
+                                          <JFXTextField fx:id="brand" promptText="Brand" />
+                                          <JFXTextField fx:id="supplier" promptText="Supplier" />
+                                          <JFXTextField fx:id="code_supp" promptText="code supplier" />
+                                       </children>
+                                       <padding>
+                                          <Insets left="20.0" top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                    <Label layoutX="28.0" layoutY="26.0" prefHeight="20.0" prefWidth="151.0" text="Add Needs :" />
+                                    <JFXRadioButton fx:id="tool" layoutX="50.0" layoutY="76.0" onAction="#OnTool" prefHeight="20.0" prefWidth="91.0" selected="true" text="Tool">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="q" />
+                                       </toggleGroup>
+                                    </JFXRadioButton>
+                                    <JFXRadioButton fx:id="spareparts" layoutX="265.0" layoutY="78.0" onAction="#OnSP" text="Spare Parts" toggleGroup="$q" />
+                                    <CustomTextField fx:id="quantity" layoutX="667.0" layoutY="126.0" prefHeight="30.0" prefWidth="327.0" />
+                                    <Label layoutX="497.0" layoutY="131.0" text="Quantity :" />
+                                    <Label layoutX="497.0" layoutY="192.0" text="Unity Price :" />
+                                    <CustomTextField fx:id="price" layoutX="667.0" layoutY="187.0" prefHeight="30.0" prefWidth="330.0" />
+                                    <Label layoutX="500.0" layoutY="265.0" prefHeight="20.0" prefWidth="78.0" text="Family :" />
+                                    <JFXComboBox fx:id="FamiliCombo" layoutX="669.0" layoutY="238.0" prefHeight="40.0" prefWidth="332.0" />
+                                    <Label fx:id="labMethod" layoutX="503.0" layoutY="368.0" text="Procurement method :" />
+                                    <JFXComboBox fx:id="MethodCombo" layoutX="669.0" layoutY="345.0" prefHeight="33.0" prefWidth="333.0" />
+                                    <Label fx:id="labNature" layoutX="502.0" layoutY="317.0" prefHeight="20.0" prefWidth="78.0" text="Nature :" />
+                                    <JFXComboBox fx:id="NatureCombo" layoutX="669.0" layoutY="294.0" prefHeight="40.0" prefWidth="331.0" />
+                                    <JFXButton fx:id="addstock" buttonType="RAISED" layoutX="766.0" layoutY="436.0" onAction="#OnAddStock" ripplerFill="#e14242" styleClass="blue-btn" text="add to stock" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Tools Stock">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.6173228346456693" layoutX="16.0" layoutY="6.0" orientation="VERTICAL" prefHeight="649.0" prefWidth="1105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
+                                 <children>
+                                    <TextField layoutX="720.0" layoutY="14.0" prefHeight="30.0" prefWidth="302.0" promptText="Search doctor by name" styleClass="search-box" />
+                                    <TableView fx:id="ToolsTab" layoutX="11.0" layoutY="55.0" prefHeight="324.0" prefWidth="1080.0">
+                                      <columns>
+                                          <TableColumn fx:id="Tquant" editable="false" prefWidth="99.0" sortable="false" text="Quantity" />
+                                        <TableColumn fx:id="Tref" editable="false" prefWidth="138.0" text="reference" />
+                                          <TableColumn fx:id="Tdesc" editable="false" prefWidth="149.0" sortable="false" text="description" />
+                                          <TableColumn fx:id="Tbrand" editable="false" prefWidth="102.0" sortable="false" text="brand" />
+                                          <TableColumn fx:id="Tfam" prefWidth="139.0" text="family" />
+                                          <TableColumn fx:id="Tnature" prefWidth="99.0" text="nature" />
+                                          <TableColumn fx:id="Tsupp" prefWidth="125.0" text="supplier" />
+                                          <TableColumn fx:id="TcodeS" prefWidth="127.0" text="code supplier" />
+                                          <TableColumn fx:id="Tprix" prefWidth="101.0" text="Price/unity" />
+                                      </columns>
+                                    </TableView>
+                                    <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="1033.0" layoutY="14.0" prefHeight="30.0" prefWidth="52.0" style="-fx-background-color: #dd9a0b;" text="find">
+                                       <effect>
+                                          <Glow />
+                                       </effect>
+                                    </JFXButton>
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="1103.0">
+                                 <children>
+                                    <HBox layoutX="30.0" layoutY="14.0" prefHeight="210.0" prefWidth="1043.0" spacing="30.0">
+                                       <children>
+                                          <GridPane prefHeight="219.0" prefWidth="493.0" styleClass="card">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="106.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="321.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="Personal Details" />
+                                                <Label prefHeight="20.0" prefWidth="83.0" text="Contacts" GridPane.rowIndex="4" />
+                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" />
+                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                             </children>
+                                          </GridPane>
+                                          <GridPane prefHeight="219.0" prefWidth="520.0" styleClass="card">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="186.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" prefWidth="302.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="Speciality" />
+                                                <Label text="Taking Appointments ?" GridPane.rowIndex="2" />
+                                                <Label text="Pending Appointments" GridPane.rowIndex="3" />
+                                                <Label prefHeight="20.0" prefWidth="280.0" styleClass="yellow-label" GridPane.columnIndex="1" />
+                                                <Label prefHeight="20.0" prefWidth="280.0" styleClass="yellow-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label prefHeight="20.0" prefWidth="279.0" styleClass="red-label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                   <children>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="98.0" style="-fx-font-weight: bold;" styleClass="green-label" />
+                                                      <JFXButton buttonType="RAISED" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: rgb(0, 166, 90); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="View" />
+                                                   </children>
+                                                </HBox>
+                                                <JFXButton buttonType="RAISED" ripplerFill="#53eb11" styleClass="blue-btn" text="Edit Info" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Spare Parts Stock">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.6173228346456693" layoutX="16.0" layoutY="6.0" orientation="VERTICAL" prefHeight="649.0" prefWidth="1105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <items>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
+                                 <children>
+                                    <TextField layoutX="719.0" layoutY="15.0" prefHeight="30.0" prefWidth="302.0" promptText="Search SP by name reference" styleClass="search-box" />
+                                    <TableView fx:id="SparePartsTab" layoutX="17.0" layoutY="52.0" prefHeight="327.0" prefWidth="1074.0">
+                                       <columns>
+                                          <TableColumn fx:id="Squent" editable="false" prefWidth="99.0" sortable="false" text="Quantity" />
+                                          <TableColumn fx:id="Sref" editable="false" prefWidth="138.0" text="reference" />
+                                          <TableColumn fx:id="Sdesc" editable="false" prefWidth="149.0" sortable="false" text="description" />
+                                          <TableColumn fx:id="Sbrand" editable="false" prefWidth="102.0" sortable="false" text="brand" />
+                                          <TableColumn fx:id="Sfam" prefWidth="139.0" text="family" />
+                                          <TableColumn fx:id="Smethod" prefWidth="99.0" text="method" />
+                                          <TableColumn fx:id="Ssup" prefWidth="125.0" text="supplier" />
+                                          <TableColumn fx:id="ScodSup" prefWidth="127.0" text="code supplier" />
+                                          <TableColumn fx:id="Sprix" prefWidth="101.0" text="Price/unity" />
+                                       </columns>
+                                    </TableView>
+                                    <JFXButton fx:id="FindSP" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="1039.0" layoutY="15.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#ClickOnFindSP" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: #dd9a0b;" text="find">
+                                       <effect>
+                                          <Glow />
+                                       </effect>
+                                    </JFXButton>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="1103.0">
+                                 <children>
+                                    <HBox layoutX="30.0" layoutY="14.0" prefHeight="210.0" prefWidth="1043.0" spacing="30.0">
+                                       <children>
+                                          <GridPane prefHeight="219.0" prefWidth="493.0" styleClass="card">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="106.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="321.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="Personal Details" />
+                                                <Label prefHeight="20.0" prefWidth="83.0" text="Contacts" GridPane.rowIndex="4" />
+                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" />
+                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                             </children>
+                                          </GridPane>
+                                          <GridPane prefHeight="219.0" prefWidth="520.0" styleClass="card">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="186.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" prefWidth="302.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="Speciality" />
+                                                <Label text="Taking Appointments ?" GridPane.rowIndex="2" />
+                                                <Label text="Pending Appointments" GridPane.rowIndex="3" />
+                                                <Label prefHeight="20.0" prefWidth="280.0" styleClass="yellow-label" GridPane.columnIndex="1" />
+                                                <Label prefHeight="20.0" prefWidth="280.0" styleClass="yellow-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label prefHeight="20.0" prefWidth="279.0" styleClass="red-label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                   <children>
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="98.0" style="-fx-font-weight: bold;" styleClass="green-label" />
+                                                      <JFXButton buttonType="RAISED" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: rgb(0, 166, 90); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="View" />
+                                                   </children>
+                                                </HBox>
+                                                <JFXButton buttonType="RAISED" ripplerFill="#53eb11" styleClass="blue-btn" text="Edit Info" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                           </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Tools Booking ">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox layoutX="17.0" layoutY="278.0" prefHeight="392.0" prefWidth="278.0" spacing="20.0" styleClass="card-unpadded">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="281.0" spacing="20.0" style="-fx-background-color: #00A65A;">
+                                 <children>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../Desktop/CVs/hospital-fx-master/src/imgs/add.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="37.0" prefWidth="216.0" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 17px;" text="Add New Booking" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </HBox>
+                              <VBox prefHeight="58.0" prefWidth="270.0">
+                                 <children>
+                                    <Label style="-fx-text-fill: #AAAAAA;" text="Work Order" />
+                                    <JFXComboBox prefHeight="30.0" prefWidth="295.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="15.0" right="10.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox layoutX="10.0" layoutY="97.0" prefHeight="58.0" prefWidth="294.0">
+                                 <children>
+                                    <Label style="-fx-text-fill: #AAAAAA;" text="Booking Date" />
+                                    <JFXDatePicker prefHeight="19.0" prefWidth="276.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="15.0" />
+                                 </padding>
+                              </VBox>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="110.0" style="-fx-text-fill: #AAAAAA;" text="Release Date" />
+                              <HBox alignment="CENTER" prefHeight="57.0" prefWidth="277.0">
+                                 <children>
+                                    <JFXDatePicker maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="273.0" />
+                                 </children>
+                              </HBox>
+                              <JFXButton buttonType="RAISED" minWidth="-Infinity" styleClass="blue-btn" text="SAVE" />
+                           </children>
+                        </VBox>
+                        <AnchorPane layoutX="316.0" layoutY="-5.0" prefHeight="651.0" prefWidth="786.0" styleClass="card-unpadded">
+                           <children>
+                              <TitledPane animated="false" layoutY="14.0" prefHeight="334.0" prefWidth="778.0" styleClass="blue-titledPane" text="Tools Booking details list">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView layoutX="13.0" layoutY="14.0" prefHeight="292.0" prefWidth="746.0">
+                                             <columns>
+                                                <TableColumn prefWidth="97.0" text="Reference" />
+                                                <TableColumn prefWidth="145.0" text="reserved quentity" />
+                                                <TableColumn prefWidth="154.0" text="available quentity" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" layoutX="3.0" layoutY="360.0" prefHeight="274.0" prefWidth="779.0" styleClass="blue-titledPane" text="Custom Search">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="773.0">
+                                       <children>
+                                          <TableView layoutX="247.0" layoutY="14.0" prefHeight="226.0" prefWidth="521.0">
+                                             <columns>
+                                                <TableColumn prefWidth="75.0" text="C1" />
+                                                <TableColumn prefWidth="75.0" text="C2" />
+                                             </columns>
+                                          </TableView>
+                                          <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="215.0" styleClass="card-unpadded">
+                                             <children>
+                                                <VBox layoutX="15.0" layoutY="14.0" prefHeight="64.0" prefWidth="181.0" spacing="10.0">
+                                                   <children>
+                                                      <Label prefHeight="19.0" prefWidth="178.0" text="Search criteria" />
+                                                      <JFXCheckBox prefHeight="19.0" prefWidth="121.0" text="Work Order" />
+                                                      <JFXCheckBox text="Tool Family" />
+                                                   </children>
+                                                </VBox>
+                                                <TextField layoutX="9.0" layoutY="112.0" prefHeight="29.0" prefWidth="191.0" promptText="Search here" styleClass="search-box" />
+                                                <JFXButton layoutX="64.0" layoutY="153.0" ripplerFill="#0ff75e" style="-fx-background-color: #AAAAAA;" text="Search..." />
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </TitledPane>
+                           </children>
+                        </AnchorPane>
+                        <VBox layoutX="14.0" layoutY="14.0" prefHeight="250.0" prefWidth="283.0" style="-fx-background-color: #00A8FF;" styleClass="card-unpadded">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="320.0" spacing="20.0" style="-fx-background-color: #00A0F3;">
+                                 <children>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../Desktop/CVs/hospital-fx-master/src/imgs/appoint.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="20.0" prefWidth="233.0" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 17px;" text="Booking Statistics" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </HBox>
+                              <VBox prefHeight="62.0" prefWidth="320.0">
+                                 <children>
+                                    <Label prefHeight="35.0" prefWidth="191.0" style="-fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold;" text="Mechanical Tools">
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </Label>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="100.0" spacing="20.0">
+                                       <children>
+                                          <JFXProgressBar progress="1.0" />
+                                          <Label style="-fx-font-weight: bold; -fx-font-size: 15pt; -fx-text-fill: white;" text="123" />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="58.0" prefWidth="320.0">
+                                 <children>
+                                    <Label prefHeight="35.0" prefWidth="181.0" style="-fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold;" text="Electrical Tools">
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </Label>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="100.0" spacing="20.0">
+                                       <children>
+                                          <JFXProgressBar progress="0.43" />
+                                          <Label style="-fx-font-weight: bold; -fx-font-size: 15pt; -fx-text-fill: white;" text="39" />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="65.0" prefWidth="320.0">
+                                 <children>
+                                    <Label prefHeight="35.0" prefWidth="185.0" style="-fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold;" text="Other Tools Families">
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </Label>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="100.0" spacing="20.0">
+                                       <children>
+                                          <JFXProgressBar progress="0.37" />
+                                          <Label style="-fx-font-weight: bold; -fx-font-size: 15pt; -fx-text-fill: white;" text="45" />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </JFXTabPane>
+   </children>
+</AnchorPane>

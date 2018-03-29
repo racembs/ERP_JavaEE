@@ -1,6 +1,7 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.test;
 
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,6 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.Orders;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
-import tn.esprit.b4.esprit1718b4eventmanagement.entities.WorksPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ManufacturingServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
@@ -37,9 +37,9 @@ public class Wtest {
     String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
     	
     	WorksUsServiceRemote proxy=(WorksUsServiceRemote) context.lookup(jndiName);
-    	WorksPK worksPK =new WorksPK();
-    	worksPK.setIdUser(1);
-    	worksPK.setIdEquipment(1);
+    	//WorksPK worksPK =new WorksPK();
+    	//worksPK.setIdUser(1);
+    	//worksPK.setIdEquipment(1);
     	
     //	UsualWork uw =new UsualWork();
     	/*UsualWork w=new UsualWork ("text", "text", "comboSpecialization.getValue().toString()",
@@ -50,9 +50,9 @@ public class Wtest {
     	//System.out.println(.getDescription());
     
       //  proxy.addWR(uw);
-        List<Works> list = proxy.displayWRB();
+        //List<Works> list = proxy.displayWRB();
        // ObservableList<Works> items = FXCollections.observableArrayList(list);
-        System.out.println(list.get(0).getDescription());
+       // System.out.println(list.get(0).getDescription());
       User s=  userService.userbyfstlstname("k k");
       System.out.println("heloooooooooo"+s.getEmail());
 	}

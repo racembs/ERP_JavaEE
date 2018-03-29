@@ -31,9 +31,7 @@ private static final long serialVersionUID = 1L;
 	
 	////////////////////
 	@ManyToOne
-	@JoinColumns({
-			@JoinColumn(name="id_user",referencedColumnName="id_user",insertable=false,updatable=false),
-			@JoinColumn(name="id_equipement",referencedColumnName="id_equipement",insertable=false,updatable=false)})
+	@JoinColumn(name="id",referencedColumnName="id",insertable=false,updatable=false)
 	private Works works;
 	
 	
