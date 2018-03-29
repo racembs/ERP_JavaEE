@@ -30,7 +30,6 @@ public class UsualWork  extends Works implements Serializable{
 
 	public UsualWork() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public String getEmmergency() {
 		return emmergency;

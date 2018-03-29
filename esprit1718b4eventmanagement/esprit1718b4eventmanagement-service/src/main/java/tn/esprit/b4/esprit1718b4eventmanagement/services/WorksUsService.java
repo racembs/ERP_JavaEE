@@ -42,6 +42,7 @@ public class WorksUsService implements WorksUsServiceLocal, WorksUsServiceRemote
 		@Override
 		public void addWO(UsualWork w) {
 			w.setNature(Nature.WorkOrder);
+			
 			em.persist(w);
 			
 		}

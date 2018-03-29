@@ -19,4 +19,5 @@ public interface WorksUsServiceLocal {
 	public List<Works> DisplayUSWorks();
 	public List<UsualWork> displayWO();
 	public List<UsualWork> displayWObyTech(int idtech);
+
 }

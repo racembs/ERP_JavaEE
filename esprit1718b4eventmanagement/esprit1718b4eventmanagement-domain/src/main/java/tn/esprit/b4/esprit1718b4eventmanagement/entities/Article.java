@@ -31,8 +31,11 @@ public class Article implements Serializable {
 		@OneToMany(mappedBy="article",fetch=FetchType.EAGER)
 		private List<OrdredItem> orderItem = new ArrayList<>();
 		
+		@OneToMany(mappedBy="needed_article",fetch=FetchType.EAGER)
+		private List<NeededItem> neededItem = new ArrayList<>();
+		
 		@ManyToMany(fetch=FetchType.EAGER)
-		private List <OperatingRange> operatingranges;
+		private List <OperatingRange> operatingranges = new ArrayList<>();
 		
 		public void setOperatingranges(List<OperatingRange> operatingranges) {
 			this.operatingranges = operatingranges;
@@ -53,6 +56,43 @@ public class Article implements Serializable {
 		private float Pmp;
 		@Column(name = "Quantity")
 		private int Quantity;
+		@Column(name = "ReservedQuantity")
+		private int ReservedQuantity=0;
+		@Column(name = "DailyConsumption")
+		private int DailyConsumption=0;
+		@Column(name = "DeliveryTime")
+		private int DeliveryTime=0;
+		@Column(name = "PricipalQuantity",columnDefinition = "int default 100")
+		private int PricipalQuantity=100;
+		@Column(name = "etatOrdre",columnDefinition = "int default 0")
+		private int etatOrdre=0;
+	
+		public int getEtatOrdre() {
+			return etatOrdre;
+		}
+		public void setEtatOrdre(int etatOrdre) {
+			this.etatOrdre = etatOrdre;
+		}
+		public int getPricipalQuantity() {
+			return PricipalQuantity;
+		}
+		public void setPricipalQuantity(int pricipalQuantity) {
+			PricipalQuantity = pricipalQuantity;
+		}
+		
+		
+		public int getDailyConsumption() {
+			return DailyConsumption;
+		}
+		public void setDailyConsumption(int dailyConsumption) {
+			DailyConsumption = dailyConsumption;
+		}
+		public int getDeliveryTime() {
+			return DeliveryTime;
+		}
+		public void setDeliveryTime(int deliveryTime) {
+			DeliveryTime = deliveryTime;
+		}
 		public int getId() {
 			return Id;
 		}
@@ -130,6 +170,74 @@ public class Article implements Serializable {
 		}
 		public List<OperatingRange> getOperatingranges() {
 			return operatingranges;
+		}
+		public int getReservedQuantity() {
+			return ReservedQuantity;
+		}
+		public void setReservedQuantity(int reservedQuantity) {
+			ReservedQuantity = reservedQuantity;
+		}
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((ArticleCode == null) ? 0 : ArticleCode.hashCode());
+			result = prime * result + DailyConsumption;
+			result = prime * result + DeliveryTime;
+			result = prime * result + ((Description == null) ? 0 : Description.hashCode());
+			result = prime * result + Id;
+			result = prime * result + Float.floatToIntBits(Pmp);
+			result = prime * result + PricipalQuantity;
+			result = prime * result + Quantity;
+			result = prime * result + ReservedQuantity;
+			result = prime * result + ((Type == null) ? 0 : Type.hashCode());
+			result = prime * result + ((UnitCode == null) ? 0 : UnitCode.hashCode());
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Article other = (Article) obj;
+			if (ArticleCode == null) {
+				if (other.ArticleCode != null)
+					return false;
+			} else if (!ArticleCode.equals(other.ArticleCode))
+				return false;
+			if (DailyConsumption != other.DailyConsumption)
+				return false;
+			if (DeliveryTime != other.DeliveryTime)
+				return false;
+			if (Description == null) {
+				if (other.Description != null)
+					return false;
+			} else if (!Description.equals(other.Description))
+				return false;
+			if (Id != other.Id)
+				return false;
+			if (Float.floatToIntBits(Pmp) != Float.floatToIntBits(other.Pmp))
+				return false;
+			if (PricipalQuantity != other.PricipalQuantity)
+				return false;
+			if (Quantity != other.Quantity)
+				return false;
+			if (ReservedQuantity != other.ReservedQuantity)
+				return false;
+			if (Type == null) {
+				if (other.Type != null)
+					return false;
+			} else if (!Type.equals(other.Type))
+				return false;
+			if (UnitCode == null) {
+				if (other.UnitCode != null)
+					return false;
+			} else if (!UnitCode.equals(other.UnitCode))
+				return false;
+			return true;
 		}
 		
 		

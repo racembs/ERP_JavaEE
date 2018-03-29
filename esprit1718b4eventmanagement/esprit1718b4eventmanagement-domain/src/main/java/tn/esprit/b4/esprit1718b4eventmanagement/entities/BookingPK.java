@@ -12,6 +12,7 @@ public class BookingPK implements Serializable {
 	@Column(name="id_Need")
 	private Integer id_Need;
 
+
 	public Integer getId_works() {
 		return id_works;
 	}

@@ -8,10 +8,14 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 import com.google.common.base.Optional;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXButton.ButtonType;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +49,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
@@ -124,14 +132,25 @@ public class AdminRHController implements Initializable {
     private JFXButton btndeconnexion1;
     @FXML
     private TextField txtsearch;
-
+    @FXML
+    private JFXComboBox<String> Combocheck;
+    @FXML
+    private ImageView imageView;
+    @FXML
+    private JFXButton Browser;
+    @FXML
+    private Label ss;
+    @FXML
+    private Label fileSelected;
+    private String imageFile;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    	
+    	Combocheck.getItems().addAll("Mail","Statut","Name","Login");
+    	Combocheck.getSelectionModel().selectLast();
     	BtnConfirme.setVisible(false);
     	chekVal.setVisible(false);
     	CheckBloc.setVisible(false);
@@ -179,10 +198,16 @@ Context context;
     if(	GPAO.isSelected())
     {role="GPAO";}else
     {role="GMAO";}
-    	User user=new User(firstname,lastname,login,password,mail,role,number,"valable","0");
+    
+    	User user=new User(firstname,lastname,login,password,mail,role,number,"valable","0",ss.getText() );
+    	
     	proxy.save(user);
     	
-    	
+
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Information");
+    	alert.setHeaderText("the User   : " +firstname+"/"+lastname+ "is add  with success");
+    	alert.showAndWait();
     	
     	
     }
@@ -421,7 +446,11 @@ labrole.setText(p7);
     		proxy.update(user);
     		afficher();
                 labrole.setText(select);
-    	
+
+            	Alert alert = new Alert(AlertType.INFORMATION);
+            	alert.setTitle("Information");
+            	alert.setHeaderText("the User Role  is updated  with success");
+            	alert.showAndWait();    	
     	
     }
    
@@ -505,7 +534,7 @@ labrole.setText(p7);
         
         
         List<User> list=new ArrayList<>();
-        
+      String val=  Combocheck.getValue();
     	String login=	txtsearch.getText();
     	if (txtsearch.getText().equals(""))
     	{
@@ -515,7 +544,7 @@ labrole.setText(p7);
     		 tableau.setItems(items);
  	       
     	}
-    	else 
+    	else if (val.equals("Login")) 
     	{
     	User user1 = proxy.findByLogin(login);
       
@@ -523,13 +552,68 @@ labrole.setText(p7);
 	        ObservableList<User> items = FXCollections.observableArrayList(list);
 	        tableau.setItems(items);
 	        }
-
+    	else if (val.equals("Mail")) 
+    	{
+    		List<User> list1=proxy.SearchMail(login);
+    		
+   		 ObservableList<User> items = FXCollections.observableArrayList(list1);
+   		 tableau.setItems(items);
+	        }
+    	else if (val.equals("Name")) 
+	    	{
+    		List<User> list12=proxy.SearchFirstName(login);
+    		
+   		 ObservableList<User> items = FXCollections.observableArrayList(list12);
+   		 tableau.setItems(items);
+	    	        }
+    	
+    	else if (val.equals("Statut")) 
+	    	    	{
+    		List<User> list12=proxy.SearchStatut(login);
+    		
+   		 ObservableList<User> items = FXCollections.observableArrayList(list12);
+   		 tableau.setItems(items);
+	    	    	        }
     	//     List<User> list=proxy.SearchLogin(login);
     	        
     	    
     	
     	
     }
+
+    @FXML
+    private void searchreleased(KeyEvent event) {
+    	
+    	
+    }
+
+    @FXML
+    private void OnBrowserAction(ActionEvent event) throws MalformedURLException {
+    	
+    	String path_img;
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Image File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files",
+                        "*.bmp", "*.png", "*.jpg", "*.gif")); // limit fileChooser options to image files
+        File selectedFile = fileChooser.showOpenDialog(fileSelected.getScene().getWindow());
+
+        if (selectedFile != null) {
+
+            imageFile = selectedFile.toURI().toURL().toString();
+        	path_img = selectedFile.getName();
+			ss.setText(path_img);
+            Image image = new Image(imageFile);
+            imageView.setImage(image);
+        } else {
+            fileSelected.setText("Image file selection cancelled.");
+        }
+    	
+    	
+    }
+    
+    
+   
 }
     
 

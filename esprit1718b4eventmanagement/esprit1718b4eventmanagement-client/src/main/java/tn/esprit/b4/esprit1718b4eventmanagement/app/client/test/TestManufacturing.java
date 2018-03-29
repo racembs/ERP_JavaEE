@@ -2,30 +2,48 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.*;
+import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ClientServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeedNomenclatureServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeededItemServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrderItemServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrdersServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote;
-import tn.esprit.b4.esprit1718b4eventmanagement.services.ManufacturingServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.utilities.ServiceLocator;
 
 public class TestManufacturing {
 
 	public static void main(String[] args) throws NamingException, ParseException {
-		String ManufactjndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ManufacturingService!tn.esprit.b4.esprit1718b4eventmanagement.services.ManufacturingServiceRemote";
-		Context context = new InitialContext();
-		ManufacturingServiceRemote manufactProxy =  (ManufacturingServiceRemote) context.lookup(ManufactjndiName);
+		String jndiNameClient = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ClientService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ClientServiceRemote";
+		String jndiNameNomenclature = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/NeedNomenclatureService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeedNomenclatureServiceRemote";
+		String jndiNameNeededItem = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/NeededItemService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeededItemServiceRemote";
+		String jndiNameManufacturingPlan = "exported/esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ManufacturingPlanningService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ManufacturingPlanningServiceRemote";
+		String jndiNameOrdredItem = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OrderItemService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrderItemServiceRemote";
+		String jndiNameOrders= "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OrdersService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrdersServiceRemote";
+		String jndiNameArticle = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+		ServiceLocator s=ServiceLocator.getInstance(); 
+		ClientServiceRemote proxyClientServiceRemote=(ClientServiceRemote) s.getProxy(jndiNameClient);
+		NeedNomenclatureServiceRemote proxyNomenclature=(NeedNomenclatureServiceRemote) s.getProxy(jndiNameNomenclature);
+		NeededItemServiceRemote proxyNeededItem=(NeededItemServiceRemote) s.getProxy(jndiNameNeededItem);
+		NeededItemServiceRemote proxyManufacturing=(NeededItemServiceRemote) s.getProxy(jndiNameManufacturingPlan);
+		OrderItemServiceRemote proxyOrdredItem=(OrderItemServiceRemote) s.getProxy(jndiNameOrdredItem);
+		OrdersServiceRemote proxyOrders=(OrdersServiceRemote) s.getProxy(jndiNameOrders);
+		ArticleServiceRemote proxyArticleServiceRemote=(ArticleServiceRemote) s.getProxy(jndiNameArticle);
 		
-		String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
-		ArticleServiceRemote ArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
+//		Client client = new Client("1798","PSE",22827736);
+//		client.setId(proxyClientServiceRemote.addClient(client));
 		
-		Client client = new Client(1798,"PSE");
-		client.setId(manufactProxy.addClient(client));
-		
-//		Client client=manufactProxy.findClientById(1);
+//		Client client=proxyClientServiceRemote.find(1);
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy");
 		Date orderDat = dateFormat.parse("18/03/2018");
@@ -33,46 +51,67 @@ public class TestManufacturing {
 		Orders order = new Orders(1818,orderDat,deliveryDat,"en attente");
 		Orders order2 = new Orders(1818,orderDat,deliveryDat,"en attente");
 		
-		order.setClient(client);
-		int idOrder = manufactProxy.addOrders(order);
-		int idOrder2 = manufactProxy.addOrders(order2);
+//		order.setClient(client);
+//		int idOrder = proxyOrders.addOrders(order);
+//		int idOrder2 = proxyOrders.addOrders(order2);
 		
-		Article PF = new Article("ARM100", "Armoire", "unit", "Produit fini", 540, 10);
-		PF.setId(ArticleProxy.addArticle(PF));
+		Article PF = new Article("ARM200", "Armoire", "unit", "Produit fini", 540, 10);
+		//PF.setId(proxyArticleServiceRemote.addArticle(PF));
 		
 		OrdredItem ordredItem = new OrdredItem();
 		ordredItem.setCode(4518);
 		ordredItem.setQuantity(10);
-		ordredItem.setStatus("en attente");
-		manufactProxy.addOrdredItem(1, 1, ordredItem);
+		ordredItem.setStatus("Pending");
+//		proxyOrdredItem.addOrdredItem(1, 1, ordredItem);
 		
-		OrdredItem orderItem2 = manufactProxy.findOrdredItemById(1,1);
-		System.out.println(orderItem2.getArticle().getDescription());
+		OrdredItem orderItem2 = proxyOrdredItem.findOrdredItemById(1,1);
+		System.out.println(orderItem2.getArticle().getType());
 		System.out.println(orderItem2.getOrdredItemPk().getId_Article());
 		
 		
-//		ManufacturingOrder searchMan2 = manufactProxy.addManufactChild(searchMan);
+//		NeededItem searchMan2 = manufactProxy.addManufactChild(searchMan);
 //		System.out.println(searchMan2.getSonsMO().get(0).getManufacturingOrderPk().getId_Article());
 
-		ManufacturingOrder Father = new ManufacturingOrder();
-		Father.setCode(1200);
-		Father.setQuantity(7);
-		Father.setOrderItem(orderItem2);
-		Father.setMO_article(orderItem2.getArticle());
-		Father.setId(manufactProxy.addManufactOrder(Father));
+//		NeededItem Father = new NeededItem();
+//		Father.setOrderItem(orderItem2);
+//		Father.setNeeded_article(orderItem2.getArticle());
+//		Father.setId(proxyNeededItem.addNeededItem(Father));
+//		
+//		NeededItem Child = new NeededItem();
+//		Child.setOrderItem(Father.getOrderItem());
+//		Child.setNeeded_article(orderItem2.getArticle());
+//		Child.setId(proxyNeededItem.addNeededItem(Child));
+//		
+//		NeedNomenclature nomenclature = proxyNomenclature.addnomenclature(Father.getId(), Child.getId(), 10);
 		
-		ManufacturingOrder Child = new ManufacturingOrder();
-		Child.setCode(4600);
-		Child.setQuantity(2);
-		Child.setOrderItem(Father.getOrderItem());
-		Child.setMO_article(orderItem2.getArticle());
-		Child.setId(manufactProxy.addManufactOrder(Child));
+		NeededItem Parent = new NeededItem();
+		Parent.setOrderItem(orderItem2);
+		Parent.setNeeded_article(orderItem2.getArticle());
+		Parent.setGrossNeed(orderItem2.getQuantity());
+		Parent.setNetNeed(Parent.getGrossNeed()-Parent.getNeeded_article().getQuantity());
+		//Parent.setReadyLotNumber();
+		Parent.setStatus("Pending");
+		//Parent.setId(proxyNeededItem.addNeededItem(Parent));
 		
-		ManufactOrderNomenclature nomenclature = manufactProxy.addnomenclature(Father.getId(), Child.getId(), 0);
+		Map<NeededItem, List<NeededItem>> map = new HashMap<>();
+		List<NeedNomenclature> needNomenclatureList = new ArrayList<>();
+		map = proxyNeededItem.InitialiseMap();
+		map= proxyNeededItem.CreateNeedItemTree(Parent);
+		map=proxyNeededItem.SaveNeedItemTree(map);
+		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
 		
+		NeededItem ParentneededItem = proxyNeededItem.getNeededItemParentOfOrdredItem(1, 1);
+		map=proxyNeededItem.InitialiseMap();
+		map= proxyNeededItem.findNeededItemTreeByOrdredItem(ParentneededItem);
 		
-		
-			
+		for(Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()){
+			System.out.println("Parent");
+			System.out.println(e.getKey().getLevel());
+			System.out.println("Children");
+			for (NeededItem needChild : e.getValue()) {
+				System.out.println(needChild.getLevel());
+			}
+		}
 	}
 
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -14,7 +15,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -38,11 +38,10 @@
                               <AnchorPane prefHeight="141.0" prefWidth="1086.0" style="-fx-background-color: #00ADD8;" styleClass="card-unpadded">
                                  <children>
                                     <Pane layoutX="-1.0" prefHeight="141.0" prefWidth="23.0" style="-fx-background-color: #007390;" />
-                                    <ImageView fitHeight="97.0" fitWidth="176.0" layoutX="33.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@image/contacts-256.png" />
-                                       </image>
-                                    </ImageView>
+                                    <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="161.0" layoutX="11.0" pickOnBounds="true" preserveRatio="true" />
+                                    <JFXButton fx:id="Browser" buttonType="RAISED" layoutX="264.0" layoutY="52.0" onAction="#OnBrowserAction" prefHeight="37.0" prefWidth="184.0" ripplerFill="#53eb11" styleClass="blue-btn" text="Change Statut" />
+                                    <Label fx:id="ss" layoutX="264.0" layoutY="107.0" prefHeight="20.0" prefWidth="162.0" />
+                                    <Label fx:id="fileSelected" layoutX="264.0" layoutY="21.0" prefHeight="20.0" prefWidth="120.0" />
                                  </children>
                               </AnchorPane>
                            </children>
@@ -89,7 +88,7 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
                                  <children>
-                                    <TextField fx:id="txtsearch" layoutX="632.0" layoutY="15.0" prefHeight="30.0" prefWidth="302.0" promptText="Search by Login" styleClass="search-box" />
+                                    <TextField fx:id="txtsearch" layoutX="632.0" layoutY="15.0" onKeyReleased="#searchreleased" prefHeight="30.0" prefWidth="302.0" promptText="Search by Login" styleClass="search-box" />
                                     <TableView fx:id="tableau" layoutX="49.0" layoutY="55.0" prefHeight="326.0" prefWidth="1080.0">
                                       <columns>
                                           <TableColumn fx:id="ColLogin" editable="false" maxWidth="143.666748046875" minWidth="-1.0" prefWidth="143.666748046875" sortable="false" text="Login" />
@@ -102,6 +101,7 @@
                                     </TableView>
                                     <JFXButton fx:id="btndeconnexion" buttonType="RAISED" layoutX="40.0" layoutY="11.0" onAction="#OnDeconnexionAction" prefHeight="37.0" prefWidth="184.0" ripplerFill="#53eb11" styleClass="blue-btn" text="Deconnexion" />
                                     <JFXButton buttonType="RAISED" layoutX="934.0" layoutY="12.0" onAction="#OnSearchAction" prefHeight="37.0" prefWidth="144.0" ripplerFill="#53eb11" styleClass="blue-btn" text="Search" />
+                                    <JFXComboBox fx:id="Combocheck" layoutX="491.0" layoutY="11.0" prefHeight="40.0" prefWidth="121.0" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="1103.0">

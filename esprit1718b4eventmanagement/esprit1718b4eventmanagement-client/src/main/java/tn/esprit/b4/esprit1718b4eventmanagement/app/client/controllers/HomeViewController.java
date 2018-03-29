@@ -73,7 +73,8 @@ public class HomeViewController implements Initializable {
             VBox sidePane = FXMLLoader.load(getClass().getResource("/views/Drawer.fxml"));
             AnchorPane wrPane = FXMLLoader.load(getClass().getResource("/views/WorkUs.fxml"));
             AnchorPane ndPane = FXMLLoader.load(getClass().getResource("/views/NeedsStock.fxml"));
-            
+            AnchorPane woPane = FXMLLoader.load(getClass().getResource("/views/WorkOs.fxml"));
+            AnchorPane Profile = FXMLLoader.load(getClass().getResource("/views/Profile.fxml"));
             drawer.setSidePane(sidePane);
 
             for (Node node : sidePane.getChildren()) {
@@ -85,18 +86,25 @@ public class HomeViewController implements Initializable {
                                                   	 drawer.close();                               
                                                    setNode(wrPane);
                                                     break;
+
                             case "NeedsStock":
                                 drawer.close(); 
                                 setNode(ndPane);
+
+                            case "doctorMenu":
+                                drawer.close();                               
+                                setNode(Profile);
+
                                 break;
 
-                            case "paymentMenu":
-                                drawer.close();
-                             
-                                break;
+                            case "WorkOrder":
+                             	 drawer.close();                               
+                              setNode(woPane);
+                               break;
+
                             case "appointmentMenu":
                                 drawer.close();                                
-                               
+                                setNode(Profile);
                                 break;                                
                         }
                     });

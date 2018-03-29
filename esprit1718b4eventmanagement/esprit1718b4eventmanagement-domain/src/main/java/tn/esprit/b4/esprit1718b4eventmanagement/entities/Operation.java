@@ -128,6 +128,12 @@ public class Operation implements Serializable {
 	public void setOptrange(OperatingRange optrange) {
 		this.optrange = optrange;
 	}
+
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	
 	
 	

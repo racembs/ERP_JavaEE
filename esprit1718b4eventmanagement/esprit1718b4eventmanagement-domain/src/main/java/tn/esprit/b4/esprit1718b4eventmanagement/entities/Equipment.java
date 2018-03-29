@@ -1,17 +1,9 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.List;
+import javax.persistence.*;
+
 
 @Entity
 @Table(name = "tab_Equipment")
@@ -19,7 +11,8 @@ public class Equipment implements Serializable {
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
-
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Id")
@@ -31,22 +24,63 @@ public class Equipment implements Serializable {
 	@Column(name = "State")
 	private String State;
 	@Column(name = "EISDate")
-	private Date EISDate;
+	private String EISDate;
 	@Column(name = "Fabriquant")
 	private String Fabriquant;
 	@Column(name = "Marque")
 	private String Marque;
-	
-
-	
-	
-	
+	@Column(name = "Lieu")
+	private String Lieu;
 	
 	
 	
 	@OneToMany(mappedBy="equipement")
 	private List <ChargingStation> chargingstations;
 	
+	@ManyToOne
+	@JoinColumn(name="id_Arboe",referencedColumnName="Id",insertable=true,updatable=true)
+	private Arboresence arboresence;
+	
+@OneToMany(mappedBy="equipement")
+private List <Works> works;
+	
+	
+	
+	public String getLieu() {
+		return Lieu;
+	}
+	public void setLieu(String lieu) {
+		Lieu = lieu;
+	}
+	public Equipment(String serialNum, String description, String state, String eISDate, String fabriquant,
+			String marque, Arboresence arboresence) {
+		super();
+		SerialNum = serialNum;
+		Description = description;
+		State = state;
+		EISDate = eISDate;
+		Fabriquant = fabriquant;
+		Marque = marque;
+		this.arboresence = arboresence;
+	}
+	public Arboresence getArboresence() {
+		return arboresence;
+	}
+	public void setArboresence(Arboresence arboresence) {
+		this.arboresence = arboresence;
+	}
+	
+	
+	
+	
+	public Equipment(List<ChargingStation> chargingstations) {
+		super();
+		this.chargingstations = chargingstations;
+		
+		
+		
+		
+	}
 	public int getId() {
 		return Id;
 	}
@@ -71,23 +105,55 @@ public class Equipment implements Serializable {
 	public void setState(String state) {
 		State = state;
 	}
-	public Date getEISDate() {
-		return EISDate;
-	}
-	public void setEISDate(Date eISDate) {
-		EISDate = eISDate;
-	}
 	
 	public Equipment() {
 		super();
 	}
-	public Equipment( String serialNum, String description, String state, Date eISDate) {
+
+	public String getEISDate() {
+		return EISDate;
+	}
+	public void setEISDate(String eISDate) {
+		EISDate = eISDate;
+	}
+	public String getFabriquant() {
+		return Fabriquant;
+	}
+	public void setFabriquant(String fabriquant) {
+		Fabriquant = fabriquant;
+	}
+	public String getMarque() {
+		return Marque;
+	}
+	public void setMarque(String marque) {
+		Marque = marque;
+	}
+	
+
+	
+	public Equipment(String serialNum, String description, String state, String eISDate, String fabriquant,
+			String marque, List<ChargingStation> chargingstations) {
 		super();
-		
 		SerialNum = serialNum;
 		Description = description;
 		State = state;
 		EISDate = eISDate;
+		Fabriquant = fabriquant;
+		Marque = marque;
+		this.chargingstations = chargingstations;
+	}
+	
+	public Equipment(int id, String serialNum, String description, String state, String eISDate, String fabriquant,
+			String marque, List<ChargingStation> chargingstations) {
+		super();
+		Id = id;
+		SerialNum = serialNum;
+		Description = description;
+		State = state;
+		EISDate = eISDate;
+		Fabriquant = fabriquant;
+		Marque = marque;
+		this.chargingstations = chargingstations;
 	}
 	public List<ChargingStation> getChargingstations() {
 		return chargingstations;
@@ -95,6 +161,45 @@ public class Equipment implements Serializable {
 	public void setChargingstations(List<ChargingStation> chargingstations) {
 		this.chargingstations = chargingstations;
 	}
+	public Equipment(String serialNum, String description, String state, String fabriquant, String marque,
+			Arboresence arboresence) {
+		super();
+		SerialNum = serialNum;
+		Description = description;
+		State = state;
+		Fabriquant = fabriquant;
+		Marque = marque;
+		this.arboresence = arboresence;
+	}
+	public Equipment(String serialNum, String description, String state, String eISDate, String fabriquant,
+			String marque) {
+		super();
+		SerialNum = serialNum;
+		Description = description;
+		State = state;
+		EISDate = eISDate;
+		Fabriquant = fabriquant;
+		Marque = marque;
+	}
+	public Equipment(String serialNum, String description, String state, String eISDate, String fabriquant,
+			String marque, String lieu, Arboresence arboresence) {
+		super();
+		SerialNum = serialNum;
+		Description = description;
+		State = state;
+		EISDate = eISDate;
+		Fabriquant = fabriquant;
+		Marque = marque;
+		Lieu = lieu;
+		this.arboresence = arboresence;
+	}
+	public List<Works> getWorks() {
+		return works;
+	}
+	public void setWorks(List<Works> works) {
+		this.works = works;
+	}
+
 
 	
 	

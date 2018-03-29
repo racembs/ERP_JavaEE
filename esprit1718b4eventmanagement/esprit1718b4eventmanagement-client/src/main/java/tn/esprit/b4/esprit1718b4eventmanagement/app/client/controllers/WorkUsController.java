@@ -23,9 +23,11 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 
 import javax.naming.NamingException;
+import javax.swing.text.TabableView;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 import javafx.fxml.FXML;
@@ -33,6 +35,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TreeItem;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
@@ -53,6 +56,10 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
+import javafx.scene.PointLight;
+
+import javafx.scene.control.Label;
+import javafx.scene.paint.*;
 
 
 /**
@@ -109,6 +116,7 @@ public class WorkUsController implements Initializable {
     private JFXTextField f7;
     @FXML
     private JFXTreeView<String> treeviewEq;
+
     /**
      * Initializes the controller class.
      * @param url
@@ -118,6 +126,7 @@ public class WorkUsController implements Initializable {
     @SuppressWarnings({ "finally", "null", "unchecked" })
 	@Override
     public void initialize(URL url, ResourceBundle rb){
+    
     	 Image icon = new Image (
     			   getClass().getResourceAsStream("/views/imgs/equi.png"));
     		
@@ -381,12 +390,233 @@ public class WorkUsController implements Initializable {
         RadioButton selectedRadioButton = (RadioButton) q.getSelectedToggle();
         String toogleGroupValue = selectedRadioButton.getText();
         uw.setEmmergency(toogleGroupValue);
+        Equipment e=new Equipment();
+        e.setId(2);
+        uw.setEquipement(e);
         proxy.addWR(uw);
         Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Work Request Adding");
 		alert.setHeaderText("Succesful :) ");
 		alert.showAndWait();
+		DETAILS();
     }
-       
+    
+
+  
+    private void DETAILS() throws NamingException {
+   
+			  
+	 tableview.setEditable(true);
+	//UserServiceRemote userService2;
+
+	try {
+		
+		Context context;
+		context = new InitialContext();
+  	UserServiceRemote userService2 = (UserServiceRemote) context
+				.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
+
+		List<String>lun = new ArrayList<>();
+		for(int i=0;i<userService2.findAll().size();i++)
+		{
+		lun.add(userService2.findAll().get(i).getFirstname()+" "+userService2.findAll().get(i).getLastname());
+		}
+		C4.setOnEditCommit((CellEditEvent<UsualWork, String> event) -> {
+			try {
+			
+				 String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
+				 WorksUsServiceRemote proxy=(WorksUsServiceRemote) context.lookup(jndiName);
+				
+				  	TablePosition<UsualWork, String> pos = event.getTablePosition();
+		            
+		            String state = event.getNewValue();
+		            System.out.println("combo"+state);
+		 
+		            int row = pos.getRow();
+		            xxx= event.getTableView().getItems().get(row);
+		            if(state.equals("approuved"))
+		            {xxx.setNature(Nature.WorkOrder);}
+		            else
+		            	{xxx.setNature(Nature.WorkRequest);}
+		            xxx.setState(state);
+		    	    xxx.setWODate(new Date());
+		    	 //   xxx.setWorksPK(www.getWorksPK()); 
+
+		    	
+
+	
+		    	
+		    		
+		    		 proxy.updateWork(xxx);
+
+		
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+      });
+ 		C8.setOnEditCommit((CellEditEvent<UsualWork, String> eventk) -> {
+ 			UserServiceRemote userServicej;
+			try {
+				userServicej = (UserServiceRemote) context
+						.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
+				 String jndiNamec8="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
+				 WorksUsServiceRemote proxyc8=(WorksUsServiceRemote) context.lookup(jndiNamec8);
+				
+				  	TablePosition<UsualWork, String> pos = eventk.getTablePosition();
+			
+				User tech =userServicej.userbyfstlstname(eventk.getNewValue());
+			       int row = pos.getRow();
+			  
+			       xxx= eventk.getTableView().getItems().get(row);
+			
+				System.out.println(eventk.getNewValue());
+	    	   	showdetails(tech);
+	    	
+	    	
+	    	   // xxx.setWorksPK(www.getWorksPK()); 
+	    	   	xxx.setTechnicianId(tech.getId());
+	    		proxyc8.updateWork(xxx);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+  	   
+});
+ 		C3.setOnEditCommit((CellEditEvent<UsualWork, String> eventb) -> {
+ 		 String jndiNamec3="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
+		 WorksUsServiceRemote proxyc3;
+		try {
+			proxyc3 = (WorksUsServiceRemote) context.lookup(jndiNamec3);
+			TablePosition<UsualWork, String> pos = eventb.getTablePosition();
+			System.out.println(eventb.getNewValue());
+		       int row = pos.getRow();
+		    xxx= eventb.getTableView().getItems().get(row);
+				
+		  //  xxx.setWorksPK(www.getWorksPK()); 
+						System.out.println(eventb.getNewValue());
+						xxx.setTechnology(eventb.getNewValue());
+						proxyc3.updateWork(xxx);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		  
+				
+
+
+	        });
+		C8.setCellValueFactory(cellData
+              -> {
+                  return new SimpleStringProperty(cellData.getValue().getUser().getFirstname()+" "+cellData.getValue().getUser().getLastname());
+              }
+      );
+      C8.setCellFactory(tableCol -> {
+      	ComboBoxTableCell<UsualWork, String> ct2 = new ComboBoxTableCell<>();
+			ObservableList<String> obList = FXCollections.observableList(lun);
+		
+          ct2.getItems().addAll(obList);
+          ct2.setComboBoxEditable(true);
+      	C8.setEditable(true);
+          return ct2;
+      });
+
+	} catch (NamingException e2) {
+		// TODO Auto-generated catch block
+		e2.printStackTrace();
+	}
+
+
+
+  // Populate Comboboxe with static options,
+  comboSpecialization.getItems().addAll("Mechanical","Electrical ","hydraulic"
+  ,"unspecified");
+  comboSpecialization.getSelectionModel().selectLast();
+  
+//  comboDepartment.getItems().addAll("eq1","eq2");
+//   comboDepartment.getSelectionModel().selectLast();
+	Context context;
+	try {
+		context = new InitialContext();
+		UserServiceRemote userService = (UserServiceRemote) context
+				.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
+  	User user = LoginController.user;
+  	if (user.getPost().equals("technician"))
+  	{
+  		tabD.setDisable(true);
+  	}
+	} catch (NamingException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+
+
+	
+	try {
+		
+
+			context= new InitialContext();
+		 String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
+		 WorksUsServiceRemote proxy=(WorksUsServiceRemote) context.lookup(jndiName);
+	
+
+	    		C1.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("objet"));
+	    		C2.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("description"));
+	    		C3.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("technology"));
+	    		C3.setCellValueFactory(cellData
+	                    -> {
+	                        return new SimpleStringProperty(cellData.getValue().getTechnology());
+	                    }
+	            );
+	            C3.setCellFactory(tableCol -> {
+	                ComboBoxTableCell<UsualWork, String> ct = new ComboBoxTableCell<>();
+	                ct.getItems().addAll("Mechanical","Electrical ","hydraulic"
+	                        ,"unspecified");
+	                ct.setComboBoxEditable(true);
+
+	                return ct;
+	            });
+	            C4.setEditable(true);
+	    		C4.setCellValueFactory(new Callback<CellDataFeatures<UsualWork, String>, ObservableValue<String>>() {
+	    			 
+	                @Override
+	                public ObservableValue<String> call(CellDataFeatures<UsualWork, String> param) {
+	                    Works person = param.getValue();
+	                    // F,M
+	                    String state = person.getState();
+	                   // Gender gender = Gender.getByCode(genderCode);
+	                    return new SimpleObjectProperty<String>(state);
+	                }
+	            });
+	    		C5.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("emmergency"));
+			    C6.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("WRDate"));
+			    C7.setCellValueFactory(new Callback<CellDataFeatures<UsualWork,String>,ObservableValue<String>>(){
+
+		              @Override
+		              public ObservableValue<String> call(CellDataFeatures<UsualWork, String> param) {
+		                  return new SimpleStringProperty(param.getValue().getEquipement().getSerialNum()+"--"+param.getValue().getEquipement().getDescription());
+		              }
+		          }); 
+	    		ObservableList<String> genderList = FXCollections.observableArrayList("approuved","not approuved");
+		        // Populate Comboboxe with static options,
+	    		C4.setCellFactory(ComboBoxTableCell.forTableColumn(genderList));
+			
+  	        List<UsualWork> list = proxy.displayWRB();
+  	        ObservableList<UsualWork> items = FXCollections.observableArrayList(list);
+  	      //  System.out.println(items.get(0).getDescription());
+  	       tableview.setItems(items);
+  	   
+	} catch (NamingException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+	tableview.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+		
+	}));
+    }
 }
 

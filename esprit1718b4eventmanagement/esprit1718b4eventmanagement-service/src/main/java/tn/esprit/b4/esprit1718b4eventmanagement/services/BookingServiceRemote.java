@@ -12,6 +12,5 @@ public interface BookingServiceRemote {
 	public void addBooking(Booking booking);
 	public void deleteBooking(int idBooking);
 	public void updateBooking(Booking booking);
-	public Booking findBooking(int idTool, int id_Work);
-
+	public Booking findBooking(int idBooking);
 }

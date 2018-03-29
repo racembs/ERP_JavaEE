@@ -12,6 +12,8 @@ import javax.persistence.TypedQuery;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NomenclaturePk;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 
 
 @Stateless
@@ -24,6 +26,12 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 		em.persist(article);
 		return article.getId();
 		}
+	@Override
+	public void DeleteArticle(int idArticle) {
+		Article article =this.findArticle(idArticle);
+		em.remove(article);
+		
+	}
 
 	
 	@Override
@@ -49,8 +57,19 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 
 
 	@Override
-	public void updateArticle(Article article) {
-		em.merge(article);
+	public void updateArticle(Article newArticle) {
+		Article article =findArticleByCode(newArticle.getArticleCode()).get(0);
+		article.setArticleCode(newArticle.getArticleCode());
+		article.setDescription(newArticle.getDescription());
+		article.setPmp(newArticle.getPmp());
+		article.setQuantity(newArticle.getQuantity());
+		article.setType(newArticle.getType());
+		article.setUnitCode(newArticle.getUnitCode());
+		article.setDailyConsumption(newArticle.getDailyConsumption());
+		article.setDeliveryTime(newArticle.getDeliveryTime());
+		article.setEtatOrdre(newArticle.getEtatOrdre());
+		article.setPricipalQuantity(newArticle.getPricipalQuantity());
+		
 	}
 
 
@@ -85,6 +104,7 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 	}
 
 
+
 	@Override
 	public List<Article> getAllArticles() {
 		TypedQuery<Article> query
@@ -107,11 +127,12 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 
 
 	@Override
-	public Article findArticleByCode(String code) {
+	public List<Article> findArticleByCode(String code) {
 		TypedQuery<Article> query
-		=em.createQuery("SELECT a FROM Article a WHERE a.ArticleCode= :code", Article.class);
+		=em.createQuery("SELECT a FROM Article a WHERE a.ArticleCode LIKE :code", Article.class);
 		query.setParameter("code",code);
-		Article article=query.getSingleResult();
+		List<Article> article=query.getResultList();
+		
 		return article;
 	}
 
@@ -125,8 +146,38 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 		List<Article> article=query.getResultList();
 		return article;
 	}
-	
-	
+	@Override
+	public List<Article> getArticleListByCode(String code) {
+		TypedQuery<Article> query
+		=em.createQuery("SELECT a FROM Article a WHERE a.ArticleCode LIKE :code", Article.class);
+		query.setParameter("code","%"+code+"%");
+		List<Article> article=query.getResultList();
+		return article;
+	}
+
 
 	
+	
+	//*************************Done By ONS****************************//
+	
+	@Override
+	public List<Article> DisplayArticle() {
+
+		TypedQuery<Article> query1=em.createQuery("SELECT a FROM Article a",Article.class);
+		List <Article> result= query1.getResultList();
+		return result;
+	}
+
+	//********************Methode for Orders interface***************//
+	@Override
+	public List<Article> findArticleByCodeORDescription(String input) {
+		String type = "Produit-Fini";
+		TypedQuery<Article> query
+		=em.createQuery("SELECT a FROM Article a WHERE a.ArticleCode LIKE :input AND a.Type= :type OR a.Description LIKE :input AND a.Type= :type", Article.class);
+		query.setParameter("input","%"+input+"%");
+		query.setParameter("type",type);
+		List<Article> article=query.getResultList();
+		return article;
+	}
+
 }
