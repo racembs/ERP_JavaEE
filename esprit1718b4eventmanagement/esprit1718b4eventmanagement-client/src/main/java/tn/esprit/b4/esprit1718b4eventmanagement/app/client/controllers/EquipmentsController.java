@@ -392,7 +392,16 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     		colState.setCellValueFactory(new PropertyValueFactory<Equipment, String>("State"));
     		 colDescription.setCellValueFactory(new PropertyValueFactory<Equipment, String>("Description"));
         
-    		
+    		//////////////////////////////
+    		 
+    		 //////////////////////////
+    		 
+    		 
+    		 
+    		 
+    		 
+    		 
+    		 
         List<Equipment> list = proxy.getAllEquipment();
     	        ObservableList<Equipment> items = FXCollections.observableArrayList(list);
     	        tableau.setItems(items);
