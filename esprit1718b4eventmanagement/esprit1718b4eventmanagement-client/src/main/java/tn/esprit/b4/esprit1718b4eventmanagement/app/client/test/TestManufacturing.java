@@ -99,13 +99,20 @@ public class TestManufacturing {
 		map= proxyNeededItem.CreateNeedItemTree(Parent);
 		map=proxyNeededItem.SaveNeedItemTree(map);
 		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
+		
+		NeededItem ParentneededItem = proxyNeededItem.getNeededItemParentOfOrdredItem(1, 1);
+		map=proxyNeededItem.InitialiseMap();
+		map= proxyNeededItem.findNeededItemTreeByOrdredItem(ParentneededItem);
+		
+		for(Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()){
+			System.out.println("Parent");
+			System.out.println(e.getKey().getLevel());
+			System.out.println("Children");
+			for (NeededItem needChild : e.getValue()) {
+				System.out.println(needChild.getLevel());
+			}
+		}
 	}
-//to create a nomenclature mono level	
-//	Map<NeededItem, NeedNomenclature> map = proxyNeededItem.addChildrenNeededItem(Parent);
-//	for (Map.Entry<NeededItem, NeedNomenclature> e : map.entrySet()) {
-//		e.getValue().getNeedNomenclaturePk().setIdChild(proxyNeededItem.addNeededItem(e.getKey()));
-//		proxyNomenclature.save(e.getValue());		
-//	}
 
 }
 

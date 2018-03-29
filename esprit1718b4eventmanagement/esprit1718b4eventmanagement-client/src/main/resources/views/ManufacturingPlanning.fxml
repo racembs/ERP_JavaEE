@@ -13,7 +13,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
@@ -55,28 +56,32 @@
                                     </VBox>
                                     <ComboBox fx:id="ComboOrders" layoutX="508.0" layoutY="26.0" onAction="#SelectComboAction" onMouseClicked="#OrderdisplayAction" prefHeight="30.0" prefWidth="177.0" />
                                     <Label fx:id="ItemLabel1" layoutX="402.0" layoutY="25.0" prefHeight="33.0" prefWidth="76.0" text="Order" />
-                                    <TreeView fx:id="Tree" layoutX="740.0" layoutY="11.0" prefHeight="271.0" prefWidth="416.0" />
+                                    <TreeTableView fx:id="TreeTable" layoutX="767.0" layoutY="25.0" prefHeight="253.0" prefWidth="404.0">
+                                      <columns>
+                                        <TreeTableColumn fx:id="NeededColumn" prefWidth="347.0" text="Needed Item" />
+                                        <TreeTableColumn fx:id="QtyColumn" prefWidth="55.0" text="Qty" />
+                                      </columns>
+                                    </TreeTableView>
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="364.0" prefWidth="1200.0">
                                  <children>
                                     <TableView fx:id="TableNeededItem" layoutX="55.0" layoutY="97.0" onKeyPressed="#TableClickedWithKey" onMouseClicked="#TableClicked" prefHeight="236.0" prefWidth="1021.0">
                                       <columns>
-                                        <TableColumn fx:id="OrdredItemColumn" prefWidth="134.0" text="Ordred Item" />
-                                        <TableColumn fx:id="ChildColumn" prefWidth="135.0" text="Needed Item" />
-                                          <TableColumn fx:id="ParentColumn" prefWidth="132.0" text="Parent Item " />
-                                          <TableColumn fx:id="GrossNeedColumn" prefWidth="107.0" text="Gross Need" />
-                                          <TableColumn fx:id="NetNeedColumn" minWidth="0.0" prefWidth="94.0" text="Net Need" />
-                                          <TableColumn fx:id="ReadyLotColumn" prefWidth="95.0" text="Ready Lot" />
-                                          <TableColumn fx:id="ReqActionColumn" prefWidth="141.0" text="Required Action" />
-                                          <TableColumn fx:id="LevelColumn" prefWidth="92.0" text="Tree level" />
-                                          <TableColumn fx:id="StatusColumn" prefWidth="90.0" text="Status" />
+                                        <TableColumn fx:id="OrdredItemColumn" prefWidth="134.0" text="Reference" />
+                                        <TableColumn fx:id="ChildColumn" prefWidth="152.0" text="Needed Item" />
+                                          <TableColumn fx:id="GrossNeedColumn" prefWidth="110.0" text="Gross Need" />
+                                          <TableColumn fx:id="NetNeedColumn" minWidth="0.0" prefWidth="108.0" text="Net Need" />
+                                          <TableColumn fx:id="ReadyLotColumn" prefWidth="130.0" text="Ready Lot" />
+                                          <TableColumn fx:id="ReqActionColumn" prefWidth="210.0" text="Required Action" />
+                                          <TableColumn fx:id="LevelColumn" prefWidth="98.0" text="Tree level" />
+                                          <TableColumn fx:id="StatusColumn" prefWidth="77.0" text="Status" />
                                       </columns>
                                     </TableView>
                                     <Button fx:id="delete" layoutX="1085.0" layoutY="215.0" mnemonicParsing="false" onAction="#deleteOrdredItemNeed" prefHeight="30.0" prefWidth="101.0" text="Delete All" />
                                     <Label fx:id="CompanyLabel1" layoutX="64.0" layoutY="37.0" prefHeight="30.0" prefWidth="131.0" text="Client" />
                                     <TextField fx:id="ClientTextSearch" layoutX="187.0" layoutY="37.0" />
-                                    <ComboBox fx:id="ComboOrdersSearch" layoutX="516.0" layoutY="37.0" prefHeight="30.0" prefWidth="177.0" />
+                                    <ComboBox fx:id="ComboOrdersSearch" layoutX="516.0" layoutY="37.0" onAction="#SelectComboSearchAction" onMouseClicked="#OrderSerachDisplayAction" prefHeight="30.0" prefWidth="177.0" />
                                     <Label fx:id="ItemLabel11" layoutX="410.0" layoutY="36.0" prefHeight="33.0" prefWidth="76.0" text="Order" />
                                     <ComboBox fx:id="ComboArticleSearch" layoutX="899.0" layoutY="37.0" prefHeight="30.0" prefWidth="177.0" />
                                     <Label fx:id="ItemLabel111" layoutX="793.0" layoutY="36.0" prefHeight="33.0" prefWidth="76.0" text="Article" />

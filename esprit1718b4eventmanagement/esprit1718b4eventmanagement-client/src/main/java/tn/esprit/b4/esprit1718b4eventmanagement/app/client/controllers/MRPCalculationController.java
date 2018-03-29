@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.naming.Context;
@@ -31,6 +32,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -219,7 +221,7 @@ public class MRPCalculationController implements Initializable {
         });
     }
     
-    private void fillTreeTableView() throws NamingException {
+    private void showTreeView() throws NamingException {
     	
     	TreeItem<NeededItem> root=new TreeItem<>();
      
@@ -259,6 +261,8 @@ public class MRPCalculationController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		Make.setVisible(true);
+		Cancel.setText("Cancel");
 		TreeItem<String> rootItem = new TreeItem<String> ("Inbox");
         rootItem.setExpanded(true);
         for (int i = 1; i < 6; i++) {
@@ -270,18 +274,31 @@ public class MRPCalculationController implements Initializable {
 	
    @FXML
     void CancelAction(ActionEvent event) {
-	   DisplayAllNeededItem();
+	   Stage stage = (Stage) Cancel.getScene().getWindow();
+	    stage.close();
     }
 
     @FXML
     void MakeAction(ActionEvent event) {
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setTitle("Confirmation Dialog");
+    	alert.setHeaderText("Look, a Confirmation Dialog");
+    	alert.setContentText("Do you want to start the Manufacturing planning for this Item?");
 
+    	Optional<ButtonType> result = alert.showAndWait();
+    	if (result.get() == ButtonType.OK){
+    		map=proxyNeededItem.SaveNeedItemTree(map);
+    		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
+    		Make.setVisible(false);
+    		Cancel.setText("Exit");
+    	}
+    	
     }
     
     @FXML
     void ShowAction(ActionEvent event) throws NamingException {
     	DisplayAllNeededItem();
-    	fillTreeTableView();
+    	showTreeView();
     	ShowButton.setVisible(false);
 
     }

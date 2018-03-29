@@ -33,12 +33,12 @@
             <Accordion layoutX="14.0" layoutY="81.0" />
             <TableView fx:id="TableNeededItem" layoutX="48.0" layoutY="328.0" prefHeight="360.0" prefWidth="883.0">
               <columns>
-                <TableColumn fx:id="OrdredItemColumn" prefWidth="113.0" text="Ordred Item" />
-                <TableColumn fx:id="ChildColumn" prefWidth="156.0" text="Needed Item" />
+                <TableColumn fx:id="OrdredItemColumn" prefWidth="115.0" text="Reference" />
+                <TableColumn fx:id="ChildColumn" prefWidth="114.0" text="Needed Item" />
                   <TableColumn fx:id="GrossNeedColumn" prefWidth="105.0" text="Gross Need" />
-                  <TableColumn fx:id="NetNeedColumn" minWidth="0.0" prefWidth="96.0" text="Net Need" />
+                  <TableColumn fx:id="NetNeedColumn" minWidth="0.0" prefWidth="93.0" text="Net Need" />
                   <TableColumn fx:id="ReadyLotColumn" prefWidth="95.0" text="Ready Lot" />
-                  <TableColumn fx:id="ReqActionColumn" prefWidth="141.0" text="Required Action" />
+                  <TableColumn fx:id="ReqActionColumn" prefWidth="184.0" text="      Required Action" />
                   <TableColumn fx:id="LevelColumn" prefWidth="93.0" text="Tree level" />
                   <TableColumn fx:id="StatusColumn" prefWidth="92.0" text="Status" />
               </columns>

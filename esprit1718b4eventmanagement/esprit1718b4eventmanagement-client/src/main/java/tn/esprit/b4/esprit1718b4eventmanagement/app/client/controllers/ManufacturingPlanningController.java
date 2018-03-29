@@ -2,14 +2,18 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.naming.NamingException;
+
 import org.controlsfx.control.textfield.TextFields;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -31,6 +35,9 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -112,37 +119,40 @@ public class ManufacturingPlanningController implements Initializable {
     private Label ItemLabel1;
 
     @FXML
-    private TreeView<NeedNomenclature> Tree;
+    private TreeTableView<NeededItem> TreeTable;
 
     @FXML
-    private TableView<NeedNomenclature> TableNeededItem;
+    private TreeTableColumn<NeededItem, String> NeededColumn;
 
     @FXML
-    private TableColumn<NeedNomenclature, Integer> OrdredItemColumn;
+    private TreeTableColumn<NeededItem, String> QtyColumn;
 
     @FXML
-    private TableColumn<NeedNomenclature, String> ChildColumn;
+    private TableView<NeededItem> TableNeededItem;
 
     @FXML
-    private TableColumn<NeedNomenclature, String> ParentColumn;
+    private TableColumn<NeededItem, String> OrdredItemColumn;
 
     @FXML
-    private TableColumn<NeedNomenclature, String> GrossNeedColumn;
+    private TableColumn<NeededItem, String> ChildColumn;
 
     @FXML
-    private TableColumn<NeedNomenclature, String> NetNeedColumn;
+    private TableColumn<NeededItem, String> GrossNeedColumn;
 
     @FXML
-    private TableColumn<NeedNomenclature, String> ReadyLotColumn;
+    private TableColumn<NeededItem, String> NetNeedColumn;
 
     @FXML
-    private TableColumn<NeedNomenclature, String> ReqActionColumn;
+    private TableColumn<NeededItem, String> ReadyLotColumn;
 
     @FXML
-    private TableColumn<NeedNomenclature, String> LevelColumn;
+    private TableColumn<NeededItem, String> ReqActionColumn;
 
     @FXML
-    private TableColumn<NeedNomenclature, String> StatusColumn;
+    private TableColumn<NeededItem, String> LevelColumn;
+
+    @FXML
+    private TableColumn<NeededItem, String> StatusColumn;
 
     @FXML
     private Button delete;
@@ -160,16 +170,16 @@ public class ManufacturingPlanningController implements Initializable {
     private Label ItemLabel11;
 
     @FXML
-    private ComboBox<Article> ComboArticleSearch;
+    private ComboBox<OrdredItem> ComboArticleSearch;
 
     @FXML
     private Label ItemLabel111;
     
-    public void ComboBoxOrders(){
-    	Client client = proxyClientServiceRemote.findByCompany(ClientText.getText());
+    public void ComboBoxOrders(ComboBox<Orders> combo, TextField ClientTex){
+    	Client client = proxyClientServiceRemote.findByCompany(ClientTex.getText());
     	List <Orders> list = proxyOrders.findOrdersByClient(client.getId());
     	ObservableList<Orders> items = FXCollections.observableArrayList(list);
-    	ComboOrders.setConverter(new StringConverter<Orders>() {
+    	combo.setConverter(new StringConverter<Orders>() {
     		@Override
     		public String toString(Orders object) {
     		    return String.valueOf(object.getReference());
@@ -179,9 +189,9 @@ public class ManufacturingPlanningController implements Initializable {
     		    return null;
     		}
     		});
-        ComboOrders.setItems(items); 
+    	combo.setItems(items); 
 
-        ComboOrders.valueProperty().addListener(new ChangeListener<Orders>() {
+    	combo.valueProperty().addListener(new ChangeListener<Orders>() {
            
 			@Override
 			public void changed(ObservableValue<? extends Orders> observableValue, Orders oldValue, Orders newValue) {
@@ -201,6 +211,7 @@ public class ManufacturingPlanningController implements Initializable {
 				items.add(client.getCompany());	
 			}
 			TextFields.bindAutoCompletion(ClientText, items);
+			TextFields.bindAutoCompletion(ClientTextSearch, items);
 			
 		}
 		
@@ -211,7 +222,7 @@ public class ManufacturingPlanningController implements Initializable {
 				Alert alert = new Alert(AlertType.ERROR);
 		        alert.setTitle("Error Dialog");
 		        alert.setHeaderText("Failed");
-		        alert.setContentText("you have to complete all the fields");
+		        alert.setContentText("you have to select an item");
 		        alert.showAndWait();
 			}
 			else{
@@ -221,11 +232,6 @@ public class ManufacturingPlanningController implements Initializable {
 				Parent.setGrossNeed(Parent.getOrderItem().getQuantity());
 				Parent.setNetNeed(Parent.getGrossNeed()-Parent.getNeeded_article().getQuantity());
 				Parent.setStatus("Pending");
-				
-//				Map<NeededItem, List<NeededItem>> map = new HashMap<>();
-//				map = proxyNeededItem.InitialiseMap();
-//				map= proxyNeededItem.CreateNeedItemTree(Parent);
-//				List<NeedNomenclature> needNomenclatureList = proxyNomenclature.DisplayTreeNomenclatureFromMap(map);
   				
   				FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MRPCalculation.fxml"));
   				Stage stage = new Stage();
@@ -290,19 +296,82 @@ public class ManufacturingPlanningController implements Initializable {
 	    	
 	    }
 	    
-	    @FXML
-	    void searchArcticle(KeyEvent event) {
-	    	displaySearchedItem();
+	    private void showTreeView(NeededItem AbsoluteParent, Map<NeededItem, List<NeededItem>> map ) throws NamingException {
+	    	
+	    	TreeItem<NeededItem> root=new TreeItem<>();
+	     
+	     	TreeItem<NeededItem> newItemarticlePere;
+	     	TreeItem<NeededItem> newItemarticleFils=null;
+	    	 
+	     	newItemarticlePere=new TreeItem<>(AbsoluteParent);
+	    	 root.getChildren().add(newItemarticlePere);
+
+	    	 ArrayDeque <TreeItem<NeededItem>> queue=new ArrayDeque<>();
+	    	 queue.add(newItemarticlePere);
+	    	
+	    	 while(!queue.isEmpty()) {
+	    		 
+	    		TreeItem<NeededItem> TreeItemHead=queue.getFirst();
+	    		queue.removeFirst();
+	    		List<NeededItem> listNomenclatureFils2 = map.get(TreeItemHead.getValue());
+	    		for (NeededItem neededItem : listNomenclatureFils2) {
+	    			newItemarticleFils=new TreeItem<>(neededItem);
+	    			TreeItemHead.getChildren().add(newItemarticleFils);
+	    			queue.addLast(newItemarticleFils);
+				}
+	    	 }
+	    	 
+	    	 NeededColumn.setCellValueFactory(
+	    	            (TreeTableColumn.CellDataFeatures<NeededItem, String> param) -> 
+	    	            new ReadOnlyStringWrapper(param.getValue().getValue().getNeeded_article().getArticleCode())
+	    	        );
+	    	 QtyColumn.setCellValueFactory(
+	 	            (TreeTableColumn.CellDataFeatures<NeededItem, String> param) -> 
+	 	            new ReadOnlyStringWrapper(String.valueOf(param.getValue().getValue().getNetNeed()))
+	 	        );
+	     	TreeTable.setRoot(root);
+	     	TreeTable.setShowRoot(false);
+	     
 	    }
-	    
 	    
 	    @FXML
 	    void OrderdisplayAction(MouseEvent event) {
-	    	ComboBoxOrders();
+	    	ComboBoxOrders(ComboOrders,ClientText);
+	    }
+	    
+	    @FXML
+	    void OrderSerachDisplayAction(MouseEvent event) {
+	    	ComboBoxOrders(ComboOrdersSearch,ClientTextSearch);
 	    }
 	    
 	    @FXML
 	    void SelectComboAction(ActionEvent event) {
 	    	displaySearchedItem();
+	    }
+	    
+	    @FXML
+	    void SelectComboSearchAction(ActionEvent event) {
+	    	List<OrdredItem> list ;
+	        list = proxyOrdredItem.findItemsOfAnOrder(ComboOrdersSearch.getSelectionModel().getSelectedItem().getId());
+	        ObservableList<OrdredItem> items = FXCollections.observableArrayList(list);
+	    	ComboArticleSearch.setConverter(new StringConverter<OrdredItem>() {
+	    		@Override
+	    		public String toString(OrdredItem object) {
+	    		    return String.valueOf(object.getArticle().getArticleCode());
+	    		}
+	    		@Override
+	    		public OrdredItem fromString(String string) {
+	    		    return null;
+	    		}
+	    		});
+	    	ComboArticleSearch.setItems(items); 
+
+	    	ComboArticleSearch.valueProperty().addListener(new ChangeListener<OrdredItem>() {
+	           
+				@Override
+				public void changed(ObservableValue<? extends OrdredItem> observableValue, OrdredItem oldValue, OrdredItem newValue) {
+					
+				}    
+	        });
 	    }
 	}

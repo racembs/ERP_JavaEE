@@ -39,7 +39,7 @@ public class NeededItem implements Serializable {
 	@ManyToOne
 	private OrdredItem orderItem;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.MERGE)
 	private Article needed_article;
 	
 	@OneToMany(mappedBy="neededItem",fetch=FetchType.EAGER)

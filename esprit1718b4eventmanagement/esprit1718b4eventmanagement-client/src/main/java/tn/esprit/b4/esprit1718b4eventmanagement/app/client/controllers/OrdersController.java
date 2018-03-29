@@ -162,6 +162,9 @@ public class OrdersController implements Initializable {
     
     @FXML
     private Button Remove;
+    
+    @FXML
+    private Button deleteItem;
 
     @FXML
     private TableView<OrdredItem> TableItems;
@@ -180,7 +183,7 @@ public class OrdersController implements Initializable {
 		SubmitUpdate.setVisible(false);
 		CancelUpdate.setVisible(false);
 		TableItems.setVisible(false);
-		ShowItem.setVisible(false);
+		deleteItem.setVisible(false);
 		displayAllOrdres();
 		java.util.List<Client> ClientList = proxyClientServiceRemote.findAll();
 		ObservableList<String> items = FXCollections.observableArrayList();
@@ -312,6 +315,13 @@ public class OrdersController implements Initializable {
     	if(TableOrders.getSelectionModel().getSelectedItem()!=null){
     		TableItems.setVisible(true);
     		displayItemOfAnOrder();
+    	}
+    }
+    
+    @FXML
+    void TableItemClicked(MouseEvent event) {
+    	if(TableItems.getSelectionModel().getSelectedItem()!=null){
+    		deleteItem.setVisible(true);
     	}
     }
     
@@ -497,6 +507,21 @@ public class OrdersController implements Initializable {
         alert.setContentText("update successful");
         alert.showAndWait();
         displayItemOfAnOrder();
+    }
+    
+    @FXML
+    void deleteItemAction(ActionEvent event) {
+    	Alert alerta = new Alert(AlertType.CONFIRMATION);
+    	alerta.setTitle("Confirmation Dialog");
+    	alerta.setHeaderText("Look, a Confirmation Dialog");
+    	alerta.setContentText("Do you want to delete this Item?");
+
+    	Optional<ButtonType> result = alerta.showAndWait();
+    	if (result.get() == ButtonType.OK){
+    		proxyOrdredItem.delete(TableItems.getSelectionModel().getSelectedItem());
+        	deleteItem.setVisible(false);
+    	}
+
     }
 
 }
