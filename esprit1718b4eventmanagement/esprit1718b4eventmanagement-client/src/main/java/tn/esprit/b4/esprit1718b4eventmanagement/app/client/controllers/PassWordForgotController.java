@@ -8,7 +8,7 @@ import java.util.UUID;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
-import javax.mail.Message;
+/*import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
@@ -18,7 +18,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimeMultipart;*/
 
 
 
@@ -89,7 +89,7 @@ public class PassWordForgotController implements Initializable {
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
 
-		Session session = Session.getInstance(props,
+		/*Session session = Session.getInstance(props,
 		  new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, password);
@@ -114,7 +114,7 @@ public class PassWordForgotController implements Initializable {
 				e.printStackTrace();
 			}
 
-			System.out.println("Done");
+			System.out.println("Done");*/
     }    
 
     @FXML
@@ -188,7 +188,7 @@ alert.showAndWait();}
     
 
     @FXML
-    private void OnCancelAction(ActionEvent event) throws IOException, AddressException, MessagingException {
+  /*  private void OnCancelAction(ActionEvent event) throws IOException, AddressException, MessagingException {
 //  sendMessage("mehdi.benahmed@esprit.tn","ehoo","ehhii");
     		Parent parent= null;
     	parent  =FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
@@ -201,10 +201,10 @@ alert.showAndWait();}
     	
     	
     	
-    }
+    }*/
     
     
-    public void send2(String msg,String mail,String path) throws AddressException, javax.mail.MessagingException {
+   /* public void send2(String msg,String mail,String path) throws AddressException, javax.mail.MessagingException {
 
         
         
@@ -251,7 +251,7 @@ alert.showAndWait();}
        
 
 
-      }
+      }*/
   
 
 
