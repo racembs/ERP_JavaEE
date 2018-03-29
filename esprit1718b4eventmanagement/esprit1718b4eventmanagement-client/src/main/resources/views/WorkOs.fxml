@@ -96,7 +96,13 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                             
+                                             	 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                   <children>
+                                                     <JFXButton  fx:id="delete"   onAction="#onclickDelete" buttonType="RAISED" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: rgb(0, 166, 90); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="delete" />
+                                                      <Label visible="false" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="98.0" style="-fx-font-weight: bold;" styleClass="green-label" text="12" />
+                                                      <JFXButton fx:id="done" onAction="#onclickDone" buttonType="RAISED" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: rgb(0, 166, 90); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="Done" />
+                                                   </children>
+                                                </HBox>
                                                 
                                                 <JFXButton fx:id="start" onAction="#onclickStart" buttonType="RAISED" ripplerFill="#53eb11" styleClass="green-btn" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                              </children>

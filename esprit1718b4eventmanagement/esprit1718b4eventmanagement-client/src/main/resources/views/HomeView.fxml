@@ -15,7 +15,7 @@
             <JFXHamburger fx:id="hamburger" styleClass="jfx-hamburger" BorderPane.alignment="CENTER" />
          </left>
          <center>
-            <Label fx:id="txtCurrentWindow" prefHeight="40.0" prefWidth="199.0" style="-fx-text-fill: white; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="card-title" text="--GPAO--" BorderPane.alignment="CENTER" />
+            <Label fx:id="txtCurrentWindow" prefHeight="40.0" prefWidth="199.0" style="-fx-text-fill: white; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="card-title" text="--GMAO--" BorderPane.alignment="CENTER" />
          </center>
          <right>
             
