@@ -52,6 +52,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.TreeTableColumn.CellDataFeatures;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.util.converter.NumberStringConverter;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.MvtApprov;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
@@ -105,13 +106,13 @@ public class ArticleController implements Initializable {
     @FXML
     private TableView<Article> tableAllArticles;
     @FXML
-    private TableColumn<Article,String> tArticlePrice;
+    private TableColumn<Article,Number> tArticlePrice;
     @FXML
     private TableColumn<Article,String> tArticleCode;
     @FXML
     private TableColumn<Article,String> tArticleDescription;
     @FXML
-    private TableColumn<Article,String> tArticleQuantity;
+    private TableColumn<Article,Number> tArticleQuantity;
     @FXML
     private TableColumn<Article,String> tArticleType;
     @FXML
@@ -182,9 +183,9 @@ public class ArticleController implements Initializable {
 			}
     	tableAllArticles.setEditable(true);
     	tArticleDescription.setCellFactory(TextFieldTableCell.forTableColumn());
-    	tArticleCode.setCellFactory(TextFieldTableCell.forTableColumn());
-    	//tArticlePrice.setCellFactory(TextFieldTableCell.forTableColumn());
-    	//tArticleQuantity.setCellFactory(TextFieldTableCell.forTableColumn());
+    	//tArticleCode.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tArticlePrice.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+    	tArticleQuantity.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
     	tArticleType.setCellFactory(TextFieldTableCell.forTableColumn());
     	tUnitCode.setCellFactory(TextFieldTableCell.forTableColumn());
  
@@ -455,11 +456,11 @@ private void fillTableView(String code) throws NamingException {
     
     
     @FXML
-    private void ChangeDescriptionFromTable(TableColumn.CellEditEvent event) throws NamingException {
+    private void ChangeDescriptionFromTable(TableColumn.CellEditEvent<Article,String> event) throws NamingException {
     	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
     	Context context = new InitialContext();
     	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
-    	Article article=ArticleTableView.getSelectionModel().getSelectedItem().getValue();
+    	Article article=tableAllArticles.getSelectionModel().getSelectedItem();
     	article.setDescription(event.getNewValue().toString());
     	System.out.println(event.getNewValue().toString());
     	aArticleProxy.updateArticle(article);
@@ -471,7 +472,7 @@ private void fillTableView(String code) throws NamingException {
     	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
     	Context context = new InitialContext();
     	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
-    	Article article=ArticleTableView.getSelectionModel().getSelectedItem().getValue();
+    	Article article=tableAllArticles.getSelectionModel().getSelectedItem();
     	article.setArticleCode(event.getNewValue().toString());
     	aArticleProxy.updateArticle(article);
     	fillTableView("all");
@@ -482,7 +483,7 @@ private void fillTableView(String code) throws NamingException {
     	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
     	Context context = new InitialContext();
     	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
-    	Article article=ArticleTableView.getSelectionModel().getSelectedItem().getValue();
+    	Article article=tableAllArticles.getSelectionModel().getSelectedItem();
     	article.setPmp(Float.valueOf(event.getNewValue().toString()));
     	aArticleProxy.updateArticle(article);
     	fillTableView("all");
@@ -493,7 +494,7 @@ private void fillTableView(String code) throws NamingException {
     	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
     	Context context = new InitialContext();
     	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
-    	Article article=ArticleTableView.getSelectionModel().getSelectedItem().getValue();
+    	Article article=tableAllArticles.getSelectionModel().getSelectedItem();
     	article.setQuantity(Integer.valueOf(event.getNewValue().toString()));
     	aArticleProxy.updateArticle(article);
     	fillTableView("all");
@@ -504,7 +505,7 @@ private void fillTableView(String code) throws NamingException {
     	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
     	Context context = new InitialContext();
     	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
-    	Article article=ArticleTableView.getSelectionModel().getSelectedItem().getValue();
+    	Article article=tableAllArticles.getSelectionModel().getSelectedItem();
     	article.setType(event.getNewValue().toString());
     	aArticleProxy.updateArticle(article);
     	fillTableView("all");
@@ -515,7 +516,7 @@ private void fillTableView(String code) throws NamingException {
     	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
     	Context context = new InitialContext();
     	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
-    	Article article=ArticleTableView.getSelectionModel().getSelectedItem().getValue();
+    	Article article=tableAllArticles.getSelectionModel().getSelectedItem();
     	article.setUnitCode(event.getNewValue().toString());
     	aArticleProxy.updateArticle(article);
     	fillTableView("all");

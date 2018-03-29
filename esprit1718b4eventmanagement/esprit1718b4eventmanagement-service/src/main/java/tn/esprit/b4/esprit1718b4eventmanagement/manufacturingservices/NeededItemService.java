@@ -102,7 +102,7 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 			NeededItem ChildNeededItem = new NeededItem();
 			ChildNeededItem.setNeeded_article(nomenclature.getArticleFils());
 			ChildNeededItem.setOrderItem(ParentneededItem.getOrderItem());
-			if(nomenclature.getArticleFils().getType()=="Matiére-Premiére"){
+			if(nomenclature.getArticleFils().getType().equals("Matiére-Premiére")){
 				ChildNeededItem.setActionNature("Purchase Order");
 				ChildNeededItem.setLevel(99);
 			}
@@ -142,6 +142,17 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 		}
 		return map;
 	}
+
+	@Override
+	public List<NeededItem> NeedItemList(Map<NeededItem, List<NeededItem>> map) {
+		List<NeededItem> list = new ArrayList<>();
+		for (NeededItem neededItem : map.keySet()) {
+			//Add all key and that mean add all neededItem
+			list.add(neededItem);
+		}
+		return list;
+	}
+
 
 
 

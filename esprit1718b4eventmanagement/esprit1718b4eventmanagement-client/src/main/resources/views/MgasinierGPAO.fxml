@@ -37,13 +37,13 @@
                            <items>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
                                  <children>
-                                    <TableView fx:id="tableAllOrders" layoutX="177.0" layoutY="211.0" prefHeight="323.0" prefWidth="691.0">
+                                    <TableView fx:id="tableAllOrders" layoutX="147.0" layoutY="208.0" prefHeight="386.0" prefWidth="849.0">
                                       <columns>
-                                        <TableColumn fx:id="tArticle" prefWidth="114.0" text="   Article" />
-                                        <TableColumn fx:id="tQuantity" minWidth="5.0" prefWidth="132.0" text="     Quantity" />
-                                          <TableColumn fx:id="tAlarmDate" prefWidth="155.0" text="      Alarm Date" />
-                                          <TableColumn fx:id="tArticleQuantity" prefWidth="143.0" text="   Request Date" />
-                                          <TableColumn fx:id="tArticleType" prefWidth="145.0" text="   Reception Date" />
+                                        <TableColumn fx:id="tArticle" prefWidth="169.0" text="          Article" />
+                                        <TableColumn fx:id="tQuantity" minWidth="5.0" prefWidth="137.0" text="      Quantity" />
+                                          <TableColumn fx:id="tAlarmDate" prefWidth="179.0" text="         Alarm Date" />
+                                          <TableColumn fx:id="tRequestDate" prefWidth="181.0" text="       Request Date" />
+                                          <TableColumn fx:id="tReceptionDate" prefWidth="181.0" text="     Reception Date" />
                                       </columns>
                                        <contextMenu>
                                           <ContextMenu fx:id="contextMenu">

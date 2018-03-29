@@ -16,5 +16,6 @@ public interface NeededItemServiceLocal extends IGenericDAO<NeededItem> {
 	public Map<NeededItem, List<NeededItem>> CreateNeedItemTree(NeededItem ParentneededItem);
 	public Map<NeededItem, List<NeededItem>> SaveNeedItemTree(Map<NeededItem, List<NeededItem>> map);
 	public Map<NeededItem, List<NeededItem>> InitialiseMap();
+	public List<NeededItem> NeedItemList(Map<NeededItem, List<NeededItem>> map);
 
 }

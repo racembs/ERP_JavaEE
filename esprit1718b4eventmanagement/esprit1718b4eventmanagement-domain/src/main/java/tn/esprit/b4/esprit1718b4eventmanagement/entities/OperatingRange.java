@@ -2,6 +2,7 @@ package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -35,7 +36,7 @@ public class OperatingRange implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToMany(mappedBy="operatingranges")
-	private List <Article> articles;
+	private List <Article> articles = new ArrayList<>();
 	
 	@OneToMany(mappedBy="optrange")
 	private List <Operation> operations;

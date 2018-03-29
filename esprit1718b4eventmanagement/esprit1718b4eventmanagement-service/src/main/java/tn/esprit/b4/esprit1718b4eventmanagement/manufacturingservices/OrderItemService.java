@@ -67,5 +67,7 @@ public class OrderItemService extends GenericDAO<OrdredItem> implements OrderIte
 		Query query = em.createQuery("DELETE FROM OrdredItem o WHERE o.ordredItemPk.id_Order =:idOrder");
 		int deletedCount = query.setParameter("idOrder",idOrder).executeUpdate();
 	}
+	
+	
 
 }

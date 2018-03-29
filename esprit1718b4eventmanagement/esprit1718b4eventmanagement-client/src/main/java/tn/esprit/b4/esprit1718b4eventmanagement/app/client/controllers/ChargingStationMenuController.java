@@ -16,16 +16,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.collections.ListChangeListener;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TreeItem.TreeModificationEvent;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxTreeCell;
+import org.controlsfx.control.CheckTreeView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.scene.control.CheckBoxTreeItem;
+import javafx.scene.control.TreeItem;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
 
@@ -111,26 +118,35 @@ public class ChargingStationMenuController implements Initializable {
     		idtreeE.setVisible(false);
     		
     		try {
+    			String jndiNameChargingStation = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ChargingStationService!tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote";
+    			Context contextChargingStation;
+    			contextChargingStation = new InitialContext();
+    			ChargingStationServiceRemote proxyChargingStation = (ChargingStationServiceRemote) contextChargingStation.lookup(jndiNameChargingStation);
+    			ChargingStation ch = new ChargingStation();
     			
-    			CheckBoxTreeItem<String> userss = new CheckBoxTreeItem<String>("Users");
+    			
+    			TreeItem<String> userss = new TreeItem<String>("Users");
     			Context contextUser;
     			contextUser = new InitialContext();
     		   	UserServiceRemote proxyuser = (UserServiceRemote) contextUser.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
     	    	User user = new User();
     	    	
-    			List<User>listu = proxyuser.DisplayUser();
+    			List<ChargingStation>listu = proxyChargingStation.DisplayChargingStation();
     			
     	 		for (int i = 0; i < listu.size(); i++) {
-    	 			ObservableList<User> itemss = FXCollections.observableArrayList(listu);
-    	 			CheckBoxTreeItem<String> Usr = new CheckBoxTreeItem<String>(itemss.get(i).getFirstname()+"-"+itemss.get(i).getLastname());
-    	 			Usr.setValue(itemss.get(i).getFirstname()+"-"+itemss.get(i).getLastname());
+    	 			ObservableList<ChargingStation> itemss = FXCollections.observableArrayList(listu);
+    	 			TreeItem<String> Usr = new TreeItem<String>(itemss.get(i).getUser().getFirstname()+"-"+itemss.get(i).getUser().getLastname());
+    	 			Usr.setValue(" Code : "+itemss.get(i).getCode()+" First Name : "+itemss.get(i).getUser().getFirstname()+" Last Name : "+itemss.get(i).getUser().getLastname()+" Department : "+itemss.get(i).getUser().getRole());
     	 			userss.getChildren().addAll(Usr);
     			}
+    	 		idtreeU.setRoot(userss);	 		
     	 		
-    	 		idtreeU.setRoot(userss);
-    	 		idtreeU.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
     	 		
-    		} catch (NamingException e2) {
+    	 		TreeItem<String> selectedItem = idtreeU.getSelectionModel().getSelectedItem();
+
+    	        
+     
+    	 		} catch (NamingException e2) {
     			// TODO Auto-generated catch block
     			e2.printStackTrace();
     		}
@@ -151,25 +167,32 @@ public class ChargingStationMenuController implements Initializable {
     		idtreeE.setVisible(true);
     		
     		try {
+    			String jndiNameChargingStation = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ChargingStationService!tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote";
+    			Context contextChargingStation;
+    			contextChargingStation = new InitialContext();
+    			ChargingStationServiceRemote proxyChargingStation = (ChargingStationServiceRemote) contextChargingStation.lookup(jndiNameChargingStation);
+    			ChargingStation ch = new ChargingStation();
     			
-    			CheckBoxTreeItem<String> equipments = new CheckBoxTreeItem<String>("Equipments");
+    			
+    			
+    			TreeItem<String> equipments = new TreeItem<String>("Equipments");
     			Context contextEquipment;
      			contextEquipment = new InitialContext();
      			EquipementServiceRemote proxyEquipment = (EquipementServiceRemote) contextEquipment.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/EquipementService!tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote");
      	    	Equipment equipment = new Equipment();
-     	    	List<Equipment> listE = proxyEquipment.DisplayEquipment();
-    			
+     	    	//List<Equipment> listE = proxyEquipment.DisplayEquipment();
+     	    	List<ChargingStation> listE = proxyChargingStation.DisplayChargingStation();
     			
     	 		for (int i = 0; i < listE.size(); i++) {
-    	 			ObservableList<Equipment> itemss = FXCollections.observableArrayList(listE);
-    	 			CheckBoxTreeItem<String> Eq = new CheckBoxTreeItem<String>(itemss.get(i).getSerialNum()+"-"+itemss.get(i).getMarque());
-    	 			Eq.setValue(itemss.get(i).getSerialNum()+"-"+itemss.get(i).getMarque());
+    	 			ObservableList<ChargingStation> itemss = FXCollections.observableArrayList(listE);
+    	 			TreeItem<String> Eq = new TreeItem<String>(itemss.get(i).getEquipement().getSerialNum()+"-"+itemss.get(i).getEquipement().getMarque());
+    	 			Eq.setValue(" Code : "+itemss.get(i).getCode()+" Serial Number : "+itemss.get(i).getEquipement().getSerialNum()+" Marque : "+itemss.get(i).getEquipement().getMarque()+" Manufacturer : "+itemss.get(i).getEquipement().getFabriquant());
     	 			equipments.getChildren().addAll(Eq);
     			}
     	 		
     	 		idtreeE.setRoot(equipments);
-    	 		idtreeE.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
-    	 		
+    	 		//idtreeE.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
+    	 		TreeItem<String> selectedItem = idtreeU.getSelectionModel().getSelectedItem();
     		} catch (NamingException e2) {
     			// TODO Auto-generated catch block
     			e2.printStackTrace();

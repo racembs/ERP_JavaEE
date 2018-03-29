@@ -160,7 +160,66 @@ public class NeededItem implements Serializable {
 
 	public void setManufacturingPlanning(List<ManufacturingPlanning> manufacturingPlanning) {
 		this.manufacturingPlanning = manufacturingPlanning;
-	}   
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((actionNature == null) ? 0 : actionNature.hashCode());
+		result = prime * result + grossNeed;
+		result = prime * result + level;
+		result = prime * result + ((needed_article == null) ? 0 : needed_article.hashCode());
+		result = prime * result + netNeed;
+		result = prime * result + ((purchaseDeliveryDate == null) ? 0 : purchaseDeliveryDate.hashCode());
+		result = prime * result + readyLotNumber;
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		NeededItem other = (NeededItem) obj;
+		if (actionNature == null) {
+			if (other.actionNature != null)
+				return false;
+		} else if (!actionNature.equals(other.actionNature))
+			return false;
+		if (grossNeed != other.grossNeed)
+			return false;
+		if (level != other.level)
+			return false;
+		if (needed_article == null) {
+			if (other.needed_article != null)
+				return false;
+		} else if (!needed_article.equals(other.needed_article))
+			return false;
+		if (netNeed != other.netNeed)
+			return false;
+		if (purchaseDeliveryDate == null) {
+			if (other.purchaseDeliveryDate != null)
+				return false;
+		} else if (!purchaseDeliveryDate.equals(other.purchaseDeliveryDate))
+			return false;
+		if (readyLotNumber != other.readyLotNumber)
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		return true;
+	}
+
+	
+
+	
 	
 	
 	
