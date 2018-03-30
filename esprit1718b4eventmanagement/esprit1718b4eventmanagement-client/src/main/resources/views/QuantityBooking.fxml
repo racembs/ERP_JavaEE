@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="235.0" prefWidth="332.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="student.ChooseASectionController">
+   <children>
+      <Button layoutX="113.0" layoutY="137.0" mnemonicParsing="false" onAction="#onQuentityTake" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #2196F3;" text="Take" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <JFXComboBox fx:id="combo_quentity" layoutX="84.0" layoutY="77.0" prefHeight="25.0" prefWidth="143.0" />
+      <Label layoutX="76.0" layoutY="28.0" prefHeight="17.0" prefWidth="152.0" text="choose the quentity to book" />
+   </children>
+</AnchorPane>

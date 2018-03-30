@@ -79,7 +79,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Tools Stock">
+          <Tab onSelectionChanged="#onToolsTalbes" text="Tools Stock">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -126,14 +126,18 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label text="Personal Details" />
-                                                <Label prefHeight="20.0" prefWidth="83.0" text="Contacts" GridPane.rowIndex="4" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <Label prefHeight="20.0" prefWidth="300.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Label text="Rference" />
+                                                <Label prefHeight="20.0" prefWidth="83.0" text="Family" GridPane.rowIndex="4" />
+                                                <Label fx:id="lab4" prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label fx:id="lab1" prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" />
+                                                <Label fx:id="lab2" prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label fx:id="lab3" prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label fx:id="lab5" prefHeight="20.0" prefWidth="300.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label fx:id="lab6" prefHeight="20.0" prefWidth="300.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Label text="Quantity" GridPane.rowIndex="1" />
+                                                <Label text="Description" GridPane.rowIndex="2" />
+                                                <Label text="Brand" GridPane.rowIndex="3" />
+                                                <Label text="Nature" GridPane.rowIndex="5" />
                                              </children>
                                           </GridPane>
                                           <GridPane prefHeight="219.0" prefWidth="520.0" styleClass="card">
@@ -150,19 +154,20 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label text="Speciality" />
-                                                <Label text="Taking Appointments ?" GridPane.rowIndex="2" />
-                                                <Label text="Pending Appointments" GridPane.rowIndex="3" />
-                                                <Label prefHeight="20.0" prefWidth="280.0" styleClass="yellow-label" GridPane.columnIndex="1" />
-                                                <Label prefHeight="20.0" prefWidth="280.0" styleClass="yellow-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Label prefHeight="20.0" prefWidth="279.0" styleClass="red-label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label text="Supplier" />
+                                                <Label text="Unity Price" GridPane.rowIndex="2" />
+                                                <Label text="Reserved Pieces number" GridPane.rowIndex="3" />
+                                                <Label fx:id="lab7" prefHeight="20.0" prefWidth="280.0" styleClass="yellow-label" GridPane.columnIndex="1" />
+                                                <Label fx:id="lab8" prefHeight="20.0" prefWidth="280.0" styleClass="yellow-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label fx:id="lab9" prefHeight="20.0" prefWidth="279.0" styleClass="red-label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                    <children>
-                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="98.0" style="-fx-font-weight: bold;" styleClass="green-label" />
+                                                      <Label fx:id="lab10" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="98.0" style="-fx-font-weight: bold;" styleClass="green-label" />
                                                       <JFXButton buttonType="RAISED" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: rgb(0, 166, 90); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="View" />
                                                    </children>
                                                 </HBox>
                                                 <JFXButton buttonType="RAISED" ripplerFill="#53eb11" styleClass="blue-btn" text="Edit Info" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Label text="Code supplier" GridPane.rowIndex="1" />
                                              </children>
                                           </GridPane>
                                        </children>
@@ -175,7 +180,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Spare Parts Stock">
+            <Tab onSelectionChanged="#onSparePartsTalbes" text="Spare Parts Stock">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -271,7 +276,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Tools Booking ">
+            <Tab onSelectionChanged="#onToolsBookingTalbes" text="Tools Booking ">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

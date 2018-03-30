@@ -91,7 +91,7 @@ public class WorkUsController implements Initializable {
     @FXML
     private TableColumn<UsualWork, String> C5;
     @FXML
-    private TableColumn<UsualWork, String> C6;
+    private TableColumn<UsualWork, Date> C6;
     @FXML
     private TableColumn<UsualWork, String> C7;
     @FXML
@@ -330,7 +330,7 @@ public class WorkUsController implements Initializable {
 		                }
 		            });
 		    		C5.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("emmergency"));
-				    C6.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("WRDate"));
+				    C6.setCellValueFactory(new PropertyValueFactory<UsualWork, Date>("WRDate"));
 				    C7.setCellValueFactory(new Callback<CellDataFeatures<UsualWork,String>,ObservableValue<String>>(){
 
 			              @Override
@@ -592,7 +592,7 @@ public class WorkUsController implements Initializable {
 	                }
 	            });
 	    		C5.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("emmergency"));
-			    C6.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("WRDate"));
+			    C6.setCellValueFactory(new PropertyValueFactory<UsualWork, Date>("WRDate"));
 			    C7.setCellValueFactory(new Callback<CellDataFeatures<UsualWork,String>,ObservableValue<String>>(){
 
 		              @Override
