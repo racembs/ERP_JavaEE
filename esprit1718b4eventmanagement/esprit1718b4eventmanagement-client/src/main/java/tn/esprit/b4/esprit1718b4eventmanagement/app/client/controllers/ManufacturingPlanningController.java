@@ -14,6 +14,7 @@ import javax.naming.NamingException;
 import org.controlsfx.control.textfield.TextFields;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -40,6 +41,7 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
@@ -49,6 +51,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
@@ -227,6 +230,7 @@ public class ManufacturingPlanningController implements Initializable {
 			}
 			else{
 				NeededItem Parent = new NeededItem();
+				Parent.setActionNature("Manufacturing Order");
 				Parent.setOrderItem(ListShow.getItems().get(0));
 				Parent.setNeeded_article(ListShow.getItems().get(0).getArticle());
 				Parent.setGrossNeed(Parent.getOrderItem().getQuantity());
@@ -277,7 +281,7 @@ public class ManufacturingPlanningController implements Initializable {
 	    	}
 	    	else{
 	    		List<OrdredItem> list ;
-		        list = proxyOrdredItem.findItemsOfAnOrder(ComboOrders.getSelectionModel().getSelectedItem().getId());
+		        list = proxyOrdredItem.findPendingItemsOfAnOrder(ComboOrders.getSelectionModel().getSelectedItem().getId());
 		        ObservableList<OrdredItem> items = FXCollections.observableArrayList(list);
 		        ListShow.setItems(items);
 		        ListShow.setCellFactory(param -> new ListCell<OrdredItem>() {
@@ -294,6 +298,72 @@ public class ManufacturingPlanningController implements Initializable {
 		        });
 	    	}
 	    	
+	    }
+	    
+	    Map<NeededItem, List<NeededItem>> map = new HashMap<>();
+	    NeededItem ParentneededItem = new NeededItem();
+	    public void DisplayNeededItem(){
+ 
+	    		ParentneededItem = proxyNeededItem.getNeededItemParentOfOrdredItem
+		    			(ComboArticleSearch.getSelectionModel().getSelectedItem().getOrdredItemPk().getId_Order(), 
+		    					ComboArticleSearch.getSelectionModel().getSelectedItem().getOrdredItemPk().getId_Article());  
+  
+			map=proxyNeededItem.InitialiseMap();
+	    	map = proxyNeededItem.findNeededItemTreeByOrdredItem(ParentneededItem);
+	    	List<NeededItem> neededItemList =proxyNeededItem.NeedItemList(map);
+	    	
+	    	ObservableList<NeededItem> items = FXCollections.observableArrayList(neededItemList);
+	        
+	    	TableNeededItem.setItems(items);
+	        
+	    	OrdredItemColumn.setCellValueFactory(new Callback<CellDataFeatures<NeededItem, String>, ObservableValue<String>>() {
+	            @Override
+	            public ObservableValue<String> call(CellDataFeatures<NeededItem, String> param) {
+	                return new SimpleStringProperty(String.valueOf(param.getValue().getOrderItem().getCode()));
+	            }
+	        });
+	    	ChildColumn.setCellValueFactory(new Callback<CellDataFeatures<NeededItem, String>, ObservableValue<String>>() {
+	            @Override
+	            public ObservableValue<String> call(CellDataFeatures<NeededItem, String> param) {
+	                return new SimpleStringProperty(param.getValue().getNeeded_article().getArticleCode());
+	            }
+	        });
+	    	GrossNeedColumn.setCellValueFactory(new Callback<CellDataFeatures<NeededItem, String>, ObservableValue<String>>() {
+	            @Override
+	            public ObservableValue<String> call(CellDataFeatures<NeededItem, String> param) {
+	                return new SimpleStringProperty(String.valueOf(param.getValue().getGrossNeed()));
+	            }
+	        });
+	    	NetNeedColumn.setCellValueFactory(new Callback<CellDataFeatures<NeededItem, String>, ObservableValue<String>>() {
+	            @Override
+	            public ObservableValue<String> call(CellDataFeatures<NeededItem, String> param) {
+	                return new SimpleStringProperty(String.valueOf(param.getValue().getNetNeed()));
+	            }
+	        });
+	    	ReadyLotColumn.setCellValueFactory(new Callback<CellDataFeatures<NeededItem, String>, ObservableValue<String>>() {
+	            @Override
+	            public ObservableValue<String> call(CellDataFeatures<NeededItem, String> param) {
+	                return new SimpleStringProperty(String.valueOf(param.getValue().getReadyLotNumber()));
+	            }
+	        });
+	    	ReqActionColumn.setCellValueFactory(new Callback<CellDataFeatures<NeededItem, String>, ObservableValue<String>>() {
+	            @Override
+	            public ObservableValue<String> call(CellDataFeatures<NeededItem, String> param) {
+	                return new SimpleStringProperty(String.valueOf(param.getValue().getActionNature()));
+	            }
+	        });
+	    	LevelColumn.setCellValueFactory(new Callback<CellDataFeatures<NeededItem, String>, ObservableValue<String>>() {
+	            @Override
+	            public ObservableValue<String> call(CellDataFeatures<NeededItem, String> param) {
+	                return new SimpleStringProperty(String.valueOf(param.getValue().getLevel()));
+	            }
+	        });
+	    	StatusColumn.setCellValueFactory(new Callback<CellDataFeatures<NeededItem, String>, ObservableValue<String>>() {
+	            @Override
+	            public ObservableValue<String> call(CellDataFeatures<NeededItem, String> param) {
+	                return new SimpleStringProperty(String.valueOf(param.getValue().getStatus()));
+	            }
+	        });
 	    }
 	    
 	    private void showTreeView(NeededItem AbsoluteParent, Map<NeededItem, List<NeededItem>> map ) throws NamingException {
@@ -373,5 +443,12 @@ public class ManufacturingPlanningController implements Initializable {
 					
 				}    
 	        });
+	    }
+	    
+	    @FXML
+	    void forTableAction(ActionEvent event) throws NamingException {
+	    	TableNeededItem.getItems().clear();
+	    	DisplayNeededItem();
+	    	showTreeView(ParentneededItem,map);
 	    }
 	}

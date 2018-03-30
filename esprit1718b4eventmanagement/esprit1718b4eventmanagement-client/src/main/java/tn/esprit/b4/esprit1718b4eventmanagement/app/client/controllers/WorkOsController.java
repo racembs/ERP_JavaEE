@@ -120,6 +120,10 @@ public class WorkOsController implements Initializable {
     @FXML
     private JFXButton start;
     @FXML
+    private JFXButton delete;
+    @FXML
+    private JFXButton done;
+    @FXML
     private GridPane pane;
 
     static UsualWork work;
@@ -129,17 +133,19 @@ public class WorkOsController implements Initializable {
     @SuppressWarnings("restriction")
 	@Override
     public void initialize(URL url, ResourceBundle rb) {
+    	delete.setVisible(false);
+    	done.setVisible(false);
    	 Image icon = new Image (
 			   getClass().getResourceAsStream("/views/imgs/play.png"));
 		start.setGraphic(new ImageView(icon));
 		
-		/*start.setStyle(
+		start.setStyle(
                 "-fx-background-radius: 5em; " +
-                "-fx-min-width: 3px; " +
-                "-fx-min-height: 3px; " +
-                "-fx-max-width: 3px; " +
-                "-fx-max-height: 3px;"
-        );*/
+                "-fx-min-width: 50px; " +
+                "-fx-min-height: 50px; " +
+                "-fx-max-width: 50px; " +
+                "-fx-max-height: 50px;"
+        );
   	 tableview.setEditable(true);
  	//UserServiceRemote userService2;
   	 // l1.setVisible(false);
@@ -189,11 +195,27 @@ public class WorkOsController implements Initializable {
 			                  return new SimpleStringProperty(param.getValue().getEquipement().getSerialNum()+"--"+param.getValue().getEquipement().getDescription());
 			              }
 			          }); 
-		    		
-	    	        List<UsualWork> list = proxy.displayWO();
-	    	        ObservableList<UsualWork> items = FXCollections.observableArrayList(list);
+		    		if(LoginController.user.getPost().equals("technician"))
+		    		{
+		    			 List<UsualWork> list = proxy.displayWObyTech(LoginController.user.getId());
+		    			 ObservableList<UsualWork> items = FXCollections.observableArrayList(list);
+		    			/* if(items.isEmpty())
+		    			 {
+		    				 Alert alert = new Alert(AlertType.INFORMATION);
+		    					alert.setTitle("You have no work orders !");
+		    					alert.setHeaderText("work orders");
+		    					alert.showAndWait(); 
+		    			 }
+		    			 else*/
+		    		     tableview.setItems(items);
+		    		}
+		    		else
+		    		{ List<UsualWork> list = proxy.displayWO();
+		    		 ObservableList<UsualWork> items = FXCollections.observableArrayList(list);
+		    	     tableview.setItems(items);}
+	    	       
 	    	      //  System.out.println(items.get(0).getDescription());
-	    	       tableview.setItems(items);
+	    	  
 	    	   
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
@@ -206,6 +228,13 @@ public class WorkOsController implements Initializable {
 			if(newValue.getOrderstate().equals("start"))
 			{
 				start.setVisible(false);
+				done.setVisible(true);
+			}
+			if(newValue.getOrderstate().equals("done"))
+			{
+				start.setVisible(false);
+				done.setVisible(false);
+				delete.setVisible(true);
 			}
 			work=newValue;
 		}));
@@ -258,6 +287,37 @@ public class WorkOsController implements Initializable {
     	work.setOrderstate("start");
     	work.setStartDate(new Date());
     	proxy.updateWork(work);
+    	//l'affichage de l interface booking
+    	
+    }
+    @FXML
+    private void onclickDone(ActionEvent event) throws NamingException {
+    	
+    	Context context;
+    	context = new InitialContext();
+    	
+    String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
+    	
+    	WorksUsServiceRemote proxy=(WorksUsServiceRemote) context.lookup(jndiName);
+    	 System.out.println(work.getDescription());
+    	work.setOrderstate("done");
+    	work.setEndDate(new Date());
+    	proxy.updateWork(work);
+    	//l'affichage de l interface booking
+    	
+    }
+    @FXML
+    private void onclickDelete(ActionEvent event) throws NamingException {
+    	
+    	Context context;
+    	context = new InitialContext();
+    	
+    String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
+    	
+    	WorksUsServiceRemote proxy=(WorksUsServiceRemote) context.lookup(jndiName);
+    	 System.out.println(work.getDescription());
+    	
+    	proxy.deleteWork(work.getId());
     	//l'affichage de l interface booking
     	
     }

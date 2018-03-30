@@ -34,7 +34,7 @@ public class OrdredItem implements Serializable {
 	,insertable=false,updatable=false)
 	private Article article;
 	
-	@OneToMany(mappedBy="orderItem")
+	@OneToMany(mappedBy="orderItem", fetch=FetchType.EAGER)
 	private List<NeededItem> ManufacturingList = new ArrayList<>();
 	
 	public OrdredItem() {
@@ -95,6 +95,37 @@ public class OrdredItem implements Serializable {
 
 	public void setManufacturingList(List<NeededItem> manufacturingList) {
 		ManufacturingList = manufacturingList;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((article == null) ? 0 : article.hashCode());
+		result = prime * result + ((order == null) ? 0 : order.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrdredItem other = (OrdredItem) obj;
+		if (article == null) {
+			if (other.article != null)
+				return false;
+		} else if (!article.equals(other.article))
+			return false;
+		if (order == null) {
+			if (other.order != null)
+				return false;
+		} else if (!order.equals(other.order))
+			return false;
+		return true;
 	}
    
 	
