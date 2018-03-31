@@ -135,16 +135,23 @@ public class WorkOsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     	delete.setVisible(false);
     	done.setVisible(false);
-   	 Image icon = new Image (
-			   getClass().getResourceAsStream("/views/imgs/play.png"));
-		start.setGraphic(new ImageView(icon));
-		
-		start.setStyle(
+ 	 Image icon = new Image (
+			   getClass().getResourceAsStream("/views/imgs/rsz_1rsz_trash-bin-open.png"));
+		delete.setGraphic(new ImageView(icon));
+		done.setStyle(
                 "-fx-background-radius: 5em; " +
-                "-fx-min-width: 50px; " +
-                "-fx-min-height: 50px; " +
-                "-fx-max-width: 50px; " +
-                "-fx-max-height: 50px;"
+                "-fx-min-width: 80px; " +
+                "-fx-min-height: 80px; " +
+                "-fx-max-width: 80px; " +
+                "-fx-max-height: 80px;"
+        );
+		start.setStyle(
+				
+                "-fx-background-radius: 5em; " +
+                "-fx-min-width: 80px; " +
+                "-fx-min-height: 80px; " +
+                "-fx-max-width: 80px; " +
+                "-fx-max-height: 80px;"
         );
   	 tableview.setEditable(true);
  	//UserServiceRemote userService2;
