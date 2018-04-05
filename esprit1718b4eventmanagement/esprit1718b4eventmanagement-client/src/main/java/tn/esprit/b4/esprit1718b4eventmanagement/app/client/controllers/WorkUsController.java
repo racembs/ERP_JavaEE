@@ -35,11 +35,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TreeItem;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ArboPereFis;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Arboresence;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote;
 
@@ -133,21 +136,56 @@ public class WorkUsController implements Initializable {
 				TreeItem<String> equii =  new TreeItem<>("Entreprise", new ImageView(icon));
     			  equii.setExpanded(true);
 
-    			  TreeItem<String> nodeA = new TreeItem<>("arbo 1", new ImageView(icon));
+    			/*  TreeItem<String> nodeA = new TreeItem<>("arbo 1", new ImageView(icon));
     			  TreeItem<String> nodeB = new TreeItem<>("arbo 2", new ImageView(icon));
     			  TreeItem<String> nodeC = new TreeItem<>("arbo 3", new ImageView(icon));
     			  equii.getChildren().addAll(nodeA,nodeB,nodeC);
-    			  nodeA.setExpanded(true);
+    			  nodeA.setExpanded(true);*/
     			  
     			  TreeItem<String> nodeA1 = new TreeItem<>("arbo1:room 1", new ImageView(icon));
     			  TreeItem<String> nodeB1 = new TreeItem<>("arbo1:room 2", new ImageView(icon));
     			  TreeItem<String> nodeC1 = new TreeItem<>("arbo1:room 3", new ImageView(icon));
-    			  nodeA.getChildren().addAll(nodeA1,nodeB1,nodeC1);
-    			  treeviewEq.setRoot(equii);
+    			 // nodeA.getChildren().addAll(nodeA1,nodeB1,nodeC1);
+    			 // treeviewEq.setRoot(equii);
    	 tableview.setEditable(true);
     	//UserServiceRemote userService2;
     
 		try {
+			String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
+	     	Context context1;
+		
+				context1 = new InitialContext();
+
+		     	ArboresenceServiceRemote Proxy = (ArboresenceServiceRemote) context1.lookup(jndiName2);
+
+	     	
+	  		 	List<Arboresence> list1 = Proxy.getPereArbo("Principale") ;
+	  		 	for(int i=0;i<list1.size();i++)
+	  		 	{
+	  		 	 TreeItem<String> node = new TreeItem<>(list1.get(i).getName(), new ImageView(icon));
+	  		 	 equii.getChildren().add(node);
+	  		 	List<ArboPereFis> list= Proxy.getFilsArbo(list1.get(i).getId());
+	  		 	for(int j=0;j<list.size();j++)
+	  		 	{
+	  		 	 TreeItem<String> nodej = new TreeItem<>(list.get(j).getArboFils().getName(), new ImageView(icon));
+	  		 	 node.setExpanded(true);
+	  		 	 node.getChildren().add(nodej);
+	  		 	List<ArboPereFis> listj= Proxy.getFilsArbo(list.get(j).getArboFils().getId());
+	  		 	for(int k=0;k<listj.size();k++)
+	  		 	{
+	  		 	/* TreeItem<String> nodek = new TreeItem<>(list.get(k).getArboFils().getName(), new ImageView(icon));
+	  		 	 nodej.setExpanded(true);
+	  		 	 nodej.getChildren().add(nodek);*/
+	  		 	}
+	  		 	
+	  		 	}
+	  		 	
+   			 
+   			// node.getChildren().addAll(nodeA1,nodeB1,nodeC1);
+	  		 	}
+	  		 	
+  			  treeviewEq.setRoot(equii);
+	  		 	
 			
 			Context context;
 			context = new InitialContext();
@@ -353,7 +391,7 @@ public class WorkUsController implements Initializable {
 		}
 	
 		tableview.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
-			
+			showdetails(newValue.getUser());
 		}));
     }  
 	private void showdetails(User trader) {
