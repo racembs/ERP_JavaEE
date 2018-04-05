@@ -42,7 +42,7 @@ public class MvtApprovService implements MvtApprovServiceLocal,MvtApprovServiceR
 	@Override
 	public MvtApprov getOrderByArticle(int id) {
 	TypedQuery<MvtApprov> query
-	=em.createQuery("select m from MvtApprov m where m.article.Id=id", MvtApprov.class);
+	=em.createQuery("select m from MvtApprov m where m.article.Id=:id", MvtApprov.class);
 	query.setParameter("id",id);
 	MvtApprov ordre=query.getSingleResult();
 	return ordre;

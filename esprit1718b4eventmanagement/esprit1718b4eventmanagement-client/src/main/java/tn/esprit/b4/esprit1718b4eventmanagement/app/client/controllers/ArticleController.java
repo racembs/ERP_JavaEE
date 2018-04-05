@@ -234,7 +234,7 @@ comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Prod
     	
     	
     	
-    	aArticleProxy.addNomenclature(selectedItem.getValue().getId(),aArticleProxy.findArticleByCode(txtArticleChild.getText()).get(0).getId(),Integer.parseInt(txtChildQuantity.getText()));
+    	aArticleProxy.addNomenclature(selectedItem.getValue().getId(),aArticleProxy.getArticleListByCode(txtArticleChild.getText()).get(0).getId(),Integer.parseInt(txtChildQuantity.getText()));
     	fillTreeTableView("all");
     	
   
@@ -538,7 +538,7 @@ private void fillTableView(String code) throws NamingException {
     	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context2.lookup(ArticlejndiName);
     	
     	
-    	 Article article=aArticleProxy.findArticleByCode(txtArticleCodeForOrder.getText()).get(0);
+    	 Article article=aArticleProxy.getArticleListByCode(txtArticleCodeForOrder.getText()).get(0);
     	 LocalDate  localDateAlarm = AlarmDate.getValue();
     	 Date AlarmTypeDate = java.sql.Date.valueOf(localDateAlarm);
     			 
@@ -581,7 +581,7 @@ private void fillTableView(String code) throws NamingException {
     	txtDeliveryTime.setText("");
     	Article article=aArticleProxy.findArticleByCode(txtSearchArticleAutoOrdre.getText()).get(0);
     	
-    	if(article!=null) {
+    	if(article!=null&&article.getType().equals("Matiére-Premiére")) {
     		BtnAutoOrdreUpdate.setDisable(false);
     		txtDailyConsuption.setDisable(false);
         	txtDeliveryTime.setDisable(false);
@@ -592,13 +592,32 @@ private void fillTableView(String code) throws NamingException {
     	
     	
     }
+    
+
+    @FXML
+    private void OnSearchAddOrderReleased(KeyEvent event) throws NamingException {
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context2 = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context2.lookup(ArticlejndiName);
+    	BtnAddOrder.setDisable(true); 
+    	Article article=aArticleProxy.findArticleByCode(txtArticleCodeForOrder.getText()).get(0);
+    	
+    	if(article!=null&&article.getType().equals("Matiére-Premiére")) {
+
+    	
+    		BtnAddOrder.setDisable(false);  
+    	
+    	}
+    	
+    	
+    }
 
     @FXML
     private void OnChangeAutoSettingsClicked(ActionEvent event) throws NamingException {
     	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
     	Context context2 = new InitialContext();
     	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context2.lookup(ArticlejndiName);
-    	Article article=aArticleProxy.findArticleByCode(txtSearchArticleAutoOrdre.getText()).get(0);
+    	Article article=aArticleProxy.getArticleListByCode(txtSearchArticleAutoOrdre.getText()).get(0);
     	article.setDeliveryTime(Integer.valueOf(txtDeliveryTime.getText()));
     	article.setDailyConsumption(Integer.valueOf(txtDailyConsuption.getText()));
     	aArticleProxy.updateArticle(article);

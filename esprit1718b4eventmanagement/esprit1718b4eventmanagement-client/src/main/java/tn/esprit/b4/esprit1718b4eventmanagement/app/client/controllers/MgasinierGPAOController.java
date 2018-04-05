@@ -6,6 +6,7 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
 import com.jfoenix.controls.JFXTextField;
+
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDateTime;
@@ -27,11 +28,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.MvtApprov;
@@ -89,18 +92,59 @@ public void fillTableAllOrdres(String code) throws NamingException {
 	Context context1 = new InitialContext();
 	MvtApprovServiceRemote OrdreProxy = (MvtApprovServiceRemote) context1.lookup(jndiName);
 	
-	 //tArticle.setCellValueFactory(new PropertyValueFactory<>("article"));
+	  tArticle.setCellFactory(column -> {
+  	    return new TableCell<MvtApprov, String>() {
+  	        @Override
+  	        protected void updateItem(String item, boolean empty) {
+  	            super.updateItem(item, empty);
+
+  	            if (item == null || empty) {
+  	                setText(null);
+  	                setStyle("");
+  	            } else {
+  	            
+  	            	setText(item);
+  	            	//setTextFill(Color.WHITE);
+  	               // setStyle("-fx-font-weight: bold");
+  	                    
+  	               
+  	            }
+  	        }
+  	    };
+  	});
+	  tReceptionDate.setCellFactory(column -> {
+	  	    return new TableCell<MvtApprov, String>() {
+	  	        @Override
+	  	        protected void updateItem(String item, boolean empty) {
+	  	            super.updateItem(item, empty);
+
+	  	            if (item == null || empty) {
+	  	                setText(null);
+	  	                setStyle("");
+	  	            } else {
+	  	            
+	  	            	setText(item);
+	  	            	//setTextFill(Color.BLACK);
+	  	                // setStyle("-fx-background-color: #eaeaea");
+	  	                    
+	  	               
+	  	            }
+	  	        }
+	  	    };
+	  	});
 	 tArticle.setCellValueFactory(new Callback<CellDataFeatures<MvtApprov,String>,ObservableValue<String>>(){
 
          @Override
          public ObservableValue<String> call(CellDataFeatures<MvtApprov, String> param) {
              return new SimpleStringProperty(param.getValue().getArticle().getArticleCode());
          }
+         
      });
      tAlarmDate.setCellValueFactory(new PropertyValueFactory<>("alarmDate"));
      tQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
      tReceptionDate.setCellValueFactory(new PropertyValueFactory<>("receptionDate"));
      tRequestDate.setCellValueFactory(new PropertyValueFactory<>("requestDate"));
+   
 
  	ObservableList<MvtApprov> ObsListOrders;
 	if(code.equals("all")) {
@@ -108,6 +152,8 @@ public void fillTableAllOrdres(String code) throws NamingException {
 	}
 	else {
 		ObsListOrders = FXCollections.observableArrayList(OrdreProxy.getAllOrders());
+		//ObsListOrders = FXCollections.observableArrayList(OrdreProxy.getOrderByArticle(Integer.valueOf(code)));
+		System.out.println(OrdreProxy.getOrderByArticle(Integer.valueOf(code)).getQuantity());
 	}
 	
 	tableAllOrders.setItems(ObsListOrders);
@@ -127,7 +173,13 @@ public void fillTableAllOrdres(String code) throws NamingException {
 
 
     @FXML
-    private void SearchArticleFromTableAction(KeyEvent event) {
+    private void SearchOrdreFromTableAction(KeyEvent event) throws NamingException {
+    //txtSearchOrder.getText());
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+		Context context = new InitialContext();
+		ArticleServiceRemote ArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
+		Article article =ArticleProxy.findArticleByCode(txtSearchOrder.getText()).get(0);
+		fillTableAllOrdres(String.valueOf(article.getId()));
     }
 
     @FXML
