@@ -104,6 +104,8 @@ public class WorkOsController implements Initializable {
     @FXML
     private TableColumn<UsualWork, String> C8;
     @FXML
+    private TableColumn<UsualWork, String> C9;
+    @FXML
     private JFXTextField f1;
     @FXML
     private JFXTextField f2;
@@ -115,6 +117,8 @@ public class WorkOsController implements Initializable {
     private JFXTextField f5;
     @FXML
     private JFXTextField f6;
+    @FXML
+    private JFXTextField f9;
     @FXML
     private Label l1;
     @FXML
@@ -135,6 +139,7 @@ public class WorkOsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     	delete.setVisible(false);
     	done.setVisible(false);
+    	start.setVisible(false);
  	 Image icon = new Image (
 			   getClass().getResourceAsStream("/views/imgs/rsz_1rsz_trash-bin-open.png"));
 		delete.setGraphic(new ImageView(icon));
@@ -192,9 +197,11 @@ public class WorkOsController implements Initializable {
 		    		C1.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("objet"));
 		    		C2.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("description"));
 		    		C3.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("technology"));
-		  
+		    		C4.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("orderstate"));
 		    		C5.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("emmergency"));
-				    C6.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("WRDate"));
+				    C6.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("WODate"));
+				    C8.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("endDate"));
+				    C9.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("startDate"));
 				    C7.setCellValueFactory(new Callback<CellDataFeatures<UsualWork,String>,ObservableValue<String>>(){
 
 			              @Override
@@ -231,7 +238,7 @@ public class WorkOsController implements Initializable {
 	
 		tableview.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
 			
-			pane.setVisible(true);
+			//pane.setVisible(true);
 			if(newValue.getOrderstate().equals("start"))
 			{
 				start.setVisible(false);
@@ -294,6 +301,10 @@ public class WorkOsController implements Initializable {
     	work.setOrderstate("start");
     	work.setStartDate(new Date());
     	proxy.updateWork(work);
+    	 Alert alert = new Alert(AlertType.INFORMATION);
+ 		alert.setTitle("start");
+ 		alert.setHeaderText("Selected work order state set to Start");
+ 		alert.showAndWait();
     	//l'affichage de l interface booking
     	
     }
@@ -310,6 +321,10 @@ public class WorkOsController implements Initializable {
     	work.setOrderstate("done");
     	work.setEndDate(new Date());
     	proxy.updateWork(work);
+    	 Alert alert = new Alert(AlertType.INFORMATION);
+ 		alert.setTitle("done");
+ 		alert.setHeaderText("Selected work order state set to done! keep the good work ;) ");
+ 		alert.showAndWait();
     	//l'affichage de l interface booking
     	
     }
@@ -325,6 +340,10 @@ public class WorkOsController implements Initializable {
     	 System.out.println(work.getDescription());
     	
     	proxy.deleteWork(work.getId());
+    	 Alert alert = new Alert(AlertType.INFORMATION);
+ 		alert.setTitle("Delete");
+ 		alert.setHeaderText("Selected work order deleted");
+ 		alert.showAndWait();
     	//l'affichage de l interface booking
     	
     }

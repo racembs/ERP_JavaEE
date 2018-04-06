@@ -104,5 +104,14 @@ public class ArboresenceService implements ArboresenceServiceLocal,ArboresenceSe
 	}
 	
 	
-	
+	@Override
+	public List<Equipment> DisplayEquipmentbyarbo(Arboresence idArbo) {
+
+		TypedQuery<Equipment> query=em.createQuery("SELECT a FROM Equipment a where a.arboresence=:ar", Equipment.class);
+		query.setParameter("ar",idArbo);
+		List<Equipment> results = query.getResultList();
+    	return results;
+	}
+
+  
 }

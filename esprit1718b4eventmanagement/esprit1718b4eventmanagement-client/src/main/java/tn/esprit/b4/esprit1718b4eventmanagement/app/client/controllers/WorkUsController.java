@@ -35,11 +35,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TreeItem;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ArboPereFis;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Arboresence;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote;
 
@@ -97,6 +101,8 @@ public class WorkUsController implements Initializable {
     @FXML
     private TableColumn<UsualWork, String> C8;
     @FXML
+    private TableColumn<UsualWork, String> C9;
+    @FXML
     private TableView<UsualWork> tableview;
     @FXML
     private Tab tabD;
@@ -123,32 +129,122 @@ public class WorkUsController implements Initializable {
      * @param rb
      */
     static UsualWork xxx;
+    static UsualWork xxx2=new UsualWork();
     @SuppressWarnings({ "finally", "null", "unchecked" })
 	@Override
     public void initialize(URL url, ResourceBundle rb){
-    
     	 Image icon = new Image (
-    			   getClass().getResourceAsStream("/views/imgs/equi.png"));
-    		
+  			   getClass().getResourceAsStream("/views/imgs/equi.png"));
+  		
 				TreeItem<String> equii =  new TreeItem<>("Entreprise", new ImageView(icon));
-    			  equii.setExpanded(true);
+  			  equii.setExpanded(true);
 
-    			  TreeItem<String> nodeA = new TreeItem<>("arbo 1", new ImageView(icon));
-    			  TreeItem<String> nodeB = new TreeItem<>("arbo 2", new ImageView(icon));
-    			  TreeItem<String> nodeC = new TreeItem<>("arbo 3", new ImageView(icon));
-    			  equii.getChildren().addAll(nodeA,nodeB,nodeC);
-    			  nodeA.setExpanded(true);
-    			  
-    			  TreeItem<String> nodeA1 = new TreeItem<>("arbo1:room 1", new ImageView(icon));
-    			  TreeItem<String> nodeB1 = new TreeItem<>("arbo1:room 2", new ImageView(icon));
-    			  TreeItem<String> nodeC1 = new TreeItem<>("arbo1:room 3", new ImageView(icon));
-    			  nodeA.getChildren().addAll(nodeA1,nodeB1,nodeC1);
-    			  treeviewEq.setRoot(equii);
-   	 tableview.setEditable(true);
-    	//UserServiceRemote userService2;
+  			/*  TreeItem<String> nodeA = new TreeItem<>("arbo 1", new ImageView(icon));
+  			  TreeItem<String> nodeB = new TreeItem<>("arbo 2", new ImageView(icon));
+  			  TreeItem<String> nodeC = new TreeItem<>("arbo 3", new ImageView(icon));
+  			  equii.getChildren().addAll(nodeA,nodeB,nodeC);
+  			  nodeA.setExpanded(true);*/
+  			  
+  			  TreeItem<String> nodeA1 = new TreeItem<>("arbo1:room 1", new ImageView(icon));
+  			  TreeItem<String> nodeB1 = new TreeItem<>("arbo1:room 2", new ImageView(icon));
+  			  TreeItem<String> nodeC1 = new TreeItem<>("arbo1:room 3", new ImageView(icon));
+  			 // nodeA.getChildren().addAll(nodeA1,nodeB1,nodeC1);
+  			 // treeviewEq.setRoot(equii);
+ 	 tableview.setEditable(true);
+  	//UserServiceRemote userService2;
+  
+
     
 		try {
-			
+			String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
+	     	Context context1;
+		
+				context1 = new InitialContext();
+
+		     	ArboresenceServiceRemote Proxy = (ArboresenceServiceRemote) context1.lookup(jndiName2);
+		    	
+	  		 	List<Arboresence> list1 = Proxy.getPereArbo("Principale") ;
+	  		 //	for(int i=0;i<list1.size();i++)
+	  		 		for (Arboresence l1: list1)
+	  		 	{
+	  		 	 TreeItem<String> node = new TreeItem<>(l1.getName(), new ImageView(icon));
+	  		 	 equii.getChildren().add(node);
+	  		 	List<ArboPereFis> list= Proxy.getFilsArbo(l1.getId());
+	  	
+	  		 		for (ArboPereFis l: list)
+	  		 	{
+	  		 	 TreeItem<String> nodej = new TreeItem<>(l.getArboFils().getName(), new ImageView(icon));
+	  		 	 node.setExpanded(true);
+	  		 	 node.getChildren().add(nodej);
+	  		  
+	  		 	List<ArboPereFis> listj= Proxy.getFilsArbo(l.getArboFils().getId());
+	  			for (ArboPereFis uj: listj)
+	  		 	{
+	  		 	TreeItem<String> nodek = new TreeItem<>(uj.getArboFils().getName(), new ImageView(icon));
+	  		 	 nodej.setExpanded(true);
+	  		 	 nodej.getChildren().add(nodek);
+	  			List<ArboPereFis> listk= Proxy.getFilsArbo(uj.getArboFils().getId());
+	  			for (ArboPereFis u: listk)
+	  		 	{
+	  		 	TreeItem<String> nodem= new TreeItem<>(u.getArboFils().getName(), new ImageView(icon));
+	  		 	 nodek.setExpanded(true);
+	  		 	 nodek.getChildren().add(nodem);
+	  		 	List<ArboPereFis> listeq= Proxy.getFilsArbo(u.getArboFils().getId());
+	  			for (ArboPereFis ueq: listeq)
+	  		 	{
+	  		 	TreeItem<String> nodeq= new TreeItem<>(ueq.getArboFils().getName(), new ImageView(icon));
+	  		 	 nodem.setExpanded(true);
+	  		 	 nodem.getChildren().add(nodeq);
+	  		 	List<Equipment> eq= Proxy.DisplayEquipmentbyarbo(ueq.getArboFils());
+	  			for (Equipment q: eq)
+	  		 	{
+	  			 	System.out.println("q.getSerialNum()");
+	  		 	TreeItem<String> nodeequi= new TreeItem<>(q.getSerialNum(), new ImageView(icon));
+	  		 	System.out.println(q.getSerialNum());
+	  		 	nodeq.setExpanded(true);
+	  		 	nodeq.getChildren().add(nodeequi);
+	  		 	}
+	  		 	}
+	  		 	}
+	  		 	
+	  		 	}
+	  		 	
+   			 
+   			// node.getChildren().addAll(nodeA1,nodeB1,nodeC1);
+	  		 	}
+	  		 	}
+  			  treeviewEq.setRoot(equii);
+  	    	
+  
+  			treeviewEq.getSelectionModel().selectedItemProperty()
+            .addListener(new ChangeListener<TreeItem<String>>() {
+
+                @Override
+                public void changed(
+                	
+    	     	
+                        ObservableValue<? extends TreeItem<String>> observable,
+                        TreeItem<String> old_val, TreeItem<String> new_val) {
+                	
+					try {
+						String jndiNameEq= "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/EquipementService!tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote";
+	        	  	    
+
+		  	    		EquipementServiceRemote proxyeq;
+						proxyeq = (EquipementServiceRemote) context1.lookup(jndiNameEq);
+						 TreeItem<String> selectedItem = new_val;
+		                    System.out.println("Selected Text : " + selectedItem.getValue());
+		                    // do what ever you want
+		                    System.out.println(proxyeq.findEquipementBySerie(selectedItem.getValue()));
+		                    xxx2.setEquipement(proxyeq.findEquipementBySerie(selectedItem.getValue()));
+					} catch (NamingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+                   
+                }
+
+            });
 			Context context;
 			context = new InitialContext();
 	    	UserServiceRemote userService2 = (UserServiceRemote) context
@@ -299,7 +395,8 @@ public class WorkUsController implements Initializable {
 				context= new InitialContext();
 			 String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
 			 WorksUsServiceRemote proxy=(WorksUsServiceRemote) context.lookup(jndiName);
-		
+			 C9.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("id_user"));
+			 
 	
 		    		C1.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("objet"));
 		    		C2.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("description"));
@@ -378,22 +475,22 @@ public class WorkUsController implements Initializable {
     	WorksUsServiceRemote proxy=(WorksUsServiceRemote) context.lookup(jndiName);
     	
     	
-    	UsualWork uw =new UsualWork();
-    
+    	//UsualWork uw =xxx2;
+    System.out.println(LoginController.user.getLogin());
   
-    	uw.setUser(LoginController.user);
-    	uw.setObjet(object.getText());
-    	uw.setDescription(adInfo.getText());
-    	uw.setTechnology(comboSpecialization.getValue().toString());
-      uw.setWRDate(new Date());
+    	xxx2.setUser(LoginController.user);
+    	xxx2.setObjet(object.getText());
+    	xxx2.setDescription(adInfo.getText());
+    	xxx2.setTechnology(comboSpecialization.getValue().toString());
+    	xxx2.setWRDate(new Date());
   
         RadioButton selectedRadioButton = (RadioButton) q.getSelectedToggle();
         String toogleGroupValue = selectedRadioButton.getText();
-        uw.setEmmergency(toogleGroupValue);
+        xxx2.setEmmergency(toogleGroupValue);
         Equipment e=new Equipment();
         e.setId(2);
-        uw.setEquipement(e);
-        proxy.addWR(uw);
+        //uw.setEquipement(e);
+        proxy.addWR(xxx2);
         Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Work Request Adding");
 		alert.setHeaderText("Succesful :) ");

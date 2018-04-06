@@ -8,6 +8,7 @@ import javax.ejb.Local;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ArboPereFis;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Arboresence;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NomenclaturePk;
 
@@ -21,4 +22,6 @@ public interface ArboresenceServiceLocal {
 	public List<ArboPereFis> getFilsArbo(int idArboPere);
 	public List<Arboresence> getPereArbo(String type);
 	public Arboresence getArbo(String name) ;
+	public List<Equipment> DisplayEquipmentbyarbo(Arboresence idArbo);
+
 }
