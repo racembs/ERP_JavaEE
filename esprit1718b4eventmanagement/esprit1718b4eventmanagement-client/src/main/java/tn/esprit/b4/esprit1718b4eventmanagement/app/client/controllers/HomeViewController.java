@@ -75,6 +75,7 @@ public class HomeViewController implements Initializable {
 			AnchorPane ndPane = FXMLLoader.load(getClass().getResource("/views/NeedsStock.fxml"));
 			AnchorPane woPane = FXMLLoader.load(getClass().getResource("/views/WorkOs.fxml"));
 			AnchorPane Profile = FXMLLoader.load(getClass().getResource("/views/Profile.fxml"));
+			AnchorPane Equipment = FXMLLoader.load(getClass().getResource("/views/Equipement.fxml"));
 			drawer.setSidePane(sidePane);
 
 			for (Node node : sidePane.getChildren()) {
@@ -98,6 +99,12 @@ public class HomeViewController implements Initializable {
 							drawer.close();
 							setNode(Profile);
 							break;
+							
+						case "Equipment":
+							drawer.close();
+							setNode(Equipment);
+							break;
+
 
 						case "NeedsStock":
 							drawer.close();

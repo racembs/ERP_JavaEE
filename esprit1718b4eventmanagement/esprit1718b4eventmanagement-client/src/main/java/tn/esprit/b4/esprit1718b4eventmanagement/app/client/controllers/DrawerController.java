@@ -37,6 +37,8 @@ public class DrawerController implements Initializable {
     private JFXButton exitBtn;
     @FXML
     private JFXButton ProfileBtn;
+    @FXML
+    private JFXButton Equipment;
 
     /**
      * Initializes the controller class.
@@ -65,7 +67,6 @@ public class DrawerController implements Initializable {
     
     }
 
-    @FXML
     private void onProfileClik(ActionEvent event) throws IOException {
           	Parent parent= null;
 			    	parent  =FXMLLoader.load(getClass().getResource("/views/Profile.fxml"));

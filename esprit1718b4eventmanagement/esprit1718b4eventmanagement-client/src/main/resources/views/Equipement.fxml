@@ -12,6 +12,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -32,7 +34,7 @@
                                  <content>
                                     <AnchorPane fx:id="arbo" prefHeight="648.0" prefWidth="1098.0" styleClass="card-unpadded">
                                        <children>
-                                          <JFXTextField fx:id="serialnum" focusColor="#00add8" labelFloat="true" layoutX="89.0" layoutY="139.0" prefHeight="30.0" prefWidth="242.0" promptText="Serial Number" unFocusColor="#868282" />
+                                          <JFXTextField fx:id="serialnum" focusColor="#00add8" labelFloat="true" layoutX="89.0" layoutY="139.0" onKeyReleased="#ControledesaiseAddEqui" prefHeight="30.0" prefWidth="242.0" promptText="Serial Number" unFocusColor="#868282" />
                                           <JFXTextField fx:id="marque" focusColor="#00add8" labelFloat="true" layoutX="86.0" layoutY="252.0" prefHeight="30.0" prefWidth="252.0" promptText="Marque" unFocusColor="#868282" />
                                           <JFXTextField fx:id="fabriquant" focusColor="#00add8" labelFloat="true" layoutX="89.0" layoutY="316.0" prefHeight="30.0" prefWidth="257.0" promptText="Fabriquant" unFocusColor="#868282" />
                                           <JFXButton fx:id="btncancel" layoutX="878.0" layoutY="561.0" onAction="#OnCancelClick" styleClass="cancel-button" text="Cancel" />
@@ -98,7 +100,8 @@
                                                             <TableColumn fx:id="colFabriquant" editable="false" prefWidth="168.0" sortable="false" text="Fabriquant" />
                                                             <TableColumn fx:id="colMarque" editable="false" prefWidth="207.0" sortable="false" text="Marque" />
                                                             <TableColumn fx:id="colState" editable="false" maxWidth="536.0" minWidth="-1.0" prefWidth="150.0" sortable="false" text="State" />
-                                                            <TableColumn fx:id="colDescription" editable="false" prefWidth="398.0" text="Description Equipment" />
+                                                            <TableColumn fx:id="colDescription" editable="false" prefWidth="225.0" text="Description Equipment" />
+                                                            <TableColumn fx:id="image" prefWidth="173.0" text="Column X" />
                                                          </columns>
                                                       </TableView>
                                                    </children>
@@ -159,6 +162,29 @@
                                     </AnchorPane>
                                  </content>
                               </Tab>
+                              <Tab fx:id="btndetail11" onSelectionChanged="#OnDetail22Action" text="DETAILS">
+                                 <content>
+                                    <AnchorPane fx:id="eh" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <SplitPane layoutX="16.0" layoutY="6.0" orientation="VERTICAL" prefHeight="649.0" prefWidth="1105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <items>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="1103.0">
+                                                   <children>
+                                                      <TreeTableView fx:id="treetableview" layoutX="143.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
+                                                        <columns>
+                                                          <TreeTableColumn fx:id="arbotable" prefWidth="75.0" text="C1" />
+                                                          <TreeTableColumn prefWidth="75.0" text="C2" />
+                                                        </columns>
+                                                      </TreeTableView>
+                                                      <Label layoutX="424.0" layoutY="85.0" text="Label" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </items>
+                                          </SplitPane>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
                            </tabs>
                         </JFXTabPane>
                      </children>
@@ -170,13 +196,13 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <HBox layoutX="23.0" layoutY="33.0" prefHeight="141.0" prefWidth="372.0" spacing="30.0" />
-                        <AnchorPane fx:id="arbo1" layoutX="4.0" layoutY="14.0" onMouseClicked="#combarbotypeAction" prefHeight="648.0" prefWidth="1098.0" styleClass="card-unpadded">
+                        <AnchorPane fx:id="arbo1" layoutX="-5.0" layoutY="17.0" onMouseClicked="#combarbotypeAction" prefHeight="648.0" prefWidth="1098.0" styleClass="card-unpadded">
                            <children>
                               <JFXTextField fx:id="name" focusColor="#00add8" labelFloat="true" layoutX="89.0" layoutY="139.0" prefHeight="30.0" prefWidth="242.0" promptText="Name" unFocusColor="#868282" />
                               <JFXButton fx:id="btncancel1" layoutX="878.0" layoutY="561.0" onAction="#OnCancelArboClick" styleClass="cancel-button" text="Cancel" />
-                              <JFXButton layoutX="576.0" layoutY="564.0" prefHeight="27.0" prefWidth="78.0" styleClass="green-btn" text="Edit" />
-                              <JFXButton fx:id="btnadd1" layoutX="733.0" layoutY="563.0" onAction="#OnAddArboClick" prefHeight="37.0" prefWidth="100.0" styleClass="blue-btn" text="add" />
-                              <JFXTextArea fx:id="arbo2" layoutX="486.0" layoutY="420.0" maxWidth="404.0" minWidth="280.0" prefHeight="81.0" prefWidth="280.0" promptText="arboresence" />
+                              <JFXButton layoutX="324.0" layoutY="562.0" onAction="#onUpdateArboAction" prefHeight="27.0" prefWidth="78.0" styleClass="green-btn" text="update" />
+                              <JFXButton fx:id="btnadd1" layoutX="749.0" layoutY="562.0" onAction="#OnAddArboClick" prefHeight="37.0" prefWidth="100.0" styleClass="blue-btn" text="save" />
+                              <JFXTextArea fx:id="arbo2" layoutX="510.0" layoutY="448.0" maxWidth="404.0" minWidth="280.0" prefHeight="81.0" prefWidth="280.0" promptText="arboresence" />
                               <JFXComboBox fx:id="combarbotype" layoutX="66.0" layoutY="247.0" onAction="#combarbotypeAction" onMouseClicked="#combarbotypeAction" prefHeight="40.0" prefWidth="274.0" />
                               <Label layoutX="38.0" layoutY="201.0" prefHeight="46.0" prefWidth="258.0" text="Type D'arborecence" />
                               <JFXComboBox fx:id="ComboEquii" layoutX="473.0" layoutY="119.0" onAction="#ComboEquiiAction" prefHeight="40.0" prefWidth="178.0" />
@@ -186,6 +212,7 @@
                               <JFXComboBox fx:id="ComboEqui41" layoutX="581.0" layoutY="373.0" prefHeight="40.0" prefWidth="215.0" />
                               <Label fx:id="adarb" layoutX="30.0" layoutY="141.0" prefHeight="26.0" prefWidth="51.0" />
                               <Label layoutX="81.0" layoutY="144.0" prefHeight="20.0" prefWidth="17.0" text="/" />
+                              <JFXButton layoutX="626.0" layoutY="560.0" onAction="#onUpdateArboSaveAction" prefHeight="27.0" prefWidth="78.0" styleClass="green-btn" text="Save" />
                            </children>
                         </AnchorPane>
                      </children>

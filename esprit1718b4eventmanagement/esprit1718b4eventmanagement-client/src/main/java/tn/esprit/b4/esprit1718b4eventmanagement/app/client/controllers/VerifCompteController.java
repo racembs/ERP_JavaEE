@@ -57,7 +57,7 @@ public class VerifCompteController implements Initializable {
     @FXML
     private JFXButton btncancel;
 User user =LoginController.user;
-private String code;
+static private String code;
     /**
      * Initializes the controller class.
      */
