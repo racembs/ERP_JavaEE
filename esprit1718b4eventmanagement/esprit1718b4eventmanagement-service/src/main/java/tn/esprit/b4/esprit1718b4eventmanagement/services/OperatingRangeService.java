@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
@@ -72,6 +73,15 @@ public class OperatingRangeService extends GenericDAO<OperatingRange> implements
 		TypedQuery<Long> query=em.createQuery("SELECT COUNT(o) FROM OperatingRange o",Long.class);
 		Long result= query.getSingleResult();
 		return result;
+	}
+	
+	
+	public OperatingRange assignOperatingRangeToArticle (int idOptR, int idArticle){
+		OperatingRange op = em.find(OperatingRange.class, idOptR);
+		Article art = em.find(Article.class, idArticle);
+		op.getArticles().add(art);
+		art.getOperatingranges().add(op);
+		return op;
 	}
 
 }

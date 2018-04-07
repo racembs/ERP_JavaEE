@@ -4,6 +4,8 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXTextField;
+import com.sun.javafx.css.converters.StringConverter;
+
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -157,16 +159,29 @@ public class ChargingStationController implements Initializable {
  			contextEquipment = new InitialContext();
  			EquipementServiceRemote proxyEquipment = (EquipementServiceRemote) contextEquipment.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/EquipementService!tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote");
  	    	Equipment equipment = new Equipment();
- 	    	List<Equipment> listE = proxyEquipment.DisplayEquipment();
-
+ 	    	List<Equipment> listE;// = proxyEquipment.DisplayEquipment();
+ 	    	listE = proxyEquipment.DisplayEquipment();
  	    	//ComboBox Equipment
-              ObservableList<Equipment> obListeq = FXCollections.observableList(listE);
+              ObservableList<Equipment> obListeq = FXCollections.observableArrayList(listE);
+              
+              idEquipement.setConverter(new javafx.util.StringConverter<Equipment>(
+            		  ) {
+				
+				@Override
+				public String toString(Equipment object) {
+					 return String.valueOf(object.getSerialNum()+"-"+object.getDescription());
+				}
+				
+				@Override
+				public Equipment fromString(String string) {
+					// TODO Auto-generated method stub
+					return null;
+				}
+			});
+              
+            
               idEquipement.setItems(obListeq);
-              idEquipement.valueProperty().addListener((obs, oldVal, newVal) -> {
-                  String selectionText =  newVal.getSerialNum() + "-" + newVal.getDescription();
-                  System.out.println(selectionText);
-                
-              });
+
               idEquipement.getSelectionModel().selectLast();
 			
  			 
@@ -181,13 +196,24 @@ public class ChargingStationController implements Initializable {
   			
   		    //ComboBox User
   		    ObservableList<User> obListu = FXCollections.observableList(listu);
-             idUser.setItems(obListu);
-             idUser.valueProperty().addListener((obs, oldVal, newVal) -> {
-                 String selectionText =  newVal.getFirstname() + "-" + newVal.getLastname();
-
-                 System.out.println(selectionText);
-               
-             });
+		    
+  		  idUser.setConverter(new javafx.util.StringConverter<User>(
+        		  ) {
+			
+			@Override
+			public String toString(User object) {
+				return String.valueOf(object.getFirstname()+"-"+object.getLastname());
+			}
+			
+			@Override
+			public User fromString(String string) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
+  		    
+          
+             idUser.setItems(obListu);  
            idUser.getSelectionModel().selectLast();	
               
 			idUserTab.setCellValueFactory(new Callback<CellDataFeatures<ChargingStation,String>,ObservableValue<String>>(){

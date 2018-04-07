@@ -129,6 +129,8 @@
                         <Image url="views/image/back.png" />
                      </image>
                   </ImageView>
+                  <Label layoutX="310.0" layoutY="301.0" text="Article" />
+                  <ComboBox fx:id="idArticleCombo" layoutX="434.0" layoutY="297.0" prefHeight="20.0" prefWidth="216.0" />
                   
                   </children>
             </AnchorPane>

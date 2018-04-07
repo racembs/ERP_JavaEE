@@ -1,6 +1,8 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
+import java.io.File;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -23,6 +25,9 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TreeItem.TreeModificationEvent;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxTreeCell;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.controlsfx.control.CheckTreeView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -36,7 +41,21 @@ import tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceR
 import tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
 
+import java.net.URL;
 
+import com.google.api.client.auth.oauth2.AuthorizationCodeFlow.Builder;
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.CalendarScopes;
+import com.google.gdata.client.calendar.*;
+import com.google.gdata.data.calendar.*;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.store.FileDataStoreFactory;
 public class ChargingStationMenuController implements Initializable {
     
     private Label label;
@@ -232,18 +251,48 @@ public class ChargingStationMenuController implements Initializable {
 			  
 			  System.out.println("Calendar Clicked!"); // change functionality
 	            Parent parent= null;
-		    	try {
-					parent  =FXMLLoader.load(getClass().getResource("/views/Calendar.fxml"));
-					Scene scene=new Scene(parent);
-					Stage primaryStage= new Stage(); 
-					primaryStage.setScene(scene);
-					primaryStage.show();
-					idCal.getScene().getWindow().hide();
+	            
+	            /////////////////////////////////////////////////
+	
+	            ////////////////////////////////////////////////////
+	            
+	            
+//		    	try {
+//					parent  =FXMLLoader.load(getClass().getResource("/views/Calendar.fxml"));
+//					Scene scene=new Scene(parent);
+//					Stage primaryStage= new Stage(); 
+//					primaryStage.setScene(scene);
+//					primaryStage.show();
+//					idCal.getScene().getWindow().hide();
+//
+//				} catch (Exception e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+	            
+	            
+//	            try{
+//	                CalendarService myService = new CalendarService("ons");
+//	                myService.setUserCredentials("gpaoons@gmail.com", "gpaoons123");
+//	                URL feedUrl = new URL("http://www.google.com/calendar/feeds/default/allcalendars/full");
+//	                CalendarFeed resultFeed = myService.getFeed(feedUrl, CalendarFeed.class);
+//	                System.out.println("Your calendars:");
+//	                System.out.println();
+//	                for (int i = 0; i < resultFeed.getEntries().size(); i++) {
+//	                    CalendarEntry entry = resultFeed.getEntries().get(i);
+//	                    System.out.println("\t" + entry.getTitle().getPlainText());
+//	                }
+//	            }catch(Exception p){
+//	                p.printStackTrace();
+//	            }
+	            
+	            
 
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+	            
+
+
+   
+	            
 		  });
     	
     	idcancel.setOnMouseClicked((MouseEvent a) -> { 

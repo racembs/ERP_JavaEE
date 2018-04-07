@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -151,6 +152,8 @@ public class OperatingRangeController implements Initializable {
     @FXML
     private ComboBox<OperatingRange> ORop;
     @FXML
+    private ComboBox<Article>idArticleCombo;
+    @FXML
     private ComboBox<User> Uop;
     @FXML
     private ComboBox<Equipment> Eop;
@@ -199,6 +202,45 @@ public class OperatingRangeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+    			try {
+    				String ArticlejndiName1 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    		    	Context contextArticle1;
+
+			contextArticle1 = new InitialContext();
+			
+		  	ArticleServiceRemote ArticleProxy1 = (ArticleServiceRemote) contextArticle1.lookup(ArticlejndiName1);
+	    	 Article article = new Article();
+		     List<Article> listA1 = ArticleProxy1.DisplayArticle();
+		     
+	          ObservableList<Article> obListA1 = FXCollections.observableList(listA1);
+	          idArticleCombo.setConverter(new javafx.util.StringConverter<Article>(
+            		  ) {
+				
+				@Override
+				public String toString(Article object) {
+					 return String.valueOf(object.getArticleCode()+ "-" +object.getDescription());
+				}
+				
+				@Override
+				public Article fromString(String string) {
+					// TODO Auto-generated method stub
+					return null;
+				}
+			});      
+	          
+	          idArticleCombo.setItems(obListA1);
+//	          idArticleCombo.valueProperty().addListener((obs, oldVal, newVal) -> {
+//	              String selectionText =  newVal.getArticleCode()+ "-" + newVal.getDescription();
+//	              System.out.println(selectionText);
+//	            
+//	          });
+	          idArticleCombo.getSelectionModel().selectLast();
+		} catch (NamingException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+  
+    	
     	
     	idoptA.setVisible(false);
     	idStakingCond.getItems().addAll("Consecutive","Overlap","With staking delay","Parallel");
@@ -209,12 +251,12 @@ public class OperatingRangeController implements Initializable {
 			context = new InitialContext();
 			String OperatingRangejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
 	        OperatingRangeServiceRemote proxy =  (OperatingRangeServiceRemote) context.lookup(OperatingRangejndiName);
-
+	        OperatingRange op = new OperatingRange();
+	        
 			String jndiNameOperation = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperationService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote";
 			Context contextOperation = new InitialContext();
 			OperationServiceRemote proxyOperation = (OperationServiceRemote) contextOperation.lookup(jndiNameOperation);
 			//Operation opt = new Operation();
-			
 			
 			String jndiNameChargingStation = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ChargingStationService!tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote";
 			Context contextChargingStation = new InitialContext();
@@ -235,6 +277,8 @@ public class OperatingRangeController implements Initializable {
 	        List<Operation> listOpt = proxyOperation.DisplayOperation();
 	        List<Article> listA = ArticleProxy.DisplayArticle();
 
+	      
+	        
 	        ObservableList<Operation> items4 = FXCollections.observableArrayList(listOpt);
 	        //Long N = proxy.CountOperatingRange();
 	        ObservableList<OperatingRange> items22 = FXCollections.observableArrayList(list);
@@ -246,6 +290,7 @@ public class OperatingRangeController implements Initializable {
 	        for (int a = 0; a < listA.size(); a++) {
 	        	ObservableList<Article> itemsA = FXCollections.observableArrayList(listA);
 		        System.out.println(itemsA.get(a).getArticleCode());
+		 
 		        //String A=("Article"+a);
 
 		        CheckBoxTreeItem<String> Article = new CheckBoxTreeItem<String>(itemsA.get(a).getArticleCode());
@@ -281,13 +326,36 @@ public class OperatingRangeController implements Initializable {
 					OperatingRangeServiceRemote proxy42 =  (OperatingRangeServiceRemote) context42.lookup(OperatingRangejndiName42);
 					//OperatingRange optrange1 = new OperatingRange("AR","Table mount","Series",30);
 					OperatingRange optrange = new OperatingRange();
-					optrange.setCode(idCode.getText());
+					Article a = new Article();
+				    optrange.setCode(idCode.getText());
 					optrange.setDesignation(idDesignation.getText());
 					int Deadline = Integer.parseInt(idDeadline.getText());
 					optrange.setDeadline(Deadline);
+					
 					optrange.setStakingcondition(idStakingCond.getValue().toString());
-								
-					proxy42.addOperatingRange(optrange);
+			        
+					int idA = idArticleCombo.getSelectionModel().getSelectedItem().getId();
+					 
+					
+//					List<Article> listA1 = ArticleProxy.DisplayArticle();
+//					
+//			        for (int b = 0; b < listA1.size(); b++) {
+//			        	
+//			        	ObservableList<Article> itemsA1 = FXCollections.observableArrayList(listA1);
+//			        	if (idA==itemsA1.get(b).getId()){
+//			        		a.setId(idA);
+//			        		List<Article> listA2 = new ArrayList<Article>();
+//			      	        listA2.add(a);
+//			      	      optrange.setArticles(listA2);
+//			        	}
+//			        	}
+				        //System.out.println(itemsA1.get(b).getArticleCode());
+				      
+			        
+					
+				//	proxy42.addOperatingRange(optrange);
+					 int idOptR=proxy42.addOperatingRange(optrange);
+					proxy42.assignOperatingRangeToArticle (idOptR,idA);
 					//System.out.println("created");
 					
 					   List<OperatingRange> list12 = proxy42.DisplayOperatingRange();
@@ -433,13 +501,28 @@ public class OperatingRangeController implements Initializable {
 		  			
 		  		    //ComboBox User
 		  		    ObservableList<User> obListu = FXCollections.observableList(listu);
+		  		    
+		  		  Uop.setConverter(new javafx.util.StringConverter<User>(
+		        		  ) {
+					
+					@Override
+					public String toString(User object) {
+						return String.valueOf(object.getFirstname()+"-"+object.getLastname());
+					}
+					
+					@Override
+					public User fromString(String string) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+				});
 		             Uop.setItems(obListu);
-		             Uop.valueProperty().addListener((obs, oldVal, newVal) -> {
-		                 String selectionText =  newVal.getFirstname() + "-" + newVal.getLastname();
-
-		                 System.out.println(selectionText);
-		               
-		             });
+//		             Uop.valueProperty().addListener((obs, oldVal, newVal) -> {
+//		                 String selectionText =  newVal.getFirstname() + "-" + newVal.getLastname();
+//
+//		                 System.out.println(selectionText);
+//		               
+//		             });
 		             Uop.getSelectionModel().selectLast();
 		             
 		             
@@ -450,12 +533,28 @@ public class OperatingRangeController implements Initializable {
 
 		 	    	//ComboBox Equipment
 		              ObservableList<Equipment> obListeq = FXCollections.observableList(listE);
+		              
+		              Eop.setConverter(new javafx.util.StringConverter<Equipment>(
+		            		  ) {
+						
+						@Override
+						public String toString(Equipment object) {
+							 return String.valueOf(object.getSerialNum()+"-"+object.getDescription());
+						}
+						
+						@Override
+						public Equipment fromString(String string) {
+							// TODO Auto-generated method stub
+							return null;
+						}
+					});              
+		              
 		              Eop.setItems(obListeq);
-		              Eop.valueProperty().addListener((obs, oldVal, newVal) -> {
-		                  String selectionText =  newVal.getSerialNum() + "-" + newVal.getDescription();
-		                  System.out.println(selectionText);
-		                
-		              });
+//		              Eop.valueProperty().addListener((obs, oldVal, newVal) -> {
+//		                  String selectionText =  newVal.getSerialNum() + "-" + newVal.getDescription();
+//		                  System.out.println(selectionText);
+//		                
+//		              });
 		              Eop.getSelectionModel().selectLast();
 		              
 		              
@@ -468,12 +567,27 @@ public class OperatingRangeController implements Initializable {
 
 			 	    	//ComboBox Equipment
 			              ObservableList<OperatingRange> optR = FXCollections.observableList(listoptR);
+			          
+			              ORop.setConverter(new javafx.util.StringConverter<OperatingRange>(
+			            		  ) {
+							
+							@Override
+							public String toString(OperatingRange object) {
+								 return String.valueOf(object.getCode()+"-"+object.getDesignation());
+							}
+							
+							@Override
+							public OperatingRange fromString(String string) {
+								// TODO Auto-generated method stub
+								return null;
+							}
+						});
 			              ORop.setItems(optR);
-			              ORop.valueProperty().addListener((obs, oldVal, newVal) -> {
-			                  String selectionText =  newVal.getCode() + "-" + newVal.getDesignation();
-			                  System.out.println(selectionText);
-			                
-			              });
+//			              ORop.valueProperty().addListener((obs, oldVal, newVal) -> {
+//			                  String selectionText =  newVal.getCode() + "-" + newVal.getDesignation();
+//			                  System.out.println(selectionText);
+//			                
+//			              });
 			              ORop.getSelectionModel().selectLast();
 			              
 			              
