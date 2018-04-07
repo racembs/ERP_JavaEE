@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -114,17 +116,23 @@ public class TestManufacturing {
 //				System.out.println(needChild.getLevel());
 //			}
 //		}
+		
+		int duration =proxyManufacturing.manufacturingDuration(ParentneededItem.getNeeded_article(), 10);
+	    System.out.println(duration);
+	    
 		Calendar cal = Calendar.getInstance();
 		cal.set(2018, 02, 12, 15, 0);
 
 		Date dt = cal.getTime();
 		
-		Date d = proxyManufacturing.endingManufacturingDate(dt, 1860);
+		Date d = proxyManufacturing.endingManufacturingDate(dt, duration);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd kk:mm");
 	    System.out.println(sdf.format(d));
 	    
-	    System.out.println(proxyManufacturing.manufacturingDuration(ParentneededItem.getNeeded_article(), 10));
+	    
+	    
+	    
 	}
 
 }

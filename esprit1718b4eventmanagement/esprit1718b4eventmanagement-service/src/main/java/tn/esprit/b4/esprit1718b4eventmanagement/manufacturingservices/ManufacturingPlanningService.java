@@ -2,9 +2,13 @@ package tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -36,17 +40,20 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
     }
 
 	@Override
-	public long manufacturingDuration(Article article,int quantity) {
-		int duration = 0;
+	public int manufacturingDuration(Article article,int quantity) {
+		int duration=0;
+		double calcule=0;
 		//liste of operating range
 		List<OperatingRange> listOp = article.getOperatingranges();
-		for (OperatingRange operatingRange : listOp) {
+		Set<OperatingRange> setOp = new HashSet<>(listOp);
+		for (OperatingRange operatingRange : setOp) {
 			List<Operation> List = operatingRange.getOperations();
-			for (Operation operation : List) {
-				duration = duration + (quantity/operation.getUnitproductiontime());
+			Set<Operation> set = new HashSet<>(List);
+			for (Operation operation : set) {
+				calcule = ((double)quantity/operation.getUnitproductiontime())*60;
+				duration= duration+((int) calcule);
 			}
 		}
-		duration = Math.round(duration*60);
 		return duration;
 	}
 
