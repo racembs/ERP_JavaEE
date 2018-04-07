@@ -35,10 +35,10 @@ public class OperatingRange implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@ManyToMany(mappedBy="operatingranges")
+	@ManyToMany(mappedBy="operatingranges",fetch=FetchType.EAGER)
 	private List <Article> articles = new ArrayList<>();
 	
-	@OneToMany(mappedBy="optrange")
+	@OneToMany(mappedBy="optrange",fetch=FetchType.EAGER)
 	private List <Operation> operations;
 
 	public int getIdoptrange() {

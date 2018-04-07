@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
@@ -23,6 +24,9 @@ import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 @LocalBean
 public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanning> implements ManufacturingPlanningServiceRemote, ManufacturingPlanningServiceLocal {
 
+	@EJB
+	NeededItemServiceLocal needItem;
+	
     /**
      * Default constructor. 
      */
@@ -32,16 +36,17 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
     }
 
 	@Override
-	public long manufacturingDuration(Article article) {
+	public long manufacturingDuration(Article article,int quantity) {
 		int duration = 0;
 		//liste of operating range
 		List<OperatingRange> listOp = article.getOperatingranges();
 		for (OperatingRange operatingRange : listOp) {
 			List<Operation> List = operatingRange.getOperations();
 			for (Operation operation : List) {
-				duration = duration + operation.getUnitproductiontime();
+				duration = duration + (quantity/operation.getUnitproductiontime());
 			}
 		}
+		duration = Math.round(duration*60);
 		return duration;
 	}
 

@@ -123,6 +123,8 @@ public class TestManufacturing {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd kk:mm");
 	    System.out.println(sdf.format(d));
+	    
+	    System.out.println(proxyManufacturing.manufacturingDuration(ParentneededItem.getNeeded_article(), 10));
 	}
 
 }
