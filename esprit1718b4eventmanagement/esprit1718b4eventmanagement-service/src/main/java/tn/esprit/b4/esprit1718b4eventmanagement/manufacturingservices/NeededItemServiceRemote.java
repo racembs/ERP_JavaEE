@@ -20,5 +20,6 @@ public interface NeededItemServiceRemote extends IGenericDAO<NeededItem> {
 	public Map<NeededItem, List<NeededItem>> findNeededItemTreeByOrdredItem(NeededItem ParentneededItem);
 	public List<NeededItem> NeedItemList(Map<NeededItem, List<NeededItem>> map);
 	public NeededItem getNeededItemParentOfOrdredItem(int idOrder, int idArticle);
+	public int CheckReadyLot(NeededItem Parent);
 
 }

@@ -234,7 +234,7 @@ public class ManufacturingPlanningController implements Initializable {
 				Parent.setOrderItem(ListShow.getItems().get(0));
 				Parent.setNeeded_article(ListShow.getItems().get(0).getArticle());
 				Parent.setGrossNeed(Parent.getOrderItem().getQuantity());
-				Parent.setNetNeed(Parent.getGrossNeed()-Parent.getNeeded_article().getQuantity());
+				Parent.setNetNeed(Parent.getGrossNeed()-(Parent.getNeeded_article().getQuantity()-Parent.getNeeded_article().getReservedQuantity()));
 				Parent.setStatus("Pending");
   				
   				FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MRPCalculation.fxml"));
