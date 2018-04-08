@@ -257,18 +257,18 @@ public class ChargingStationMenuController implements Initializable {
 	            ////////////////////////////////////////////////////
 	            
 	            
-//		    	try {
-//					parent  =FXMLLoader.load(getClass().getResource("/views/Calendar.fxml"));
-//					Scene scene=new Scene(parent);
-//					Stage primaryStage= new Stage(); 
-//					primaryStage.setScene(scene);
-//					primaryStage.show();
-//					idCal.getScene().getWindow().hide();
-//
-//				} catch (Exception e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
+		    	try {
+					parent  =FXMLLoader.load(getClass().getResource("/views/Calendar.fxml"));
+					Scene scene=new Scene(parent);
+					Stage primaryStage= new Stage(); 
+					primaryStage.setScene(scene);
+					primaryStage.show();
+					idCal.getScene().getWindow().hide();
+
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 	            
 	            
 //	            try{
@@ -299,6 +299,23 @@ public class ChargingStationMenuController implements Initializable {
 			  Parent parent= null;
 			  	try {
 	  				parent  =FXMLLoader.load(getClass().getResource("/views/MenuuGPAO.fxml"));
+	  				Scene scene=new Scene(parent);
+	  				Stage primaryStage= new Stage(); 
+	  				primaryStage.setScene(scene);
+	  				primaryStage.show();
+	  				idcancel.getScene().getWindow().hide();
+			  	} catch (Exception e1) {
+	  				// TODO Auto-generated catch block
+	  				e1.printStackTrace();
+	  			}
+		  });
+    	
+    	
+     	idStat.setOnMouseClicked((MouseEvent a) -> { 
+     		System.out.println("Stat Clicked!");
+			  Parent parent= null;
+			  	try {
+	  				parent  =FXMLLoader.load(getClass().getResource("/views/Stat.fxml"));
 	  				Scene scene=new Scene(parent);
 	  				Stage primaryStage= new Stage(); 
 	  				primaryStage.setScene(scene);

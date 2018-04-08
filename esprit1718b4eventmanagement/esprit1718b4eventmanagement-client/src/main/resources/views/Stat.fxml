@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXToolbar?>
+<?import java.net.URL?>
+<?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.ScatterChart?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.StatController">
+ <children>
+      <JFXToolbar layoutY="-1.0" prefHeight="0.0" prefWidth="1200.0" styleClass="jfx-toolbar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <center>
+            <Label fx:id="txtCurrentWindow" prefHeight="40.0" prefWidth="199.0" style="-fx-text-fill: white; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="card-title" text="GPAO" BorderPane.alignment="CENTER" />
+         </center>
+         <right>
+            
+         </right>
+         <stylesheets>
+            <URL value="@../views/styles.css" />
+            <URL value="@styles.css" />
+         </stylesheets>
+      </JFXToolbar>
+      <Separator fx:id="id1" layoutX="809.0" layoutY="701.0" prefHeight="17.0" prefWidth="376.0" />
+      <Label fx:id="id2" layoutX="811.0" layoutY="718.0" prefHeight="27.0" prefWidth="343.0" text="All Rights Reserved SpootLightTeam 2018 " textAlignment="RIGHT" textFill="#3381ae">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="455.0" layoutY="40.0" prefHeight="70.0" prefWidth="277.0" text="Welcome">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Label>
+      <Label layoutX="813.0" layoutY="129.0" text="Operating Range" textFill="#e11c1c">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="876.0" layoutY="164.0" text="State">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="idComboStat" layoutX="945.0" layoutY="169.0" prefWidth="150.0" />
+      <Label fx:id="OptRStat" layoutX="1101.0" layoutY="164.0" prefHeight="35.0" prefWidth="54.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <PieChart fx:id="idPc" layoutX="34.0" layoutY="413.0" prefHeight="307.0" prefWidth="376.0" />
+      <BarChart fx:id="idBC" layoutX="411.0" layoutY="411.0" prefHeight="307.0" prefWidth="402.0">
+        <xAxis>
+          <CategoryAxis fx:id="idBCx" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="idBCy" side="LEFT" />
+        </yAxis>
+      </BarChart>
+      <AreaChart fx:id="idAC" layoutX="15.0" layoutY="102.0" prefHeight="300.0" prefWidth="402.0">
+        <xAxis>
+          <CategoryAxis fx:id="idACx" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="idACy" side="LEFT" />
+        </yAxis>
+      </AreaChart>
+      <ScatterChart fx:id="idSC" layoutX="411.0" layoutY="99.0" prefHeight="307.0" prefWidth="402.0">
+        <xAxis>
+          <CategoryAxis fx:id="idSCx" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="idSCy" side="LEFT" />
+        </yAxis>
+      </ScatterChart>
+      <Separator layoutX="813.0" layoutY="222.0" prefHeight="0.0" prefWidth="357.0" />
+      <Separator layoutX="813.0" layoutY="496.0" prefHeight="0.0" prefWidth="357.0" />
+      <Separator layoutX="819.0" layoutY="401.0" prefHeight="0.0" prefWidth="357.0" />
+      <Separator layoutX="813.0" layoutY="311.0" prefHeight="0.0" prefWidth="357.0" />
+      <Label layoutX="813.0" layoutY="233.0" text="Articles" textFill="#e11c1c">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="815.0" layoutY="413.0" text="Charging Stations" textFill="#e11c1c">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="819.0" layoutY="325.0" text="Equipments" textFill="#e11c1c">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="821.0" layoutY="513.0" text="Operations" textFill="#e11c1c">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Separator layoutX="808.0" layoutY="99.0" orientation="VERTICAL" prefHeight="642.0" prefWidth="0.0" />
+      <Separator layoutX="813.0" layoutY="597.0" prefHeight="0.0" prefWidth="357.0" />
+      <Label layoutX="821.0" layoutY="614.0" text="Manufactor Planning" textFill="#e11c1c">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="idA" layoutX="969.0" layoutY="253.0" prefHeight="35.0" prefWidth="61.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="idE" layoutX="969.0" layoutY="345.0" prefHeight="35.0" prefWidth="61.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="idCS" layoutX="974.0" layoutY="433.0" prefHeight="35.0" prefWidth="54.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="idO" layoutX="969.0" layoutY="533.0" prefHeight="35.0" prefWidth="61.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="idMP" layoutX="975.0" layoutY="653.0" prefHeight="35.0" prefWidth="54.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </children>
+   
+   
+   
+</AnchorPane>
