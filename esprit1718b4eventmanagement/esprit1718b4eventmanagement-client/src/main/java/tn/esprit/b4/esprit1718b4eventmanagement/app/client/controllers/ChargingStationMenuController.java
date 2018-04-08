@@ -56,6 +56,20 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map.Entry;
+
+import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.Calendar.CalendarList;
+import com.google.api.services.calendar.model.CalendarListEntry;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventAttendee;
+import com.google.api.services.calendar.model.EventDateTime;
+import com.google.api.services.calendar.model.EventReminder;
+import com.google.api.services.calendar.model.Events;
+
 public class ChargingStationMenuController implements Initializable {
     
     private Label label;
@@ -253,22 +267,132 @@ public class ChargingStationMenuController implements Initializable {
 	            Parent parent= null;
 	            
 	            /////////////////////////////////////////////////
+	            CalendarController quickstart =new CalendarController();
+	            
+				
+		
+	            try {
+	            	 // Build a new authorized API client service.
+	                // Note: Do not confuse this class with the
+	                //   com.google.api.services.calendar.model.Calendar class.
+	                Calendar service;
+					try {
+						service = quickstart.getCalendarService();
+						 // List the next 10 events from the primary calendar.
+		                DateTime now = new DateTime(System.currentTimeMillis());
+		                Events events;
+						
+							events = service.events().list("primary")
+							    .setMaxResults(10)
+							    .setTimeMin(now)
+							    .setOrderBy("startTime")
+							    .setSingleEvents(true)
+							    .execute();
+							
+			                List<Event> items = events.getItems();
+			                if (items.size() == 0) {
+			                    System.out.println("No upcoming events found.");
+			                } else {
+			                    System.out.println("Upcoming events");
+			                    for (Event event : items) {
+			                        DateTime start = event.getStart().getDateTime();
+			                        if (start == null) {
+			                            start = event.getStart().getDate();
+			                        }
+			                        System.out.printf("%s (%s)\n", event.getSummary(), start);
+			                        System.out.printf("%s (%s)\n", event.getId(), start);
+			                     
+			                     
+			                     /////////////////////////////////////
+			                     // Refer to the Java quickstart on how to setup the environment:
+			                     // https://developers.google.com/calendar/quickstart/java
+			                     // Change the scope to CalendarScopes.CALENDAR and delete any stored
+			                     // credentials.
+			                    	quickstart.authorize();
+			                     Event event1 = new Event()
+			                         .setSummary("Google I/O 2015")
+			                         .setLocation("800 Howard St., San Francisco, CA 94103")
+			                         .setDescription("A chance to hear more about Google's developer products.");
+
+			                     DateTime startDateTime = new DateTime("2018-05-28T09:00:00-07:00");
+			                     EventDateTime start1 = new EventDateTime()
+			                         .setDateTime(startDateTime)
+			                         .setTimeZone("America/Los_Angeles");
+			                     event1.setStart(start1);
+
+			                     DateTime endDateTime = new DateTime("2018-05-28T17:00:00-07:00");
+			                     EventDateTime end = new EventDateTime()
+			                         .setDateTime(endDateTime)
+			                         .setTimeZone("America/Los_Angeles");
+			                     event1.setEnd(end);
+
+			                     String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=2"};
+			                     event1.setRecurrence(Arrays.asList(recurrence));
+
+			                     EventAttendee[] attendees = new EventAttendee[] {
+			                         new EventAttendee().setEmail("gpaoons@gmail.com"),
+			                         new EventAttendee().setEmail("gpaoons@gmail.com"),
+			                     };
+			                     event1.setAttendees(Arrays.asList(attendees));
+
+			                     EventReminder[] reminderOverrides = new EventReminder[] {
+			                         new EventReminder().setMethod("email").setMinutes(24 * 60),
+			                         new EventReminder().setMethod("popup").setMinutes(10),
+			                     };
+			                     Event.Reminders reminders = new Event.Reminders()
+			                         .setUseDefault(false)
+			                         .setOverrides(Arrays.asList(reminderOverrides));
+			                     event1.setReminders(reminders);
+
+			                     String calendarId = "primary";
+			                     event1 = service.events().insert(calendarId, event1).execute();
+			                     System.out.printf("Event created: %s\n", event1.getHtmlLink());
+			                     ////////////////////////////////////////   
+			                     // Delete an event
+			                     //add the id
+			                        service.events().delete("primary", event.getId()).execute();
+			                     
+			                        
+			                     // Retrieve the event from the API
+			                        Event event2 = service.events().get("primary", event.getId()).execute();
+
+			                        // Make a change
+			                        event2.setSummary("Appointment at Somewhere");
+			                        
+			                     // Update the event
+			                        Event updatedEvent = service.events().update("primary", event2.getId(), event2).execute();
+			                        System.out.println(updatedEvent.getUpdated());
+			                    }
+			                }
+					
+
+	               
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 	
+	           
+	            }finally {
+	            	 System.out.printf("i'm very happy 😉  ");
+	    		}
 	            ////////////////////////////////////////////////////
 	            
 	            
-		    	try {
-					parent  =FXMLLoader.load(getClass().getResource("/views/Calendar.fxml"));
-					Scene scene=new Scene(parent);
-					Stage primaryStage= new Stage(); 
-					primaryStage.setScene(scene);
-					primaryStage.show();
-					idCal.getScene().getWindow().hide();
+//		    	try {
+//					parent  =FXMLLoader.load(getClass().getResource("/views/Calendar.fxml"));
+//					Scene scene=new Scene(parent);
+//					Stage primaryStage= new Stage(); 
+//					primaryStage.setScene(scene);
+//					primaryStage.show();
+//					idCal.getScene().getWindow().hide();
+//
+//				} catch (Exception e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+	            
 	            
 	            
 //	            try{

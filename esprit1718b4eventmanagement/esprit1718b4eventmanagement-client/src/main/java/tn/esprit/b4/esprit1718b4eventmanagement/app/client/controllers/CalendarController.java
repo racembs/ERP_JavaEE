@@ -1,137 +1,117 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXColorPicker;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXListView;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
+
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
+import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.util.store.FileDataStoreFactory;
+import com.google.api.client.util.DateTime;
+
+import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.model.*;
+
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ResourceBundle;
+
 
 public class CalendarController implements Initializable {
 
-    private Label label;
-    @FXML
-    private AnchorPane rootPane;
-    @FXML
-    private VBox colorRootPane;
-    @FXML
-    private JFXColorPicker fallSemCP;
-    @FXML
-    private JFXCheckBox fallSemCheckBox;
-    @FXML
-    private JFXColorPicker springSemCP;
-    @FXML
-    private JFXCheckBox springSemCheckBox;
-    @FXML
-    private JFXColorPicker summerSemCP;
-    @FXML
-    private JFXCheckBox summerSemCheckBox;
-    @FXML
-    private JFXColorPicker allQtrCP;
-    @FXML
-    private JFXCheckBox allQtrCheckBox;
-    @FXML
-    private JFXColorPicker allMbaCP;
-    @FXML
-    private JFXCheckBox allMbaCheckBox;
-    @FXML
-    private JFXColorPicker allHalfCP;
-    @FXML
-    private JFXCheckBox allHalfCheckBox;
-    @FXML
-    private JFXColorPicker allCampusCP;
-    @FXML
-    private JFXCheckBox allCampusCheckBox;
-    @FXML
-    private JFXColorPicker allHolidayCP;
-    @FXML
-    private JFXCheckBox allHolidayCheckBox;
-    @FXML
-    private JFXColorPicker traTrbCP;
-    @FXML
-    private JFXCheckBox allTraTrbCheckBox;
-    @FXML
-    private JFXCheckBox selectAllCheckBox;
-    @FXML
-    private VBox toolsRootPane;
-    @FXML
-    private VBox centerArea;
-    @FXML
-    private ScrollPane scrollPane;
-    @FXML
-    private HBox weekdayHeader;
-    @FXML
-    private GridPane calendarGrid;
-    @FXML
-    private Label calendarNameLbl;
-    @FXML
-    private Label monthLabel;
-    @FXML
-    private JFXComboBox<?> selectedYear;
-    @FXML
-    private JFXListView<?> monthSelect;
-    
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
-    
+
+ 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
 
-    @FXML
-    private void newCalendar(MouseEvent event) {
+    /** Application name. */
+    private static final String APPLICATION_NAME =
+        "Google Calendar API Java Quickstart";
+
+    /** Directory to store user credentials for this application. */
+    private static final java.io.File DATA_STORE_DIR = new java.io.File(
+        System.getProperty("user.home"), ".credentials/calendar-java-quickstart");
+
+    /** Global instance of the {@link FileDataStoreFactory}. */
+    private static FileDataStoreFactory DATA_STORE_FACTORY;
+
+    /** Global instance of the JSON factory. */
+    private static final JsonFactory JSON_FACTORY =
+        JacksonFactory.getDefaultInstance();
+
+    /** Global instance of the HTTP transport. */
+    private static HttpTransport HTTP_TRANSPORT;
+
+    /** Global instance of the scopes required by this quickstart.
+     *
+     * If modifying these scopes, delete your previously saved credentials
+     * at ~/.credentials/calendar-java-quickstart
+     */
+    private static final List<String> SCOPES =
+        Arrays.asList(CalendarScopes.CALENDAR);
+
+    static {
+        try {
+            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+        } catch (Throwable t) {
+            t.printStackTrace();
+            System.exit(1);
+        }
     }
 
-    @FXML
-    private void manageCalendars(MouseEvent event) {
+    /**
+     * Creates an authorized Credential object.
+     * @return an authorized Credential object.
+     * @throws IOException
+     */
+    public static Credential authorize() throws IOException {
+        // Load client secrets.
+        InputStream in =
+        		CalendarController.class.getResourceAsStream("/client_secret.json");
+        GoogleClientSecrets clientSecrets =
+            GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+
+        // Build flow and trigger user authorization request.
+        GoogleAuthorizationCodeFlow flow =
+                new GoogleAuthorizationCodeFlow.Builder(
+                        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
+                .setDataStoreFactory(DATA_STORE_FACTORY)
+                .setAccessType("offline")
+                .build();
+        Credential credential = new AuthorizationCodeInstalledApp(
+            flow, new LocalServerReceiver()).authorize("user");
+        System.out.println(
+                "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+        return credential;
     }
 
-    @FXML
-    private void pdfBtn(MouseEvent event) {
+    /**
+     * Build and return an authorized Calendar client service.
+     * @return an authorized Calendar client service
+     * @throws IOException
+     */
+    public static com.google.api.services.calendar.Calendar
+        getCalendarService() throws IOException {
+        Credential credential = authorize();
+        return new com.google.api.services.calendar.Calendar.Builder(
+                HTTP_TRANSPORT, JSON_FACTORY, credential)
+                .setApplicationName(APPLICATION_NAME)
+                .build();
     }
 
-    @FXML
-    private void excelBtn(MouseEvent event) {
-    }
-
-    @FXML
-    private void handleCheckBoxAction(ActionEvent event) {
-    }
-
-    @FXML
-    private void selectAllCheckBoxes(ActionEvent event) {
-    }
-
-    @FXML
-    private void updateColors(MouseEvent event) {
-    }
-
-    @FXML
-    private void newRule(MouseEvent event) {
-    }
-
-    @FXML
-    private void manageRules(MouseEvent event) {
-    }
-
-    @FXML
-    private void manageTermDates(MouseEvent event) {
-    }
-
-    @FXML
-    private void deleteAllEvents(MouseEvent event) {
-    }
+    
+       
     
 }
