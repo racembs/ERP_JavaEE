@@ -24,4 +24,5 @@ public interface EquipementServiceRemote {
 	
 	public Equipment findEqupment(int idArbo);
 	public void DeleteEqupment(int idArbo);
+
 	}

@@ -11,11 +11,14 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeedNomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeedNomenclaturePk;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeededItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleService;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceLocal;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
@@ -34,6 +37,8 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 	ArticleServiceLocal articleServ;
 	@EJB
 	NeedNomenclatureServiceLocal needNomenclature;
+	@EJB
+	OrderItemServiceLocal orderItemService;
 	@PersistenceContext
 	private EntityManager em;
     public NeededItemService() {
@@ -102,7 +107,7 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 			NeededItem ChildNeededItem = new NeededItem();
 			ChildNeededItem.setNeeded_article(nomenclature.getArticleFils());
 			ChildNeededItem.setOrderItem(ParentneededItem.getOrderItem());
-			if(nomenclature.getArticleFils().getType()=="Matiére-Premiére"){
+			if(nomenclature.getArticleFils().getType().equals("Matiére-Premiére")){
 				ChildNeededItem.setActionNature("Purchase Order");
 				ChildNeededItem.setLevel(99);
 			}
@@ -138,10 +143,71 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 	public Map<NeededItem, List<NeededItem>> SaveNeedItemTree(Map<NeededItem, List<NeededItem>> map) {
 		for (NeededItem neededItem : map.keySet()) {
 			//Add all key and that mean add all neededItem
+			Article article = articleServ.findArticle(neededItem.getNeeded_article().getId());
+			article.setReservedQuantity(article.getReservedQuantity()+neededItem.getGrossNeed()-neededItem.getNetNeed());
+			articleServ.updateArticle(article);
 			neededItem.setId(addNeededItem(neededItem));
 		}
 		return map;
 	}
+	
+	
+
+	@Override
+	public List<NeededItem> NeedItemList(Map<NeededItem, List<NeededItem>> map) {
+		List<NeededItem> list = new ArrayList<>();
+		for (NeededItem neededItem : map.keySet()) {
+			//Add all key and that mean add all neededItem
+			list.add(neededItem);
+		}
+		return list;
+	}
+
+	@Override
+	public Map<NeededItem, List<NeededItem>> findNeededItemTreeByOrdredItem(NeededItem ParentneededItem) {
+		List<NeedNomenclature> listNomenclature = needNomenclature.getNeededItemChildren(ParentneededItem.getId());
+		List<NeededItem> listChildren = new ArrayList<>();
+		for (NeedNomenclature needednom : listNomenclature) {
+			listChildren.add(needednom.getChild());
+		}
+		map.put(ParentneededItem, listChildren);
+		
+		if(listChildren==null){
+		}
+		else{
+			for (NeededItem neededItem : listChildren) {
+				findNeededItemTreeByOrdredItem(neededItem);
+			}
+		}
+		return map;
+	}
+
+	@Override
+	public NeededItem getNeededItemParentOfOrdredItem(int idOrder, int idArticle) {
+		TypedQuery<NeededItem> query
+		=em.createQuery("select n from NeededItem n where n.orderItem.ordredItemPk.id_Order=:idOrder AND "
+				+ "n.orderItem.ordredItemPk.id_Article=:idArticle AND n.level=:level" , NeededItem.class);
+		query.setParameter("idOrder", idOrder);
+		query.setParameter("idArticle", idArticle);
+		query.setParameter("level", 0);
+		NeededItem nomenclature=query.getSingleResult();
+		return nomenclature;
+	}
+
+	@Override
+	public int CheckReadyLot(NeededItem Parent) {
+		int lowestReadyLot=10000000;
+		List<NeedNomenclature> nomenclatureList = needNomenclature.getNeededItemChildren(Parent.getId());
+		for (NeedNomenclature needNomenclature : nomenclatureList) {
+			if(lowestReadyLot>needNomenclature.getChild().getReadyLotNumber()){
+				lowestReadyLot=needNomenclature.getChild().getReadyLotNumber();
+			}
+		}
+		return lowestReadyLot;
+	}
+
+
+
 
 
 

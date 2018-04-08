@@ -3,10 +3,13 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.test;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -14,6 +17,7 @@ import javax.naming.NamingException;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.*;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ClientServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ManufacturingPlanningServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeedNomenclatureServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeededItemServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrderItemServiceRemote;
@@ -27,7 +31,7 @@ public class TestManufacturing {
 		String jndiNameClient = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ClientService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ClientServiceRemote";
 		String jndiNameNomenclature = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/NeedNomenclatureService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeedNomenclatureServiceRemote";
 		String jndiNameNeededItem = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/NeededItemService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeededItemServiceRemote";
-		String jndiNameManufacturingPlan = "exported/esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ManufacturingPlanningService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ManufacturingPlanningServiceRemote";
+		String jndiNameManufacturingPlan = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ManufacturingPlanningService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ManufacturingPlanningServiceRemote";
 		String jndiNameOrdredItem = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OrderItemService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrderItemServiceRemote";
 		String jndiNameOrders= "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OrdersService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrdersServiceRemote";
 		String jndiNameArticle = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
@@ -35,7 +39,7 @@ public class TestManufacturing {
 		ClientServiceRemote proxyClientServiceRemote=(ClientServiceRemote) s.getProxy(jndiNameClient);
 		NeedNomenclatureServiceRemote proxyNomenclature=(NeedNomenclatureServiceRemote) s.getProxy(jndiNameNomenclature);
 		NeededItemServiceRemote proxyNeededItem=(NeededItemServiceRemote) s.getProxy(jndiNameNeededItem);
-		NeededItemServiceRemote proxyManufacturing=(NeededItemServiceRemote) s.getProxy(jndiNameManufacturingPlan);
+		ManufacturingPlanningServiceRemote proxyManufacturing=(ManufacturingPlanningServiceRemote) s.getProxy(jndiNameManufacturingPlan);
 		OrderItemServiceRemote proxyOrdredItem=(OrderItemServiceRemote) s.getProxy(jndiNameOrdredItem);
 		OrdersServiceRemote proxyOrders=(OrdersServiceRemote) s.getProxy(jndiNameOrders);
 		ArticleServiceRemote proxyArticleServiceRemote=(ArticleServiceRemote) s.getProxy(jndiNameArticle);
@@ -65,7 +69,7 @@ public class TestManufacturing {
 //		proxyOrdredItem.addOrdredItem(1, 1, ordredItem);
 		
 		OrdredItem orderItem2 = proxyOrdredItem.findOrdredItemById(1,1);
-		System.out.println(orderItem2.getArticle().getDescription());
+		System.out.println(orderItem2.getArticle().getType());
 		System.out.println(orderItem2.getOrdredItemPk().getId_Article());
 		
 		
@@ -95,17 +99,41 @@ public class TestManufacturing {
 		
 		Map<NeededItem, List<NeededItem>> map = new HashMap<>();
 		List<NeedNomenclature> needNomenclatureList = new ArrayList<>();
-		map = proxyNeededItem.InitialiseMap();
-		map= proxyNeededItem.CreateNeedItemTree(Parent);
-		map=proxyNeededItem.SaveNeedItemTree(map);
-		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
+//		map = proxyNeededItem.InitialiseMap();
+//		map= proxyNeededItem.CreateNeedItemTree(Parent);
+//		map=proxyNeededItem.SaveNeedItemTree(map);
+//		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
+		
+		NeededItem ParentneededItem = proxyNeededItem.getNeededItemParentOfOrdredItem(1, 1);
+		map=proxyNeededItem.InitialiseMap();
+		map= proxyNeededItem.findNeededItemTreeByOrdredItem(ParentneededItem);
+		
+//		for(Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()){
+//			System.out.println("Parent");
+//			System.out.println(e.getKey().getLevel());
+//			System.out.println("Children");
+//			for (NeededItem needChild : e.getValue()) {
+//				System.out.println(needChild.getLevel());
+//			}
+//		}
+		
+		int duration =proxyManufacturing.manufacturingDuration(ParentneededItem.getNeeded_article(), 10);
+	    System.out.println(duration);
+	    
+		Calendar cal = Calendar.getInstance();
+		cal.set(2018, 02, 12, 15, 0);
+
+		Date dt = cal.getTime();
+		
+		Date d = proxyManufacturing.endingManufacturingDate(dt, duration);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd kk:mm");
+	    System.out.println(sdf.format(d));
+	    
+	    
+	    
+	    
 	}
-//to create a nomenclature mono level	
-//	Map<NeededItem, NeedNomenclature> map = proxyNeededItem.addChildrenNeededItem(Parent);
-//	for (Map.Entry<NeededItem, NeedNomenclature> e : map.entrySet()) {
-//		e.getValue().getNeedNomenclaturePk().setIdChild(proxyNeededItem.addNeededItem(e.getKey()));
-//		proxyNomenclature.save(e.getValue());		
-//	}
 
 }
 

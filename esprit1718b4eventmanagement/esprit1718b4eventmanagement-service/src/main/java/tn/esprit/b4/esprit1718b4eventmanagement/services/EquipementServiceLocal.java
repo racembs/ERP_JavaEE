@@ -23,5 +23,7 @@ public interface EquipementServiceLocal {
 	public List<Equipment> DisplayEquipment();
 	public Equipment findEqupment(int idArbo);
 	public void DeleteEqupment(int idArbo);
+	
+	
 
 }

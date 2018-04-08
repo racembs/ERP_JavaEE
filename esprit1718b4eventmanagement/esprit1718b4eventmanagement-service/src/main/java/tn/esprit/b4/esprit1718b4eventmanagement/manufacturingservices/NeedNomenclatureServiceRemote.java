@@ -13,5 +13,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.utilities.IGenericDAO;
 public interface NeedNomenclatureServiceRemote extends IGenericDAO<NeedNomenclature> {
 	public NeedNomenclature addnomenclature(int idParent,int idChild,int netNeed) ;
 	public List<NeedNomenclature> SaveNeedItemTreeNomenclature(Map<NeededItem, List<NeededItem>> map);
+	public List<NeedNomenclature> DisplayTreeNomenclatureFromMap(Map<NeededItem, List<NeededItem>> map);
+	public List<NeedNomenclature> getNeededItemChildren(int idParent);
 
 }

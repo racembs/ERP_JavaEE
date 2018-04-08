@@ -50,21 +50,21 @@ public class TestArboresence extends Application {
 
 	EquipementServiceRemote Proxy = (EquipementServiceRemote) context.lookup(jndiName);
 	
-	
+/*	
 	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
 	//System.out.println(	Proxy1.findArboresence(4).getId());
 		
 		
 	Arboresence c=	Proxy1.findArboresence(4);
-	
+	*/
 	
 	
 	//System.out.println(	c.getId());
 	 Equipment e =Proxy.findEquipementBySerie("2");
-		System.out.println(	e.getId());
+		System.out.println(	"ahawaaaaa"+e.getId());
 	// e.setArboresence(c);
 	//e.setEISDate("pffffffffffffffff");
-	 Proxy.updateEquipment(e);
+	// Proxy.updateEquipment(e);
 	 
 	 
 //	Integer id=c.getId();

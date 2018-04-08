@@ -24,20 +24,20 @@ public class TestArticle extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-		/*String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+		String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
 		Context context = new InitialContext();
 		ArticleServiceRemote ArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
-		Article article =ArticleProxy.findArticle(5);
+		//Article article =ArticleProxy.findArticleByCode("MatierePremiere");
+		//System.out.println(article.getId());
 		
-		
-		ArticleProxy.DeleteArticle(7);*/
 		String jndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/MvtApprovService!tn.esprit.b4.esprit1718b4eventmanagement.services.MvtApprovServiceRemote";
     	Context context1 = new InitialContext();
     	MvtApprovServiceRemote OrdreProxy = (MvtApprovServiceRemote) context1.lookup(jndiName);
-    	//System.out.println(OrdreProxy.getOrderByArticle(1).getQuantity());
+    //	System.out.println(OrdreProxy.getOrderByArticle(article.getId()).getQuantity());
 	
 		Parent parent =FXMLLoader.load(getClass().getResource("/views/MgasinierGPAO.fxml"));
 		Scene scene=new Scene(parent);
+		scene.getStylesheets().add("/src/main/resouces/views/tab.css");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		

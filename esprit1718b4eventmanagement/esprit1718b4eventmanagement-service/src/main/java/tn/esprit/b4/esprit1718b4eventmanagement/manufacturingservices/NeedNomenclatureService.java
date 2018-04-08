@@ -8,10 +8,12 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeedNomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeedNomenclaturePk;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeededItem;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 
 /**
@@ -55,5 +57,31 @@ public class NeedNomenclatureService extends GenericDAO<NeedNomenclature> implem
 			}
 		}
 		return list;
+	}
+	
+	@Override
+	public List<NeedNomenclature> DisplayTreeNomenclatureFromMap(Map<NeededItem, List<NeededItem>> map) {
+		List <NeedNomenclature> list = new ArrayList<>();
+		for (Map.Entry<NeededItem, List<NeededItem>> entry1 : map.entrySet()) {
+			if(!entry1.getValue().isEmpty()){
+				for (NeededItem ChildNeededItem : entry1.getValue()) {
+					NeedNomenclature need = new NeedNomenclature();
+					need.setChild(ChildNeededItem);
+					need.setParent(entry1.getKey());
+					need.setQuantity(ChildNeededItem.getNetNeed());
+					list.add(need);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<NeedNomenclature> getNeededItemChildren(int idParent) {
+		TypedQuery<NeedNomenclature> query
+		=em.createQuery("select n from NeedNomenclature n where n.needNomenclaturePk.idParent=:idParent", NeedNomenclature.class);
+		query.setParameter("idParent", idParent);
+		List<NeedNomenclature> nomenclature=query.getResultList();
+		return nomenclature;
 	}
 }

@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -36,6 +37,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
@@ -43,6 +47,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
 
 
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 
 
 
@@ -93,6 +98,14 @@ User user = LoginController.user;
     private String imageFile;
     @FXML
     private ImageView imageviewprofil;
+    
+    ValidationSupport v7= new ValidationSupport();
+    ValidationSupport v6= new ValidationSupport();
+  		ValidationSupport v5= new ValidationSupport();
+  		   ValidationSupport v1= new ValidationSupport();
+  			ValidationSupport v2= new ValidationSupport();
+  			ValidationSupport v3= new ValidationSupport();
+  			ValidationSupport v4= new ValidationSupport();
     /**
      * Initializes the controller class.
      */
@@ -102,6 +115,7 @@ User user = LoginController.user;
     	 Image image = new Image("http://localhost/image/" +user.getImage());
         imageviewprofil.setImage(image);
         
+
         
         txtphonenumber.setText(user.getNumtel());
              txtlastname.setText(user.getLastname());
@@ -121,6 +135,11 @@ User user = LoginController.user;
                 
                 
                 fileSelected.setVisible(false);
+                
+                
+
+
+                
     }    
 
     @FXML
@@ -225,6 +244,7 @@ proxy.update1(user);
     private void OnCleanAction(ActionEvent event) {
         
         
+      
         txtmodnumber.setText("");
              txtmodLn.setText("");
              txtmodFn.setText("");
@@ -257,5 +277,26 @@ proxy.update1(user);
 				primaryStage.show();
 				 txtback.getScene().getWindow().hide();
     }
+
+    @FXML
+    private void Controledesaisie(KeyEvent event) {
+    }
+
+    @FXML
+    private void Controlesaisie(Event event) {
+
+  	  v1.registerValidator(txtmodFn,Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+		v2.registerValidator(txtmodLn,Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+		
+		v4.registerValidator(txtmodEmail, Validator.createRegexValidator("", "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", Severity.ERROR));
+		v5.registerValidator(txtmodnumber, Validator.createRegexValidator("must be digits only!", "^[0-9]{1,12}$", Severity.ERROR));
+
+		
+		v3.registerValidator(txtmodlogin, Validator.createEmptyValidator("Text is Required"));
+		v6.registerValidator(txtpwd, Validator.createRegexValidator("", "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*).{8,25})", Severity.ERROR));
+		v7.registerValidator(txtpwd1, Validator.createRegexValidator("", "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*).{8,25})", Severity.ERROR));
+  
+    }
+    }
     
-}
+

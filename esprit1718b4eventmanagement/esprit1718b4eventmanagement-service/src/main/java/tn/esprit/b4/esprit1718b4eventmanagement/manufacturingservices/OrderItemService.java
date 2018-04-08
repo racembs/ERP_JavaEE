@@ -47,7 +47,17 @@ public class OrderItemService extends GenericDAO<OrdredItem> implements OrderIte
 		ordredItemPk.setId_Order(idOrder);
 		return em.find(OrdredItem.class, ordredItemPk);
 	}
-
+	
+	@Override
+	public OrdredItem mergeOrdredItem(int idOrder, int idArticle, OrdredItem orderItem) {
+		OrdredItemPk ordredItemPk = new OrdredItemPk();
+		ordredItemPk.setId_Article(idArticle);
+		ordredItemPk.setId_Order(idOrder);
+		orderItem.setOrdredItemPk(ordredItemPk);
+		em.merge(orderItem);
+		return orderItem;
+	}
+	
 	@Override
 	public OrdredItem reatach(OrdredItem ordredItem) {
 		return em.find(OrdredItem.class, ordredItem.getOrdredItemPk());
@@ -67,5 +77,18 @@ public class OrderItemService extends GenericDAO<OrdredItem> implements OrderIte
 		Query query = em.createQuery("DELETE FROM OrdredItem o WHERE o.ordredItemPk.id_Order =:idOrder");
 		int deletedCount = query.setParameter("idOrder",idOrder).executeUpdate();
 	}
+
+	@Override
+	public List<OrdredItem> findPendingItemsOfAnOrder(int idOrder) {
+		TypedQuery<OrdredItem> query
+		=em.createQuery("SELECT o FROM OrdredItem o WHERE o.ordredItemPk.id_Order =:idOrder AND o.ManufacturingList IS EMPTY", OrdredItem.class);
+		query.setParameter("idOrder",idOrder);
+		List<OrdredItem> list=query.getResultList();
+		return list;
+	}
+
+
+
+	
 
 }

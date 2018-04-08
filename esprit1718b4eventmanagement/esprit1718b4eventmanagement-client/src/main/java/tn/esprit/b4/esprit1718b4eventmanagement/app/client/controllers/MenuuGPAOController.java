@@ -137,7 +137,7 @@ public class MenuuGPAOController implements Initializable {
             
             Parent parent= null;
 	    	try {
-				parent  =FXMLLoader.load(getClass().getResource("/views/MenuGPAO.fxml"));
+				parent  =FXMLLoader.load(getClass().getResource("/views/ManufacturingPlanning.fxml"));
 				Scene scene=new Scene(parent);
 				Stage primaryStage= new Stage(); 
 				primaryStage.setScene(scene);

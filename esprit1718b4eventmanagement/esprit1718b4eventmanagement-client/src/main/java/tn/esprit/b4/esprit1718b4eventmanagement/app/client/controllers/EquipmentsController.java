@@ -13,16 +13,23 @@ import com.jfoenix.controls.JFXTreeView;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,22 +43,28 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ArboPereFis;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Arboresence;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeededItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote;
@@ -199,7 +212,23 @@ public class EquipmentsController implements Initializable {
     private TextField searchtraining1;
     @FXML
     private JFXTextField LieuModif;
-   
+    @FXML
+    private Tab btndetail11;
+    @FXML
+    private TreeTableColumn<Arboresence, String> arbotable;
+    @FXML
+    private TreeTableView<Arboresence> treetableview;
+    @FXML
+    private TableColumn<Equipment,String> image;
+    ValidationSupport v7= new ValidationSupport();
+    ValidationSupport v6= new ValidationSupport();
+  		ValidationSupport v5= new ValidationSupport();
+  		   ValidationSupport v1= new ValidationSupport();
+  			ValidationSupport v2= new ValidationSupport();
+  			ValidationSupport v3= new ValidationSupport();
+  			ValidationSupport v4= new ValidationSupport();
+    @FXML
+    private AnchorPane eh;
 		
     /**
      * Initializes the controller class.
@@ -356,15 +385,39 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     	String namee=name.getText();
     	String type=combarbotype.getValue();
     	Arboresence arbo=new Arboresence(namee,type);
+    	
+    	if(name.getText().equals("")||adarb.getText().equals(""))
+    	{
+    		Alert alert = new Alert(AlertType.ERROR);
+	    	alert.setTitle("Erreur ");
+	    	alert.setHeaderText(" please complete all fields .!!!!");
+	    	alert.showAndWait();
+	    	
+    	}
+    	else
+    	{
+    		if(Proxy.getArbo(name.getText()).getName().equals(name.getText()))
+    		{
+    			
+    			Alert alert = new Alert(AlertType.ERROR);
+    	    	alert.setTitle("Erreur name exist");
+    	    	alert.setHeaderText("the name exist .!!!!");
+    	    	alert.showAndWait();
+    	    	
+    		}else
+    		{
+    	
     	Proxy.addArbo(arbo);
     	
     
     	Proxy.addArbo(Proxy.getArbo(  adarb.getText()).getId(),	Proxy.getArbo(namee).getId());
-    	
     	Alert alert = new Alert(AlertType.INFORMATION);
     	alert.setTitle("Information");
     	alert.setHeaderText("the arbo    : " +arbo2.getText()+"/"+name.getText()+ "is add  with success");
     	alert.showAndWait();
+    		
+    	}}
+    
     	
     	  
     	
@@ -391,8 +444,50 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     		colMarque.setCellValueFactory(new PropertyValueFactory<Equipment, String>("Marque"));
     		colState.setCellValueFactory(new PropertyValueFactory<Equipment, String>("State"));
     		 colDescription.setCellValueFactory(new PropertyValueFactory<Equipment, String>("Description"));
+    		 tableau.setTableMenuButtonVisible(true);
+    		 
         
-    		
+    		//////////////////////////////
+    		image.setCellFactory(new Callback<TableColumn<Equipment,String>,TableCell<Equipment,String>>(){        
+    				@Override
+    				public TableCell<Equipment,String> call(TableColumn<Equipment,String> param) {                
+    					TableCell<Equipment,String> cell = new TableCell<Equipment,String>(){
+    						ImageView imageview1 = new ImageView();
+    						//@Override
+    						public void updateItem() {                        
+    							                           
+    								HBox box= new HBox();
+    								box.setSpacing(10) ;
+    								VBox vbox = new VBox();
+    							
+    					 
+
+    								
+    								imageview1.setFitHeight(50);
+    								imageview1.setFitWidth(50);
+    								imageview1.setImage(new Image("http://localhost/image/" +LoginController.user.getImage())); 
+
+    								box.getChildren().addAll(imageview1,vbox); 
+    								//SETTING ALL THE GRAPHICS COMPONENT FOR CELL
+    								setGraphic(box);
+    							}
+    						
+    					};
+    					System.out.println(cell.getIndex());               
+    					return cell;
+    				}
+
+					
+
+    			});
+    		 //////////////////////////
+    		 
+    		 
+    		 
+    		 
+    		 
+    		 
+    		 
         List<Equipment> list = proxy.getAllEquipment();
     	        ObservableList<Equipment> items = FXCollections.observableArrayList(list);
     	        tableau.setItems(items);
@@ -982,8 +1077,8 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     private void OnModifEquipmentActionPage(Event event) throws NamingException {
     	
     	
-    	
-    	
+    	   
+       
     	
     	
     	String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/EquipementService!tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote";
@@ -1016,7 +1111,16 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
                         MenuItem.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent event) {
-                            
+                            	 v2.registerValidator(descrsptionModif,Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+                             	
+                             	v4.registerValidator(marqueModif, Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+                             	v5.registerValidator(fabriquantModif,Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+
+                             	
+                             	v3.registerValidator(StateModif, Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+                             	v6.registerValidator(serialnumModif, Validator.createRegexValidator("", "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*).{8,25})", Severity.ERROR));
+
+                             	LieuModif.setDisable(true);
                           
                                  
                                  String serie=tableau1.getSelectionModel().getSelectedItem().getSerialNum();
@@ -1028,17 +1132,16 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
                                  String lieu=tableau1.getSelectionModel().getSelectedItem().getLieu();
                                  String desc =tableau1.getSelectionModel().getSelectedItem().getDescription();
                                  descrsptionModif.setText(desc);
+                                 descrsptionModif.setDisable(true);
                                  String marque=tableau1.getSelectionModel().getSelectedItem().getMarque();
                                  marqueModif.setText(marque);
                                  String state=tableau1.getSelectionModel().getSelectedItem().getState();
                                  StateModif.setText(state);
                                  Integer idarbo=tableau1.getSelectionModel().getSelectedItem().getArboresence().getId();
-                                 
-                                
+                              
                                  arboareaModif.setText(lieu);
                
-                              	
-                            	
+                                 arboareaModif.setDisable(true);
                             }
                             
                         });
@@ -1235,8 +1338,68 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     	        tableau1.setItems(items);
     }
 
+    @FXML
+    private void OnDetail22Action(Event event) {
 
+    }
+
+    private void showTreeView(Arboresence AbsoluteParent, List<Arboresence> listNomenclatureFils2 ) throws NamingException {
+    	
+
+    	
+      	TreeItem<Arboresence> root=new TreeItem<>();
     
+ 	TreeItem<Arboresence> newItemarticlePere;
+ 	TreeItem<Arboresence> newItemarticleFils=null;
+	 
+ 	newItemarticlePere=new TreeItem<>(AbsoluteParent);
+	 root.getChildren().add(newItemarticlePere);
+
+	 ArrayDeque <TreeItem<Arboresence>> queue=new ArrayDeque<>();
+	 queue.add(newItemarticlePere);
+	
+	 while(!queue.isEmpty()) {
+		 
+		TreeItem<Arboresence> TreeItemHead=queue.getFirst();
+		queue.removeFirst();
+		;
+		for (Arboresence neededItem : listNomenclatureFils2) {
+			newItemarticleFils=new TreeItem<>(neededItem);
+			TreeItemHead.getChildren().add(newItemarticleFils);
+			queue.addLast(newItemarticleFils);
+		}
+	 }
+	 
+	 
+	arbotable.setCellValueFactory(
+	            (TreeTableColumn.CellDataFeatures<Arboresence, String> param) -> 
+	            new ReadOnlyStringWrapper(String.valueOf(param.getValue().getValue().getName()))
+	        );
+ 	treetableview.setRoot(root);
+ 	treetableview.setShowRoot(false);
+  
+    }
+
+    @FXML
+    private void onUpdateArboAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void onUpdateArboSaveAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void ControledesaiseAddEqui(Event event) {
+v2.registerValidator(fabriquant,Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+    	
+    	v4.registerValidator(marque, Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+    	v5.registerValidator(descrsption,Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+
+    	
+    	v3.registerValidator(State, Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+    	v6.registerValidator(serialnum, Validator.createRegexValidator("", "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*).{8,25})", Severity.ERROR));
+
+    }
 
  
 }

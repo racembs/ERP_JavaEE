@@ -25,7 +25,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="684.0" prefWidth="1105.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.MgasinierGPAOController">
+<AnchorPane id="AnchorPane" prefHeight="684.0" prefWidth="1105.0" stylesheets="@tab.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.MgasinierGPAOController">
    <children>
       <JFXTabPane layoutX="138.0" layoutY="100.0" prefHeight="684.0" prefWidth="1105.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -37,13 +37,13 @@
                            <items>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
                                  <children>
-                                    <TableView fx:id="tableAllOrders" layoutX="147.0" layoutY="208.0" prefHeight="386.0" prefWidth="849.0">
+                                    <TableView fx:id="tableAllOrders" layoutX="118.0" layoutY="169.0" prefHeight="386.0" prefWidth="849.0">
                                       <columns>
                                         <TableColumn fx:id="tArticle" prefWidth="169.0" text="          Article" />
-                                        <TableColumn fx:id="tQuantity" minWidth="5.0" prefWidth="137.0" text="      Quantity" />
-                                          <TableColumn fx:id="tAlarmDate" prefWidth="179.0" text="         Alarm Date" />
-                                          <TableColumn fx:id="tRequestDate" prefWidth="181.0" text="       Request Date" />
-                                          <TableColumn fx:id="tReceptionDate" prefWidth="181.0" text="     Reception Date" />
+                                        <TableColumn fx:id="tQuantity" minWidth="5.0" prefWidth="137.0" text="     Quantity" />
+                                          <TableColumn fx:id="tAlarmDate" prefWidth="179.0" text="       Alarm Date" />
+                                          <TableColumn fx:id="tRequestDate" prefWidth="181.0" text="      Request Date" />
+                                          <TableColumn fx:id="tReceptionDate" prefWidth="181.0" text="    Reception Date" />
                                       </columns>
                                        <contextMenu>
                                           <ContextMenu fx:id="contextMenu">
@@ -54,7 +54,7 @@
                                           </ContextMenu>
                                        </contextMenu>
                                     </TableView>
-                                    <JFXTextField fx:id="txtSearchOrder" focusColor="#00add8" labelFloat="true" layoutX="399.0" layoutY="106.0" onKeyReleased="#SearchArticleFromTableAction" prefHeight="42.0" prefWidth="208.0" promptText="            Search Ordre" unFocusColor="#868282" />
+                                    <JFXTextField fx:id="txtSearchOrder" focusColor="#00add8" labelFloat="true" layoutX="439.0" layoutY="96.0" onKeyReleased="#SearchOrdreFromTableAction" prefHeight="42.0" prefWidth="208.0" promptText="            Search Ordre" unFocusColor="#868282" />
                                  </children>
                               </AnchorPane>
                            </items>

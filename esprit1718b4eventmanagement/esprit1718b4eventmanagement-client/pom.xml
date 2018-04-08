@@ -44,12 +44,6 @@
 	      <artifactId>google-api-services-calendar</artifactId>
 	      <version>v3-rev305-1.23.0</version>
 	    </dependency>
-	    
-	    <dependency><font></font>
-    <groupId>com.google.apis</groupId><font></font>
-    <artifactId>google-api-services-calendar</artifactId><font></font>
-    <version>v3-rev305-1.21.0</version><font></font>
-</dependency>
 
 <dependency>
     <groupId>com.google.apis</groupId>

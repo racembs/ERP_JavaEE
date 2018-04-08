@@ -47,67 +47,80 @@ public class HomeViewController implements Initializable {
     @FXML
     private Label txtCurrentWindow;
 
-    /**
-     * Initializes the controller class.
-     *
-     * @param url
-     * @param rb
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-       
- HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(hamburger);
-        transition.setRate(-1);
-        hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
-            transition.setRate(transition.getRate() * -1);
-            transition.play();
+	/**
+	 * Initializes the controller class.
+	 *
+	 * @param url
+	 * @param rb
+	 */
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
 
-            if (drawer.isShown()) {
-                drawer.close();
-            } else {
-                drawer.open();
-            }
+		HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(hamburger);
+		transition.setRate(-1);
+		hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
+			transition.setRate(transition.getRate() * -1);
+			transition.play();
 
-        });
-        try {
-            VBox sidePane = FXMLLoader.load(getClass().getResource("/views/Drawer.fxml"));
-            AnchorPane wrPane = FXMLLoader.load(getClass().getResource("/views/WorkUs.fxml"));
-            AnchorPane woPane = FXMLLoader.load(getClass().getResource("/views/WorkOs.fxml"));
-            AnchorPane Profile = FXMLLoader.load(getClass().getResource("/views/Profile.fxml"));
-            drawer.setSidePane(sidePane);
+			if (drawer.isShown()) {
+				drawer.close();
+			} else {
+				drawer.open();
+			}
 
-            for (Node node : sidePane.getChildren()) {
-                if (node.getAccessibleText() != null) {
-                    node.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent ev) -> {
-                        switch (node.getAccessibleText()) {
-                        
-                                                  case "WorkRequest":
-                                                  	 drawer.close();                               
-                                                   setNode(wrPane);
-                                                    break;
-                            case "doctorMenu":
-                                drawer.close();                               
-                                setNode(Profile);
-                                break;
-                            case "WorkOrder":
-                             	 drawer.close();                               
-                              setNode(woPane);
-                               break;
-                            case "appointmentMenu":
-                                drawer.close();                                
-                                setNode(Profile);
-                                break;                                
-                        }
-                    });
-                }
+		});
+		try {
+			VBox sidePane = FXMLLoader.load(getClass().getResource("/views/Drawer.fxml"));
+			AnchorPane wrPane = FXMLLoader.load(getClass().getResource("/views/WorkUs.fxml"));
+			AnchorPane ndPane = FXMLLoader.load(getClass().getResource("/views/NeedsStock.fxml"));
+			AnchorPane woPane = FXMLLoader.load(getClass().getResource("/views/WorkOs.fxml"));
+			AnchorPane Profile = FXMLLoader.load(getClass().getResource("/views/Profile.fxml"));
+			AnchorPane Equipment = FXMLLoader.load(getClass().getResource("/views/Equipement.fxml"));
+			drawer.setSidePane(sidePane);
 
-            }
+			for (Node node : sidePane.getChildren()) {
+				if (node.getAccessibleText() != null) {
+					node.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent ev) -> {
+						switch (node.getAccessibleText()) {
 
-        } catch (IOException ex) {
-            Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+						case "WorkRequest":
+							drawer.close();
+							setNode(wrPane);
+							break;
+						case "doctorMenu":
+							drawer.close();
+							setNode(Profile);
+							break;
+						case "WorkOrder":
+							drawer.close();
+							setNode(woPane);
+							break;
+						case "appointmentMenu":
+							drawer.close();
+							setNode(Profile);
+							break;
+							
+						case "Equipment":
+							drawer.close();
+							setNode(Equipment);
+							break;
 
-    }
+
+						case "NeedsStock":
+							drawer.close();
+							setNode(ndPane);
+
+						}
+					});
+				}
+
+			}
+
+		} catch (IOException ex) {
+			Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+	}
 
     private void setNode(Node node) {
         holderPane.getChildren().clear();
