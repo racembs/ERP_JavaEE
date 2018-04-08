@@ -195,15 +195,23 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 	}
 
 	@Override
-	public int CheckReadyLot(NeededItem Parent) {
+	public int CheckReadyLot(NeededItem Parent,List<NeededItem> children) {
 		int lowestReadyLot=10000000;
-		List<NeedNomenclature> nomenclatureList = needNomenclature.getNeededItemChildren(Parent.getId());
-		for (NeedNomenclature needNomenclature : nomenclatureList) {
-			if(lowestReadyLot>needNomenclature.getChild().getReadyLotNumber()){
-				lowestReadyLot=needNomenclature.getChild().getReadyLotNumber();
+		//List<NeededItem> nomenclatureList = needNomenclature.getNeededItemChildren(Parent.getId());
+		for (NeededItem child : children) {
+			if(lowestReadyLot>child.getReadyLotNumber()){
+				lowestReadyLot=child.getReadyLotNumber();
 			}
 		}
 		return lowestReadyLot;
+	}
+
+	@Override
+	public Map<NeededItem, List<NeededItem>> updateNeedItemTree(Map<NeededItem, List<NeededItem>> map) {
+		for (NeededItem neededItem : map.keySet()) {
+			em.merge(neededItem);
+		}
+		return map;
 	}
 
 

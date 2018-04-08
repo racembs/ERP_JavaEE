@@ -16,10 +16,11 @@ public interface NeededItemServiceLocal extends IGenericDAO<NeededItem> {
 	public Map<NeededItem, NeedNomenclature> addChildrenNeededItem(NeededItem neededItem);
 	public Map<NeededItem, List<NeededItem>> CreateNeedItemTree(NeededItem ParentneededItem);
 	public Map<NeededItem, List<NeededItem>> SaveNeedItemTree(Map<NeededItem, List<NeededItem>> map);
+	public Map<NeededItem, List<NeededItem>> updateNeedItemTree(Map<NeededItem, List<NeededItem>> map);
 	public Map<NeededItem, List<NeededItem>> InitialiseMap();
 	public Map<NeededItem, List<NeededItem>> findNeededItemTreeByOrdredItem(NeededItem ParentneededItem);
 	public List<NeededItem> NeedItemList(Map<NeededItem, List<NeededItem>> map);
 	public NeededItem getNeededItemParentOfOrdredItem(int idOrder, int idArticle);
-	public int CheckReadyLot(NeededItem Parent);
+	public int CheckReadyLot(NeededItem Parent,List<NeededItem> children);
 
 }

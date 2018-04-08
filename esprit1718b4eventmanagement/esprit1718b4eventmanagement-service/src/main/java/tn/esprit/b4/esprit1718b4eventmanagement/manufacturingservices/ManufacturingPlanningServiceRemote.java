@@ -2,6 +2,7 @@ package tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Remote;
 
@@ -15,5 +16,7 @@ public interface ManufacturingPlanningServiceRemote extends IGenericDAO<Manufact
 
 	public int manufacturingDuration(Article article,int quantity);
 	public Date endingManufacturingDate(Date startingDate,long duration);
+	public List<ManufacturingPlanning> ReadyManufacturingPlanning(Map<NeededItem, List<NeededItem>> map,Date startingDate);
+	public void updateStatusToFinished();
 	
 }

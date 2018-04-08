@@ -121,7 +121,7 @@ public class TestManufacturing {
 	    System.out.println(duration);
 	    
 		Calendar cal = Calendar.getInstance();
-		cal.set(2018, 02, 12, 15, 0);
+		cal.set(2018, 03, 8, 11, 0);
 
 		Date dt = cal.getTime();
 		
@@ -130,9 +130,16 @@ public class TestManufacturing {
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd kk:mm");
 	    System.out.println(sdf.format(d));
 	    
-	    
-	    
-	    
+//	    List<ManufacturingPlanning> ListMan = proxyManufacturing.ReadyManufacturingPlanning(map, dt);
+//	    for (ManufacturingPlanning manufacturingPlanning : ListMan) {
+//			System.out.println(manufacturingPlanning.getNeededItem().getNeeded_article().getArticleCode());
+//			System.out.println(manufacturingPlanning.getNeededItem().getNeeded_article().getQuantity());
+//			System.out.println(manufacturingPlanning.getQuantity());
+//			System.out.println(manufacturingPlanning.getStartingDate());
+//			System.out.println(manufacturingPlanning.getEndingDate());
+//			System.out.println("next");
+//		}
+	    proxyManufacturing.updateStatusToFinished();
 	}
 
 }
