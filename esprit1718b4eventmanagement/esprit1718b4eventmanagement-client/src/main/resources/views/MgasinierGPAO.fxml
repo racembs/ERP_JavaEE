@@ -37,7 +37,7 @@
                            <items>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
                                  <children>
-                                    <TableView fx:id="tableAllOrders" layoutX="118.0" layoutY="169.0" prefHeight="386.0" prefWidth="849.0">
+                                    <TableView fx:id="tableAllOrders" layoutX="111.0" layoutY="90.0" prefHeight="343.0" prefWidth="849.0">
                                       <columns>
                                         <TableColumn fx:id="tArticle" prefWidth="169.0" text="          Article" />
                                         <TableColumn fx:id="tQuantity" minWidth="5.0" prefWidth="137.0" text="     Quantity" />
@@ -48,13 +48,15 @@
                                        <contextMenu>
                                           <ContextMenu fx:id="contextMenu">
                                             <items>
-                                              <MenuItem fx:id="UpdateItem" mnemonicParsing="false" onAction="#OnMenuUpdateArticleClicked" text="Update" />
-                                                <MenuItem fx:id="deleteItem" mnemonicParsing="false" onAction="#OnDeleteArticleClicked" text="Delete" />
+                                              <MenuItem fx:id="confirmer" mnemonicParsing="false" onAction="#OnConfirmOrderClicked" text="Confirm Reception " />
+                                                <MenuItem fx:id="generatePdf" mnemonicParsing="false" onAction="#OnGeneratePdfClicked" text="Generate Pdf" />
                                             </items>
                                           </ContextMenu>
                                        </contextMenu>
                                     </TableView>
-                                    <JFXTextField fx:id="txtSearchOrder" focusColor="#00add8" labelFloat="true" layoutX="439.0" layoutY="96.0" onKeyReleased="#SearchOrdreFromTableAction" prefHeight="42.0" prefWidth="208.0" promptText="            Search Ordre" unFocusColor="#868282" />
+                                    <JFXTextField fx:id="txtSearchOrder" focusColor="#00add8" labelFloat="true" layoutX="415.0" layoutY="28.0" onKeyReleased="#SearchOrdreFromTableAction" prefHeight="42.0" prefWidth="208.0" promptText="            Search Ordre" unFocusColor="#868282" />
+                                    <DatePicker fx:id="receptionDate" disable="true" layoutX="347.0" layoutY="493.0" opacity="0.0" promptText="Reception date" />
+                                    <JFXButton fx:id="BtnConfirmOrder" buttonType="RAISED" disable="true" layoutX="623.0" layoutY="491.0" onAction="#OnConfirmBtnAction" opacity="0.0" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: rgb(0,180,212); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="Confirm" />
                                  </children>
                               </AnchorPane>
                            </items>

@@ -5,14 +5,24 @@
  */
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.mail.MessagingException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -25,7 +35,9 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableCell;
@@ -35,6 +47,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.MvtApprov;
@@ -71,6 +84,14 @@ public class MgasinierGPAOController implements Initializable {
     private TableColumn<MvtApprov,String> tReceptionDate;
     @FXML
     private JFXTextField txtSearchOrder;
+    @FXML
+    private JFXButton BtnConfirmOrder;
+    @FXML
+    private DatePicker receptionDate;
+    @FXML
+    private MenuItem generatePdf;
+    
+    
 
     /**
      * Initializes the controller class.
@@ -80,6 +101,7 @@ public class MgasinierGPAOController implements Initializable {
        try {
 		fillTableAllOrdres("all");
 		AuoOrderCreation();
+		
 		
 	} catch (NamingException e) {
 		// TODO Auto-generated catch block
@@ -112,26 +134,7 @@ public void fillTableAllOrdres(String code) throws NamingException {
   	        }
   	    };
   	});
-	  tReceptionDate.setCellFactory(column -> {
-	  	    return new TableCell<MvtApprov, String>() {
-	  	        @Override
-	  	        protected void updateItem(String item, boolean empty) {
-	  	            super.updateItem(item, empty);
-
-	  	            if (item == null || empty) {
-	  	                setText(null);
-	  	                setStyle("");
-	  	            } else {
-	  	            
-	  	            	setText(item);
-	  	            	//setTextFill(Color.BLACK);
-	  	                // setStyle("-fx-background-color: #eaeaea");
-	  	                    
-	  	               
-	  	            }
-	  	        }
-	  	    };
-	  	});
+	
 	 tArticle.setCellValueFactory(new Callback<CellDataFeatures<MvtApprov,String>,ObservableValue<String>>(){
 
          @Override
@@ -163,13 +166,7 @@ public void fillTableAllOrdres(String code) throws NamingException {
 
 	
 }
-    @FXML
-    private void OnMenuUpdateArticleClicked(ActionEvent event) {
-    }
-
-    @FXML
-    private void OnDeleteArticleClicked(ActionEvent event) {
-    }
+ 
 
 
     @FXML
@@ -224,5 +221,114 @@ public void fillTableAllOrdres(String code) throws NamingException {
     	
     	}
     }
+    @FXML
+    private void OnConfirmOrderClicked(ActionEvent event) {
+    	receptionDate.setDisable(false);
+    	BtnConfirmOrder.setDisable(false);
+    	receptionDate.setOpacity(1);
+    	BtnConfirmOrder.setOpacity(1);
+    }
+    
+    @FXML
+    private void OnGeneratePdfClicked(ActionEvent event) {
+    	MvtApprov mvtApprov=tableAllOrders.getSelectionModel().getSelectedItem();
+    	  FileChooser fileChooser = new FileChooser();
+          fileChooser.setTitle("Save Copy of Report");
+          fileChooser.setInitialDirectory(
+                  new File(System.getProperty("user.home"))
+          );
+          fileChooser.setInitialFileName("Report"+mvtApprov.getArticle().getArticleCode()+"_"+mvtApprov.getRequestDate()+".pdf");
+          FileChooser.ExtensionFilter pdfExtensionFilter =
+                  new FileChooser.ExtensionFilter(
+                          "PDF - Portable Document Format (.pdf)", "*.pdf");
+          fileChooser.getExtensionFilters().add(pdfExtensionFilter);
+          fileChooser.setSelectedExtensionFilter(pdfExtensionFilter);
+          File file = fileChooser.showSaveDialog(txtSearchOrder.getContextMenu());
+
+          if (file != null) {
+              try {
+            	  genereteReportPdf(mvtApprov,file.getPath());
+              } catch (Exception e) {
+                  e.printStackTrace();
+              }
+          }
+      }
+    
+    @FXML
+    private void OnConfirmBtnAction(ActionEvent event) throws NamingException {
+
+    	String jndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/MvtApprovService!tn.esprit.b4.esprit1718b4eventmanagement.services.MvtApprovServiceRemote";
+    	Context context1 = new InitialContext();
+    	MvtApprovServiceRemote OrdreProxy = (MvtApprovServiceRemote) context1.lookup(jndiName);
+    	
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context2 = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context2.lookup(ArticlejndiName);
+    	
+    	
+    	MvtApprov mvtApprov=tableAllOrders.getSelectionModel().getSelectedItem();
+    	LocalDate  localDateRequest = receptionDate.getValue();
+    	Alert alert = new Alert(Alert.AlertType.WARNING);
+    	if(localDateRequest==null) {
+    		 alert.setTitle("Wrong Date");
+             alert.setHeaderText("You should choose a date");
+            alert.showAndWait();
+    	}else {
+   	 Date RecptionTypeDate = java.sql.Date.valueOf(localDateRequest);
+   	 
+    java.util.Date CurrentDate=new java.util.Date();
+    
+	 if(RecptionTypeDate.compareTo(CurrentDate)>=0) {
+		 alert.setTitle("Wrong Date");
+         alert.setHeaderText("Reception Date is wrong");
+        alert.showAndWait();
+	 }else {
+			mvtApprov.setReceptionDate(RecptionTypeDate);
+	    	
+	    	OrdreProxy.updateMvtApprov(mvtApprov);
+	    	fillTableAllOrdres("all");
+	    	receptionDate.setDisable(true);
+	    	BtnConfirmOrder.setDisable(true);
+	    	receptionDate.setValue(null);
+	    	receptionDate.setOpacity(0.5);
+	    	BtnConfirmOrder.setOpacity(0.5);
+	    	aArticleProxy.incrementArticleQuantity(mvtApprov.getArticle().getId(), mvtApprov.getQuantity());
+	 }
+    	}
+    
+    	
+    }
+    
+    private void genereteReportPdf(MvtApprov order ,String path) throws IOException, DocumentException, MessagingException {
+    	Document document = new Document();
+
+PdfWriter.getInstance(document, new FileOutputStream(path));
+
+document.open();
+
+document.add(new Paragraph("\n--------------------  Product Request  --------------------------\n\n"
+    + " Article Code :"+order.getArticle().getArticleCode()
+    + "\n Quantity needed  : "+order.getQuantity()
+    +"\n Company : SpotLight GPAO"
+    + "\n\n\n"
+    + "\n Date :"+new java.util.Date()+"\n\n"
+    + " Cordially "
+));
+
+document.addTitle("title");
+document.close();
+
+
+
+Alert alert = new Alert(Alert.AlertType.INFORMATION);
+alert.setTitle("information");
+alert.setHeaderText(null);
+alert.setContentText("The report is successfully generated");
+alert.show();
+
+
+}
+
+    
 }
    

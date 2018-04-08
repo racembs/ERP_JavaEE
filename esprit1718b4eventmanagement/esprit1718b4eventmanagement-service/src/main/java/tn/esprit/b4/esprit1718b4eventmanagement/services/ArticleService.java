@@ -91,6 +91,15 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 		
 		em.merge(nomenclature);
 	}
+	@Override
+	public List<Nomenclature> getAllFinalArticleNomenclature(){
+		TypedQuery<Nomenclature> query
+		=em.createQuery("select n from Nomenclature n", Nomenclature.class);
+		//query.setParameter("type", "Produit-Fini");
+		List<Nomenclature> nomenclature=query.getResultList();
+		return nomenclature;
+		
+	}
 
 
 	@Override
