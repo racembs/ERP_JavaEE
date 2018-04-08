@@ -165,26 +165,32 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 			  query.setParameter("date",cal.getTime(),TemporalType.TIMESTAMP).executeUpdate();
 		Set<NeededItem> set1 = new HashSet<>(needItem.findAll());
 		for (NeededItem neededItem : set1) {
-			if(!neededItem.getManufacturingPlanning().isEmpty()){
-				Set<ManufacturingPlanning> set2 = new HashSet<>(neededItem.getManufacturingPlanning());
-				boolean status =true;
-				for (ManufacturingPlanning manufacturingPlanning : set2) {
-					if(!manufacturingPlanning.getStatus().equals("finished")){
-						status = false;
-					}else{
-						int ArtQty=manufacturingPlanning.getNeededItem().getNeeded_article().getQuantity();
-						int ReservQty =manufacturingPlanning.getNeededItem().getNeeded_article().getReservedQuantity();
-						int qty = manufacturingPlanning.getQuantity();
-						manufacturingPlanning.getNeededItem().getNeeded_article().setQuantity(qty+ArtQty);
-						manufacturingPlanning.getNeededItem().getNeeded_article().setReservedQuantity(qty+ReservQty);
-						articleServ.updateArticle(manufacturingPlanning.getNeededItem().getNeeded_article());
+			if(!neededItem.getStatus().equals("finished")){
+				if(!neededItem.getManufacturingPlanning().isEmpty()){
+					Set<ManufacturingPlanning> set2 = new HashSet<>(neededItem.getManufacturingPlanning());
+					boolean status =true;
+					for (ManufacturingPlanning manufacturingPlanning : set2) {
+						if(!manufacturingPlanning.getStatus().equals("finished")){
+							status = false;
+						}else{
+							if(!manufacturingPlanning.getIs_incremented()){
+								int ArtQty=manufacturingPlanning.getNeededItem().getNeeded_article().getQuantity();
+								int ReservQty =manufacturingPlanning.getNeededItem().getNeeded_article().getReservedQuantity();
+								int qty = manufacturingPlanning.getQuantity();
+								manufacturingPlanning.getNeededItem().getNeeded_article().setQuantity(qty+ArtQty);
+								manufacturingPlanning.getNeededItem().getNeeded_article().setReservedQuantity(qty+ReservQty);
+								articleServ.updateArticle(manufacturingPlanning.getNeededItem().getNeeded_article());
+								manufacturingPlanning.setIs_incremented(true);
+							}
+						}
+					}
+					if(status==true){
+						neededItem.setStatus("finished");
+						needItem.update(neededItem);
 					}
 				}
-				if(status==true){
-					neededItem.setStatus("finished");
-					needItem.update(neededItem);
-				}
 			}
+			
 		}
 		
 	}

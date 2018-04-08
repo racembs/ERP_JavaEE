@@ -107,6 +107,14 @@ public class ManufacturingPlanning implements Serializable {
 		this.status = status;
 		this.neededItem = neededItem;
 	}
+
+	public boolean getIs_incremented() {
+		return is_incremented;
+	}
+
+	public void setIs_incremented(boolean is_incremented) {
+		this.is_incremented = is_incremented;
+	}
 	
 	
 
