@@ -34,12 +34,20 @@ public class WorkPrevService implements WorkPrevServiceLocal, WorkPrevServiceRem
 	@Override
 	public void addWP(PreventiveWork w) {
 		
-	
 		em.persist(w);
 		
 	}
 	@Override
 	public List<PreventiveWork> DisplayPWorks() {
-		return em.createQuery("from Works", PreventiveWork.class).getResultList();
+		return em.createQuery("from PreventiveWork", PreventiveWork.class).getResultList();
+	}
+	@Override
+	public List<PreventiveWork> displayWPbyTech(int idtech) {
+	
+		TypedQuery<PreventiveWork> query=em.createQuery("SELECT e FROM"
+				+ " PreventiveWork e WHERE e.technicianId =:param2 ",PreventiveWork.class);
+		
+		query.setParameter("param2", idtech);
+		return query.getResultList();
 	}
 }
