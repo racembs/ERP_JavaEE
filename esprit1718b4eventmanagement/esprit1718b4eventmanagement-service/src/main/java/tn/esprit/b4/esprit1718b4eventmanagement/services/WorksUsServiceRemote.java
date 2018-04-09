@@ -19,6 +19,7 @@ public interface WorksUsServiceRemote {
 	public void deleteWork(int idw);
 	public List<UsualWork> displayWRB();
 	//public Equipment findById(int id);
+	public UsualWork findById(int idW);
 	public List<Works> DisplayUSWorks();
 	public List<UsualWork> displayWO();
 	public List<UsualWork> displayWObyTech(int idtech);

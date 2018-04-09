@@ -8,6 +8,7 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeView;
@@ -125,6 +126,8 @@ public class WorkOsController implements Initializable {
     private JFXButton done;
     @FXML
     private GridPane pane;
+    @FXML
+    private JFXRadioButton book;
 
     static UsualWork work;
     /**
@@ -320,5 +323,9 @@ public class WorkOsController implements Initializable {
     	proxy.deleteWork(work.getId());
     	//l'affichage de l interface booking
     	
+    }
+    
+    @FXML
+    private void onBookTool(ActionEvent event) {
     }
 }

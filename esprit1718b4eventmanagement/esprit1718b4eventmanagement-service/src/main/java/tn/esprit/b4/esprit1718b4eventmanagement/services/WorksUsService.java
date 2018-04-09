@@ -7,6 +7,7 @@ import javax.persistence.TypedQuery;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Tool;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 
@@ -90,5 +91,11 @@ public class WorksUsService implements WorksUsServiceLocal, WorksUsServiceRemote
 			query.setParameter("param", Nature.WorkOrder);
 			query.setParameter("param2", idtech);
 			return query.getResultList();
+		}
+		@Override
+		public UsualWork findById(int idW) {
+			TypedQuery<UsualWork> query=em.createQuery("SELECT S FROM UsualWork S WHERE S.id= :n",UsualWork.class);
+	        query.setParameter("n", idW);
+			return query.getSingleResult();
 		}
 }
