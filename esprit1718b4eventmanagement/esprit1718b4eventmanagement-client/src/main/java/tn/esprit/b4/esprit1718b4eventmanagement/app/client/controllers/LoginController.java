@@ -171,6 +171,20 @@ user.setNb("0");
 					primaryStage.show();
 					  btnLogin.getScene().getWindow().hide();
 				} 
+				else if (txtPassword.getText().equals(user.getPassword())&&(user.getRole().equals("storekeeper"))&&(user.getStatut().equals("valable"))) {
+					System.out.println("3okkkeeyy");
+					
+
+					
+				
+			    	Parent parent= null;
+			    	parent  =FXMLLoader.load(getClass().getResource("/views/MgasinierGPAO.fxml"));
+					Scene scene=new Scene(parent);
+					Stage primaryStage= new Stage(); 
+					primaryStage.setScene(scene);
+					primaryStage.show();
+					  btnLogin.getScene().getWindow().hide();
+				}
 				else {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Error");
