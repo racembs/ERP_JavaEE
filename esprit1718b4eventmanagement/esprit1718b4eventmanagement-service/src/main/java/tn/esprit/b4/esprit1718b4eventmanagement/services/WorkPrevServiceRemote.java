@@ -17,4 +17,5 @@ import tn.esprit.b4.esprit1718b4eventmanagement.utilities.IGenericDAO;
 public interface WorkPrevServiceRemote {
 	public void addWP(PreventiveWork w);
 	public List<PreventiveWork> DisplayPWorks();
+	public List<PreventiveWork> displayWPbyTech(int idtech);
 }

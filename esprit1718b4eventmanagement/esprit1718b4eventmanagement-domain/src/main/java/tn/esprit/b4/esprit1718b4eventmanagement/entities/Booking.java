@@ -1,6 +1,7 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.entities;
 
 import java.io.Serializable;
+
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -23,6 +24,8 @@ private static final long serialVersionUID = 1L;
 	@Column(name = "Release_DATE")
 	@Temporal(TemporalType.DATE)
 	private Date ReleaseDate;
+	@Column(name = "Quantity")
+	private int Quantity;
 	
 	@EmbeddedId
 	private BookingPK bookingPK;
@@ -30,6 +33,18 @@ private static final long serialVersionUID = 1L;
 
 	
 	////////////////////
+
+	public int getQuantity() {
+		return Quantity;
+	}
+
+
+
+	public void setQuantity(int quantity) {
+		Quantity = quantity;
+	}
+
+
 
 	@ManyToOne
 	@JoinColumn(name="id",referencedColumnName="id",insertable=false,updatable=false)

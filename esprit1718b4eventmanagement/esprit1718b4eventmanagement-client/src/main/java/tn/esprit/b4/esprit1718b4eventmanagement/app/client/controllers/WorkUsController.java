@@ -564,6 +564,7 @@ public class WorkUsController implements Initializable {
 				  	TablePosition<UsualWork, String> pos = eventk.getTablePosition();
 			
 				User tech =userServicej.userbyfstlstname(eventk.getNewValue());
+				
 			       int row = pos.getRow();
 			  
 			       xxx= eventk.getTableView().getItems().get(row);

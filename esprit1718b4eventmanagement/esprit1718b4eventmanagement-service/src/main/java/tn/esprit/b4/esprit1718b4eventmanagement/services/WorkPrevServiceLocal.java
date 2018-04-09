@@ -12,4 +12,5 @@ import java.util.List;
 public interface WorkPrevServiceLocal {
 	public void addWP(PreventiveWork w);
 	public List<PreventiveWork> DisplayPWorks();
+	public List<PreventiveWork> displayWPbyTech(int idtech);
 }

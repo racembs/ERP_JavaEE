@@ -8,14 +8,17 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -24,7 +27,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import org.controlsfx.control.PlusMinusSlider?>
 
 <AnchorPane id="AnchorPane" prefHeight="684.0" prefWidth="1105.0" stylesheets="@../views/styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.WorkOsController">
    <children>
@@ -40,7 +42,7 @@
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
                                  <children>
                                     <TextField layoutX="787.0" layoutY="14.0" prefHeight="30.0" prefWidth="302.0" promptText="Search doctor by name" styleClass="search-box" />
-                                    <TableView fx:id="tableview" layoutX="11.0" layoutY="53.0" prefHeight="326.0" prefWidth="1080.0">
+                                    <TableView fx:id="table" editable="true" layoutX="12.0" layoutY="14.0" prefHeight="236.0" prefWidth="1080.0">
                                       <columns>
                                       
                                           <TableColumn fx:id="C1" editable="true" prefWidth="150.0" text="Object" />
@@ -53,6 +55,19 @@
                                            <TableColumn fx:id="C8" editable="true" prefWidth="150.0" text="starting date" />
                                            <TableColumn fx:id="C9" editable="true" prefWidth="150.0" text="ending date" />
                                       </columns>
+                                    </TableView>
+                                    <TableView fx:id="tableview1" layoutX="14.0" layoutY="271.0" prefHeight="130.0" prefWidth="1076.0">
+                                       <columns>
+                                          <TableColumn fx:id="C11" editable="true" prefWidth="150.0" text="Object" />
+                                          <TableColumn fx:id="C21" editable="true" prefWidth="150.0" text="Add.Informations" />
+                                          <TableColumn fx:id="C31" editable="true" prefWidth="150.0" text="Technology" />
+                                          <TableColumn fx:id="C41" editable="true" prefWidth="150.0" text="wo-state" />
+                                          <TableColumn fx:id="C51" editable="true" prefWidth="150.0" text="Emmergency" />
+                                          <TableColumn fx:id="C61" editable="true" prefWidth="150.0" sortable="true" text="Creation Date" />
+                                          <TableColumn fx:id="C71" editable="true" prefWidth="150.0" text="Equipment(Ref--Info)" />
+                                          <TableColumn fx:id="C81" editable="true" prefWidth="150.0" text="starting date" />
+                                          <TableColumn fx:id="C91" editable="true" prefWidth="150.0" text="ending date" />
+                                       </columns>
                                     </TableView>
                                  </children>
                               </AnchorPane>
@@ -74,7 +89,7 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label fx:id="l1" text="Selected equipment" visible="false" />
+                                                <Label fx:id="l12" text="Selected equipment" visible="false" />
                                                
                                                 <JFXTextField fx:id="f1" prefHeight="20.0" prefWidth="258.0" styleClass="blue-label" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                 <JFXTextField fx:id="f2" prefHeight="20.0" prefWidth="300.0" styleClass="blue-label" text="" GridPane.columnIndex="1" />
@@ -86,7 +101,7 @@
                                              </children>
                                              
                                           </GridPane>
-                                          <VBox prefHeight="210.0" prefWidth="452.0" style="-fx-background-color: #00A8FF;" styleClass="card-unpadded">
+                                          <VBox prefHeight="210.0" prefWidth="278.0" style="-fx-background-color: #00A8FF;" styleClass="card-unpadded">
                                              <children>
                                                 <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="320.0" spacing="20.0" style="-fx-background-color: #00A0F3;">
                                                    <children>
@@ -164,6 +179,13 @@
                                                 <JFXButton fx:id="delete" onAction="#onclickDelete" prefHeight="30.0" prefWidth="106.0" ripplerFill="#0ff75e" style="-fx-background-color: #AAAAAA;" styleClass="red-label" text="delete" />
                                              </children>
                                           </VBox>
+                                          <VBox prefHeight="200.0" prefWidth="100.0" />
+                                          <VBox prefHeight="210.0" prefWidth="102.0">
+                                             <children>
+                                                <JFXButton fx:id="eya1" onAction="#onBookTools" prefHeight="37.0" prefWidth="201.0" styleClass="green-btn" text="book tools" />
+                                                <JFXButton fx:id="eya2" onAction="#onAddSpares" prefHeight="30.0" prefWidth="100.0" styleClass="blue-btn" text="add spare parts" />
+                                             </children>
+                                          </VBox>
                                        </children>
                                     </HBox>
                                  </children>
@@ -178,9 +200,9 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-      <VBox layoutX="5.0" layoutY="6.0" prefHeight="774.0" prefWidth="362.0" spacing="20.0" styleClass="card-unpadded">
+      <VBox layoutX="5.0" layoutY="6.0" minHeight="-Infinity" prefHeight="631.0" prefWidth="362.0" spacing="20.0" styleClass="card-unpadded">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="320.0" spacing="20.0" style="-fx-background-color: #00A65A;">
+            <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="362.0" spacing="20.0" style="-fx-background-color: #00A65A;">
                <children>
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -193,50 +215,55 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <JFXTextField labelFloat="true" maxWidth="320.0" minWidth="105.0" prefHeight="30.0" prefWidth="214.0" promptText="Object" />
-                              <JFXTextArea prefHeight="46.0" prefWidth="336.0" promptText="Add. Informations" />
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="152.0" prefWidth="159.0" translateY="1.0">
-               <children>
-                  <Label style="-fx-text-fill: #AAAAAA;" text="Technology" />
-                  <JFXComboBox prefHeight="30.0" prefWidth="143.0" />
-                                    <JFXDatePicker minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="145.0" promptText="Starting Date" />
-               </children>
-               <padding>
-                  <Insets left="15.0" right="10.0" />
-               </padding>
-            </VBox>
-                              <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="154.0" translateX="180.0" translateY="-153.0">
-                                 <padding>
-                                    <Insets left="15.0" />
-                                 </padding>
+            <JFXTextField fx:id="object" labelFloat="true" maxWidth="320.0" minWidth="105.0" prefHeight="7.0" prefWidth="320.0" promptText="Object" />
+                              <JFXTextArea fx:id="info" prefHeight="0.0" prefWidth="362.0" promptText="Add. Informations" />
+                              <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <JFXDatePicker promptText="Trigger" />
-                  <JFXDatePicker minHeight="-Infinity" minWidth="-Infinity" prefHeight="77.0" prefWidth="143.0" promptText="Ending Date" />
-                                    <Label prefHeight="20.0" prefWidth="81.0" text="Frequency" />
-                                    <PlusMinusSlider maxHeight="31.0" maxWidth="111.0" prefHeight="31.0" prefWidth="111.0" />
+                                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="174.0" prefWidth="173.0">
+                                       <padding>
+                                          <Insets left="15.0" />
+                                       </padding>
+                                       <children>
+                                          <Label text="Warning days" textFill="#434141" />
+                                          <Spinner fx:id="spinner1" initialValue="3" max="100" min="0" prefHeight="13.0" prefWidth="85.0">
+                                             <effect>
+                                                <Glow />
+                                             </effect>
+                                          </Spinner>
+                                          <JFXDatePicker fx:id="startdate" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="150.0" promptText="Starting Date" />
+                                          <Label prefHeight="34.0" prefWidth="91.0" text="Frequency" textFill="#5e5d5d" />
+                                       
+                                          <Spinner fx:id="spinner" initialValue="3" max="100" min="0" prefHeight="30.0" prefWidth="85.0">
+                                            
+          										
+                                             <effect>
+                                                <Glow />
+                                             </effect>
+                                          </Spinner>
+                                       </children>
+                                      
+                                    </VBox>
+                  <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="172.0" prefWidth="181.0">
+                     <children>
+                        <JFXComboBox fx:id="combotech" prefHeight="48.0" prefWidth="145.0" promptText="Technology" />
+                        <JFXDatePicker fx:id="enddate" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="158.0" promptText="Ending Date" />
+                                          <JFXComboBox fx:id="techniciancombo" prefHeight="49.0" prefWidth="145.0" promptText="Technician" />
+                     </children>
+                     <padding>
+                        <Insets left="15.0" right="10.0" />
+                     </padding>
+                  </VBox>
                                  </children>
-                              </VBox>
-                              <Label text="select equipement" />
-                              <VBox prefHeight="30.0" prefWidth="321.0">
-                                 <padding>
-                                    <Insets left="15.0" />
-                                 </padding>
-                              </VBox>
-                              <JFXButton styleClass="blue-btn" text="Save" translateX="290.0" />
-            <HBox alignment="BOTTOM_RIGHT" prefHeight="39.0" prefWidth="224.0" translateY="310.0">
-                                 <children>
-                  <JFXButton buttonType="RAISED" styleClass="blue-btn" text="SAVE" />
-                                 </children>
-            </HBox>
+                              </HBox>
          </children>
       </VBox>
       <AnchorPane layoutX="372.0" layoutY="3.0" prefHeight="666.0" prefWidth="721.0" styleClass="card-unpadded">
          <children>
-            <TitledPane animated="false" layoutX="16.0" layoutY="6.0" prefHeight="342.0" prefWidth="711.0" styleClass="blue-titledPane" text="new preventive works">
+            <TitledPane animated="false" layoutX="16.0" layoutY="6.0" prefHeight="342.0" prefWidth="711.0" styleClass="blue-titledPane" text=" preventive works">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="13.0" layoutY="14.0" prefHeight="292.0" prefWidth="700.0">
+                        <TableView fx:id="tableview" layoutX="13.0" layoutY="14.0" prefHeight="292.0" prefWidth="700.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="C1" />
                             <TableColumn prefWidth="75.0" text="C2" />
@@ -246,11 +273,11 @@
                   </AnchorPane>
               </content>
             </TitledPane>
-            <TitledPane animated="false" layoutX="3.0" layoutY="360.0" prefHeight="274.0" prefWidth="724.0" styleClass="blue-titledPane" text="show all">
+            <TitledPane animated="false" layoutX="3.0" layoutY="360.0" prefHeight="274.0" prefWidth="724.0" styleClass="blue-titledPane" text="search">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="722.0">
                      <children>
-                        <TableView layoutX="247.0" layoutY="14.0" prefHeight="200.0" prefWidth="453.0">
+                        <TableView fx:id="tableviewsearch" layoutX="247.0" layoutY="14.0" prefHeight="200.0" prefWidth="453.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="C1" />
                             <TableColumn prefWidth="75.0" text="C2" />
@@ -266,7 +293,7 @@
                                  </children>
                               </VBox>
                               <TextField layoutX="9.0" layoutY="112.0" prefHeight="29.0" prefWidth="191.0" promptText="Search here" styleClass="search-box" />
-                              <JFXButton layoutX="64.0" layoutY="153.0" ripplerFill="#0ff75e" style="-fx-background-color: #AAAAAA;" text="Search..." />
+                              <JFXButton fx:id="search" layoutX="64.0" layoutY="153.0" ripplerFill="#0ff75e" style="-fx-background-color: #AAAAAA;" text="Search..." />
                            </children>
                         </AnchorPane>
                      </children>
@@ -275,6 +302,8 @@
             </TitledPane>
          </children>
       </AnchorPane>
+                        <JFXTreeView fx:id="treeviewEq" editable="true" layoutX="7.0" layoutY="337.0" prefHeight="234.0" prefWidth="357.0" styleClass="jfx-decorator" />
+                        <JFXButton fx:id="save" layoutX="109.0" layoutY="594.0" onAction="#onclickSave" prefHeight="25.0" prefWidth="107.0" styleClass="green-btn" text="Save" />
    </children>
                   </AnchorPane>
             </content>

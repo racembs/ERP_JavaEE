@@ -2,10 +2,12 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
 
 import java.io.Serializable;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -18,6 +20,7 @@ import org.jfree.data.time.SimpleTimePeriod;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
+import javafx.fxml.Initializable;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingPlanning;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ClientServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ManufacturingPlanningServiceRemote;
@@ -36,7 +39,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.utilities.ServiceLocator;
  *
  *
  */
-public class GanttDemo1 extends ApplicationFrame implements Serializable {
+public class GanttDemoController extends ApplicationFrame implements Initializable {
 	
 	String jndiNameClient = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ClientService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ClientServiceRemote";
 	String jndiNameNomenclature = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/NeedNomenclatureService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeedNomenclatureServiceRemote";
@@ -59,12 +62,11 @@ public class GanttDemo1 extends ApplicationFrame implements Serializable {
      *
      * @param title  the frame title.
      */
-    public GanttDemo1(final String title) {
+    public GanttDemoController(final String title,List<ManufacturingPlanning> list) {
     	
     	
 
         super(title);
-        List<ManufacturingPlanning> list = proxyManufacturing.findAll();
         final IntervalCategoryDataset dataset = createDataset(list);
         final JFreeChart chart = createChart(dataset);
 
@@ -150,11 +152,17 @@ public class GanttDemo1 extends ApplicationFrame implements Serializable {
      */
     public static void main(final String[] args) {
 
-        final GanttDemo1 demo = new GanttDemo1("Gantt Chart Demo 1");
-        demo.pack();
-        RefineryUtilities.centerFrameOnScreen(demo);
-        demo.setVisible(true);
+//        final GanttDemoController demo = new GanttDemoController("Gantt Chart Demo 1");
+//        demo.pack();
+//        RefineryUtilities.centerFrameOnScreen(demo);
+//        demo.setVisible(true);
 
     }
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

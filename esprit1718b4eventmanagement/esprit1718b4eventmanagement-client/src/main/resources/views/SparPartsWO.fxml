@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXDatePicker?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -14,8 +12,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.BookingController">
-   <children>
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.SparPartsWOController">
+    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
             <AnchorPane prefHeight="36.0" prefWidth="850.0" BorderPane.alignment="CENTER">
@@ -56,12 +54,12 @@
                         <TableColumn fx:id="studentCCourseColumnSec" prefWidth="71.0" text="family" />
                     </columns>
                   </TableView>
-                  <Text fill="#0091ea" layoutX="391.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All Tools List :">
+                  <Text fill="#0091ea" layoutX="391.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Spare Parts List :">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <Text fill="#0091ea" layoutX="5.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Chosen Tools :">
+                  <Text fill="#0091ea" layoutX="5.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Chosen Spares :">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -74,10 +72,8 @@
                      </font>
                   </Button>
                   <Button layoutX="272.0" layoutY="6.0" mnemonicParsing="false" onAction="#onBookedToolsRefresh" prefHeight="25.0" prefWidth="82.0" style="-fx-background-color: #09B28C;" text="Refresh" textFill="WHITE" />
-                  <TextField fx:id="registrationTFSearch" layoutX="607.0" layoutY="6.0" promptText="Tool reference" />
+                  <TextField fx:id="registrationTFSearch" layoutX="607.0" layoutY="6.0" promptText="Spare-Parts reference" />
                   <Button layoutX="770.0" layoutY="6.0" mnemonicParsing="false" onAction="#onToolSearchClick" prefHeight="25.0" prefWidth="66.0" text="Search" />
-                  <JFXDatePicker fx:id="EndDate" layoutX="132.0" layoutY="422.0" prefHeight="30.0" prefWidth="134.0" />
-                  <Label layoutX="6.0" layoutY="431.0" text="End of Booking Date : " textFill="#b20909" />
                </children>
             </AnchorPane>
          </bottom>

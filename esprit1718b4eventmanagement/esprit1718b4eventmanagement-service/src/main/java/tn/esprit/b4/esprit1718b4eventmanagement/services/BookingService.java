@@ -1,5 +1,6 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 
 import javax.persistence.PersistenceContext;
@@ -10,7 +11,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.BookingPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 
 
-
+@Stateless
 public class BookingService implements BookingServiceLocal,BookingServiceRemote{
 
 	@PersistenceContext(unitName="spotlight-ejb")
