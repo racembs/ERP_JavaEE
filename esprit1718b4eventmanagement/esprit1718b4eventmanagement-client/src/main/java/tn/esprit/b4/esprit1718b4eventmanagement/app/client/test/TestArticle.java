@@ -35,7 +35,7 @@ public class TestArticle extends Application {
     	MvtApprovServiceRemote OrdreProxy = (MvtApprovServiceRemote) context1.lookup(jndiName);
     //	System.out.println(OrdreProxy.getOrderByArticle(article.getId()).getQuantity());
 	
-		Parent parent =FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
+		Parent parent =FXMLLoader.load(getClass().getResource("/views/MgasinierGPAO.fxml"));
 		Scene scene=new Scene(parent);
 		scene.getStylesheets().add("/src/main/resouces/views/tab.css");
 		primaryStage.setScene(scene);

@@ -188,7 +188,7 @@ public class ArticleController implements Initializable {
     
     	
     	try {
-    		fillTreeTableView("all");
+    		
     		fillTableView("all");
     		//AuoOrderCreation();
     		
@@ -286,7 +286,7 @@ comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Prod
 				
 			}
 		});
-    	//fillTreeTableView("all");
+    	fillTreeTableView("all");
 		jfxDialog.show();
     	
   
@@ -325,7 +325,7 @@ private void fillTreeTableView(String code) throws NamingException {
 	
 	 
 for(int i=0;i<listNomenclature.size();i++) {
-	if(listNomenclature.get(i).getArticlePere().getType().equals("Produit-Fini")&&listNomenclature.get(i).getArticleFils().getType().equals("Produit-Fini")) {
+	if(listNomenclature.get(i).getArticlePere().getType().equals("Produit-Pere")&&listNomenclature.get(i).getArticleFils().getType().equals("Produit-Fini")) {
 		produitFini.add(listNomenclature.get(i));
 		
 	}
@@ -333,7 +333,7 @@ for(int i=0;i<listNomenclature.size();i++) {
 
  }else {
 	 for(int i=0;i<listNomenclature.size();i++) {
-			if(listNomenclature.get(i).getArticlePere().getType().equals("Produit-Fini")&&listNomenclature.get(i).getArticleFils().getType().equals("Produit-Fini")&&listNomenclature.get(i).getArticleFils().getArticleCode().contains(code)) {
+			if(listNomenclature.get(i).getArticlePere().getType().equals("Produit-Pere")&&listNomenclature.get(i).getArticleFils().getType().equals("Produit-Fini")&&listNomenclature.get(i).getArticleFils().getArticleCode().contains(code)) {
 				produitFini.add(listNomenclature.get(i));
 				
 			}
@@ -354,6 +354,7 @@ for(int i=0;i<listNomenclature.size();i++) {
 	 
 	 ArrayDeque <TreeItem<Nomenclature>> queue=new ArrayDeque<>();
 	 queue.add(newItemarticlePere);
+	 
 	
 	 while(!queue.isEmpty()) {
 		 

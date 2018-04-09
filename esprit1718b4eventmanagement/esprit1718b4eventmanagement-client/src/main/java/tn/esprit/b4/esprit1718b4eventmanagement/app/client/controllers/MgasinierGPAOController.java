@@ -28,6 +28,7 @@ import javax.mail.MessagingException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.sound.midi.Soundbank;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -79,7 +80,7 @@ public class MgasinierGPAOController implements Initializable {
     @FXML
     private TableColumn<MvtApprov,String> tQuantity;
     @FXML
-    private TableColumn<MvtApprov,String> tAlarmDate;
+    private TableColumn<MvtApprov,Date> tAlarmDate;
     @FXML
     private TableColumn<MvtApprov,String> tRequestDate;
     @FXML
@@ -101,8 +102,9 @@ public class MgasinierGPAOController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        try {
-		fillTableAllOrdres("all");
 		AuoOrderCreation();
+		fillTableAllOrdres("all");
+
 		
 		
 	} catch (NamingException e) {
@@ -110,26 +112,39 @@ public class MgasinierGPAOController implements Initializable {
 		e.printStackTrace();
 	}
     }    
+    
+    
+    
+    
+    
 public void fillTableAllOrdres(String code) throws NamingException {
 
 	String jndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/MvtApprovService!tn.esprit.b4.esprit1718b4eventmanagement.services.MvtApprovServiceRemote";
 	Context context1 = new InitialContext();
 	MvtApprovServiceRemote OrdreProxy = (MvtApprovServiceRemote) context1.lookup(jndiName);
 	
-	  tArticle.setCellFactory(column -> {
-  	    return new TableCell<MvtApprov, String>() {
+	  tAlarmDate.setCellFactory(column -> {
+  	    return new TableCell<MvtApprov, Date>() {
   	        @Override
-  	        protected void updateItem(String item, boolean empty) {
+  	        protected void updateItem(Date item, boolean empty) {
   	            super.updateItem(item, empty);
 
   	            if (item == null || empty) {
   	                setText(null);
   	                setStyle("");
   	            } else {
-  	            
-  	            	setText(item);
-  	            	//setTextFill(Color.WHITE);
-  	               // setStyle("-fx-font-weight: bold");
+  	            	
+  	          
+  	          Date currentDate =java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
+  	          if(item.compareTo(currentDate)<=0) {
+  	        	setText(item.toString());
+  	        	
+  	          }else {
+  	        	setText(item.toString());
+  	          }
+  	        
+  	            	//setTextFill(Color.RED);
+  	               //setStyle("-fx-font-weight: bold");
   	                    
   	               
   	            }
@@ -171,6 +186,8 @@ public void fillTableAllOrdres(String code) throws NamingException {
  
 
 
+
+
     @FXML
     private void SearchOrdreFromTableAction(KeyEvent event) throws NamingException {
     //txtSearchOrder.getText());
@@ -201,25 +218,36 @@ public void fillTableAllOrdres(String code) throws NamingException {
     	
     	
     	for(int i=0;i<articles.size();i++) {
+    		if(articles.get(i).getType().equals("Matiére-Premiére")) {
+    			System.out.println("mp");
+    		
     	int joursRestant=articles.get(i).getQuantity()/articles.get(i).getDailyConsumption();
     	 
-    	
+
     	Date dateT=java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
+    	Date AlarmDate=java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
+    	
     	Date currentDate =java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
 
 
     	int day= dateT.getDate();
-
+    	
+    	
     	dateT.setDate(day+joursRestant-articles.get(i).getDeliveryTime());
+    	AlarmDate.setDate(day+joursRestant+1);
+    	
+    	
+    	System.out.println("req :"+dateT+" alarm : "+AlarmDate);
     	if(dateT.compareTo(currentDate)<=0 && articles.get(i).getEtatOrdre()==0) {
-    		MvtApprov mvtApprov=new MvtApprov(articles.get(i),null,articles.get(i).getPricipalQuantity()-articles.get(i).getQuantity(),null,dateT,null);
+    	
+    		MvtApprov mvtApprov=new MvtApprov(articles.get(i),null,articles.get(i).getPricipalQuantity()-articles.get(i).getQuantity(),AlarmDate,dateT,null);
     		OrdreProxy.addMvtApprov(mvtApprov);
     		articles.get(i).setEtatOrdre(1);
     		aArticleProxy.updateArticle(articles.get(i));
     	}
     	
     	
-    	
+    		}
     	
     	}
     }
