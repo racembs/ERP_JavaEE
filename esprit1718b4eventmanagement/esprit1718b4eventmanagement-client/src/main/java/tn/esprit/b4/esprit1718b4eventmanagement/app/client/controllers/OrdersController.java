@@ -281,10 +281,13 @@ public class OrdersController implements Initializable {
         		order.setReference((id*17+47)*10);
         		proxyOrders.update(order);
         		List<OrdredItem> listOrderItem = Table_Added_Item.getItems();
+        		int i=0;
         		for (OrdredItem ordredItem : listOrderItem) {
+        			i++;
         			OrdredItem newOrdredItem = new OrdredItem();
         			newOrdredItem.setQuantity(ordredItem.getQuantity());
         			newOrdredItem.setStatus("pending");
+        			newOrdredItem.setCode((id*5+33)*19+i);
         			System.out.println();
     				proxyOrdredItem.addOrdredItem(order.getId(), ordredItem.getArticle().getId(), newOrdredItem);
     			}

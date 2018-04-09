@@ -12,19 +12,21 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import org.controlsfx.control.CheckTreeView?>
 
 <AnchorPane id="AnchorPane" prefHeight="684.0" prefWidth="1105.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.EquipmentsController">
    <children>
       <JFXTabPane layoutX="138.0" layoutY="100.0" prefHeight="684.0" prefWidth="1105.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab text=" Equipement">
+          <Tab onSelectionChanged="#ONADDEQUI22" text=" Equipement">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -41,13 +43,9 @@
                                           <JFXButton fx:id="btnadd" layoutX="733.0" layoutY="563.0" onAction="#OnAddClick" prefHeight="37.0" prefWidth="100.0" styleClass="blue-btn" text="add" />
                                           <JFXTextField fx:id="State" focusColor="#00add8" labelFloat="true" layoutX="89.0" layoutY="198.0" prefHeight="30.0" prefWidth="249.0" promptText="State" unFocusColor="#868282" />
                                           <JFXTextArea fx:id="descrsption" layoutX="86.0" layoutY="377.0" maxWidth="404.0" minWidth="280.0" prefHeight="114.0" prefWidth="280.0" promptText="Descreption" />
-                                          <JFXTextArea fx:id="arboarea" layoutX="467.0" layoutY="413.0" maxWidth="404.0" minWidth="280.0" prefHeight="39.0" prefWidth="375.0" promptText="arboresence" />
-                                          <JFXComboBox fx:id="ComboEqui" layoutX="448.0" layoutY="89.0" onAction="#ComboEquiAction" prefHeight="40.0" prefWidth="178.0" />
-                                          <JFXComboBox fx:id="ComboEqui1" layoutX="472.0" layoutY="149.0" onMouseClicked="#Combo2Action" prefHeight="40.0" prefWidth="186.0" />
-                                          <JFXComboBox fx:id="ComboEqui2" layoutX="495.0" layoutY="208.0" onMouseClicked="#Combo3Action" prefHeight="40.0" prefWidth="195.0" />
-                                          <JFXComboBox fx:id="ComboEqui3" layoutX="522.0" layoutY="267.0" onMouseClicked="#ComboEqui3Acyion" prefHeight="40.0" prefWidth="209.0" />
-                                          <JFXComboBox fx:id="ComboEqui4" layoutX="549.0" layoutY="326.0" prefHeight="40.0" prefWidth="215.0" />
-                                          <Label fx:id="arbofinal" layoutX="565.0" layoutY="491.0" prefHeight="33.0" prefWidth="80.0" text="Label" />
+                                          <Label fx:id="arbofinal" layoutX="565.0" layoutY="512.0" prefHeight="33.0" prefWidth="80.0" text="Label" />
+                                          <CheckTreeView fx:id="treeviewarbo11" layoutX="480.0" layoutY="60.0" prefHeight="308.0" prefWidth="462.0" />
+                                          <Label layoutX="120.0" layoutY="43.0" />
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -89,96 +87,95 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <SplitPane dividerPositions="0.6173228346456693" layoutX="16.0" layoutY="6.0" orientation="VERTICAL" prefHeight="649.0" prefWidth="1105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <SplitPane dividerPositions="0.5" layoutX="16.0" layoutY="6.0" orientation="VERTICAL" prefHeight="649.0" prefWidth="1105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <items>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
                                                    <children>
                                                       <TextField fx:id="searchtraining" layoutX="766.0" layoutY="14.0" onKeyReleased="#OnSerarchReleased" prefHeight="30.0" prefWidth="323.0" promptText="Search by SerialNum Fabriquant Marque State" styleClass="search-box" />
-                                                      <TableView fx:id="tableau" layoutY="55.0" prefHeight="326.0" prefWidth="1080.0">
+                                                      <TableView fx:id="tableau" layoutY="55.0" prefHeight="246.0" prefWidth="894.0">
                                                          <columns>
                                                             <TableColumn fx:id="colSerialNum" editable="false" prefWidth="156.0" text="SerialNum" />
                                                             <TableColumn fx:id="colFabriquant" editable="false" prefWidth="168.0" sortable="false" text="Fabriquant" />
                                                             <TableColumn fx:id="colMarque" editable="false" prefWidth="207.0" sortable="false" text="Marque" />
                                                             <TableColumn fx:id="colState" editable="false" maxWidth="536.0" minWidth="-1.0" prefWidth="150.0" sortable="false" text="State" />
                                                             <TableColumn fx:id="colDescription" editable="false" prefWidth="225.0" text="Description Equipment" />
-                                                            <TableColumn fx:id="image" prefWidth="173.0" text="Column X" />
                                                          </columns>
                                                       </TableView>
+                                                      <Label graphicTextGap="8.0" layoutX="916.0" layoutY="109.0" prefHeight="37.0" prefWidth="112.0" styleClass="green-label" text="Total Equipment :" textFill="#f50707" />
+                                                      <Label fx:id="totalequipment" layoutX="937.0" layoutY="163.0" prefHeight="34.0" prefWidth="60.0" />
                                                    </children>
                                                 </AnchorPane>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="1103.0">
+                                                <HBox prefHeight="100.0" prefWidth="200.0">
                                                    <children>
-                                                      <GridPane prefHeight="219.0" prefWidth="493.0" styleClass="card">
-                                                         <columnConstraints>
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="106.0" />
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="321.0" />
-                                                         </columnConstraints>
-                                                         <rowConstraints>
-                                                            <RowConstraints />
-                                                            <RowConstraints />
-                                                            <RowConstraints />
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                         </rowConstraints>
-                                                         <children>
-                                                            <Label prefHeight="20.0" prefWidth="172.0" text="Equipment Details" GridPane.rowIndex="2" />
-                                                            <Label prefHeight="20.0" prefWidth="83.0" text="State " GridPane.rowIndex="5" />
-                                                            <Label fx:id="txtserial" prefHeight="26.0" prefWidth="300.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                            <Label fx:id="txtdate" prefHeight="28.0" prefWidth="293.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                            <Label fx:id="txtetat" prefHeight="24.0" prefWidth="300.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                                            <Label fx:id="txtdesc1" prefHeight="20.0" prefWidth="300.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                                            <Label prefHeight="20.0" prefWidth="132.0" text="Description" GridPane.rowIndex="6" />
-                                                            <Label prefHeight="20.0" prefWidth="83.0" text="Date " GridPane.rowIndex="4" />
-                                                            <Label prefHeight="20.0" prefWidth="127.0" text="SerialNumber" GridPane.rowIndex="3" />
-                                                         </children>
-                                                      </GridPane>
-                                                      <GridPane layoutX="560.0" prefHeight="219.0" prefWidth="493.0" styleClass="card">
-                                                         <columnConstraints>
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="106.0" />
-                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="321.0" />
-                                                         </columnConstraints>
-                                                         <rowConstraints>
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints maxHeight="30.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-                                                         </rowConstraints>
-                                                         <children>
-                                                            <Label prefHeight="34.0" prefWidth="111.0" text="Arboresence" GridPane.rowIndex="2" />
-                                                            <Label fx:id="txtarbo12" prefHeight="47.0" prefWidth="321.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                            <Label fx:id="txtfabr" prefHeight="30.0" prefWidth="321.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                            <Label fx:id="txtmarque" prefHeight="29.0" prefWidth="321.0" styleClass="blue-label" GridPane.columnIndex="1" />
-                                                            <Label prefHeight="20.0" prefWidth="83.0" text="Marque" />
-                                                            <Label prefHeight="20.0" prefWidth="83.0" text="Fabriquant" GridPane.rowIndex="1" />
-                                                         </children>
-                                                      </GridPane>
+                                                      <TitledPane animated="false" prefHeight="319.0" prefWidth="572.0" styleClass="blue-titledPane" text="Information">
+                                                        <content>
+                                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="828.0">
+                                                               <children>
+                                                                  <GridPane layoutX="38.0" layoutY="14.0" prefHeight="237.0" prefWidth="493.0" styleClass="card">
+                                                                     <columnConstraints>
+                                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="106.0" />
+                                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="321.0" />
+                                                                     </columnConstraints>
+                                                                     <rowConstraints>
+                                                                        <RowConstraints />
+                                                                        <RowConstraints />
+                                                                        <RowConstraints maxHeight="8.0" minHeight="0.0" prefHeight="0.0" />
+                                                                        <RowConstraints maxHeight="66.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                                                                        <RowConstraints maxHeight="67.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                                                                        <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                        <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                                                                        <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                                                                        <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+                                                                     </rowConstraints>
+                                                                     <children>
+                                                                        <Label prefHeight="20.0" prefWidth="172.0" text="Equipment Details" GridPane.rowIndex="2" />
+                                                                        <Label prefHeight="20.0" prefWidth="83.0" text="State " GridPane.rowIndex="5" />
+                                                                        <Label fx:id="txtserial" prefHeight="26.0" prefWidth="325.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                                        <Label fx:id="txtdate" prefHeight="23.0" prefWidth="319.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                                        <Label fx:id="txtetat" prefHeight="22.0" prefWidth="321.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                                        <Label fx:id="txtdesc1" prefHeight="24.0" prefWidth="321.0" styleClass="green-label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                                        <Label prefHeight="20.0" prefWidth="132.0" text="Description" GridPane.rowIndex="6" />
+                                                                        <Label prefHeight="20.0" prefWidth="83.0" text="Date " GridPane.rowIndex="4" />
+                                                                        <Label prefHeight="20.0" prefWidth="127.0" text="SerialNumber" GridPane.rowIndex="3" />
+                                                                        <Label prefHeight="20.0" prefWidth="83.0" text="Marque" GridPane.rowIndex="7" />
+                                                                        <Label fx:id="txtmarque" prefHeight="21.0" prefWidth="321.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                                        <Label prefHeight="20.0" prefWidth="83.0" text="Fabriquant" GridPane.rowIndex="8" />
+                                                                        <Label fx:id="txtfabr" prefHeight="22.0" prefWidth="321.0" styleClass="blue-label" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                                                     </children>
+                                                                  </GridPane>
+                                                               </children>
+                                                            </AnchorPane>
+                                                        </content>
+                                                      </TitledPane>
+                                                      <TitledPane animated="false" prefHeight="287.0" prefWidth="482.0" styleClass="blue-titledPane" text="General Information">
+                                                        <content>
+                                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <ImageView fx:id="idCal" fitHeight="97.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true">
+                                                                     <image>
+                                                                        <Image url="@image/po.jpg" />
+                                                                     </image>
+                                                                  </ImageView>
+                                                                  <Label graphicTextGap="8.0" layoutX="105.0" layoutY="-1.0" prefHeight="37.0" prefWidth="128.0" styleClass="yellow-label" text="equipment in repair" textFill="#f50707" />
+                                                                  <Label fx:id="nbeqpanne" layoutX="124.0" layoutY="41.0" prefHeight="27.0" prefWidth="89.0" />
+                                                                  <ImageView fx:id="idCal1" fitHeight="85.0" fitWidth="111.0" layoutX="234.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                                                     <image>
+                                                                        <Image url="@image/images.jpg" />
+                                                                     </image>
+                                                                  </ImageView>
+                                                                  <Label graphicTextGap="8.0" layoutX="341.0" layoutY="3.0" prefHeight="37.0" prefWidth="128.0" styleClass="green-label" text="equipment in Service" textFill="#f50707" />
+                                                                  <Label fx:id="nbbonne" layoutX="365.0" layoutY="41.0" prefHeight="27.0" prefWidth="89.0" />
+                                                                  <ImageView fx:id="idCal11" fitHeight="98.0" fitWidth="89.0" layoutX="18.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+                                                                     <image>
+                                                                        <Image url="@image/stat.png" />
+                                                                     </image>
+                                                                  </ImageView>
+                                                               </children>
+                                                            </AnchorPane>
+                                                        </content>
+                                                      </TitledPane>
                                                    </children>
-                                                </AnchorPane>
-                                             </items>
-                                          </SplitPane>
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </Tab>
-                              <Tab fx:id="btndetail11" onSelectionChanged="#OnDetail22Action" text="DETAILS">
-                                 <content>
-                                    <AnchorPane fx:id="eh" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <SplitPane layoutX="16.0" layoutY="6.0" orientation="VERTICAL" prefHeight="649.0" prefWidth="1105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                             <items>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="1103.0">
-                                                   <children>
-                                                      <TreeTableView fx:id="treetableview" layoutX="143.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
-                                                        <columns>
-                                                          <TreeTableColumn fx:id="arbotable" prefWidth="75.0" text="C1" />
-                                                          <TreeTableColumn prefWidth="75.0" text="C2" />
-                                                        </columns>
-                                                      </TreeTableView>
-                                                      <Label layoutX="424.0" layoutY="85.0" text="Label" />
-                                                   </children>
-                                                </AnchorPane>
+                                                </HBox>
                                              </items>
                                           </SplitPane>
                                        </children>
@@ -191,7 +188,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="ADD Arborecence">
+            <Tab onSelectionChanged="#onaddarboclick" text=" Arborecence">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -200,19 +197,16 @@
                            <children>
                               <JFXTextField fx:id="name" focusColor="#00add8" labelFloat="true" layoutX="89.0" layoutY="139.0" prefHeight="30.0" prefWidth="242.0" promptText="Name" unFocusColor="#868282" />
                               <JFXButton fx:id="btncancel1" layoutX="878.0" layoutY="561.0" onAction="#OnCancelArboClick" styleClass="cancel-button" text="Cancel" />
-                              <JFXButton layoutX="324.0" layoutY="562.0" onAction="#onUpdateArboAction" prefHeight="27.0" prefWidth="78.0" styleClass="green-btn" text="update" />
+                              <JFXButton fx:id="btnupdatee" layoutX="229.0" layoutY="557.0" onAction="#onUpdate1Action" prefHeight="43.0" prefWidth="114.0" styleClass="green-btn" text="update" />
                               <JFXButton fx:id="btnadd1" layoutX="749.0" layoutY="562.0" onAction="#OnAddArboClick" prefHeight="37.0" prefWidth="100.0" styleClass="blue-btn" text="save" />
-                              <JFXTextArea fx:id="arbo2" layoutX="510.0" layoutY="448.0" maxWidth="404.0" minWidth="280.0" prefHeight="81.0" prefWidth="280.0" promptText="arboresence" />
                               <JFXComboBox fx:id="combarbotype" layoutX="66.0" layoutY="247.0" onAction="#combarbotypeAction" onMouseClicked="#combarbotypeAction" prefHeight="40.0" prefWidth="274.0" />
-                              <Label layoutX="38.0" layoutY="201.0" prefHeight="46.0" prefWidth="258.0" text="Type D'arborecence" />
-                              <JFXComboBox fx:id="ComboEquii" layoutX="473.0" layoutY="119.0" onAction="#ComboEquiiAction" prefHeight="40.0" prefWidth="178.0" />
-                              <JFXComboBox fx:id="ComboEqui11" layoutX="502.0" layoutY="181.0" onMouseClicked="#Combo11Action" prefHeight="40.0" prefWidth="186.0" />
-                              <JFXComboBox fx:id="ComboEqui21" layoutX="529.0" layoutY="247.0" onMouseClicked="#Combo21Action" prefHeight="40.0" prefWidth="195.0" />
-                              <JFXComboBox fx:id="ComboEqui31" layoutX="547.0" layoutY="304.0" onMouseClicked="#ComboEqui31Acyion" prefHeight="40.0" prefWidth="209.0" />
-                              <JFXComboBox fx:id="ComboEqui41" layoutX="581.0" layoutY="373.0" prefHeight="40.0" prefWidth="215.0" />
+                              <Label fx:id="labelarbotype" layoutX="38.0" layoutY="201.0" prefHeight="46.0" prefWidth="258.0" text="Type D'arborecence" />
                               <Label fx:id="adarb" layoutX="30.0" layoutY="141.0" prefHeight="26.0" prefWidth="51.0" />
                               <Label layoutX="81.0" layoutY="144.0" prefHeight="20.0" prefWidth="17.0" text="/" />
-                              <JFXButton layoutX="626.0" layoutY="560.0" onAction="#onUpdateArboSaveAction" prefHeight="27.0" prefWidth="78.0" styleClass="green-btn" text="Save" />
+                              <JFXButton fx:id="btnmodifarbo" layoutX="626.0" layoutY="560.0" onAction="#onUpdateArboSaveAction" prefHeight="27.0" prefWidth="78.0" styleClass="green-btn" text="Save" />
+                              <CheckTreeView fx:id="treeviewarbo1" layoutX="449.0" layoutY="33.0" prefHeight="400.0" prefWidth="414.0" />
+                              <JFXButton fx:id="btndelete1" layoutX="51.0" layoutY="556.0" onAction="#onDelete1Action" prefHeight="43.0" prefWidth="128.0" styleClass="red-label" text="delete" />
+                              <JFXButton fx:id="btnadd11" layoutX="497.0" layoutY="563.0" onAction="#DeleteClick" prefHeight="37.0" prefWidth="100.0" styleClass="red-label" text="save" />
                            </children>
                         </AnchorPane>
                      </children>

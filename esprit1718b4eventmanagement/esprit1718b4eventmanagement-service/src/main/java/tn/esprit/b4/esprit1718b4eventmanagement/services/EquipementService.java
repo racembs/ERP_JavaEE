@@ -13,6 +13,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 
 
@@ -104,6 +105,24 @@ public class EquipementService extends GenericDAO<Equipment>  implements Equipem
 			em.remove(arbo);
 			
 		}
+		
+		@Override
+		public Long Date(String datedeb,String datefin) {
+			TypedQuery<Long> query
+			=em.createQuery("SELECT COUNT(c) FROM Works c WHERE c.startDate <=STR_TO_DATE('" + datedeb + "', '%d/%m/%Y') "
+		                + "and c.endDate >=STR_TO_DATE('" + datefin + "', '%d/%m/%Y')",Long.class);
 
+			Long train=query.getSingleResult();
+			return train;
+		}
+
+		@Override
+		public Long countequi() {
+			TypedQuery<Long> query
+			=em.createQuery("SELECT COUNT(c) FROM Equipment c",Long.class);
+
+			Long train=query.getSingleResult();
+			return train;
+		}
 	
 }

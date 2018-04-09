@@ -30,6 +30,8 @@ import org.controlsfx.validation.Validator;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -61,6 +63,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import sun.invoke.empty.Empty;
+
+import org.controlsfx.control.CheckTreeView;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ArboPereFis;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Arboresence;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
@@ -102,8 +107,6 @@ public class EquipmentsController implements Initializable {
     @FXML
     private JFXButton btncancel1;
     @FXML
-    private JFXButton btnadd1;
-    @FXML
     private JFXComboBox<String> combarbotype;
     @FXML
     private TableView<Equipment> tableau;
@@ -118,32 +121,12 @@ public class EquipmentsController implements Initializable {
     @FXML
     private TableColumn<Equipment,String>  colDescription;
  
-    @FXML
-    private JFXComboBox<String> ComboEqui;
-    @FXML
-    private JFXComboBox<String> ComboEqui1;
-    @FXML
-    private JFXComboBox<String> ComboEqui2;
-    @FXML
-    private JFXComboBox<String> ComboEqui3;
-    @FXML
-    private JFXComboBox<String> ComboEqui4;
-    @FXML
-    private JFXTextArea arboarea;
+ 
+  
     @FXML
     private Label arbofinal;
-    @FXML
-    private JFXTextArea arbo2;
-    @FXML
-    private JFXComboBox<String> ComboEquii;
-    @FXML
-    private JFXComboBox<String> ComboEqui11;
-    @FXML
-    private JFXComboBox<String> ComboEqui21;
-    @FXML
-    private JFXComboBox<String> ComboEqui31;
-    @FXML
-    private JFXComboBox<String> ComboEqui41;
+  
+   
     @FXML
     private Label adarb;
     @FXML
@@ -162,8 +145,7 @@ public class EquipmentsController implements Initializable {
  
     @FXML
     private Label txtdesc1;
-    @FXML
-    private Label txtarbo12;
+    
     @FXML
     private AnchorPane arbo3;
     @FXML
@@ -212,14 +194,7 @@ public class EquipmentsController implements Initializable {
     private TextField searchtraining1;
     @FXML
     private JFXTextField LieuModif;
-    @FXML
-    private Tab btndetail11;
-    @FXML
-    private TreeTableColumn<Arboresence, String> arbotable;
-    @FXML
-    private TreeTableView<Arboresence> treetableview;
-    @FXML
-    private TableColumn<Equipment,String> image;
+ 
     ValidationSupport v7= new ValidationSupport();
     ValidationSupport v6= new ValidationSupport();
   		ValidationSupport v5= new ValidationSupport();
@@ -227,16 +202,65 @@ public class EquipmentsController implements Initializable {
   			ValidationSupport v2= new ValidationSupport();
   			ValidationSupport v3= new ValidationSupport();
   			ValidationSupport v4= new ValidationSupport();
+  			ValidationSupport v11= new ValidationSupport();
+  			
+  		   ValidationSupport v17= new ValidationSupport();
+  		    ValidationSupport v16= new ValidationSupport();
+  		  		ValidationSupport v15= new ValidationSupport();
+  		  		   ValidationSupport v14= new ValidationSupport();
+  		  			ValidationSupport v13= new ValidationSupport();
+  		  			ValidationSupport v18= new ValidationSupport();
+  		  			ValidationSupport v19= new ValidationSupport();
+  		  			ValidationSupport v12= new ValidationSupport();
+  			
+  			
+  			
+  			
     @FXML
-    private AnchorPane eh;
+    private CheckTreeView<String> treeviewarbo1;
+ 
+    @FXML
+    private JFXButton btnmodifarbo;
+    @FXML
+    private Label labelarbotype;
+    @FXML
+    private JFXButton btnadd1;
+    @FXML
+    private JFXButton btnadd11;
+    @FXML
+    private JFXButton btnupdatee;
+    @FXML
+    private JFXButton btndelete1;
+    @FXML
+    private CheckTreeView<String> treeviewarbo11;
+    private CheckTreeView<String> treeviewarbo12;
+    @FXML
+    private ImageView idCal;
+    @FXML
+    private Label nbeqpanne;
+    @FXML
+    private ImageView idCal1;
+    @FXML
+    private Label nbbonne;
+    @FXML
+    private ImageView idCal11;
+    @FXML
+    private Label totalequipment;
 		
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    	
-    	
+    	try {
+			refrech();
+	
+			refrech1();
+		} catch (NamingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	arbofinal.setVisible(false);
     	//////Modif Equipment Combo
 ComboEquiModif1.setVisible(false);
 ComboEquiModif2.setVisible(false);
@@ -244,26 +268,11 @@ ComboEquiModif3.setVisible(false);
 ComboEquiModif4.setVisible(false);
 ComboEquiModif.setVisible(false);
 
-  		/////combo de l'interface arbo add
-       
-    	 ComboEqui11.setVisible(false);
-    	 
-  	   ComboEqui21.setVisible(false);
-  	 
-
-  	   ComboEqui31.setVisible(false);
-  
-  	   ComboEqui41.setVisible(false);
-  	   
+  		/////combo ;
+btnadd11.setVisible(false);
+btnmodifarbo.setVisible(false);
   	   ////combo de l interface equipment add 
-    	   ComboEqui1.setVisible(false);
-    	 
-    	   ComboEqui2.setVisible(false);
-    	 
-
-    	   ComboEqui3.setVisible(false);
-    
-    	   ComboEqui4.setVisible(false);
+    	
     	  // arbofinal.setVisible(false);
     	
     	
@@ -281,19 +290,7 @@ ComboEquiModif.setVisible(false);
 	     	ArboresenceServiceRemote Proxy = (ArboresenceServiceRemote) context1.lookup(jndiName2);
 
      	
-  		 	List<Arboresence> list1 = Proxy.getPereArbo("Principale") ;
-	          for (Arboresence u: list1)
-	         {
-	        	   
-	        	  ComboEqui.getItems().addAll(u.getName());
-	          	ComboEqui.getSelectionModel().selectLast();
-	            
-	        	  ComboEquii.getItems().addAll(u.getName());
-	          	ComboEquii.getSelectionModel().selectLast();
-	        	  
-	        	  
-	      }
-	          arboarea.setText(ComboEqui.getValue());
+	     
   
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
@@ -343,7 +340,7 @@ ComboEquiModif.setVisible(false);
 	
     String stat =State.getText();
 	
-    String lieu=arboarea.getText();
+    String lieu=arbofinal.getText();
 
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
       Calendar date = Calendar.getInstance();
@@ -357,7 +354,7 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
 
     Equipment eq=new Equipment(serie ,desc,stat,dateF,fab,marq,lieu,arbo1);
     
-    
+
     Proxy.addEquippement(eq);
 	Alert alert = new Alert(AlertType.INFORMATION);
 	alert.setTitle("Information");
@@ -372,6 +369,17 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
 
     @FXML
     private void OnCancelArboClick(ActionEvent event) {
+    	
+    	btnupdatee.setVisible(true);
+    	btnadd11.setVisible(false);
+    	btndelete1.setVisible(true);
+    	btnmodifarbo.setVisible(false);
+    	btnadd1.setVisible(true);
+   
+    	combarbotype.setVisible(true);
+    	labelarbotype.setVisible(true);
+    	name.setVisible(true);
+    
     }
 
     @FXML
@@ -385,8 +393,10 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     	String namee=name.getText();
     	String type=combarbotype.getValue();
     	Arboresence arbo=new Arboresence(namee,type);
+   
     	
-    	if(name.getText().equals("")||adarb.getText().equals(""))
+    	
+    	if(name.getText().equals(""))
     	{
     		Alert alert = new Alert(AlertType.ERROR);
 	    	alert.setTitle("Erreur ");
@@ -396,7 +406,7 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     	}
     	else
     	{
-    		if(Proxy.getArbo(name.getText()).getName().equals(name.getText()))
+    		if(!Proxy.verifAllArboresence(namee).isEmpty())
     		{
     			
     			Alert alert = new Alert(AlertType.ERROR);
@@ -406,15 +416,26 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     	    	
     		}else
     		{
-    	
-    	Proxy.addArbo(arbo);
-    	
     
+    	if(type.equals("Principale"))
+    	{	Proxy.addArbo(arbo);
+    	
+    	
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Information");
+    	alert.setHeaderText("the arbo    : "+name.getText()+ "is add  with success");
+    	alert.showAndWait();
+    	refrech();
+    	}else{
+    		Proxy.addArbo(arbo);
+    	
     	Proxy.addArbo(Proxy.getArbo(  adarb.getText()).getId(),	Proxy.getArbo(namee).getId());
     	Alert alert = new Alert(AlertType.INFORMATION);
     	alert.setTitle("Information");
-    	alert.setHeaderText("the arbo    : " +arbo2.getText()+"/"+name.getText()+ "is add  with success");
+    	alert.setHeaderText("the arbo    : " +arbofinal.getText()+"/"+name.getText()+ "is add  with success");
     	alert.showAndWait();
+    	refrech();
+    		}
     		
     	}}
     
@@ -446,40 +467,18 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     		 colDescription.setCellValueFactory(new PropertyValueFactory<Equipment, String>("Description"));
     		 tableau.setTableMenuButtonVisible(true);
     		 
-        
+    		 DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    		    Calendar date = Calendar.getInstance();
+    		    String dateF = df.format(date.getTime());
+    		    Long x=proxy.Date(dateF, dateF);
+    	nbeqpanne.setText( Long.toString(x));
+    	Long y=proxy.countequi();
+    	
+    	nbbonne.setText( Long.toString(y-x));
+        totalequipment.setText( Long.toString(y));
     		//////////////////////////////
-    		image.setCellFactory(new Callback<TableColumn<Equipment,String>,TableCell<Equipment,String>>(){        
-    				@Override
-    				public TableCell<Equipment,String> call(TableColumn<Equipment,String> param) {                
-    					TableCell<Equipment,String> cell = new TableCell<Equipment,String>(){
-    						ImageView imageview1 = new ImageView();
-    						//@Override
-    						public void updateItem() {                        
-    							                           
-    								HBox box= new HBox();
-    								box.setSpacing(10) ;
-    								VBox vbox = new VBox();
-    							
-    					 
-
-    								
-    								imageview1.setFitHeight(50);
-    								imageview1.setFitWidth(50);
-    								imageview1.setImage(new Image("http://localhost/image/" +LoginController.user.getImage())); 
-
-    								box.getChildren().addAll(imageview1,vbox); 
-    								//SETTING ALL THE GRAPHICS COMPONENT FOR CELL
-    								setGraphic(box);
-    							}
-    						
-    					};
-    					System.out.println(cell.getIndex());               
-    					return cell;
-    				}
-
-					
-
-    			});
+    		
+    		
     		 //////////////////////////
     		 
     		 
@@ -502,7 +501,7 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
                         MenuItem.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent event) {
-                            
+                       
                           
                                  
                                  String serie=tableau.getSelectionModel().getSelectedItem().getSerialNum();
@@ -521,7 +520,7 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
                                  Integer idarbo=tableau.getSelectionModel().getSelectedItem().getArboresence().getId();
                                  
                                 
-                   txtarbo12.setText(lieu);
+                
                
                               	
                             	
@@ -595,295 +594,15 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     }
     	      
 
-    @FXML
-    private void ComboEquiAction(ActionEvent event) throws NamingException {
-    	
 
-		
-
-	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
-	Context context1 = new InitialContext();
-
-	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
-   Arboresence arbo= Proxy1.getArbo(ComboEqui.getValue());
-   arbofinal.setText(ComboEqui.getValue());
-   arboarea.setText(ComboEqui.getValue());
-   ComboEqui1.getItems().clear();
-   ComboEqui1.setValue(null);
-   ComboEqui2.getItems().clear();
-   ComboEqui2.setValue(null);
-
-   ComboEqui3.getItems().clear();
-   ComboEqui3.setValue(null);
-   ComboEqui4.getItems().clear();
-   ComboEqui4.setValue(null);
    
- 	List<ArboPereFis> list= Proxy1.getFilsArbo(arbo.getId());
-    for (ArboPereFis u: list)
-   {
-  	   
-  	  ComboEqui1.getItems().addAll(u.getArboFils().getName());
-    	ComboEqui1.getSelectionModel().selectLast();
-  	  
-  	  
-  	  
-}
- 
-    ComboEqui1.setVisible(true);
-    ComboEqui2.setVisible(false);
-    ComboEqui3.setVisible(false);
-    ComboEqui4.setVisible(false);
-    	
-    }
 
-    @FXML
-    private void Combo2Action(MouseEvent event) throws NamingException {
-
-		
-
-    	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
-    	Context context1 = new InitialContext();
-
-    	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
-       Arboresence arbo= Proxy1.getArbo(ComboEqui1.getValue());
-       arboarea.setText(ComboEqui.getValue()+"/"+ComboEqui1.getValue());
-       arbofinal.setText(ComboEqui1.getValue());
-       ComboEqui2.getItems().clear();
-       ComboEqui2.setValue(null);
-
-       ComboEqui3.getItems().clear();
-       ComboEqui3.setValue(null);
-       ComboEqui4.getItems().clear();
-       ComboEqui4.setValue(null);
-     	List<ArboPereFis> list= Proxy1.getFilsArbo(arbo.getId());
-        for (ArboPereFis u: list)
-       {
-      	   
-      	  ComboEqui2.getItems().addAll(u.getArboFils().getName());
-        	ComboEqui2.getSelectionModel().selectLast();
-      	  
-      	  
-      	  
-    }
-    	
-        ComboEqui2.setVisible(true);
-        ComboEqui3.setVisible(false);
-        ComboEqui4.setVisible(false);
-    	
-    	
-    }
-
-    @FXML
-    private void Combo3Action(MouseEvent event) throws NamingException {
-    	
-    	
-    	
-    	
-
-    	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
-    	Context context1 = new InitialContext();
-
-    	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
-       Arboresence arbo= Proxy1.getArbo(ComboEqui2.getValue());
-       arboarea.setText(ComboEqui.getValue()+"/"+ComboEqui1.getValue()+"/"+ComboEqui2.getValue());
-       arbofinal.setText(ComboEqui2.getValue());
-       ComboEqui3.getItems().clear();
-       ComboEqui3.setValue(null);
-       ComboEqui4.getItems().clear();
-       ComboEqui4.setValue(null);
-     	List<ArboPereFis> list= Proxy1.getFilsArbo(arbo.getId());
-        for (ArboPereFis u: list)
-       {
-      	   
-      	  ComboEqui3.getItems().addAll(u.getArboFils().getName());
-        	ComboEqui3.getSelectionModel().selectLast();
-      	  
-      	  
-      	  
-    }
-        ComboEqui3.setVisible(true);
-        ComboEqui4.setVisible(false);
-    }
-
-    @FXML
-    private void ComboEqui3Acyion(MouseEvent event) throws NamingException {
-    	
-
-    	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
-    	Context context1 = new InitialContext();
-
-    	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
-       Arboresence arbo= Proxy1.getArbo(ComboEqui3.getValue());
-       arboarea.setText(ComboEqui.getValue()+"/"+ComboEqui1.getValue()+"/"+ComboEqui2.getValue()+"/"+ComboEqui3.getValue());
-       arbofinal.setText(ComboEqui3.getValue());
-       ComboEqui4.getItems().clear();
-       ComboEqui4.setValue(null);
-    	
-     	List<ArboPereFis> list= Proxy1.getFilsArbo(arbo.getId());
-     	
-        for (ArboPereFis u: list)
-       {
-      	   
-      	  ComboEqui4.getItems().addAll(u.getArboFils().getName());
-        	ComboEqui4.getSelectionModel().selectLast();
-      	  
-      	  
-      	  
-    }
-        ComboEqui4.setVisible(true);
-    	
-    }
-
-    @FXML
-    private void ComboEquiiAction(ActionEvent event) throws NamingException {
-    	
-
-    	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
-    	Context context1 = new InitialContext();
-
-    	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
-       Arboresence arbo= Proxy1.getArbo(ComboEquii.getValue());
-       arbo2.setText(ComboEquii.getValue());
-       adarb.setText(ComboEquii.getValue());
-       ComboEqui11.getItems().clear();
-       ComboEqui11.setValue(null);
-       ComboEqui21.getItems().clear();
-       ComboEqui21.setValue(null);
-
-       ComboEqui31.getItems().clear();
-       ComboEqui31.setValue(null);
-       ComboEqui41.getItems().clear();
-       ComboEqui41.setValue(null);
-       
-     	List<ArboPereFis> list= Proxy1.getFilsArbo(arbo.getId());
-        for (ArboPereFis u: list)
-       {
-      	   
-      	  ComboEqui11.getItems().addAll(u.getArboFils().getName());
-        	ComboEqui11.getSelectionModel().selectLast();
-      	  
-      	  
-      	  
-    }
-     
-        ComboEqui11.setVisible(true);
-        ComboEqui21.setVisible(false);
-        ComboEqui31.setVisible(false);
-        ComboEqui41.setVisible(false);
-        	
-    	
-    }
-
-    @FXML
-    private void Combo11Action(MouseEvent event) throws NamingException {
-    	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
-    	Context context1 = new InitialContext();
-
-    	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
-       Arboresence arbo= Proxy1.getArbo(ComboEqui11.getValue());
-       arbo2.setText(ComboEquii.getValue()+"/"+ComboEqui11.getValue());
-       adarb.setText(ComboEqui11.getValue());
-       ComboEqui21.getItems().clear();
-       ComboEqui21.setValue(null);
-
-       ComboEqui31.getItems().clear();
-       ComboEqui31.setValue(null);
-       ComboEqui41.getItems().clear();
-       ComboEqui41.setValue(null);
-     	List<ArboPereFis> list= Proxy1.getFilsArbo(arbo.getId());
-        for (ArboPereFis u: list)
-       {
-      	   
-      	  ComboEqui21.getItems().addAll(u.getArboFils().getName());
-        	ComboEqui21.getSelectionModel().selectLast();
-      	  
-      	  
-      	  
-    }
-    	
-        ComboEqui21.setVisible(true);
-        ComboEqui31.setVisible(false);
-        ComboEqui41.setVisible(false);
-    	
-    	
-    	
-    }
-
-    @FXML
-    private void Combo21Action(MouseEvent event) throws NamingException {
-    	
-
-
-    	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
-    	Context context1 = new InitialContext();
-
-    	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
-       Arboresence arbo= Proxy1.getArbo(ComboEqui21.getValue());
-       arbo2.setText(ComboEquii.getValue()+"/"+ComboEqui11.getValue()+"/"+ComboEqui21.getValue());
-       adarb.setText(ComboEqui21.getValue());
-       ComboEqui31.getItems().clear();
-       ComboEqui31.setValue(null);
-       ComboEqui41.getItems().clear();
-       ComboEqui41.setValue(null);
-     	List<ArboPereFis> list= Proxy1.getFilsArbo(arbo.getId());
-        for (ArboPereFis u: list)
-       {
-      	   
-      	  ComboEqui31.getItems().addAll(u.getArboFils().getName());
-        	ComboEqui31.getSelectionModel().selectLast();
-      	  
-      	  
-      	  
-    }
-        ComboEqui31.setVisible(true);
-        ComboEqui41.setVisible(false);
-    }
-
-    @FXML
-    private void ComboEqui31Acyion(MouseEvent event) throws NamingException {
-    	
-    	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
-    	Context context1 = new InitialContext();
-
-    	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
-       Arboresence arbo= Proxy1.getArbo(ComboEqui21.getValue());
-       arbo2.setText(ComboEquii.getValue()+"/"+ComboEqui11.getValue()+"/"+ComboEqui21.getValue()+"/"+ComboEqui31.getValue());
-      adarb.setText(ComboEqui31.getValue());
-       ComboEqui31.getItems().clear();
-       ComboEqui31.setValue(null);
-       ComboEqui41.getItems().clear();
-       ComboEqui41.setValue(null);
-     	List<ArboPereFis> list= Proxy1.getFilsArbo(arbo.getId());
-        for (ArboPereFis u: list)
-       {
-      	   
-      	  ComboEqui31.getItems().addAll(u.getArboFils().getName());
-        	ComboEqui31.getSelectionModel().selectLast();
-      	  
-      	  
-      	  
-    }
-        ComboEqui31.setVisible(true);
-        ComboEqui41.setVisible(false);
-    }
-
+    
+   
     @FXML
     private void combarbotypeAction(MouseEvent event) {
         
-        if(combarbotype.getValue().equals("Principale"))
-        {adarb.setVisible(false);
-         arbo2.setVisible(false);
-         ComboEquii.setVisible(false);
-        
-        }
-        else
-        {           arbo2.setVisible(true);
-            ComboEquii.setVisible(true);
-        adarb.setVisible(true);
-        
-        }
-        
-        
+     
     }
 
     @FXML
@@ -914,27 +633,7 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
 
     @FXML
     private void combarbotypeAction(ActionEvent event) {
-    	if(combarbotype.getValue().equals("Principale"))
-    	{ComboEquii.setVisible(false);
-    		ComboEqui11.setVisible(false);
-       	 
-     	   ComboEqui21.setVisible(false);
-     	 
-
-     	   ComboEqui31.setVisible(false);
-     
-     	   ComboEqui41.setVisible(false);
-     	    adarb.setText(""); 
-    		
-    		
-    	}
-    	else
-    	{ComboEquii.setVisible(true);
-    	name.setText("");}
-    	
-    	
-    	
-    	
+   
     	
     	
     }
@@ -1078,7 +777,19 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     	
     	
     	   
-       
+v12.registerValidator(fabriquantModif,Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+    	
+    	v14.registerValidator(marqueModif, Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+    	v15.registerValidator(descrsptionModif,Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+    	
+    
+    	v13.registerValidator(StateModif, Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+    	v16.registerValidator(serialnumModif, Validator.createRegexValidator("", "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*).{8,25})", Severity.ERROR));
+    	btnUpdate2.disableProperty().bind(v12.invalidProperty());
+    	btnUpdate2.disableProperty().bind(v13.invalidProperty());
+    	btnUpdate2.disableProperty().bind(v14.invalidProperty());
+    	btnUpdate2.disableProperty().bind(v16.invalidProperty());
+    	btnUpdate2.disableProperty().bind(v15.invalidProperty());
     	
     	
     	String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/EquipementService!tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote";
@@ -1132,7 +843,6 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
                                  String lieu=tableau1.getSelectionModel().getSelectedItem().getLieu();
                                  String desc =tableau1.getSelectionModel().getSelectedItem().getDescription();
                                  descrsptionModif.setText(desc);
-                                 descrsptionModif.setDisable(true);
                                  String marque=tableau1.getSelectionModel().getSelectedItem().getMarque();
                                  marqueModif.setText(marque);
                                  String state=tableau1.getSelectionModel().getSelectedItem().getState();
@@ -1338,68 +1048,280 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     	        tableau1.setItems(items);
     }
 
+
+
+   
     @FXML
-    private void OnDetail22Action(Event event) {
-
-    }
-
-    private void showTreeView(Arboresence AbsoluteParent, List<Arboresence> listNomenclatureFils2 ) throws NamingException {
-    	
-
-    	
-      	TreeItem<Arboresence> root=new TreeItem<>();
+    private void onUpdateArboSaveAction(ActionEvent event) throws NamingException {
     
- 	TreeItem<Arboresence> newItemarticlePere;
- 	TreeItem<Arboresence> newItemarticleFils=null;
-	 
- 	newItemarticlePere=new TreeItem<>(AbsoluteParent);
-	 root.getChildren().add(newItemarticlePere);
+    	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
+    	Context context1 = new InitialContext();
+    	
+    	ArboresenceServiceRemote Proxy = (ArboresenceServiceRemote) context1.lookup(jndiName2);
+    	 String Select=adarb.getText();
+    	String namee=name.getText();
+    	
+    	
+    	if(name.getText().equals(""))
+    	{
+    		Alert alert = new Alert(AlertType.ERROR);
+	    	alert.setTitle("Erreur ");
+	    	alert.setHeaderText(" please complete all fields .!!!!");
+	    	alert.showAndWait();
+	    	
+    	}
+    	else
+    	{
+    		if(!Proxy.verifAllArboresence(namee).isEmpty())
+    		{
+    			
+    			Alert alert = new Alert(AlertType.ERROR);
+    	    	alert.setTitle("Erreur name exist");
+    	    	alert.setHeaderText("the name exist .!!!!");
+    	    	alert.showAndWait();
+    	    	
+    		}else
+    		{
+    
+    	
+    Arboresence arbo =Proxy.getArbo(Select);
+    arbo.setName(namee);
+    Proxy.updateArbo(arbo);
+   	Alert alert = new Alert(AlertType.INFORMATION);
+	alert.setTitle("Information");
+	alert.setHeaderText("the arbo    : " +name.getText()+ "is update  with success");
+	alert.showAndWait();
+	refrech();
 
-	 ArrayDeque <TreeItem<Arboresence>> queue=new ArrayDeque<>();
-	 queue.add(newItemarticlePere);
-	
-	 while(!queue.isEmpty()) {
-		 
-		TreeItem<Arboresence> TreeItemHead=queue.getFirst();
-		queue.removeFirst();
-		;
-		for (Arboresence neededItem : listNomenclatureFils2) {
-			newItemarticleFils=new TreeItem<>(neededItem);
-			TreeItemHead.getChildren().add(newItemarticleFils);
-			queue.addLast(newItemarticleFils);
-		}
-	 }
-	 
-	 
-	arbotable.setCellValueFactory(
-	            (TreeTableColumn.CellDataFeatures<Arboresence, String> param) -> 
-	            new ReadOnlyStringWrapper(String.valueOf(param.getValue().getValue().getName()))
-	        );
- 	treetableview.setRoot(root);
- 	treetableview.setShowRoot(false);
-  
+
+
+    		}}
     }
 
-    @FXML
-    private void onUpdateArboAction(ActionEvent event) {
-    }
-
-    @FXML
-    private void onUpdateArboSaveAction(ActionEvent event) {
-    }
-
+    
+    
     @FXML
     private void ControledesaiseAddEqui(Event event) {
 v2.registerValidator(fabriquant,Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
     	
     	v4.registerValidator(marque, Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
     	v5.registerValidator(descrsption,Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
-
     	
+    	v11.registerValidator(arbofinal, Validator.createEmptyValidator("Text is Required"));
     	v3.registerValidator(State, Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
     	v6.registerValidator(serialnum, Validator.createRegexValidator("", "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*).{8,25})", Severity.ERROR));
+    	btnadd.disableProperty().bind(v2.invalidProperty());
+    	btnadd.disableProperty().bind(v3.invalidProperty());
+    	btnadd.disableProperty().bind(v4.invalidProperty());
+    	btnadd.disableProperty().bind(v6.invalidProperty());
+    	btnadd.disableProperty().bind(v5.invalidProperty());
+    	
+    }
+
+    @FXML
+    private void onaddarboclick(Event event) throws NamingException {
+    	refrech();
+
+    	
+    }
+void refrech() throws NamingException
+{   	 Image icon = new Image (
+		   getClass().getResourceAsStream("/views/imgs/equi.png"));
+
+
+
+treeviewarbo1.setEditable(true);
+
+
+
+
+	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
+	Context context1;
+
+		context1 = new InitialContext();
+
+  	ArboresenceServiceRemote Proxy = (ArboresenceServiceRemote) context1.lookup(jndiName2);
+ 	List<Arboresence> Arbolist = Proxy.getPereArbo("Principale") ;
+	 TreeItem<String> Arbo = new TreeItem<>("BlocPrincipal", new ImageView(icon));
+
+for (Arboresence x:  Arbolist)
+	 	{
+	 TreeItem<String> Arbo1 = new TreeItem<>(x.getName(), new ImageView(icon));
+	 Arbo.setExpanded(true);
+  Arbo.getChildren().add(Arbo1);
+	 	 List<ArboPereFis> Arbolist1= Proxy.getFilsArbo(x.getId());
+	
+for (ArboPereFis x1: Arbolist1)
+	 	{
+	 	 TreeItem<String> Arbo2 = new TreeItem<>(x1.getArboFils().getName(), new ImageView(icon));
+
+Arbo1.getChildren().add(Arbo2);
+	  List<ArboPereFis> Arbolist2= Proxy.getFilsArbo(x1.getArboFils().getId());
+		
+for (ArboPereFis x2: Arbolist2)
+	 	{
+	      TreeItem<String> Arbo3 = new TreeItem<>( x2.getArboFils().getName(), new ImageView(icon));
+Arbo2.setExpanded(true);
+Arbo2.getChildren().add(Arbo3);
+
+		List<ArboPereFis> Arbolist3= Proxy.getFilsArbo( x2.getArboFils().getId());
+for (ArboPereFis x3: Arbolist3)
+	 	{
+	 	TreeItem<String> arbo4= new TreeItem<>(x3.getArboFils().getName(), new ImageView(icon));
+Arbo3.setExpanded(true);
+Arbo3.getChildren().add(arbo4);
+	 
+		
+	 	}
+	 	
+	 	}
+	 	
+
+		// node.getChildren().addAll(nodeA1,nodeB1,nodeC1);
+	 	}
+
+	 	}
+treeviewarbo1.setRoot(Arbo); 
+
+
+treeviewarbo1.getSelectionModel().selectedItemProperty()
+ .addListener(new ChangeListener<TreeItem<String>>()
+		 {
+			
+			@Override
+			public void changed(ObservableValue<? extends TreeItem<String>> observable, TreeItem<String> oldValue,
+					TreeItem<String> newValue) {
+				 TreeItem<String> selectedItem = newValue;
+				adarb.setText(selectedItem.getValue());
+			}
+		});
+
+}
+
+  
+   
+    @FXML
+    private void DeleteClick(ActionEvent event) throws NamingException {
+    	
+       	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
+    	Context context1 = new InitialContext();
+    	
+    	ArboresenceServiceRemote Proxy = (ArboresenceServiceRemote) context1.lookup(jndiName2);
+    	 String Select=adarb.getText();
+    	String namee=name.getText();
+    	
+    Arboresence arbo =Proxy.getArbo(Select);
+   
+    Proxy.DeleteArbo(arbo.getId());
+refrech();
 
     }
 
+    @FXML
+    private void onUpdate1Action(ActionEvent event) {
+    	btndelete1.setVisible(false);
+    	btnadd11.setVisible(false);
+    	btnmodifarbo.setVisible(true);
+    	btnadd1.setVisible(false);
+    	
+    	combarbotype.setVisible(false);
+    	labelarbotype.setVisible(false);
+    	
+    }
+
+    @FXML
+    private void onDelete1Action(ActionEvent event) {
+    	btnupdatee.setVisible(false);
+    	btnadd11.setVisible(true);
+    	btnmodifarbo.setVisible(false);
+    	btnadd1.setVisible(false);
+    
+    	combarbotype.setVisible(false);
+    	labelarbotype.setVisible(false);
+    	name.setVisible(false);
+    	
+    }
+    void refrech1() throws NamingException
+    {   	 Image icon = new Image (
+    		   getClass().getResourceAsStream("/views/imgs/equi.png"));
+
+
+
+    treeviewarbo11.setEditable(true);
+
+
+
+
+    	String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
+    	Context context1;
+
+    		context1 = new InitialContext();
+
+      	ArboresenceServiceRemote Proxy = (ArboresenceServiceRemote) context1.lookup(jndiName2);
+     	List<Arboresence> Arbolist = Proxy.getPereArbo("Principale") ;
+    	 TreeItem<String> Arbo = new TreeItem<>("BlocPrincipal", new ImageView(icon));
+
+    for (Arboresence x:  Arbolist)
+    	 	{
+    	 TreeItem<String> Arbo1 = new TreeItem<>(x.getName(), new ImageView(icon));
+    	 Arbo.setExpanded(true);
+      Arbo.getChildren().add(Arbo1);
+    	 	 List<ArboPereFis> Arbolist1= Proxy.getFilsArbo(x.getId());
+    	
+    for (ArboPereFis x1: Arbolist1)
+    	 	{
+    	 	 TreeItem<String> Arbo2 = new TreeItem<>(x1.getArboFils().getName(), new ImageView(icon));
+
+    Arbo1.getChildren().add(Arbo2);
+    	  List<ArboPereFis> Arbolist2= Proxy.getFilsArbo(x1.getArboFils().getId());
+    		
+    for (ArboPereFis x2: Arbolist2)
+    	 	{
+    	      TreeItem<String> Arbo3 = new TreeItem<>( x2.getArboFils().getName(), new ImageView(icon));
+    Arbo2.setExpanded(true);
+    Arbo2.getChildren().add(Arbo3);
+
+    		List<ArboPereFis> Arbolist3= Proxy.getFilsArbo( x2.getArboFils().getId());
+    for (ArboPereFis x3: Arbolist3)
+    	 	{
+    	 	TreeItem<String> arbo4= new TreeItem<>(x3.getArboFils().getName(), new ImageView(icon));
+    Arbo3.setExpanded(true);
+    Arbo3.getChildren().add(arbo4);
+    	 
+    		
+    	 	}
+    	 	
+    	 	}
+    	 	
+
+    		// node.getChildren().addAll(nodeA1,nodeB1,nodeC1);
+    	 	}
+
+    	 	}
+    treeviewarbo11.setRoot(Arbo); 
+
+
+    treeviewarbo11.getSelectionModel().selectedItemProperty()
+     .addListener(new ChangeListener<TreeItem<String>>()
+    		 {
+    			
+    			@Override
+    			public void changed(ObservableValue<? extends TreeItem<String>> observable, TreeItem<String> oldValue,
+    					TreeItem<String> newValue) {
+    				 TreeItem<String> selectedItem = newValue;
+    				 arbofinal.setText(selectedItem.getValue());
+    			}
+    		});
+
+    }
+
+    
+
  
+
+    @FXML
+    private void ONADDEQUI22(Event event) throws NamingException {
+    	refrech1();
+    }
 }
+

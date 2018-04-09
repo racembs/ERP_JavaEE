@@ -1,6 +1,10 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.test;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
@@ -50,6 +54,11 @@ public class TestArboresence extends Application {
 
 	EquipementServiceRemote Proxy = (EquipementServiceRemote) context.lookup(jndiName);
 	
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    Calendar date = Calendar.getInstance();
+    String dateF = df.format(date.getTime());
+   
+	System.out.println(Proxy.countequi());
 /*	
 	ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jndiName2);
 	//System.out.println(	Proxy1.findArboresence(4).getId());
@@ -60,8 +69,8 @@ public class TestArboresence extends Application {
 	
 	
 	//System.out.println(	c.getId());
-	 Equipment e =Proxy.findEquipementBySerie("2");
-		System.out.println(	"ahawaaaaa"+e.getId());
+	 //Equipment e =Proxy.findEquipementBySerie("2");
+	//	System.out.println(	"ahawaaaaa"+e.getId());
 	// e.setArboresence(c);
 	//e.setEISDate("pffffffffffffffff");
 	// Proxy.updateEquipment(e);

@@ -17,6 +17,7 @@ public interface ManufacturingPlanningServiceLocal extends IGenericDAO<Manufactu
 	public Date endingManufacturingDate(Date startingDate,long duration);
 	public List<ManufacturingPlanning> ReadyManufacturingPlanning(Map<NeededItem, List<NeededItem>> map,Date startingDate);
 	public void updateStatusToFinished();
+	public List<ManufacturingPlanning> displayManufactOfAnOrdredItem(int idOrder, int idArticle);
 	
 
 }

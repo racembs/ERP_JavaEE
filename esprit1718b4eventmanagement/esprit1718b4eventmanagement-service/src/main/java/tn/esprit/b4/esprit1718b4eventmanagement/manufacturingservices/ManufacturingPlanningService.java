@@ -195,4 +195,17 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 		
 	}
 
+	@Override
+	public List<ManufacturingPlanning> displayManufactOfAnOrdredItem(int idOrder, int idArticle) {
+		TypedQuery<ManufacturingPlanning> query
+		=em.createQuery("select m from ManufacturingPlanning m left join m.neededItem n where n.orderItem.ordredItemPk.id_Order=:idOrder AND "
+				+ "n.orderItem.ordredItemPk.id_Article=:idArticle" , ManufacturingPlanning.class);
+		query.setParameter("idOrder", idOrder);
+		query.setParameter("idArticle", idArticle);
+		List<ManufacturingPlanning> manuf=query.getResultList();
+		return manuf;
+	}
+	
+	
+
 }
