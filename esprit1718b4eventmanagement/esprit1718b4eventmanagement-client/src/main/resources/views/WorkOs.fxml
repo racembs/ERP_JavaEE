@@ -180,10 +180,10 @@
                                              </children>
                                           </VBox>
                                           <VBox prefHeight="200.0" prefWidth="100.0" />
-                                          <VBox prefHeight="200.0" prefWidth="100.0">
+                                          <VBox prefHeight="210.0" prefWidth="102.0">
                                              <children>
-                                                <JFXButton fx:id="eya1" prefHeight="30.0" prefWidth="101.0" styleClass="green-btn" text="eya1" />
-                                                <JFXButton fx:id="eya2" prefHeight="30.0" prefWidth="100.0" styleClass="blue-btn" text="eya2" />
+                                                <JFXButton fx:id="eya1" onAction="#onBookTools" prefHeight="37.0" prefWidth="201.0" styleClass="green-btn" text="book tools" />
+                                                <JFXButton fx:id="eya2" onAction="#onAddSpares" prefHeight="30.0" prefWidth="100.0" styleClass="blue-btn" text="add spare parts" />
                                              </children>
                                           </VBox>
                                        </children>

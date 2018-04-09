@@ -14,6 +14,8 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TreeItem;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
@@ -28,6 +30,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.cell.*;
 import javafx.scene.text.*;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -66,6 +71,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleGroup;
@@ -93,15 +99,6 @@ import javafx.scene.control.Tooltip;
  */
 public class WorkOsController implements Initializable {
 
-    @FXML
-    private JFXComboBox<?> comboSpecialization;
-    @FXML
-    private ToggleGroup q;
-    @FXML
-    private JFXButton saveWR;
-   
-    @FXML
-    private JFXTextArea adInfo;
     @FXML
     private JFXTreeView<String> treeviewEq;
     @FXML
@@ -156,8 +153,6 @@ public class WorkOsController implements Initializable {
     private JFXTextField f5;
     @FXML
     private JFXTextField f6;
-    @FXML
-    private JFXTextField f9;
  
     @FXML
     private JFXButton start;
@@ -180,8 +175,6 @@ public class WorkOsController implements Initializable {
     @FXML
     private JFXDatePicker startdate;
     @FXML
-    private JFXDatePicker trigger;
-    @FXML
     private JFXDatePicker enddate;
     @FXML
     private Label l12;
@@ -197,11 +190,11 @@ public class WorkOsController implements Initializable {
     private JFXButton eya1;
     @FXML
     private JFXButton eya2;
-    @FXML
-    private GridPane pane;
     static PreventiveWork workp;
     static UsualWork work;
     static PreventiveWork xxx2=new PreventiveWork();
+    @FXML
+    private TableView<?> tableview;
     /**
      * Initializes the controller class.
      */
@@ -765,4 +758,27 @@ Tooltip.install(table, tooltip_userName);
 		}
 		else return false;
 	}
+
+    @FXML
+    private void onBookTools(ActionEvent event) throws IOException {
+    	BookingController re = new BookingController();
+        re.setID(5); 
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/Booking.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root1));  
+        stage.show();
+    }
+
+    @FXML
+    private void onAddSpares(ActionEvent event) throws IOException {
+    	//SparPartsWOController
+    	SparPartsWOController re = new SparPartsWOController();
+        re.setID(5);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/SparPartsWO.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root1));  
+        stage.show();
+    }
 }
