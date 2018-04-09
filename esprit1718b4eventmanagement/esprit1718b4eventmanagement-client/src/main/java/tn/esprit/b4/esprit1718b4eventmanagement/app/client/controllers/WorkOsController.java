@@ -7,6 +7,9 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
 
 import com.jfoenix.controls.JFXButton;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TreeItem;
@@ -22,7 +25,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-
+import javafx.event.EventHandler;
 import javafx.scene.control.cell.*;
 import javafx.scene.text.*;
 import java.net.URL;
@@ -37,6 +40,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Cell;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -54,6 +58,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 
 import javax.naming.NamingException;
+import javax.script.Bindings;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -637,7 +642,20 @@ Tooltip.install(table, tooltip_userName);
  
 // Set tooltip
 
-    				      
+    				    final ContextMenu contextMenu = new ContextMenu();
+    				    MenuItem cut = new MenuItem("Alert");
+    				    MenuItem copy = new MenuItem("warning days!");
+    				    copy.setStyle("-fx-text-fill:white ;");
+    				    cut.setStyle("-fx-text-fill:white ;");
+    				    contextMenu.setStyle("-fx-background-color: tomato;-fx-text-fill:black ;");
+    				
+    				    contextMenu.getItems().addAll(cut, copy);
+    				    cut.setOnAction(new EventHandler<ActionEvent>() {
+    				        @Override
+    				        public void handle(ActionEvent event) {
+    				            System.out.println("Cut...");
+    				        }
+    				    });
     			
     				        tableview1.setRowFactory(tv -> new TableRow<PreventiveWork>() {
     				        	   private Tooltip tooltip = new Tooltip();
@@ -648,8 +666,7 @@ Tooltip.install(table, tooltip_userName);
     				                    setStyle("");
     				                } else if (VerifierWarn(item)) {
     				                    setStyle("-fx-background-color: tomato;");
-    				                    tooltip.setText("Alert!");
-    				                    setTooltip(tooltip); 
+    				                    setContextMenu(contextMenu);
     				                } else {
     				                    setStyle("");
     				                }
@@ -742,7 +759,7 @@ Tooltip.install(table, tooltip_userName);
 	 	calendar.add(Calendar.DAY_OF_MONTH,Math.toIntExact(days));
 	 	Date dt=calendar.getTime();
 		System.out.println(" warning day" + dt);
-		if(new Date().after(dt)||new Date()==dt)
+		if(new Date().after(dt)||new Date().equals(dt))
 		{
 			return true;
 		}
