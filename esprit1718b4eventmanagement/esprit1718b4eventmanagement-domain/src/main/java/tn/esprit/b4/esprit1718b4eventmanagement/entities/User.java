@@ -209,7 +209,7 @@ public class User implements Serializable {
 		this.statut = statut;
 	}
 	public User(String firstname, String lastname, String login, String password, String email, String role,
-			String numtel, String statut, String nb, String image) {
+			String numtel, String statut, String nb, String image,String post) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -221,6 +221,7 @@ public class User implements Serializable {
 		this.statut = statut;
 		this.nb = nb;
 		this.image = image;
+		this.post = post;
 	}
 	public String getImage() {
 		return image;
@@ -241,6 +242,7 @@ public List<Works> getWorks() {
 	public void setPost(String post) {
 		this.post = post;
 	}
+
 
 
 	

@@ -29,6 +29,17 @@ public class ArboresenceService implements ArboresenceServiceLocal,ArboresenceSe
 		Arboresence arbo =em.find(Arboresence.class,id);
 		return arbo;
 	}
+	@Override
+	public void DeleteArbo(int idArbo) {
+		Arboresence arbo =this.findArboresence(idArbo);
+		em.remove(arbo);
+		
+	}
+
+	@Override
+	public void updateArbo(Arboresence e) {
+		em.merge(e);
+	}
 
 	@Override
 	public int addArbo(Arboresence arbo) {
@@ -44,12 +55,20 @@ public class ArboresenceService implements ArboresenceServiceLocal,ArboresenceSe
 		return equi;
 	
 	}
-
+	@Override
+	public List<Arboresence> verifAllArboresence(String name) {
+		TypedQuery<Arboresence> query
+		=em.createQuery("select n from Arboresence n where n.name=:input ", Arboresence.class);
+		query.setParameter("input", name);
+		List<Arboresence> equi=query.getResultList();
+		return equi;
+	
+	}
 	@Override
 	public void addArbo(int idArboPere, int idArboFils) {
 		ArboPereFis arbo =new ArboPereFis();
 		ArboPereFisPk arboPK =new ArboPereFisPk();
-		arboPK .setIdArboFils(idArboFils);
+		arboPK.setIdArboFils(idArboFils);
 		arboPK.setIdArboPere(idArboPere);
 		arbo.setArboperefilsPk(arboPK );
 		
@@ -71,6 +90,15 @@ public class ArboresenceService implements ArboresenceServiceLocal,ArboresenceSe
 	}
 	
 	
+	@Override
+	public List<ArboPereFis> getpereArbo(int idfils) {
+		TypedQuery<ArboPereFis> query
+		=em.createQuery("select n from ArboPereFis n where n.arboperefilsPk.idArboFils=:idPere", ArboPereFis.class);
+		query.setParameter("idPere", idfils);
+		List<ArboPereFis> arbo=query.getResultList();
+		return arbo;
+		
+	}
 	
 
 	@Override

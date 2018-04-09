@@ -8,6 +8,7 @@ import javax.ejb.Local;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 
 
 
@@ -23,7 +24,8 @@ public interface EquipementServiceLocal {
 	public List<Equipment> DisplayEquipment();
 	public Equipment findEqupment(int idArbo);
 	public void DeleteEqupment(int idArbo);
-	
+	public Long Date(String datedeb,String datefin) ;
+	public Long countequi();
 	
 
 }

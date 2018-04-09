@@ -23,5 +23,8 @@ public interface ArboresenceServiceLocal {
 	public List<Arboresence> getPereArbo(String type);
 	public Arboresence getArbo(String name) ;
 	public List<Equipment> DisplayEquipmentbyarbo(Arboresence idArbo);
-
+	List<Arboresence> verifAllArboresence(String name);
+	public void updateArbo(Arboresence e) ;
+	public void DeleteArbo(int idArbo);
+	List<ArboPereFis> getpereArbo(int idfils) ;
 }

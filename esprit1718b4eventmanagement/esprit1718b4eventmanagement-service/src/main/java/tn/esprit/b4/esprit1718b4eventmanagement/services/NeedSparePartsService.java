@@ -13,7 +13,7 @@ import javax.persistence.TypedQuery;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.SpareParts;
 
 @Stateless
-public class NeedSparePartsService implements NeedSparePartsServiceLocal,NeedSparePartsServiceRemote {
+public class NeedSparePartsService implements NeedSparePartsServiceLocal {
 	@PersistenceContext
 	EntityManager em;
 	@Override

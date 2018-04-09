@@ -154,11 +154,23 @@ public class AdminRHController implements Initializable {
 			ValidationSupport v3= new ValidationSupport();
 			ValidationSupport v4= new ValidationSupport();
     private String imageFile;
+    @FXML
+    private JFXRadioButton technician;
+    @FXML
+    private ToggleGroup q1;
+    @FXML
+    private JFXRadioButton dev;
+    @FXML
+    private JFXButton edibtn;
+    @FXML
+    private Tab addduser;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+    	   technician.setVisible(false);
+    	    dev.setVisible(false);
         // TODO
     	Combocheck.getItems().addAll("Mail","Statut","Name","Login");
     	Combocheck.getSelectionModel().selectLast();
@@ -178,15 +190,27 @@ public class AdminRHController implements Initializable {
     		v2.registerValidator(txtlastname,Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
     		
     		v4.registerValidator(txtemail, Validator.createRegexValidator("", "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", Severity.ERROR));
-    		v5.registerValidator(txtphonenumber, Validator.createRegexValidator("must be digits only!", "^[0-9]{1,12}$", Severity.ERROR));
+    		v5.registerValidator(txtphonenumber, Validator.createRegexValidator("must be digits only!", "^[0-9]{8,8}$", Severity.ERROR));
 
     		
     		v3.registerValidator(txtlogin, Validator.createEmptyValidator("Text is Required"));
     		v6.registerValidator(txtpassword, Validator.createRegexValidator("", "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*).{8,25})", Severity.ERROR));
 
     	
+    		edibtn.disableProperty().bind(v5.invalidProperty());
+
+    		edibtn.disableProperty().bind(v6.invalidProperty());
+
+    		edibtn.disableProperty().bind(v2.invalidProperty());
+
+    		edibtn.disableProperty().bind(v1.invalidProperty());
+
+    		edibtn.disableProperty().bind(v3.invalidProperty());
+
+    		edibtn.disableProperty().bind(v4.invalidProperty());
+    		
     	
-    	
+    		
     	
     	
     }    
@@ -218,11 +242,29 @@ Context context;
     	String password=txtpassword.getText();
     	String lastname=txtlastname.getText();
     	String role;
+    	String post=""; 
     if(	GPAO.isSelected())
-    {role="GPAO";}else
-    {role="GMAO";}
-  
-    	User user=new User(firstname,lastname,login,password,mail,role,number,"valable","0",ss.getText() );
+    {role="GPAO";
+    technician.setVisible(false);
+    dev.setVisible(false);
+    }else
+    {role="GMAO";
+    
+    technician.setVisible(true);
+    dev.setVisible(true);
+    if(technician.isSelected())
+    {
+    	post="technician";
+    }
+    else
+    { post="dev";
+    }
+    
+   
+    	
+    }
+ 
+    	User user=new User(firstname,lastname,login,password,mail,role,number,"valable","0",ss.getText(),post );
 
     	
     	proxy.save(user);
@@ -361,8 +403,10 @@ labrole.setText(p7);
 
 					              
 					    		
-					    	User user=	proxy.findByLogin(login);
-							proxy.delete(user);
+					    	User user=	proxy.find(tableau.getSelectionModel().getSelectedItem().getId())
+;
+					    	user.setStatut("baned");
+							proxy.update(user);
 							
 							afficher();
 	                            
@@ -633,6 +677,19 @@ labrole.setText(p7);
             fileSelected.setText("Image file selection cancelled.");
         }
     	
+    	
+    }
+
+    @FXML
+    private void GPAO(ActionEvent event) {
+    	 technician.setVisible(false);
+ 	    dev.setVisible(false);
+    }
+
+    @FXML
+    private void GMAO(ActionEvent event) {
+    	 technician.setVisible(true);
+ 	    dev.setVisible(true);
     	
     }
     

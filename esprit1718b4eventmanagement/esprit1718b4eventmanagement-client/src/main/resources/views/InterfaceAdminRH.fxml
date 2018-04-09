@@ -28,7 +28,7 @@
    <children>
       <JFXTabPane layoutX="138.0" layoutY="100.0" prefHeight="684.0" prefWidth="1105.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab text="Add User">
+          <Tab fx:id="addduser" text="Add User">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -42,11 +42,12 @@
                                     <JFXButton fx:id="Browser" buttonType="RAISED" layoutX="264.0" layoutY="52.0" onAction="#OnBrowserAction" prefHeight="37.0" prefWidth="184.0" ripplerFill="#53eb11" styleClass="blue-btn" text="Browser" />
                                     <Label fx:id="ss" layoutX="264.0" layoutY="107.0" prefHeight="20.0" prefWidth="162.0" />
                                     <Label fx:id="fileSelected" layoutX="264.0" layoutY="21.0" prefHeight="20.0" prefWidth="120.0" />
+                                    <Label layoutX="131.0" layoutY="89.0" />
                                  </children>
                               </AnchorPane>
                            </children>
                         </HBox>
-                        <AnchorPane layoutX="23.0" layoutY="224.0" prefHeight="413.0" prefWidth="1057.0" styleClass="card-unpadded">
+                        <AnchorPane layoutX="29.0" layoutY="222.0" prefHeight="413.0" prefWidth="1057.0" styleClass="card-unpadded">
                            <children>
                               <JFXTextField fx:id="txtfisrtname" focusColor="#00add8" labelFloat="true" layoutX="112.0" layoutY="77.0" promptText="First Name" unFocusColor="#868282" />
                               <JFXTextField fx:id="txtlastname" focusColor="#00add8" labelFloat="true" layoutX="112.0" layoutY="122.0" promptText="Last Name" unFocusColor="#868282" />
@@ -58,12 +59,12 @@
                                     <Label prefHeight="20.0" prefWidth="222.0" style="-fx-text-fill: #868282;" text="Role " />
                                     <HBox alignment="CENTER_LEFT" prefHeight="62.0" prefWidth="509.0" spacing="30.0">
                                        <children>
-                                          <JFXRadioButton fx:id="GPAO" selected="true" text="GPAO">
+                                          <JFXRadioButton fx:id="GPAO" onAction="#GPAO" selected="true" text="GPAO">
                                              <toggleGroup>
                                                 <ToggleGroup fx:id="q" />
                                              </toggleGroup>
                                           </JFXRadioButton>
-                                          <JFXRadioButton fx:id="GMAO" layoutX="10.0" layoutY="10.0" text="GMAO" toggleGroup="$q" />
+                                          <JFXRadioButton fx:id="GMAO" layoutX="10.0" layoutY="10.0" onAction="#GMAO" text="GMAO" toggleGroup="$q" />
                                        </children>
                                        <padding>
                                           <Insets left="100.0" right="20.0" />
@@ -71,9 +72,22 @@
                                     </HBox>
                                  </children>
                               </VBox>
-                              <JFXButton layoutX="611.0" layoutY="262.0" onAction="#OnCancelClick" styleClass="cancel-button" text="Cancel" />
-                              <JFXButton layoutX="469.0" layoutY="262.0" onAction="#OnEditClick" prefHeight="27.0" prefWidth="78.0" styleClass="green-btn" text="Edit" />
+                              <JFXButton layoutX="611.0" layoutY="299.0" onAction="#OnCancelClick" styleClass="cancel-button" text="Cancel" />
+                              <JFXButton fx:id="edibtn" layoutX="469.0" layoutY="299.0" onAction="#OnEditClick" prefHeight="27.0" prefWidth="78.0" styleClass="green-btn" text="Edit" />
                               <JFXTextField fx:id="txtlogin" focusColor="#00add8" labelFloat="true" layoutX="504.0" layoutY="77.0" promptText="Login" unFocusColor="#868282" />
+                              <HBox alignment="CENTER_LEFT" layoutX="435.0" layoutY="238.0" prefHeight="62.0" prefWidth="509.0" spacing="30.0">
+                                 <children>
+                                    <JFXRadioButton fx:id="technician" selected="true" text="technician">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="q1" />
+                                       </toggleGroup>
+                                    </JFXRadioButton>
+                                    <JFXRadioButton fx:id="dev" layoutX="10.0" layoutY="10.0" prefHeight="20.0" prefWidth="90.0" text="dev" toggleGroup="$q1" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="100.0" right="20.0" />
+                                 </padding>
+                              </HBox>
                            </children>
                         </AnchorPane>
                      </children>

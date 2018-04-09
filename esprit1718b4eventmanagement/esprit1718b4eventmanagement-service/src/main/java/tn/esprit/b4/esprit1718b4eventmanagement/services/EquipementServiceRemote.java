@@ -8,6 +8,7 @@ import javax.ejb.Remote;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 
 
 
@@ -24,5 +25,6 @@ public interface EquipementServiceRemote {
 	
 	public Equipment findEqupment(int idArbo);
 	public void DeleteEqupment(int idArbo);
-
+	public Long Date(String datedeb,String datefin) ;
+	public Long countequi();
 	}
