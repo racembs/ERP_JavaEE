@@ -140,6 +140,7 @@
                                           <TableColumn fx:id="C6" editable="true" prefWidth="150.0" sortable="true" text="Creation Date" />
                                           <TableColumn fx:id="C7" editable="true" prefWidth="150.0" text="Equipment(Ref--Info)" />
                                            <TableColumn fx:id="C8" editable="true" prefWidth="150.0" text="Select technician" />
+                                           <TableColumn fx:id="C9" editable="true" prefWidth="150.0" text="Sender" />
                                       </columns>
                                     </TableView>
                                  </children>

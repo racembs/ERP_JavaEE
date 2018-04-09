@@ -144,7 +144,7 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 		for (NeededItem neededItem : map.keySet()) {
 			//Add all key and that mean add all neededItem
 			Article article = articleServ.findArticle(neededItem.getNeeded_article().getId());
-			article.setReservedQuantity(neededItem.getGrossNeed()-neededItem.getNetNeed());
+			article.setReservedQuantity(article.getReservedQuantity()+neededItem.getGrossNeed()-neededItem.getNetNeed());
 			articleServ.updateArticle(article);
 			neededItem.setId(addNeededItem(neededItem));
 		}
@@ -176,8 +176,7 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 		}
 		else{
 			for (NeededItem neededItem : listChildren) {
-				//this is a recursive call to create for each child his children if exist
-				CreateNeedItemTree(neededItem);
+				findNeededItemTreeByOrdredItem(neededItem);
 			}
 		}
 		return map;
@@ -193,6 +192,26 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 		query.setParameter("level", 0);
 		NeededItem nomenclature=query.getSingleResult();
 		return nomenclature;
+	}
+
+	@Override
+	public int CheckReadyLot(NeededItem Parent,List<NeededItem> children) {
+		int lowestReadyLot=10000000;
+		//List<NeededItem> nomenclatureList = needNomenclature.getNeededItemChildren(Parent.getId());
+		for (NeededItem child : children) {
+			if(lowestReadyLot>child.getReadyLotNumber()){
+				lowestReadyLot=child.getReadyLotNumber();
+			}
+		}
+		return lowestReadyLot;
+	}
+
+	@Override
+	public Map<NeededItem, List<NeededItem>> updateNeedItemTree(Map<NeededItem, List<NeededItem>> map) {
+		for (NeededItem neededItem : map.keySet()) {
+			em.merge(neededItem);
+		}
+		return map;
 	}
 
 

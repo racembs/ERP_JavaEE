@@ -25,11 +25,12 @@ public class ManufacturingPlanning implements Serializable {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
 	private int quantity;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date startingDate;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date endingDate;
 	private float duration;
+	private boolean is_incremented=false;
 	private String status;
 	
 	@ManyToOne
@@ -97,6 +98,22 @@ public class ManufacturingPlanning implements Serializable {
 
 	public void setNeededItem(NeededItem neededItem) {
 		this.neededItem = neededItem;
+	}
+
+	public ManufacturingPlanning(int quantity, Date startingDate, String status, NeededItem neededItem) {
+		super();
+		this.quantity = quantity;
+		this.startingDate = startingDate;
+		this.status = status;
+		this.neededItem = neededItem;
+	}
+
+	public boolean getIs_incremented() {
+		return is_incremented;
+	}
+
+	public void setIs_incremented(boolean is_incremented) {
+		this.is_incremented = is_incremented;
 	}
 	
 	

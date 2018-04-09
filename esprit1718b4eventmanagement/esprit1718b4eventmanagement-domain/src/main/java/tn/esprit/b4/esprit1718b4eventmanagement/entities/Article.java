@@ -35,7 +35,8 @@ public class Article implements Serializable {
 		private List<NeededItem> neededItem = new ArrayList<>();
 		
 		@ManyToMany(fetch=FetchType.EAGER)
-		private List <OperatingRange> operatingranges = new ArrayList<>();
+
+		private List <OperatingRange> operatingranges= new ArrayList<>();
 		
 		public void setOperatingranges(List<OperatingRange> operatingranges) {
 			this.operatingranges = operatingranges;

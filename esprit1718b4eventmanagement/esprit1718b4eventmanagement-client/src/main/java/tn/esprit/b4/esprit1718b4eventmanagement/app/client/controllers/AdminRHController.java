@@ -26,6 +26,10 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -55,6 +59,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
 
@@ -142,6 +147,12 @@ public class AdminRHController implements Initializable {
     private Label ss;
     @FXML
     private Label fileSelected;
+	  ValidationSupport v6= new ValidationSupport();
+		ValidationSupport v5= new ValidationSupport();
+		   ValidationSupport v1= new ValidationSupport();
+			ValidationSupport v2= new ValidationSupport();
+			ValidationSupport v3= new ValidationSupport();
+			ValidationSupport v4= new ValidationSupport();
     private String imageFile;
     /**
      * Initializes the controller class.
@@ -160,6 +171,18 @@ public class AdminRHController implements Initializable {
     	chekGmao.setVisible(false);
 	
 
+    
+    		
+    			
+    		v1.registerValidator(txtfisrtname,Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+    		v2.registerValidator(txtlastname,Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
+    		
+    		v4.registerValidator(txtemail, Validator.createRegexValidator("", "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", Severity.ERROR));
+    		v5.registerValidator(txtphonenumber, Validator.createRegexValidator("must be digits only!", "^[0-9]{1,12}$", Severity.ERROR));
+
+    		
+    		v3.registerValidator(txtlogin, Validator.createEmptyValidator("Text is Required"));
+    		v6.registerValidator(txtpassword, Validator.createRegexValidator("", "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*).{8,25})", Severity.ERROR));
 
     	
     	
@@ -198,8 +221,9 @@ Context context;
     if(	GPAO.isSelected())
     {role="GPAO";}else
     {role="GMAO";}
-    
+  
     	User user=new User(firstname,lastname,login,password,mail,role,number,"valable","0",ss.getText() );
+
     	
     	proxy.save(user);
     	

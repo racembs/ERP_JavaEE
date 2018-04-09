@@ -19,6 +19,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ClientServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeedNomenclatureService;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeedNomenclatureServiceRemote;
@@ -268,7 +269,6 @@ public class ClientController implements Initializable {
     	CompanyText1.setText(Table.getSelectionModel().getSelectedItem().getCompany());
     	PhoneText1.setText(Long.toString(Table.getSelectionModel().getSelectedItem().getPhoneNumber()));
     	EmailText1.setText(Table.getSelectionModel().getSelectedItem().getEmail());
-
     }
 
 }

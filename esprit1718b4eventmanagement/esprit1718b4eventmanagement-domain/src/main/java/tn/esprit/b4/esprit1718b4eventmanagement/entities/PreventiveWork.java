@@ -23,6 +23,7 @@ public class PreventiveWork  extends Works implements Serializable{
 	private Date LastActDate;
 	@Temporal(TemporalType.DATE)
 	private Date TriggerD;
+	private int technicianId;
 	
 	public String getFrequency() {
 		return Frequency;
@@ -49,5 +50,10 @@ public class PreventiveWork  extends Works implements Serializable{
 		TriggerD = triggerD;
 	}
 	
-
+	public int getTechnicianId() {
+		return technicianId;
+	}
+	public void setTechnicianId(int technicianId) {
+		this.technicianId = technicianId;
+	}
 }

@@ -33,13 +33,20 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <JFXTextField fx:id="txtUnitCode" focusColor="#00add8" labelFloat="true" layoutX="553.0" layoutY="95.0" prefHeight="42.0" prefWidth="324.0" promptText="Unit Code" unFocusColor="#868282" />
-                        <JFXTextField fx:id="txtArticleCode" focusColor="#00add8" labelFloat="true" layoutX="89.0" layoutY="95.0" prefHeight="42.0" prefWidth="324.0" promptText="Article Code" unFocusColor="#868282" />
-                        <JFXTextField fx:id="txtArticlePrice" focusColor="#00add8" labelFloat="true" layoutX="89.0" layoutY="229.0" prefHeight="42.0" prefWidth="324.0" promptText="Price" unFocusColor="#868282" />
-                        <JFXTextField fx:id="txtArticleQuantity" focusColor="#00add8" labelFloat="true" layoutX="553.0" layoutY="229.0" prefHeight="42.0" prefWidth="324.0" promptText="Quantity" unFocusColor="#868282" />
-                        <JFXComboBox fx:id="comboType" layoutX="92.0" layoutY="374.0" prefHeight="40.0" prefWidth="319.0" promptText="Type" />
-                        <JFXTextArea fx:id="txtDescription" layoutX="550.0" layoutY="333.0" prefHeight="83.0" prefWidth="330.0" promptText="Description" />
-                        <JFXButton fx:id="BtnAddArticle" buttonType="RAISED" layoutX="454.0" layoutY="520.0" onAction="#OnAddAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: rgb(0,180,212); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="Add" />
+                        <StackPane fx:id="stackPaneADD" prefHeight="649.0" prefWidth="1105.0">
+                           <children>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXButton fx:id="BtnAddArticle" buttonType="RAISED" layoutX="462.0" layoutY="509.0" onAction="#OnAddAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: rgb(0,180,212); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="Add" />
+                                    <JFXTextArea fx:id="txtDescription" layoutX="561.0" layoutY="356.0" prefHeight="83.0" prefWidth="330.0" promptText="Description" />
+                                    <JFXComboBox fx:id="comboType" layoutX="116.0" layoutY="402.0" prefHeight="40.0" prefWidth="319.0" promptText="Type" />
+                                    <JFXTextField fx:id="txtArticleQuantity" focusColor="#00add8" labelFloat="true" layoutX="553.0" layoutY="276.0" prefHeight="42.0" prefWidth="324.0" promptText="Quantity" unFocusColor="#868282" />
+                                    <JFXTextField fx:id="txtArticlePrice" focusColor="#00add8" labelFloat="true" layoutX="102.0" layoutY="276.0" prefHeight="42.0" prefWidth="324.0" promptText="Price" unFocusColor="#868282" />
+                                    <JFXTextField fx:id="txtArticleCode" focusColor="#00add8" labelFloat="true" layoutX="113.0" layoutY="129.0" prefHeight="42.0" prefWidth="324.0" promptText="Article Code" unFocusColor="#868282" />
+                                    <JFXTextField fx:id="txtUnitCode" focusColor="#00add8" labelFloat="true" layoutX="553.0" layoutY="129.0" prefHeight="42.0" prefWidth="324.0" promptText="Unit Code" unFocusColor="#868282" />
+                                 </children>
+                              </AnchorPane>
+                           </children></StackPane>
                      </children>
                   </AnchorPane>
             </content>
@@ -90,23 +97,24 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <SplitPane layoutX="16.0" layoutY="6.0" orientation="VERTICAL" prefHeight="649.0" prefWidth="1105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <items>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
+                        <StackPane fx:id="stackPaneAddChild" prefHeight="650.0" prefWidth="1105.0">
+                           <children>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="1103.0">
                                  <children>
                                     <JFXTextField fx:id="txtArticleSearch" focusColor="#00add8" labelFloat="true" layoutX="226.0" layoutY="47.0" onKeyReleased="#SearchArticleAction" prefHeight="42.0" prefWidth="208.0" promptText="Search Final Article" unFocusColor="#868282" />
                                     <JFXTextField fx:id="txtArticleChild" disable="true" focusColor="#00add8" labelFloat="true" layoutX="739.0" layoutY="231.0" onKeyReleased="#OnSearchNewChildForTreeReleased" prefHeight="42.0" prefWidth="212.0" promptText="Code of the new Child" unFocusColor="#868282" AnchorPane.leftAnchor="739.0" AnchorPane.topAnchor="231.0" />
                                     <TreeTableView fx:id="ArticleTableView" layoutX="67.0" layoutY="120.0" onMouseClicked="#itemSelected" prefHeight="433.0" prefWidth="569.0">
-                                      <columns>
-                                        <TreeTableColumn fx:id="articleColumn" prefWidth="476.0" text="Article" />
-                                        <TreeTableColumn fx:id="quantityColumn" prefWidth="92.0" text="Quantity" />
-                                      </columns>
+                                       <columns>
+                                          <TreeTableColumn fx:id="articleColumn" prefWidth="476.0" text="Article" />
+                                          <TreeTableColumn fx:id="quantityColumn" prefWidth="92.0" text="Quantity" />
+                                       </columns>
                                     </TreeTableView>
                                     <JFXButton fx:id="BtnAddArticleChild" buttonType="RAISED" disable="true" layoutX="796.0" layoutY="382.0" onAction="#OnAddChildAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: rgb(0,180,212); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="Add Child" />
                                     <JFXTextField fx:id="txtChildQuantity" disable="true" focusColor="#00add8" labelFloat="true" layoutX="741.0" layoutY="304.0" prefHeight="42.0" prefWidth="208.0" promptText="Quantity" unFocusColor="#868282" />
-                                 </children></AnchorPane>
-                          </items>
-                        </SplitPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </StackPane>
                      </children>
                   </AnchorPane>
             </content>
@@ -125,9 +133,9 @@
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                    <children>
-                                                      <JFXTextField fx:id="txtArticleCodeForOrder" focusColor="#00add8" labelFloat="true" layoutX="130.0" layoutY="95.0" prefHeight="42.0" prefWidth="324.0" promptText="Article Code" unFocusColor="#868282" />
+                                                      <JFXTextField fx:id="txtArticleCodeForOrder" focusColor="#00add8" labelFloat="true" layoutX="130.0" layoutY="95.0" onKeyReleased="#OnSearchAddOrderReleased" prefHeight="42.0" prefWidth="324.0" promptText="Article Code" unFocusColor="#868282" />
                                                       <JFXTextField fx:id="txtQuantityForOrder" focusColor="#00add8" labelFloat="true" layoutX="603.0" layoutY="95.0" prefHeight="42.0" prefWidth="324.0" promptText="Quantity" unFocusColor="#868282" />
-                                                      <JFXButton fx:id="BtnAddOrder" buttonType="RAISED" layoutX="454.0" layoutY="520.0" onAction="#OnAddOrdreClicked" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: rgb(0,180,212); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="Add" />
+                                                      <JFXButton fx:id="BtnAddOrder" buttonType="RAISED" disable="true" layoutX="454.0" layoutY="520.0" onAction="#OnAddOrdreClicked" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: rgb(0,180,212); -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="Add" />
                                                       <DatePicker fx:id="AlarmDate" layoutX="236.0" layoutY="291.0" />
                                                       <DatePicker fx:id="RequestDate" layoutX="603.0" layoutY="291.0" />
                                                       <Label layoutX="236.0" layoutY="270.0" text="Alarm Date" />

@@ -84,7 +84,7 @@ public class EquipementService extends GenericDAO<Equipment>  implements Equipem
 			List <Equipment> result= query.getResultList();
 			return result;
 		}
-		
+	
 		  
 	    public List<Equipment> searchEquipment(String input){
 	    	TypedQuery<Equipment> query = em.createQuery("SELECT c FROM Equipment c WHERE c.SerialNum LIKE :input OR c.State LIKE :input OR c.Fabriquant LIKE :input OR c.Marque LIKE :input",Equipment.class);

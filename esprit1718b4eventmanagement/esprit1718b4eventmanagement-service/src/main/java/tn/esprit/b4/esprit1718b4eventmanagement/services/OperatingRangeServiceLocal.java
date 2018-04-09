@@ -16,5 +16,6 @@ public interface OperatingRangeServiceLocal extends IGenericDAO<OperatingRange> 
 	public List<OperatingRange> DisplayOperatingRange();
 	public Long CountOperatingRange();
 	public List<OperatingRange> find(String code);
+	public OperatingRange assignOperatingRangeToArticle (int idOptR, int idArticle);
 
 }
