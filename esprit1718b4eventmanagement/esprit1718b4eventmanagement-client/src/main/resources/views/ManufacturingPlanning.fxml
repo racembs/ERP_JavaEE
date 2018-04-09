@@ -99,7 +99,27 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Pane layoutX="131.0" layoutY="108.0" prefHeight="457.0" prefWidth="939.0" />
+                              <Pane layoutX="71.0" layoutY="153.0" prefHeight="367.0" prefWidth="1040.0">
+                                 <children>
+                                    <TableView fx:id="PlanTable" layoutX="3.0" prefHeight="366.0" prefWidth="1038.0">
+                                      <columns>
+                                        <TableColumn fx:id="clientPlanColumn" prefWidth="174.0" text="Client" />
+                                        <TableColumn fx:id="orderPlanColumn" prefWidth="112.0" text="Order Code" />
+                                          <TableColumn fx:id="itemPlanColumn" prefWidth="169.0" text="Item" />
+                                          <TableColumn fx:id="qtyPlanColomn" prefWidth="92.0" text="Quantity" />
+                                          <TableColumn fx:id="StartingDateColumn" prefWidth="187.0" text="Starting Date" />
+                                          <TableColumn fx:id="EndingDateColumn" prefWidth="183.0" text="Ending Date" />
+                                          <TableColumn fx:id="StatusPlanColumn" prefWidth="120.0" text="Status" />
+                                      </columns>
+                                    </TableView>
+                                 </children></Pane>
+                              <Label fx:id="Client_Lab" layoutX="80.0" layoutY="81.0" prefHeight="30.0" prefWidth="131.0" text="Client" />
+                              <TextField fx:id="Client_Text" layoutX="173.0" layoutY="81.0" />
+                              <ComboBox fx:id="Combo_Orders" layoutX="541.0" layoutY="81.0" onAction="#Combo_Orders_Action" onMouseClicked="#OrderPlanDisplayAction" prefHeight="30.0" prefWidth="177.0" />
+                              <Label fx:id="Order_Lab" layoutX="435.0" layoutY="80.0" prefHeight="33.0" prefWidth="76.0" text="Order" />
+                              <ComboBox fx:id="Combo_Article" layoutX="924.0" layoutY="81.0" onAction="#Combo_Article_Action" prefHeight="30.0" prefWidth="177.0" />
+                              <Label fx:id="ItemLabel1111" layoutX="818.0" layoutY="80.0" prefHeight="33.0" prefWidth="76.0" text="Article" />
+                              <Button fx:id="ganttButton" layoutX="384.0" layoutY="575.0" mnemonicParsing="false" onAction="#ganttAction" prefHeight="30.0" prefWidth="454.0" text="Show gantt Diagram" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -109,5 +129,11 @@
             <Accordion layoutX="14.0" layoutY="81.0" />
          </children></AnchorPane>
    </children>
+   
+   <stylesheets>
+        <URL value="@../css/default.css" />
+        <URL value="@../css/custom.css" />
+      <URL value="@../login/style.css" />
+    </stylesheets>
    
 </AnchorPane>

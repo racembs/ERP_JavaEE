@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,10 @@ import java.util.ResourceBundle;
 import javax.naming.NamingException;
 
 import org.controlsfx.control.textfield.TextFields;
+import org.jfree.ui.ApplicationFrame;
+import org.jfree.ui.RefineryUtilities;
+
+import com.sun.glass.ui.Application;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
@@ -55,11 +60,13 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingPlanning;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeedNomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeededItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Orders;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ClientServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ManufacturingPlanningServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeedNomenclatureService;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeedNomenclatureServiceRemote;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeededItemServiceRemote;
@@ -75,7 +82,7 @@ public class ManufacturingPlanningController implements Initializable {
 	String jndiNameClient = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ClientService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ClientServiceRemote";
 	String jndiNameNomenclature = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/NeedNomenclatureService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeedNomenclatureServiceRemote";
 	String jndiNameNeededItem = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/NeededItemService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeededItemServiceRemote";
-	String jndiNameManufacturingPlan = "exported/esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ManufacturingPlanningService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ManufacturingPlanningServiceRemote";
+	String jndiNameManufacturingPlan = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ManufacturingPlanningService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ManufacturingPlanningServiceRemote";
 	String jndiNameOrdredItem = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OrderItemService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrderItemServiceRemote";
 	String jndiNameOrders= "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OrdersService!tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrdersServiceRemote";
 	String jndiNameArticle = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
@@ -83,7 +90,7 @@ public class ManufacturingPlanningController implements Initializable {
 	ClientServiceRemote proxyClientServiceRemote=(ClientServiceRemote) s.getProxy(jndiNameClient);
 	NeedNomenclatureServiceRemote proxyNomenclature=(NeedNomenclatureServiceRemote) s.getProxy(jndiNameNomenclature);
 	NeededItemServiceRemote proxyNeededItem=(NeededItemServiceRemote) s.getProxy(jndiNameNeededItem);
-	NeededItemServiceRemote proxyManufacturing=(NeededItemServiceRemote) s.getProxy(jndiNameManufacturingPlan);
+	ManufacturingPlanningServiceRemote proxyManufacturing=(ManufacturingPlanningServiceRemote) s.getProxy(jndiNameManufacturingPlan);
 	OrderItemServiceRemote proxyOrdredItem=(OrderItemServiceRemote) s.getProxy(jndiNameOrdredItem);
 	OrdersServiceRemote proxyOrders=(OrdersServiceRemote) s.getProxy(jndiNameOrders);
 	ArticleServiceRemote proxyArticleServiceRemote=(ArticleServiceRemote) s.getProxy(jndiNameArticle);
@@ -174,6 +181,54 @@ public class ManufacturingPlanningController implements Initializable {
 
     @FXML
     private ComboBox<OrdredItem> ComboArticleSearch;
+    
+    @FXML
+    private Tab idPlan;
+
+    @FXML
+    private TableView<ManufacturingPlanning> PlanTable;
+
+    @FXML
+    private TableColumn<ManufacturingPlanning, String> clientPlanColumn;
+
+    @FXML
+    private TableColumn<ManufacturingPlanning, String> orderPlanColumn;
+
+    @FXML
+    private TableColumn<ManufacturingPlanning, String> itemPlanColumn;
+
+    @FXML
+    private TableColumn<ManufacturingPlanning, Integer> qtyPlanColomn;
+
+    @FXML
+    private TableColumn<ManufacturingPlanning, Date> StartingDateColumn;
+
+    @FXML
+    private TableColumn<ManufacturingPlanning, Date> EndingDateColumn;
+
+    @FXML
+    private TableColumn<ManufacturingPlanning, String> StatusPlanColumn;
+
+    @FXML
+    private Label Client_Lab;
+
+    @FXML
+    private TextField Client_Text;
+
+    @FXML
+    private ComboBox<Orders> Combo_Orders;
+
+    @FXML
+    private Label Order_Lab;
+
+    @FXML
+    private ComboBox<OrdredItem> Combo_Article;
+
+    @FXML
+    private Label ItemLabel1111;
+
+    @FXML
+    private Button ganttButton;
 
     @FXML
     private Label ItemLabel111;
@@ -215,6 +270,7 @@ public class ManufacturingPlanningController implements Initializable {
 			}
 			TextFields.bindAutoCompletion(ClientText, items);
 			TextFields.bindAutoCompletion(ClientTextSearch, items);
+			TextFields.bindAutoCompletion(Client_Text, items);
 			
 		}
 		
@@ -404,6 +460,40 @@ public class ManufacturingPlanningController implements Initializable {
 	     
 	    }
 	    
+	    public void DisplayManufactPlanning(){
+	    	 
+    	List<ManufacturingPlanning> manufactList =proxyManufacturing.displayManufactOfAnOrdredItem
+    			(Combo_Article.getSelectionModel().getSelectedItem().getOrdredItemPk().getId_Order(), 
+    					Combo_Article.getSelectionModel().getSelectedItem().getOrdredItemPk().getId_Article());
+    	
+    	ObservableList<ManufacturingPlanning> items = FXCollections.observableArrayList(manufactList);
+        
+    	PlanTable.setItems(items);
+        
+    	clientPlanColumn.setCellValueFactory(new Callback<CellDataFeatures<ManufacturingPlanning, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<ManufacturingPlanning, String> param) {
+                return new SimpleStringProperty(param.getValue().getNeededItem().getOrderItem().getOrder().getClient().getCompany());
+            }
+        });
+    	orderPlanColumn.setCellValueFactory(new Callback<CellDataFeatures<ManufacturingPlanning, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<ManufacturingPlanning, String> param) {
+                return new SimpleStringProperty(String.valueOf(param.getValue().getNeededItem().getOrderItem().getOrder().getReference()));
+            }
+        });
+    	itemPlanColumn.setCellValueFactory(new Callback<CellDataFeatures<ManufacturingPlanning, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<ManufacturingPlanning, String> param) {
+                return new SimpleStringProperty(String.valueOf(param.getValue().getNeededItem().getNeeded_article().getArticleCode()));
+            }
+        });
+    	qtyPlanColomn.setCellValueFactory(new PropertyValueFactory<ManufacturingPlanning, Integer>("quantity"));
+    	StartingDateColumn.setCellValueFactory(new PropertyValueFactory<ManufacturingPlanning, Date>("startingDate"));
+    	EndingDateColumn.setCellValueFactory(new PropertyValueFactory<ManufacturingPlanning, Date>("endingDate"));
+    	StatusPlanColumn.setCellValueFactory(new PropertyValueFactory<ManufacturingPlanning, String>("status"));
+    }
+	    
 	    @FXML
 	    void OrderdisplayAction(MouseEvent event) {
 	    	ComboBoxOrders(ComboOrders,ClientText);
@@ -451,4 +541,62 @@ public class ManufacturingPlanningController implements Initializable {
 	    	DisplayNeededItem();
 	    	showTreeView(ParentneededItem,map);
 	    }
+	    
+	    @FXML
+	    void Combo_Article_Action(ActionEvent event) {
+	    	DisplayManufactPlanning();
+	    }
+
+	    @FXML
+	    void Combo_Orders_Action(ActionEvent event) {
+	    	List<OrdredItem> list ;
+	        list = proxyOrdredItem.findItemsOfAnOrder(Combo_Orders.getSelectionModel().getSelectedItem().getId());
+	        ObservableList<OrdredItem> items = FXCollections.observableArrayList(list);
+	        Combo_Article.setConverter(new StringConverter<OrdredItem>() {
+	    		@Override
+	    		public String toString(OrdredItem object) {
+	    		    return String.valueOf(object.getArticle().getArticleCode());
+	    		}
+	    		@Override
+	    		public OrdredItem fromString(String string) {
+	    		    return null;
+	    		}
+	    		});
+	    	Combo_Article.setItems(items); 
+
+	    	Combo_Article.valueProperty().addListener(new ChangeListener<OrdredItem>() {
+	           
+				@Override
+				public void changed(ObservableValue<? extends OrdredItem> observableValue, OrdredItem oldValue, OrdredItem newValue) {
+					
+				}    
+	        });
+	    }
+	    
+	    @FXML
+	    void ganttAction(ActionEvent event) throws IOException {
+	    	if(Combo_Article.getValue()!=null){
+	    		List<ManufacturingPlanning> manufactList =proxyManufacturing.displayManufactOfAnOrdredItem
+		    			(Combo_Article.getSelectionModel().getSelectedItem().getOrdredItemPk().getId_Order(), 
+		    					Combo_Article.getSelectionModel().getSelectedItem().getOrdredItemPk().getId_Article());
+		    	final GanttDemoController demo = new GanttDemoController("Gantt Chart Demo 1",manufactList);
+		        demo.pack();
+		        RefineryUtilities.centerFrameOnScreen(demo);
+		        demo.setVisible(true);
+	    	} else {
+	    		Alert alert4 = new Alert(AlertType.ERROR);
+		        alert4.setTitle("Error Dialog");
+		        alert4.setHeaderText("Failed");
+		        alert4.setContentText("you have to select an ordred item to show the gantt diagram");
+		        alert4.showAndWait();
+	    	}
+	    	
+	    }
+	    
+	    @FXML
+	    void OrderPlanDisplayAction(MouseEvent event) {
+	    	ComboBoxOrders(Combo_Orders,Client_Text);
+	    }
+	    
+	    
 	}

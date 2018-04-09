@@ -2,8 +2,13 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +21,7 @@ import javax.naming.NamingException;
 
 import org.controlsfx.control.textfield.TextFields;
 
+import com.jfoenix.controls.JFXTimePicker;
 import com.sun.javafx.fxml.LoadListener;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -106,6 +112,9 @@ public class MRPCalculationController implements Initializable {
     
     @FXML
     private VBox box;
+
+    @FXML
+    private DatePicker date;
     
     @FXML
     private TreeTableView<NeededItem> TreeTable;
@@ -263,6 +272,7 @@ public class MRPCalculationController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Make.setVisible(true);
+		date.setVisible(true);
 		Cancel.setText("Cancel");
 		TreeItem<String> rootItem = new TreeItem<String> ("Inbox");
         rootItem.setExpanded(true);
@@ -281,19 +291,37 @@ public class MRPCalculationController implements Initializable {
 
     @FXML
     void MakeAction(ActionEvent event) {
-    	Alert alert = new Alert(AlertType.CONFIRMATION);
-    	alert.setTitle("Confirmation Dialog");
-    	alert.setHeaderText("Look, a Confirmation Dialog");
-    	alert.setContentText("Do you want to start the Manufacturing planning for this Item?");
+    	if(date.getValue()==null){
+    		Alert alert1 = new Alert(AlertType.ERROR);
+			alert1.setTitle("Error Dialog");
+			alert1.setHeaderText("Look, an Error Dialog");
+			alert1.setContentText("You have to select the starting date");
+			alert1.showAndWait();
+    	} else {
+    		Alert alert = new Alert(AlertType.CONFIRMATION);
+        	alert.setTitle("Confirmation Dialog");
+        	alert.setHeaderText("Look, a Confirmation Dialog");
+        	alert.setContentText("Do you want to start the Manufacturing planning for this Item?");
 
-    	Optional<ButtonType> result = alert.showAndWait();
-    	if (result.get() == ButtonType.OK){
-    		map=proxyNeededItem.SaveNeedItemTree(map);
-    		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
-    		Make.setVisible(false);
-    		Cancel.setText("Exit");
+        	Optional<ButtonType> result = alert.showAndWait();
+        	if (result.get() == ButtonType.OK){
+        		map=proxyNeededItem.SaveNeedItemTree(map);
+        		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
+        		LocalDate localDate = date.getValue();
+        		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+        		Date startDate = Date.from(instant);
+        		Calendar calendar = Calendar.getInstance();
+        		calendar.setTime(startDate);
+        		calendar.setTimeInMillis(calendar.getTimeInMillis()+28800000);
+        		proxyManufacturing.ReadyManufacturingPlanning(map, calendar.getTime());
+        		Make.setVisible(false);
+        		date.setVisible(false);
+        		Cancel.setText("Exit");
+        	}
+        	
     	}
     	
+		//DeliveryDatePicker.setValue(null);
     }
     
     @FXML
@@ -301,7 +329,6 @@ public class MRPCalculationController implements Initializable {
     	DisplayAllNeededItem();
     	showTreeView();
     	ShowButton.setVisible(false);
-
     }
 
 	

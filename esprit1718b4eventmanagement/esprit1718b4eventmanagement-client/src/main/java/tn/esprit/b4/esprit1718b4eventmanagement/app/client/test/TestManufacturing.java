@@ -139,7 +139,8 @@ public class TestManufacturing {
 //			System.out.println(manufacturingPlanning.getEndingDate());
 //			System.out.println("next");
 //		}
-	    proxyManufacturing.updateStatusToFinished();
+	    //proxyManufacturing.updateStatusToFinished();
+	    
 	}
 
 }
