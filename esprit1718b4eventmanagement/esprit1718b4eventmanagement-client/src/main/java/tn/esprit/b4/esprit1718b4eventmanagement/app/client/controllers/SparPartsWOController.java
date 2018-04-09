@@ -115,7 +115,7 @@ public class SparPartsWOController implements Initializable {
 
 		reference.setCellValueFactory(new PropertyValueFactory<SpareParts, String>("Reference"));
 		av_quent.setCellValueFactory(new PropertyValueFactory<SpareParts, Integer>("Quantity"));
-		studentACourseColumnSec.setCellValueFactory(new PropertyValueFactory<SpareParts, String>("Tool_Family"));
+		studentACourseColumnSec.setCellValueFactory(new PropertyValueFactory<SpareParts, String>("Family"));
 		descriptionA.setCellValueFactory(new PropertyValueFactory<SpareParts, String>("Description"));
 
 		List<SpareParts> list = proxyT.displayAll();
@@ -164,7 +164,7 @@ public class SparPartsWOController implements Initializable {
 		
 		referenceB.setCellValueFactory(new PropertyValueFactory<SpareParts, String>("Reference"));
 		reserv_quent.setCellValueFactory(new PropertyValueFactory<SpareParts, Integer>("Quantity"));
-		studentCCourseColumnSec.setCellValueFactory(new PropertyValueFactory<SpareParts, String>("Tool_Family"));
+		studentCCourseColumnSec.setCellValueFactory(new PropertyValueFactory<SpareParts, String>("Family"));
 		descriptionC.setCellValueFactory(new PropertyValueFactory<SpareParts, String>("Description"));
 
 		CurrentBookingTableView.getItems().add(newtool);
