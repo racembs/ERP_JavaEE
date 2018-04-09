@@ -172,8 +172,7 @@ public class NeedsStockController implements Initializable {
 	
 	static String Treference ;
 	static String SPreference ;
-    @FXML
-    private Button testBook;
+    
     @FXML
     private javafx.scene.control.Label lab4SP;
     @FXML
@@ -522,17 +521,6 @@ public class NeedsStockController implements Initializable {
 	private void onToolsBookingTalbes(Event event) {
 	}
 
-    @FXML
-    private void onTestBook(ActionEvent event) throws IOException {
-    	 
-    	BookingController re = new BookingController();
-        re.setID(5); 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/Booking.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root1));  
-        stage.show();
-        
-    }
+   
 
 }
