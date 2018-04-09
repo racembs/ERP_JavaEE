@@ -2,6 +2,7 @@ package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
 import javax.persistence.EntityManager;
 
+
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 

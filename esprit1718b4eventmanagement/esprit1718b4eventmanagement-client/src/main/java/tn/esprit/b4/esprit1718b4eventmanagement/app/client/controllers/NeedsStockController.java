@@ -2,6 +2,13 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
 import com.jfoenix.controls.JFXButton;
 
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextArea;
@@ -12,6 +19,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 import java.awt.Label;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +45,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ToggleGroup;
 
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -103,7 +112,7 @@ public class NeedsStockController implements Initializable {
 	@FXML
 	private javafx.scene.control.Label labNature;
 
-	static int x;
+	static int x,y;
 	@FXML
 	private TableColumn<Tool, Integer> Tquant;
 	@FXML
@@ -162,6 +171,25 @@ public class NeedsStockController implements Initializable {
 	private javafx.scene.control.Label lab10;
 	
 	static String Treference ;
+	static String SPreference ;
+    @FXML
+    private Button testBook;
+    @FXML
+    private javafx.scene.control.Label lab4SP;
+    @FXML
+    private javafx.scene.control.Label lab1SP;
+    @FXML
+    private javafx.scene.control.Label lab2SP;
+    @FXML
+    private javafx.scene.control.Label lab3SP;
+    @FXML
+    private javafx.scene.control.Label lab5SP;
+    @FXML
+    private javafx.scene.control.Label lab7SP;
+    @FXML
+    private javafx.scene.control.Label lab8SP;
+    @FXML
+    private javafx.scene.control.Label lab9SP;
 
 	/**
 	 * Initializes the controller class.
@@ -407,10 +435,104 @@ public class NeedsStockController implements Initializable {
 	@FXML
 	private void onSparePartsTalbes(Event event) throws NamingException {
 		afficherSpareParts();
+		SparePartsTab.setRowFactory(new Callback<TableView<SpareParts>, TableRow<SpareParts>>() {
+			@Override
+			public TableRow<SpareParts> call(TableView<SpareParts> param) {
+				final TableRow<SpareParts> row = new TableRow<>();
+				final ContextMenu contextMenu = new ContextMenu();
+				final MenuItem MenuItem = new MenuItem("Afficher");
+				final MenuItem removeMenuItem = new MenuItem("Supprimer");
+				MenuItem.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+
+						String p = SparePartsTab.getSelectionModel().getSelectedItem().getReference();
+						lab1SP.setText(p);
+
+						int p1 = SparePartsTab.getSelectionModel().getSelectedItem().getQuantity();
+						lab2SP.setText(String.valueOf(p1));
+
+						String p2 = SparePartsTab.getSelectionModel().getSelectedItem().getDescription();
+						lab3SP.setText(p2);
+
+						String p3 = SparePartsTab.getSelectionModel().getSelectedItem().getBrand();
+						lab4SP.setText(p3);
+
+						String p4 = SparePartsTab.getSelectionModel().getSelectedItem().getFamily();
+						lab5SP.setText(p4);
+
+						String p5 = SparePartsTab.getSelectionModel().getSelectedItem().getSupplier();
+						lab7SP.setText(p5);
+
+						String p7 = SparePartsTab.getSelectionModel().getSelectedItem().getCode_Supplier();
+						lab8SP.setText(p7);
+
+						float p8 = SparePartsTab.getSelectionModel().getSelectedItem().getPrice();
+						lab9SP.setText(String.valueOf(p8));
+						SPreference = SparePartsTab.getSelectionModel().getSelectedItem().getReference();
+					}
+
+				});
+				//////// remove
+				removeMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent event) {
+
+						String TOOLjndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/NeedToolService!tn.esprit.b4.esprit1718b4eventmanagement.services.NeedSparePartsServiceRemote";
+						Context context;
+
+						try {
+							context = new InitialContext();
+
+							NeedSparePartsServiceRemote proxy = (NeedSparePartsServiceRemote) context.lookup(TOOLjndiName);
+							SpareParts tool = proxy.findSparePartsByRef(SPreference);
+							int y = tool.getId_Need();
+							proxy.deleteSpareParts(y);
+
+							afficherSpareParts();
+
+						} catch (NamingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
+
+				});
+
+				contextMenu.getItems().add(removeMenuItem);
+
+				row.contextMenuProperty()
+						.bind(Bindings.when(row.emptyProperty()).then((ContextMenu) null).otherwise(contextMenu));
+
+				contextMenu.getItems().add(MenuItem);
+
+				row.contextMenuProperty()
+						.bind(Bindings.when(row.emptyProperty()).then((ContextMenu) null).otherwise(contextMenu));
+
+				return row;
+
+			}
+
+		});
 	}
 
 	@FXML
 	private void onToolsBookingTalbes(Event event) {
 	}
+
+    @FXML
+    private void onTestBook(ActionEvent event) throws IOException {
+    	 
+    	BookingController re = new BookingController();
+        re.setID(5); 
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/Booking.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root1));  
+        stage.show();
+        
+    }
 
 }
