@@ -233,7 +233,7 @@ public class EquipmentsController implements Initializable {
     private JFXButton btndelete1;
     @FXML
     private CheckTreeView<String> treeviewarbo11;
-    private CheckTreeView<String> treeviewarbo12;
+    
     @FXML
     private ImageView idCal;
     @FXML
@@ -1170,7 +1170,14 @@ for (ArboPereFis x3: Arbolist3)
 	 	TreeItem<String> arbo4= new TreeItem<>(x3.getArboFils().getName(), new ImageView(icon));
 Arbo3.setExpanded(true);
 Arbo3.getChildren().add(arbo4);
-	 
+List<ArboPereFis> Arbolist4= Proxy.getFilsArbo( x3.getArboFils().getId());
+for (ArboPereFis x5: Arbolist4)
+	 	{
+	 	TreeItem<String> arbo5= new TreeItem<>(x5.getArboFils().getName(), new ImageView(icon));
+arbo4.setExpanded(true);
+arbo4.getChildren().add(arbo5);
+	 	}
+		
 		
 	 	}
 	 	
@@ -1287,7 +1294,13 @@ refrech();
     	 	TreeItem<String> arbo4= new TreeItem<>(x3.getArboFils().getName(), new ImageView(icon));
     Arbo3.setExpanded(true);
     Arbo3.getChildren().add(arbo4);
-    	 
+	List<ArboPereFis> Arbolist4= Proxy.getFilsArbo( x3.getArboFils().getId());
+    for (ArboPereFis x5: Arbolist4)
+    	 	{
+    	 	TreeItem<String> arbo5= new TreeItem<>(x5.getArboFils().getName(), new ImageView(icon));
+    arbo4.setExpanded(true);
+    arbo4.getChildren().add(arbo5);
+    	 	}
     		
     	 	}
     	 	

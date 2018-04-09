@@ -294,7 +294,7 @@ Tooltip.install(table, tooltip_userName);
 		    		
 		    			 
 		    			 table.setItems(items);
-		    		     System.out.println(items.get(0).getDescription()+"tableauuuuuu1");
+		    		//     System.out.println(items.get(0).getDescription()+"tableauuuuuu1");
 		    		}
 		    		else
 		    		{ List<UsualWork> list = proxykk.displayWO();
@@ -681,7 +681,7 @@ Tooltip.install(table, tooltip_userName);
     		    		
     		    			 
     		    			 tableview1.setItems(items);
-    		    		     System.out.println(items.get(0).getDescription()+"tableauuuuuu1");
+    		    		//     System.out.println(items.get(0).getDescription()+"tableauuuuuu1");
     		    		}
     		    		else
     		    		{ List<PreventiveWork> list = proxypp.DisplayPWorks();
