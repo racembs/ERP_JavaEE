@@ -1,8 +1,6 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
 import java.io.File;
-
-
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;

@@ -193,6 +193,7 @@ public class SparPartsWOController implements Initializable {
     			alert.setTitle("Tools Successfully added");
     			alert.setHeaderText("Booking done!");
     			alert.showAndWait();
+    			System.out.println("done adding");
     			    
     }
 
