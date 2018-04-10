@@ -90,10 +90,11 @@ public class ChargingStationService extends GenericDAO<ChargingStation> implemen
 	}
 	
 	@Override
-	public List<ChargingStation> findd(int code) {
+	public List<ChargingStation> findd(String code) {
+		
 		TypedQuery<ChargingStation> query=em.createQuery(
-				"select o from ChargingStation o where o.code=:code", ChargingStation.class);
-		query.setParameter("code", code);
+				"select o from ChargingStation o where o.description like :code", ChargingStation.class);
+		query.setParameter("code", "%"+code+"%");
 		List <ChargingStation> result= query.getResultList();
 		return result;
 	}

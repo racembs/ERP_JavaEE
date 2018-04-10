@@ -54,8 +54,8 @@ public class OperatingRangeService extends GenericDAO<OperatingRange> implements
 	@Override
 	public List<OperatingRange> find(String code) {
 		TypedQuery<OperatingRange> query=em.createQuery(
-				"select o from OperatingRange o where o.code=:code", OperatingRange.class);
-		query.setParameter("code", code);
+				"select o from OperatingRange o where o.code like :code", OperatingRange.class);
+		query.setParameter("code", "%"+code+"%");
 		List <OperatingRange> result= query.getResultList();
 		return result;
 	}

@@ -75,4 +75,12 @@ public class OperationService extends GenericDAO<Operation> implements Operation
 		return list;
 	}
 
+	@Override
+	public List<Operation> findOpration(String description) {
+		TypedQuery<Operation> query
+		=em.createQuery("SELECT o FROM Operation o WHERE o.description  like :description", Operation.class);
+		query.setParameter("description","%"+description+"%");
+		List<Operation> list=query.getResultList();
+		return list;
+	}
 }

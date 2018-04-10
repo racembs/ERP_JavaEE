@@ -4,6 +4,8 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXTextField;
+
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.ResourceBundle;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import org.controlsfx.control.CheckComboBox;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -43,6 +47,7 @@ import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -151,12 +156,14 @@ public class OperatingRangeController implements Initializable {
     private TableColumn<Operation, Integer> UPToptab;
     @FXML
     private ComboBox<OperatingRange> ORop;
-    @FXML
-    private ComboBox<Article>idArticleCombo;
+//    @FXML
+//    private ComboBox<Article>idArticleCombo;
     @FXML
     private ComboBox<User> Uop;
     @FXML
     private ComboBox<Equipment> Eop;
+    @FXML
+    private CheckComboBox<String> idArticleComboo;
     @FXML
     private TextArea Dop;
     @FXML
@@ -165,28 +172,24 @@ public class OperatingRangeController implements Initializable {
     private TextField UPTop;
     @FXML
     private ImageView addop;
-    @FXML
-    private ImageView uoop;
-    @FXML
-    private ImageView delop;
+
+    
     @FXML
     private ImageView ok;
     @FXML
-    private ImageView cancel;
+    private ImageView next;
+ 
     @FXML
     private JFXTextField find;
     @FXML
     private ImageView findbt;
     @FXML
     private ImageView addop1;
-    @FXML
-    private ImageView uoop1;
-    @FXML
-    private ImageView delop1;
+ 
+ 
     @FXML
     private ImageView ok1;
-    @FXML
-    private ImageView cancel1;
+  
     @FXML
     private JFXTextField find1;
     @FXML
@@ -213,28 +216,37 @@ public class OperatingRangeController implements Initializable {
 		     List<Article> listA1 = ArticleProxy1.DisplayArticle();
 		     
 	          ObservableList<Article> obListA1 = FXCollections.observableList(listA1);
-	          idArticleCombo.setConverter(new javafx.util.StringConverter<Article>(
-            		  ) {
-				
-				@Override
-				public String toString(Article object) {
-					 return String.valueOf(object.getArticleCode()+ "-" +object.getDescription());
-				}
-				
-				@Override
-				public Article fromString(String string) {
-					// TODO Auto-generated method stub
-					return null;
-				}
-			});      
+//	          idArticleComboo.setAccessibleText("aa");
 	          
-	          idArticleCombo.setItems(obListA1);
+	          ObservableList<String> strings = FXCollections.observableArrayList();
+	          for (int i = 0; i <listA1.size() ; i++) {
+	              strings.add(listA1.get(i).getArticleCode());
+	          }
+	          idArticleComboo.getItems().addAll(strings);
+//	          System.out.println(idArticleComboo.getCheckModel().getCheckedItems());
+	          
+//	          idArticleCombo.setConverter(new javafx.util.StringConverter<Article>(
+//            		  ) {
+//				
+//				@Override
+//				public String toString(Article object) {
+//					 return String.valueOf(object.getArticleCode()+ "-" +object.getDescription());
+//				}
+//				
+//				@Override
+//				public Article fromString(String string) {
+//					// TODO Auto-generated method stub
+//					return null;
+//				}
+//			});      
+//	          
+//	          idArticleCombo.setItems(obListA1);
 //	          idArticleCombo.valueProperty().addListener((obs, oldVal, newVal) -> {
 //	              String selectionText =  newVal.getArticleCode()+ "-" + newVal.getDescription();
 //	              System.out.println(selectionText);
 //	            
 //	          });
-	          idArticleCombo.getSelectionModel().selectLast();
+//	          idArticleCombo.getSelectionModel().selectLast();
 		} catch (NamingException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -334,9 +346,10 @@ public class OperatingRangeController implements Initializable {
 					
 					optrange.setStakingcondition(idStakingCond.getValue().toString());
 			        
-					int idA = idArticleCombo.getSelectionModel().getSelectedItem().getId();
+//					int idA = idArticleCombo.getSelectionModel().getSelectedItem().getId();
 					 
-					
+				           
+				  		
 //					List<Article> listA1 = ArticleProxy.DisplayArticle();
 //					
 //			        for (int b = 0; b < listA1.size(); b++) {
@@ -355,7 +368,7 @@ public class OperatingRangeController implements Initializable {
 					
 				//	proxy42.addOperatingRange(optrange);
 					 int idOptR=proxy42.addOperatingRange(optrange);
-					proxy42.assignOperatingRangeToArticle (idOptR,idA);
+				//	proxy42.assignOperatingRangeToArticle (idOptR,idA);
 					//System.out.println("created");
 					
 					   List<OperatingRange> list12 = proxy42.DisplayOperatingRange();
@@ -375,91 +388,13 @@ public class OperatingRangeController implements Initializable {
     	
 			 });
 	        
-	        
-	        delop1.setOnMouseClicked((MouseEvent e) -> {
-	           	Alert alert = new Alert(AlertType.CONFIRMATION);
-	        	alert.setTitle("WARNING");
-	    		alert.setHeaderText("Are You Sure?");
-	        	
-	        	if (alert.showAndWait().get () == ButtonType.OK)
-	        	{
-	        		
-	        		try {
-	        			String OpRangejndiName55 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
-	            		Context context55;
-	        			context55 = new InitialContext();      			
-	        	        OperatingRangeServiceRemote proxy55 =  (OperatingRangeServiceRemote) context55.lookup(OpRangejndiName55);
-	        	        
-	        	        proxy55.delete(idTab.getSelectionModel().getSelectedItem());
-	            	
-	            	
-	        		   List<OperatingRange> list55 = proxy55.DisplayOperatingRange();
-	        	        ObservableList<OperatingRange> items55 = FXCollections.observableArrayList(list55);
-	        	        //System.out.println(items55.get(0).getDesignation());
-	        	        idTab.setItems(items55);
-	        	        
-	        	        
-	        		 Alert alert1 = new Alert(AlertType.INFORMATION);
-	        			alert1.setTitle("Operating Range Deleted");
-	        			alert1.setHeaderText("Succesful");
-	        			alert1.showAndWait();
-	        		//System.out.println("deleted");
-	            	
-	            	} catch (NamingException a) {
-	        			// TODO Auto-generated catch block
-	        			
-	        		}
-	        		
-	        	}
-	    	  });
-	        
-	        uoop1.setOnMouseClicked((MouseEvent l) -> {
-	        	Context context25;
-	    		try {
-	    			context25 = new InitialContext();
-	    			String OperatingRangejndiName25 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
-	    	        OperatingRangeServiceRemote proxy25 =  (OperatingRangeServiceRemote) context25.lookup(OperatingRangejndiName25);
 
-	    	        OperatingRange opt= idTab.getSelectionModel().getSelectedItem();
-	    	        String c= String.valueOf(opt.getCode());
-	    	        String d= String.valueOf(opt.getDeadline());
-	    	        idCode.setText(c);
-	    	        idDeadline.setText(d);
-	    	        idDesignation.setText(opt.getDesignation());
-	    	        idStakingCond.setValue(opt.getStakingcondition());
-	    	        
-	    	        ok1.setOnMouseClicked((MouseEvent a) -> {
-	    	        	opt.setCode(idCode.getText());
-	    	        	opt.setDesignation(idDesignation.getText());
-	    				int Deadline = Integer.parseInt(idDeadline.getText());
-	    				opt.setDeadline(Deadline);
-	    				opt.setStakingcondition(idStakingCond.getValue().toString());
-	    							
-	    				proxy25.update(idTab.getSelectionModel().getSelectedItem());
-	    				
-	    				System.out.println("modif");
-	    				   List<OperatingRange> list25 = proxy25.DisplayOperatingRange();
-	    	      	        ObservableList<OperatingRange> items25 = FXCollections.observableArrayList(list25);
-		        	        idTab.setItems(items25);
-		        	        
-		        	        
-		        		 Alert alert1 = new Alert(AlertType.INFORMATION);
-		        			alert1.setTitle("Operating Range Modified");
-		        			alert1.setHeaderText("Succesful");
-		        			alert1.showAndWait();
-	    	        });
-	    	        
-	    	        
-
-	    		} catch (NamingException m) {
-	    			// TODO Auto-generated catch block
-	    			m.printStackTrace();
-	    		}
-	    	  });
+	        
 	        
 	        findbt1.setOnMouseClicked((MouseEvent e) -> {
 	       		Context context1;
 	    		try {
+	    			
 	    			context1 = new InitialContext();
 	    			String OperatingRangejndiName1 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
 	    	        OperatingRangeServiceRemote proxy1 =  (OperatingRangeServiceRemote) context1.lookup(OperatingRangejndiName1);
@@ -671,116 +606,8 @@ public class OperatingRangeController implements Initializable {
 				    	
 							 });
 						        
-						     delop.setOnMouseClicked((MouseEvent u) -> {
-							        
-									try {
-										Alert alert = new Alert(AlertType.CONFIRMATION);
-								    	alert.setTitle("WARNING");
-										alert.setHeaderText("Are You Sure?");
-								    	
-								    	if (alert.showAndWait().get () == ButtonType.OK)
-								    	{
-										String jndiNameOperation3 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperationService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote";
-						    			Context contextOperation3;
-										contextOperation3 = new InitialContext();
-						    			OperationServiceRemote proxyOperation3 = (OperationServiceRemote) contextOperation3.lookup(jndiNameOperation3);
-						    			
-										
-										proxyOperation3.delete(opt.getSelectionModel().getSelectedItem());
-										
-										
-										   List<Operation> list13 = proxyOperation3.DisplayOperation();
-									        ObservableList<Operation> items13 = FXCollections.observableArrayList(list13);
-									 
-									        opt.setItems(items13);
-									        
-									        
-									        Alert alert1 = new Alert(AlertType.INFORMATION);
-							    			alert1.setTitle("Operation Deleted");
-							    			alert1.setHeaderText("Succesful");
-							    			alert1.showAndWait();
-											
-								    	}
-									} catch (Exception e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-									}
-				
-								
-				    	
-							 });
-						     
-						     
-						     uoop.setOnMouseClicked((MouseEvent u) -> {
-						    	 if(opt.getSelectionModel().getSelectedItem()!=null){
-									try {
-									
-										String jndiNameOperation4 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperationService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote";
-						    			Context contextOperation4;
-										contextOperation4 = new InitialContext();
-						    			OperationServiceRemote proxyOperation4 = (OperationServiceRemote) contextOperation4.lookup(jndiNameOperation4);
-						    			
-										
-						    			Operation chs = opt.getSelectionModel().getSelectedItem();
-										String c= String.valueOf(chs.getPhasenumber());
-										String d= String.valueOf(chs.getUnitproductiontime());
-							    		  
-							    		Dop.setText(chs.getDescription());
-							    		PNop.setText(c);
-							    		UPTop.setText(d);
-							    		
-							    		ORop.getSelectionModel().select(chs.getOptrange().getIdoptrange());
-							    		Eop.getSelectionModel().select(chs.getChargingstations().getEquipement().getId());
-							    		Uop.getSelectionModel().select(chs.getChargingstations().getUser().getId());
-						    			
-							    		 ok.setOnMouseClicked((MouseEvent a) -> {	
-							    		
-							 				 
-											chs.setDescription(Dop.getText());
-											
-											int x=Integer.parseInt(PNop.getText());
-											int y=Integer.parseInt(UPTop.getText());		  
-											chs.setPhasenumber(x);
-											chs.setUnitproductiontime(y);
-													
-											int idE = Eop.getSelectionModel().getSelectedItem().getId();
-											int idU = Uop.getSelectionModel().getSelectedItem().getId();
-											int idOptR = ORop.getSelectionModel().getSelectedItem().getIdoptrange();
-											
-											OperationPK operationpk = new OperationPK();	
-											
-											ChargingStationPK charginstationpk = new ChargingStationPK();
-											charginstationpk.setId_equipment(idE);
-											charginstationpk.setIdUser(idU);
-											
-											operationpk.setIdChargingStation(charginstationpk);
-											operationpk.setId(idOptR);
-											chs.setOperationPK(operationpk);
-							    			 
-							    			 
-							    			 proxyOperation4.update(opt.getSelectionModel().getSelectedItem());
-										
-										
-										   List<Operation> list14 = proxyOperation4.DisplayOperation();
-									        ObservableList<Operation> items14 = FXCollections.observableArrayList(list14);
-									 
-									        opt.setItems(items14);
-									        
-									        
-									        Alert alert1 = new Alert(AlertType.INFORMATION);
-							    			alert1.setTitle("Operation Modified");
-							    			alert1.setHeaderText("Succesful");
-							    			alert1.showAndWait();
-											
-							    		 });	
-									} catch (Exception e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-									}
-				
-						    	 
-						    	 }
-							 });
+			
+			
 						     
 						     
 					
@@ -814,30 +641,258 @@ public class OperatingRangeController implements Initializable {
 		  			}
 			  });
 			
-			cancel1.setOnMouseClicked((MouseEvent a) -> { 
-					Dop.clear();
-					PNop.clear();
-					UPTop.clear();
-					
-					ORop.getSelectionModel().selectLast();
-					Uop.getSelectionModel().selectLast();
-					Eop.getSelectionModel().selectLast();
-			   	    
-				
-			  });
+	
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 		}
    
 		
-		
+
     	
 
 
     }
 
-    
-  
-  
 
+    @FXML
+    public void OnKeyReleased1(KeyEvent event)
+    {
+  	// System.out.print(idoptrange.getText());
+		Context context1;
+		try {
+			
+			context1 = new InitialContext();
+			String OperatingRangejndiName1 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
+	        OperatingRangeServiceRemote proxy1 =  (OperatingRangeServiceRemote) context1.lookup(OperatingRangejndiName1);
+	        List<OperatingRange> list1 = proxy1.find(idoptrange.getText());
+	        
+	        ObservableList<OperatingRange> items1 = FXCollections.observableArrayList(list1);
+	       // System.out.println(items1.get(0).getDesignation());
+	        idTab.setItems(items1);
+	        System.out.println(idoptrange.getText());
+		 
+		  
+		} catch (NamingException x) {
+			
+			
+		}
+    }
+
+    @FXML
+    public void OnKeyReleased2(KeyEvent event)
+    {
+  	// System.out.print(find.getText());
+    	
+		
+		try {
+			Context context5;	
+			context5 = new InitialContext();
+		String jndiNameOperation5 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperationService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote";
+		
+		OperationServiceRemote proxyOperation5 = (OperationServiceRemote) context5.lookup(jndiNameOperation5);
+		//Operation opt = new Operation();
+	   List<Operation> listopt5 = proxyOperation5.findOpration(find.getText());
+        ObservableList<Operation> itemsopt5 = FXCollections.observableArrayList(listopt5);
+        opt.setItems(itemsopt5);
+  	  
+  		} catch (NamingException x) {
+  			
+  			
+  		}
+        
+    }
+    
+    @FXML
+    public void OnUpdate1(ActionEvent event)
+    {      	Context context25;
+	try {
+		context25 = new InitialContext();
+		String OperatingRangejndiName25 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
+        OperatingRangeServiceRemote proxy25 =  (OperatingRangeServiceRemote) context25.lookup(OperatingRangejndiName25);
+
+        OperatingRange opt= idTab.getSelectionModel().getSelectedItem();
+        String c= String.valueOf(opt.getCode());
+        String d= String.valueOf(opt.getDeadline());
+        idCode.setText(c);
+        idDeadline.setText(d);
+        idDesignation.setText(opt.getDesignation());
+        idStakingCond.setValue(opt.getStakingcondition());
+        
+        ok1.setOnMouseClicked((MouseEvent a) -> {
+        	opt.setCode(idCode.getText());
+        	opt.setDesignation(idDesignation.getText());
+			int Deadline = Integer.parseInt(idDeadline.getText());
+			opt.setDeadline(Deadline);
+			opt.setStakingcondition(idStakingCond.getValue().toString());
+						
+			proxy25.update(idTab.getSelectionModel().getSelectedItem());
+			
+			System.out.println("modif");
+			   List<OperatingRange> list25 = proxy25.DisplayOperatingRange();
+      	        ObservableList<OperatingRange> items25 = FXCollections.observableArrayList(list25);
+    	        idTab.setItems(items25);
+    	        
+    	        
+    		 Alert alert1 = new Alert(AlertType.INFORMATION);
+    			alert1.setTitle("Operating Range Modified");
+    			alert1.setHeaderText("Succesful");
+    			alert1.showAndWait();
+        });
+        
+        
+
+	} catch (NamingException m) {
+		// TODO Auto-generated catch block
+		m.printStackTrace();
+	}
+    }
+    @FXML
+    public void OnDelete1(ActionEvent event)
+    {
+     	Alert alert = new Alert(AlertType.CONFIRMATION);
+        	alert.setTitle("WARNING");
+    		alert.setHeaderText("Are You Sure?");
+        	
+        	if (alert.showAndWait().get () == ButtonType.OK)
+        	{
+        		
+        		try {
+        			String OpRangejndiName55 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
+            		Context context55;
+        			context55 = new InitialContext();      			
+        	        OperatingRangeServiceRemote proxy55 =  (OperatingRangeServiceRemote) context55.lookup(OpRangejndiName55);
+        	        
+        	        proxy55.delete(idTab.getSelectionModel().getSelectedItem());
+            	
+            	
+        		   List<OperatingRange> list55 = proxy55.DisplayOperatingRange();
+        	        ObservableList<OperatingRange> items55 = FXCollections.observableArrayList(list55);
+        	        //System.out.println(items55.get(0).getDesignation());
+        	        idTab.setItems(items55);
+        	        
+        	        
+        		 Alert alert1 = new Alert(AlertType.INFORMATION);
+        			alert1.setTitle("Operating Range Deleted");
+        			alert1.setHeaderText("Succesful");
+        			alert1.showAndWait();
+        		//System.out.println("deleted");
+            	
+            	} catch (NamingException a) {
+        			// TODO Auto-generated catch block
+        			
+        		}
+        		
+        	}
+    }
+    @FXML
+    public void OnUpdate2(ActionEvent event)
+    {
+   	 if(opt.getSelectionModel().getSelectedItem()!=null){
+			try {
+			
+				String jndiNameOperation4 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperationService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote";
+ 			Context contextOperation4;
+				contextOperation4 = new InitialContext();
+ 			OperationServiceRemote proxyOperation4 = (OperationServiceRemote) contextOperation4.lookup(jndiNameOperation4);
+ 			
+				
+ 			Operation chs = opt.getSelectionModel().getSelectedItem();
+				String c= String.valueOf(chs.getPhasenumber());
+				String d= String.valueOf(chs.getUnitproductiontime());
+	    		  
+	    		Dop.setText(chs.getDescription());
+	    		PNop.setText(c);
+	    		UPTop.setText(d);
+	    		
+	    		ORop.getSelectionModel().select(chs.getOptrange().getIdoptrange());
+	    		Eop.getSelectionModel().select(chs.getChargingstations().getEquipement().getId());
+	    		Uop.getSelectionModel().select(chs.getChargingstations().getUser().getId());
+ 			
+	    		 ok.setOnMouseClicked((MouseEvent a) -> {	
+	    		
+	 				 
+					chs.setDescription(Dop.getText());
+					
+					int x=Integer.parseInt(PNop.getText());
+					int y=Integer.parseInt(UPTop.getText());		  
+					chs.setPhasenumber(x);
+					chs.setUnitproductiontime(y);
+							
+					int idE = Eop.getSelectionModel().getSelectedItem().getId();
+					int idU = Uop.getSelectionModel().getSelectedItem().getId();
+					int idOptR = ORop.getSelectionModel().getSelectedItem().getIdoptrange();
+					
+					OperationPK operationpk = new OperationPK();	
+					
+					ChargingStationPK charginstationpk = new ChargingStationPK();
+					charginstationpk.setId_equipment(idE);
+					charginstationpk.setIdUser(idU);
+					
+					operationpk.setIdChargingStation(charginstationpk);
+					operationpk.setId(idOptR);
+					chs.setOperationPK(operationpk);
+	    			 
+	    			 
+	    			 proxyOperation4.update(opt.getSelectionModel().getSelectedItem());
+				
+				
+				   List<Operation> list14 = proxyOperation4.DisplayOperation();
+			        ObservableList<Operation> items14 = FXCollections.observableArrayList(list14);
+			 
+			        opt.setItems(items14);
+			        
+			        
+			        Alert alert1 = new Alert(AlertType.INFORMATION);
+	    			alert1.setTitle("Operation Modified");
+	    			alert1.setHeaderText("Succesful");
+	    			alert1.showAndWait();
+					
+	    		 });	
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+ 	 
+ 	 }
+    }
+    @FXML
+    public void OnDelete2(ActionEvent event)
+    {
+		try {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+	    	alert.setTitle("WARNING");
+			alert.setHeaderText("Are You Sure?");
+	    	
+	    	if (alert.showAndWait().get () == ButtonType.OK)
+	    	{
+			String jndiNameOperation3 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperationService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote";
+			Context contextOperation3;
+			contextOperation3 = new InitialContext();
+			OperationServiceRemote proxyOperation3 = (OperationServiceRemote) contextOperation3.lookup(jndiNameOperation3);
+			
+			
+			proxyOperation3.delete(opt.getSelectionModel().getSelectedItem());
+			
+			
+			   List<Operation> list13 = proxyOperation3.DisplayOperation();
+		        ObservableList<Operation> items13 = FXCollections.observableArrayList(list13);
+		 
+		        opt.setItems(items13);
+		        
+		        
+		        Alert alert1 = new Alert(AlertType.INFORMATION);
+    			alert1.setTitle("Operation Deleted");
+    			alert1.setHeaderText("Succesful");
+    			alert1.showAndWait();
+				
+	    	}
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    }
+    
+
+    
 }
