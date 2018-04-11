@@ -18,7 +18,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "NeededItem")
-public class NeededItem implements Serializable {
+public class NeededItem implements Serializable, Comparable<NeededItem> {
 
 	   
 	@Id
@@ -215,6 +215,11 @@ public class NeededItem implements Serializable {
 		} else if (!status.equals(other.status))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(NeededItem o) {
+		return this.getNeeded_article().getArticleCode().compareTo(o.getNeeded_article().getArticleCode());
 	}
 
 	

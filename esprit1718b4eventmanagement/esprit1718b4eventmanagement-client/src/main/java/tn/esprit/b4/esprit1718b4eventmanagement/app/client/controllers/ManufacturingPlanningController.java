@@ -97,6 +97,12 @@ public class ManufacturingPlanningController implements Initializable {
 
 	@FXML
     private Label txtCurrentWindow;
+	
+    @FXML
+    private Button back1;
+    
+    @FXML
+    private Button back2;
 
     @FXML
     private AnchorPane holderPane;
@@ -272,6 +278,44 @@ public class ManufacturingPlanningController implements Initializable {
 			TextFields.bindAutoCompletion(ClientTextSearch, items);
 			TextFields.bindAutoCompletion(Client_Text, items);
 			
+			back1.setOnMouseClicked((MouseEvent e) -> {
+	            System.out.println("Manufacturing Clicked!"); // change functionality
+	            
+	            Parent parent= null;
+		    	try {
+					parent  =FXMLLoader.load(getClass().getResource("/views/MenuuGPAO.fxml"));
+					Scene scene=new Scene(parent);
+					Stage primaryStage= new Stage(); 
+					primaryStage.setScene(scene);
+					primaryStage.show();
+					back1.getScene().getWindow().hide();
+
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	            
+	        });
+			
+			back2.setOnMouseClicked((MouseEvent e) -> {
+	            System.out.println("Manufacturing Clicked!"); // change functionality
+	            
+	            Parent parent= null;
+		    	try {
+					parent  =FXMLLoader.load(getClass().getResource("/views/MenuuGPAO.fxml"));
+					Scene scene=new Scene(parent);
+					Stage primaryStage= new Stage(); 
+					primaryStage.setScene(scene);
+					primaryStage.show();
+					back2.getScene().getWindow().hide();
+
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	            
+	        });
+			
 		}
 		
 		@FXML
@@ -290,7 +334,12 @@ public class ManufacturingPlanningController implements Initializable {
 				Parent.setOrderItem(ListShow.getItems().get(0));
 				Parent.setNeeded_article(ListShow.getItems().get(0).getArticle());
 				Parent.setGrossNeed(Parent.getOrderItem().getQuantity());
-				Parent.setNetNeed(Parent.getGrossNeed()-(Parent.getNeeded_article().getQuantity()-Parent.getNeeded_article().getReservedQuantity()));
+				if(Parent.getGrossNeed()-(Parent.getNeeded_article().getQuantity()-Parent.getNeeded_article().getReservedQuantity())>0){
+					Parent.setNetNeed(Parent.getGrossNeed()-(Parent.getNeeded_article().getQuantity()-Parent.getNeeded_article().getReservedQuantity()));
+				} else {
+					Parent.setNetNeed(0);
+				}
+				
 				Parent.setStatus("Pending");
   				
   				FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MRPCalculation.fxml"));
@@ -364,8 +413,8 @@ public class ManufacturingPlanningController implements Initializable {
 		    			(ComboArticleSearch.getSelectionModel().getSelectedItem().getOrdredItemPk().getId_Order(), 
 		    					ComboArticleSearch.getSelectionModel().getSelectedItem().getOrdredItemPk().getId_Article());  
   
-			map=proxyNeededItem.InitialiseMap();
-	    	map = proxyNeededItem.findNeededItemTreeByOrdredItem(ParentneededItem);
+			map=proxyNeededItem.InitialiseASCMap();
+	    	map = proxyNeededItem.findNeededItemTreeByOrdredItemLevelAsc(ParentneededItem);
 	    	List<NeededItem> neededItemList =proxyNeededItem.NeedItemList(map);
 	    	
 	    	ObservableList<NeededItem> items = FXCollections.observableArrayList(neededItemList);

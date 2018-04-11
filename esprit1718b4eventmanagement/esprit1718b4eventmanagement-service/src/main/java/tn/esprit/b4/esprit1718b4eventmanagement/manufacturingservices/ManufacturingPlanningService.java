@@ -127,7 +127,8 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 		List<ManufacturingPlanning> listMan = new ArrayList<>();
 		for (Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()) {
 			if(!e.getValue().isEmpty()){
-				int readyLot = needItem.CheckReadyLot(e.getKey(), e.getValue());
+				int readyLot=0;
+				readyLot = needItem.CheckReadyLot(e.getKey(), e.getValue());
 				//creating manufacturing planning of the needed Item with quantity of readyLot
 				ManufacturingPlanning manuf = new ManufacturingPlanning(readyLot,startingDate,"in progress",e.getKey());
 				int duration = manufacturingDuration(e.getKey().getNeeded_article(),readyLot);
@@ -136,13 +137,14 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 				manuf.setEndingDate(ending);
 				em.persist(manuf);
 				listMan.add(manuf);
-				for (NeededItem child : e.getValue()) {
+				Set<NeededItem> set = new HashSet<>(e.getValue());
+				for (NeededItem child : set) {
 					Nomenclature nom = findNomenclatureByParentChild(e.getKey().getNeeded_article(), child.getNeeded_article());
 					int reserved = child.getNeeded_article().getReservedQuantity();
-					reserved = reserved-readyLot*nom.getQuantity();
+					reserved = reserved-(readyLot*nom.getQuantity());
 					child.getNeeded_article().setReservedQuantity(reserved);
 					int realQuantity = child.getNeeded_article().getQuantity();
-					realQuantity= realQuantity-readyLot*nom.getQuantity();
+					realQuantity= realQuantity-(readyLot*nom.getQuantity());
 					child.getNeeded_article().setQuantity(realQuantity);
 					child.setReadyLotNumber(child.getReadyLotNumber()-readyLot);
 				}
@@ -204,6 +206,15 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 		query.setParameter("idArticle", idArticle);
 		List<ManufacturingPlanning> manuf=query.getResultList();
 		return manuf;
+	}
+
+	@Override
+	public int updateIfOneNeededItem(NeededItem neededItem) {
+		neededItem.setStatus("finished");
+		neededItem.getNeeded_article().setQuantity(neededItem.getNeeded_article().getQuantity()-neededItem.getGrossNeed());
+		articleServ.updateArticle(neededItem.getNeeded_article());
+		needItem.save(neededItem);
+		return neededItem.getId();
 	}
 	
 	
