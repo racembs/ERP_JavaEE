@@ -218,5 +218,14 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 	}
 	
 	
+	/////////////////////ONS///////////////////////////////////
+	public List<ManufacturingPlanning> DisplayManufacturingPlanning() {
+
+		TypedQuery<ManufacturingPlanning> query=em.createQuery("SELECT o FROM ManufacturingPlanning o",ManufacturingPlanning.class);
+		List <ManufacturingPlanning> result= query.getResultList();
+		return result;
+	}
+	
+	
 
 }

@@ -1,6 +1,8 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
 
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXTextField;
@@ -16,10 +18,12 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.controlsfx.control.CheckComboBox;
+import org.controlsfx.control.CheckTreeView;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,6 +44,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -52,6 +57,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
@@ -135,7 +142,9 @@ public class OperatingRangeController implements Initializable {
     private TreeView<String> idCheckTree;
     @FXML
     private ImageView idupimg;
- 
+
+    @FXML
+    private StackPane stackPaneADD;
     @FXML
     private AnchorPane idsubmit;
     @FXML
@@ -161,7 +170,7 @@ public class OperatingRangeController implements Initializable {
     @FXML
     private ComboBox<User> Uop;
     @FXML
-    private ComboBox<Equipment> Eop;
+    private ComboBox<ChargingStation> Eop;
     @FXML
     private CheckComboBox<String> idArticleComboo;
     @FXML
@@ -223,6 +232,9 @@ public class OperatingRangeController implements Initializable {
 	              strings.add(listA1.get(i).getArticleCode());
 	          }
 	          idArticleComboo.getItems().addAll(strings);
+	          
+//	          idArticleComboo.setConverter(new javafx.util.StringConverter<Article>(
+//            		  ) {
 //	          System.out.println(idArticleComboo.getCheckModel().getCheckedItems());
 	          
 //	          idArticleCombo.setConverter(new javafx.util.StringConverter<Article>(
@@ -322,12 +334,30 @@ public class OperatingRangeController implements Initializable {
 	         GPAO.getChildren().addAll(Article);
 	 	    		 idCheckTree.setRoot(GPAO);
 	 		    	 idCheckTree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
-		      
+
+	 		 
+	 		    	 
 	        }
 	        
   
+	        final CheckTreeView<String> checkTreeView = new CheckTreeView<>(GPAO);
+		       
+	         checkTreeView.getCheckModel().getCheckedItems().addListener(new ListChangeListener<TreeItem<String>>(){
+	             public void onChanged(ListChangeListener.Change<? extends TreeItem<String>> c){
+	                 System.out.println(checkTreeView.getCheckModel().getCheckedItems());
+	                 String ch=checkTreeView.getCheckModel().getCheckedItems().toString();
+	                 JFXDialogLayout content=new JFXDialogLayout();
+	                 content.setHeading(new Text("Operating Range"));
+	           		content.setBody(new Text(ch));
+	           		JFXDialog jfxDialog=new JFXDialog(stackPaneADD,content,JFXDialog.DialogTransition.TOP);
+	           		jfxDialog.show();
+	             }
 	        
-
+	        
+	    }); 
+	        
+	         
+	         
 	        addop1.setOnMouseClicked((MouseEvent e) -> {
 	
 				try {
@@ -346,28 +376,27 @@ public class OperatingRangeController implements Initializable {
 					
 					optrange.setStakingcondition(idStakingCond.getValue().toString());
 			        
+					
 //					int idA = idArticleCombo.getSelectionModel().getSelectedItem().getId();
-					 
-				           
-				  		
-//					List<Article> listA1 = ArticleProxy.DisplayArticle();
-//					
+					//System.out.println("onssssss"+idArticleComboo.getCheckModel());
+					
+					//List<Article> listA1= ArticleProxy.findArticleByCode(idArticleComboo.getCheckModel().toString());
+//					List<Article> listA1= ArticleProxy.findArticleByCode("1");
+//
+//					 int idOptR=proxy42.addOperatingRange(optrange);
 //			        for (int b = 0; b < listA1.size(); b++) {
 //			        	
 //			        	ObservableList<Article> itemsA1 = FXCollections.observableArrayList(listA1);
-//			        	if (idA==itemsA1.get(b).getId()){
-//			        		a.setId(idA);
-//			        		List<Article> listA2 = new ArrayList<Article>();
-//			      	        listA2.add(a);
-//			      	      optrange.setArticles(listA2);
+//			        	itemsA1.get(b).getId();
+//	        proxy42.assignOperatingRangeToArticle (idOptR,itemsA1.get(b).getId());
+//			        	
 //			        	}
-//			        	}
-				        //System.out.println(itemsA1.get(b).getArticleCode());
+				      
 				      
 			        
 					
 				//	proxy42.addOperatingRange(optrange);
-					 int idOptR=proxy42.addOperatingRange(optrange);
+					
 				//	proxy42.assignOperatingRangeToArticle (idOptR,idA);
 					//System.out.println("created");
 					
@@ -376,6 +405,7 @@ public class OperatingRangeController implements Initializable {
 				        System.out.println(items12.get(0).getDesignation());
 				        idTab.setItems(items12);
 				        
+	
 				        
 					    Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setTitle("Operating Range Added");
@@ -435,7 +465,7 @@ public class OperatingRangeController implements Initializable {
 		  			List<User>listu = proxyuser.DisplayUser();
 		  			
 		  		    //ComboBox User
-		  		    ObservableList<User> obListu = FXCollections.observableList(listu);
+		  		  ObservableList<User> obListu = FXCollections.observableList(listu);
 		  		    
 		  		  Uop.setConverter(new javafx.util.StringConverter<User>(
 		        		  ) {
@@ -459,38 +489,7 @@ public class OperatingRangeController implements Initializable {
 //		               
 //		             });
 		             Uop.getSelectionModel().selectLast();
-		             
-		             
-		  			contextEquipment = new InitialContext();
-		 			EquipementServiceRemote proxyEquipment = (EquipementServiceRemote) contextEquipment.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/EquipementService!tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote");
-		 	    	Equipment equipment = new Equipment();
-		 	    	List<Equipment> listE = proxyEquipment.DisplayEquipment();
-
-		 	    	//ComboBox Equipment
-		              ObservableList<Equipment> obListeq = FXCollections.observableList(listE);
-		              
-		              Eop.setConverter(new javafx.util.StringConverter<Equipment>(
-		            		  ) {
-						
-						@Override
-						public String toString(Equipment object) {
-							 return String.valueOf(object.getSerialNum()+"-"+object.getDescription());
-						}
-						
-						@Override
-						public Equipment fromString(String string) {
-							// TODO Auto-generated method stub
-							return null;
-						}
-					});              
-		              
-		              Eop.setItems(obListeq);
-//		              Eop.valueProperty().addListener((obs, oldVal, newVal) -> {
-//		                  String selectionText =  newVal.getSerialNum() + "-" + newVal.getDescription();
-//		                  System.out.println(selectionText);
-//		                
-//		              });
-		              Eop.getSelectionModel().selectLast();
+		             Eop.setDisable(true);
 		              
 		              
 		              
@@ -580,7 +579,7 @@ public class OperatingRangeController implements Initializable {
 										operation.setUnitproductiontime(b);
 										int idoptr = ORop.getSelectionModel().getSelectedItem().getIdoptrange();	
 										
-										  int idE = Eop.getSelectionModel().getSelectedItem().getId();
+										  int idE = Eop.getSelectionModel().getSelectedItem().getEquipement().getId();
 										  int idU = Uop.getSelectionModel().getSelectedItem().getId();
 										pk.setId_equipment(idE);
 										pk.setIdUser(idU);
@@ -803,10 +802,12 @@ public class OperatingRangeController implements Initializable {
 	    		Dop.setText(chs.getDescription());
 	    		PNop.setText(c);
 	    		UPTop.setText(d);
-	    		
-	    		ORop.getSelectionModel().select(chs.getOptrange().getIdoptrange());
-	    		Eop.getSelectionModel().select(chs.getChargingstations().getEquipement().getId());
-	    		Uop.getSelectionModel().select(chs.getChargingstations().getUser().getId());
+				Eop.setDisable(true);
+				Uop.setDisable(true);
+				ORop.setDisable(true);	    		
+//	    		ORop.getSelectionModel().select(chs.getOptrange().getIdoptrange());
+//	    		Eop.getSelectionModel().select(chs.getChargingstations().getEquipement().getId());
+//	    		Uop.getSelectionModel().select(chs.getChargingstations().getUser().getId());
  			
 	    		 ok.setOnMouseClicked((MouseEvent a) -> {	
 	    		
@@ -817,23 +818,23 @@ public class OperatingRangeController implements Initializable {
 					int y=Integer.parseInt(UPTop.getText());		  
 					chs.setPhasenumber(x);
 					chs.setUnitproductiontime(y);
-							
-					int idE = Eop.getSelectionModel().getSelectedItem().getId();
-					int idU = Uop.getSelectionModel().getSelectedItem().getId();
-					int idOptR = ORop.getSelectionModel().getSelectedItem().getIdoptrange();
-					
-					OperationPK operationpk = new OperationPK();	
-					
-					ChargingStationPK charginstationpk = new ChargingStationPK();
-					charginstationpk.setId_equipment(idE);
-					charginstationpk.setIdUser(idU);
-					
-					operationpk.setIdChargingStation(charginstationpk);
-					operationpk.setId(idOptR);
-					chs.setOperationPK(operationpk);
+
+//					int idE = Eop.getSelectionModel().getSelectedItem().getEquipement().getId();
+//					int idU = Uop.getSelectionModel().getSelectedItem().getId();
+//					int idOptR = ORop.getSelectionModel().getSelectedItem().getIdoptrange();
+//					
+//					OperationPK operationpk = new OperationPK();	
+//					
+//					ChargingStationPK charginstationpk = new ChargingStationPK();
+//					charginstationpk.setId_equipment(idE);
+//					charginstationpk.setIdUser(idU);
+//					
+//					operationpk.setIdChargingStation(charginstationpk);
+//					operationpk.setId(idOptR);
+//					chs.setOperationPK(operationpk);
 	    			 
 	    			 
-	    			 proxyOperation4.update(opt.getSelectionModel().getSelectedItem());
+	    			 proxyOperation4.update(chs);
 				
 				
 				   List<Operation> list14 = proxyOperation4.DisplayOperation();
@@ -893,6 +894,48 @@ public class OperatingRangeController implements Initializable {
 		}
     }
     
+    public void FindEquipment (ActionEvent event)
+    {
+    	Integer id=Uop.getValue().getId();
+        Eop.setDisable(false);
+        
+       
+		try {
+			String jndiNameChargingStation = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ChargingStationService!tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote";
+			Context contextChargingStation = new InitialContext();
+			ChargingStationServiceRemote proxyChargingStation = (ChargingStationServiceRemote) contextChargingStation.lookup(jndiNameChargingStation);
+	
+			
+	    	List<ChargingStation> listE = proxyChargingStation.findByUser(id);
 
+	    	//ComboBox Equipment
+	         ObservableList<ChargingStation> obListeq = FXCollections.observableList(listE);
+	         
+	         Eop.setConverter(new javafx.util.StringConverter<ChargingStation>(
+	       		  ) {
+				
+				@Override
+				public String toString(ChargingStation object) {
+					 return String.valueOf(object.getEquipement().getSerialNum()+"-"+object.getEquipement().getDescription());
+				}
+				
+				@Override
+				public ChargingStation fromString(String string) {
+					// TODO Auto-generated method stub
+					return null;
+				}
+			});              
+	         
+	         Eop.setItems(obListeq);
+
+	         Eop.getSelectionModel().selectLast();
+	    
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+    
+    }
     
 }

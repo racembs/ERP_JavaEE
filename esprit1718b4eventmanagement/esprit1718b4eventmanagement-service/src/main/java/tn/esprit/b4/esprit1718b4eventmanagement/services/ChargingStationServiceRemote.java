@@ -23,4 +23,5 @@ public interface ChargingStationServiceRemote extends IGenericDAO<ChargingStatio
 	
 	public List<ChargingStation> DisplayChargingStation();
 	public List<ChargingStation> findd(String code);
+	public List<ChargingStation> findByUser(Integer idUser);
 }

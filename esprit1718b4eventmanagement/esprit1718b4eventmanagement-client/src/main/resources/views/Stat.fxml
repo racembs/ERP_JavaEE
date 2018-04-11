@@ -2,20 +2,22 @@
 
 <?import com.jfoenix.controls.JFXToolbar?>
 <?import java.net.URL?>
-<?import javafx.scene.chart.AreaChart?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.chart.ScatterChart?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.StatController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.StatController">
  <children>
       <JFXToolbar layoutY="-1.0" prefHeight="0.0" prefWidth="1200.0" styleClass="jfx-toolbar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <center>
@@ -50,30 +52,14 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <ComboBox fx:id="idComboStat" layoutX="945.0" layoutY="169.0" prefWidth="150.0" />
+      <ComboBox fx:id="idComboStat" layoutX="945.0" layoutY="169.0" onAction="#Change" prefWidth="150.0" />
       <Label fx:id="OptRStat" layoutX="1101.0" layoutY="164.0" prefHeight="35.0" prefWidth="54.0">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
       <PieChart fx:id="idPc" layoutX="34.0" layoutY="413.0" prefHeight="307.0" prefWidth="376.0" />
-      <BarChart fx:id="idBC" layoutX="411.0" layoutY="411.0" prefHeight="307.0" prefWidth="402.0">
-        <xAxis>
-          <CategoryAxis fx:id="idBCx" side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis fx:id="idBCy" side="LEFT" />
-        </yAxis>
-      </BarChart>
-      <AreaChart fx:id="idAC" layoutX="15.0" layoutY="102.0" prefHeight="300.0" prefWidth="402.0">
-        <xAxis>
-          <CategoryAxis fx:id="idACx" side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis fx:id="idACy" side="LEFT" />
-        </yAxis>
-      </AreaChart>
-      <ScatterChart fx:id="idSC" layoutX="411.0" layoutY="99.0" prefHeight="307.0" prefWidth="402.0">
+      <ScatterChart fx:id="idSC" layoutX="419.0" layoutY="413.0" prefHeight="307.0" prefWidth="376.0">
         <xAxis>
           <CategoryAxis fx:id="idSCx" side="BOTTOM" />
         </xAxis>
@@ -137,6 +123,43 @@
             <Font size="24.0" />
          </font>
       </Label>
+      <ImageView fx:id="back" fitHeight="89.0" fitWidth="83.0" layoutX="1080.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="views/image/back.png" />
+         </image>
+      </ImageView>
+      <BarChart fx:id="idBC" layoutX="197.0" layoutY="123.0" prefHeight="282.0" prefWidth="574.0">
+         <xAxis>
+            <CategoryAxis fx:id="idBCx" label="Article" side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis fx:id="idBCy" label="Manufacturing Time" side="LEFT" />
+         </yAxis>
+      </BarChart>
+      <DatePicker fx:id="idStart" layoutX="37.0" layoutY="167.0" />
+      <DatePicker fx:id="idEnd" layoutX="37.0" layoutY="231.0" />
+      <Label layoutX="41.0" layoutY="136.0" text="Starting Date" textFill="#d0681d">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="44.0" layoutY="207.0" text="Ending Date" textFill="#d0681d">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="idStat" fitHeight="61.0" fitWidth="110.0" layoutX="76.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+            <Image url="views/image/stat1.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="37.0" layoutY="370.0" text="Manufacturing Planning" textFill="#110f0f">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Separator layoutX="8.0" layoutY="400.0" prefHeight="3.0" prefWidth="799.0" />
+      <Separator layoutX="416.0" layoutY="402.0" orientation="VERTICAL" prefHeight="316.0" prefWidth="6.0" />
    </children>
    
    

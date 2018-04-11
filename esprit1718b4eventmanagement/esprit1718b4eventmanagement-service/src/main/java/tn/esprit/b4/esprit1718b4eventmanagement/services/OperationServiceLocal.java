@@ -24,5 +24,6 @@ public interface OperationServiceLocal  extends IGenericDAO<Operation> {
 	
 	public List<Operation> findOprationByChargId(int idOperationgRange);
 	public List<Operation> findOpration(String description);
+
 	
 }

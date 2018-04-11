@@ -24,4 +24,5 @@ public interface ChargingStationServiceLocal extends IGenericDAO<ChargingStation
 	
 	public List<ChargingStation> DisplayChargingStation();
 	public List<ChargingStation> findd(String code);
+	public List<ChargingStation> findByUser(Integer idUser);
 }

@@ -81,7 +81,7 @@
                         <Image url="views/image/searching.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="idAdd" fitHeight="135.0" fitWidth="122.0" layoutX="40.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="idAddchs" fitHeight="135.0" fitWidth="122.0" layoutX="40.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="views/image/add2.png" />
                      </image>

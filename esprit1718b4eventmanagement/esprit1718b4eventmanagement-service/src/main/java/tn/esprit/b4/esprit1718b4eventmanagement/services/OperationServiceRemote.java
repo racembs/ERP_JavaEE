@@ -24,4 +24,5 @@ public OperationPK addOperation(int idOperatingRange, ChargingStationPK WorkStat
 	
 	public List<Operation> findOprationByChargId(int idOperationgRange);
 	public List<Operation> findOpration(String description);
+
 }

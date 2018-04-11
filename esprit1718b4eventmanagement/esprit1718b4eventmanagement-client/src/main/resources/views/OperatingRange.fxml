@@ -17,6 +17,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 <?import org.controlsfx.control.CheckTreeView?>
@@ -37,83 +38,87 @@
       </JFXToolbar>
       <AnchorPane fx:id="holderPane" layoutX="-3.0" layoutY="40.0" prefHeight="702.0" prefWidth="1189.0">
          <children>
-            <AnchorPane fx:id="idsubmit" layoutX="1.0" prefHeight="339.0" prefWidth="1203.0">
+            <StackPane fx:id="stackPaneADD" prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="315.0" layoutY="19.0" prefHeight="30.0" prefWidth="382.0" text="Operating Range" textFill="#300ce1">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="310.0" layoutY="94.0" prefHeight="17.0" prefWidth="64.0" text="Code" />
-                  <Label layoutX="310.0" layoutY="135.0" prefHeight="17.0" prefWidth="87.0" text="Designation" />
-                  <Label layoutX="315.0" layoutY="207.0" text="Deadline" />
-                  <Label layoutX="314.0" layoutY="252.0" text="Staking Condition" />
-                  <TextField fx:id="idCode" layoutX="434.0" layoutY="89.0" prefHeight="30.0" prefWidth="209.0" />
-                  <TextArea fx:id="idDesignation" layoutX="434.0" layoutY="135.0" prefHeight="49.0" prefWidth="209.0" />
-                  <TextField fx:id="idDeadline" layoutX="434.0" layoutY="202.0" prefHeight="30.0" prefWidth="209.0" />
-                  <ComboBox fx:id="idStakingCond" layoutX="434.0" layoutY="247.0" prefHeight="30.0" prefWidth="216.0" />
-                  <TableView fx:id="idTab" layoutX="657.0" layoutY="65.0" prefHeight="192.0" prefWidth="546.0">
-                    <columns>
-                      <TableColumn fx:id="idCodeTab" prefWidth="75.0" text="Code" />
-                      <TableColumn fx:id="idDesignationTab" prefWidth="150.0" text="Designation" />
-                        <TableColumn fx:id="idDeadlineTab" prefWidth="132.0" text="Deadline" />
-                        <TableColumn fx:id="idStakingCondTab" prefWidth="181.0" text="Staking Condition" />
-                    </columns>
-                     <contextMenu>
-                        <ContextMenu>
-                          <items>
-                            <MenuItem mnemonicParsing="false" onAction="#OnUpdate1" text="Update" />
-                              <MenuItem mnemonicParsing="false" onAction="#OnDelete1" text="Delete" />
-                          </items>
-                        </ContextMenu>
-                     </contextMenu>
-                  </TableView>
-                  <JFXTextField fx:id="idoptrange" layoutX="918.0" layoutY="30.0" onKeyReleased="#OnKeyReleased1" />
-                  <ImageView fx:id="idupimg" fitHeight="44.0" fitWidth="171.0" layoutX="1020.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                  <Image url="views/image/opt.png" />
-               </image>
-                 </ImageView>
-                  <CheckTreeView fx:id="idCheckTree" layoutX="21.0" layoutY="20.0" prefHeight="306.0" prefWidth="240.0" />
-                  <Separator layoutX="13.0" layoutY="342.0" prefHeight="3.0" prefWidth="986.0">
-                     <effect>
-                        <ColorAdjust />
-                     </effect>
-                  </Separator>
-                  <ImageView fx:id="addop1" fitHeight="49.0" fitWidth="46.0" layoutX="677.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="views/image/add2.png" />
+                  <AnchorPane fx:id="idsubmit" prefHeight="339.0" prefWidth="1203.0">
+                     <children>
+                        <Label layoutX="315.0" layoutY="19.0" prefHeight="30.0" prefWidth="382.0" text="Operating Range" textFill="#300ce1">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="310.0" layoutY="94.0" prefHeight="17.0" prefWidth="64.0" text="Code" />
+                        <Label layoutX="310.0" layoutY="135.0" prefHeight="17.0" prefWidth="87.0" text="Designation" />
+                        <Label layoutX="315.0" layoutY="207.0" text="Deadline" />
+                        <Label layoutX="314.0" layoutY="252.0" text="Staking Condition" />
+                        <TextField fx:id="idCode" layoutX="434.0" layoutY="89.0" prefHeight="30.0" prefWidth="209.0" />
+                        <TextArea fx:id="idDesignation" layoutX="434.0" layoutY="135.0" prefHeight="49.0" prefWidth="209.0" />
+                        <TextField fx:id="idDeadline" layoutX="434.0" layoutY="202.0" prefHeight="30.0" prefWidth="209.0" />
+                        <ComboBox fx:id="idStakingCond" layoutX="434.0" layoutY="247.0" prefHeight="30.0" prefWidth="216.0" />
+                        <TableView fx:id="idTab" layoutX="657.0" layoutY="65.0" prefHeight="192.0" prefWidth="546.0">
+                          <columns>
+                            <TableColumn fx:id="idCodeTab" prefWidth="75.0" text="Code" />
+                            <TableColumn fx:id="idDesignationTab" prefWidth="150.0" text="Designation" />
+                              <TableColumn fx:id="idDeadlineTab" prefWidth="132.0" text="Deadline" />
+                              <TableColumn fx:id="idStakingCondTab" prefWidth="181.0" text="Staking Condition" />
+                          </columns>
+                           <contextMenu>
+                              <ContextMenu>
+                                <items>
+                                  <MenuItem mnemonicParsing="false" onAction="#OnUpdate1" text="Update" />
+                                    <MenuItem mnemonicParsing="false" onAction="#OnDelete1" text="Delete" />
+                                </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </TableView>
+                        <JFXTextField fx:id="idoptrange" layoutX="918.0" layoutY="30.0" onKeyReleased="#OnKeyReleased1" />
+                        <ImageView fx:id="idupimg" fitHeight="44.0" fitWidth="171.0" layoutX="1020.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                        <Image url="views/image/opt.png" />
                      </image>
-                  </ImageView>
-                  <ImageView fx:id="ok1" fitHeight="49.0" fitWidth="55.0" layoutX="754.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="views/image/updates.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="667.0" layoutY="305.0" prefHeight="35.0" prefWidth="60.0" text="Add" textFill="#0a0a0a">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="730.0" layoutY="305.0" prefHeight="30.0" prefWidth="87.0" text="Update" textFill="#0a0a0a">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="findbt1" fitHeight="53.0" fitWidth="36.0" layoutX="1083.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="views/image/searching.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="back" fitHeight="53.0" fitWidth="71.0" layoutX="1139.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="views/image/back.png" />
-                     </image>
-                  </ImageView>
-                  <CheckComboBox fx:id="idArticleComboo" layoutX="434.0" layoutY="300.0" prefHeight="40.0" prefWidth="216.0" />
-                  <Label layoutX="315.0" layoutY="304.0" text="Article" />
-                  </children>
-            </AnchorPane>
+                       </ImageView>
+                        <CheckTreeView fx:id="idCheckTree" layoutX="21.0" layoutY="20.0" prefHeight="306.0" prefWidth="240.0" />
+                        <Separator layoutX="13.0" layoutY="342.0" prefHeight="3.0" prefWidth="986.0">
+                           <effect>
+                              <ColorAdjust />
+                           </effect>
+                        </Separator>
+                        <ImageView fx:id="addop1" fitHeight="49.0" fitWidth="46.0" layoutX="677.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="views/image/add2.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ok1" fitHeight="49.0" fitWidth="55.0" layoutX="754.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="views/image/updates.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="667.0" layoutY="305.0" prefHeight="35.0" prefWidth="60.0" text="Add" textFill="#0a0a0a">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="730.0" layoutY="305.0" prefHeight="30.0" prefWidth="87.0" text="Update" textFill="#0a0a0a">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="findbt1" fitHeight="53.0" fitWidth="36.0" layoutX="1083.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="views/image/searching.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="back" fitHeight="53.0" fitWidth="71.0" layoutX="1139.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="views/image/back.png" />
+                           </image>
+                        </ImageView>
+                        <CheckComboBox fx:id="idArticleComboo" layoutX="434.0" layoutY="300.0" prefHeight="40.0" prefWidth="216.0" />
+                        <Label layoutX="315.0" layoutY="304.0" text="Article" />
+                        </children>
+                  </AnchorPane>
+               </children>
+            </StackPane>
             <AnchorPane fx:id="idoptA" layoutY="345.0" prefHeight="377.0" prefWidth="1183.0">
                <children>
                   <Label layoutX="2.0" layoutY="-2.0" prefHeight="30.0" prefWidth="382.0" text="Operation" textFill="#2d08eb">
@@ -146,7 +151,7 @@
                   <Label layoutX="776.0" layoutY="265.0" text="Phase Number" />
                   <Label layoutX="778.0" layoutY="313.0" text="Unit Production Time" />
                   <ComboBox fx:id="ORop" layoutX="913.0" layoutY="53.0" prefHeight="20.0" prefWidth="150.0" />
-                  <ComboBox fx:id="Uop" layoutX="913.0" layoutY="103.0" prefHeight="3.0" prefWidth="150.0" />
+                  <ComboBox fx:id="Uop" layoutX="913.0" layoutY="103.0" onAction="#FindEquipment" prefHeight="3.0" prefWidth="150.0" />
                   <ComboBox fx:id="Eop" layoutX="913.0" layoutY="149.0" prefHeight="20.0" prefWidth="150.0" />
                   <TextArea fx:id="Dop" layoutX="913.0" layoutY="199.0" prefHeight="49.0" prefWidth="209.0" />
                   <TextField fx:id="PNop" layoutX="914.0" layoutY="260.0" prefHeight="30.0" prefWidth="209.0" />
