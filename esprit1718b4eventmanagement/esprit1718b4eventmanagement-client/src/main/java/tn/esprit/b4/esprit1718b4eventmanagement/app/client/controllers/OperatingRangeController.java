@@ -139,7 +139,7 @@ public class OperatingRangeController implements Initializable {
     @FXML
     private JFXTextField idoptrange;
     @FXML
-    private TreeView<String> idCheckTree;
+    private TreeView<String> idTree;
     @FXML
     private ImageView idupimg;
 
@@ -226,12 +226,45 @@ public class OperatingRangeController implements Initializable {
 		     
 	          ObservableList<Article> obListA1 = FXCollections.observableList(listA1);
 //	          idArticleComboo.setAccessibleText("aa");
-	          
+	         
 	          ObservableList<String> strings = FXCollections.observableArrayList();
 	          for (int i = 0; i <listA1.size() ; i++) {
 	              strings.add(listA1.get(i).getArticleCode());
 	          }
 	          idArticleComboo.getItems().addAll(strings);
+
+    	         
+	             idArticleComboo.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+	        	     public void onChanged(ListChangeListener.Change<? extends String> c) {
+	        	    	// System.out.println(idArticleComboo.getCheckModel().getCheckedItems().get(0));
+	        	    	// System.out.println(idArticleComboo.getCheckModel().getItemCount());
+	         	         Integer count =idArticleComboo.getCheckModel().getItemCount();
+	         	        
+	         	        	 
+	         	        	 System.out.println(idArticleComboo.getCheckModel().getCheckedItems().get(0));
+	         	        	// System.out.println("onss"+m);
+	         	        	//System.out.println(idArticleComboo.getCheckModel().getCheckedItems().get(0));
+	         	        	 
+	         	        	 
+						
+	        	    	
+	        	    	 
+	        	         
+	        	     }
+	        	 });
+	          //idArticleComboo.getAccessibleText().compareTo(null);
+//	          idArticleComboo.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+//	              public void onChanged(ListChangeListener.Change<? extends String> c) {
+//	                  System.out.println(idArticleComboo.getCheckModel().getCheckedItems().toString());
+//	              }
+//	          });
+//	          
+	          idArticleComboo.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+	              public void onChanged(ListChangeListener.Change<? extends String> c) {
+
+	            	  System.out.println(idArticleComboo.getAccessibleText());
+	              }
+	          });
 	          
 //	          idArticleComboo.setConverter(new javafx.util.StringConverter<Article>(
 //            		  ) {
@@ -292,72 +325,76 @@ public class OperatingRangeController implements Initializable {
 			ArticleServiceRemote ArticleProxy = (ArticleServiceRemote) contextArticle.lookup(ArticlejndiName);
 			
 			
-	        idCodeTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("code"));
-	        idDesignationTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("designation"));
-	        idDeadlineTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, Integer>("deadline"));
-	        idStakingCondTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("stakingcondition"));
-	        
-	        List<OperatingRange> list = proxy.DisplayOperatingRange();
-	        List<Operation> listOpt = proxyOperation.DisplayOperation();
-	        List<Article> listA = ArticleProxy.DisplayArticle();
-
-	      
-	        
-	        ObservableList<Operation> items4 = FXCollections.observableArrayList(listOpt);
-	        //Long N = proxy.CountOperatingRange();
-	        ObservableList<OperatingRange> items22 = FXCollections.observableArrayList(list);
-	        System.out.println(items22.get(0).getDesignation());
-	        idTab.setItems(items22);
-	        
-	        CheckBoxTreeItem<String> GPAO = new CheckBoxTreeItem<String>("GPAO");
-	        
-	        for (int a = 0; a < listA.size(); a++) {
-	        	ObservableList<Article> itemsA = FXCollections.observableArrayList(listA);
-		        System.out.println(itemsA.get(a).getArticleCode());
-		 
-		        //String A=("Article"+a);
-
-		        CheckBoxTreeItem<String> Article = new CheckBoxTreeItem<String>(itemsA.get(a).getArticleCode());
-		        Article.setValue(itemsA.get(a).getArticleCode());
-		        
-		        ObservableList<OperatingRange> items = FXCollections.observableArrayList(itemsA.get(a).getOperatingranges());
-		        for (OperatingRange operatingRange : items) {
-		        	CheckBoxTreeItem<String> Gammes = new CheckBoxTreeItem<String>(operatingRange.getCode());
-		    		Gammes.setValue(operatingRange.getCode());
-		    		Article.getChildren().addAll(Gammes);
-		    		
-		    	
-				}
-
+			Tree();
+//	        idCodeTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("code"));
+//	        idDesignationTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("designation"));
+//	        idDeadlineTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, Integer>("deadline"));
+//	        idStakingCondTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("stakingcondition"));
+//	        
+//	        List<OperatingRange> list = proxy.DisplayOperatingRange();
+//	        List<Operation> listOpt = proxyOperation.DisplayOperation();
+//	        List<Article> listA = ArticleProxy.DisplayArticle();
+//
+//	      
+//	        
+//	        ObservableList<Operation> items4 = FXCollections.observableArrayList(listOpt);
+//	        //Long N = proxy.CountOperatingRange();
+//	        ObservableList<OperatingRange> items22 = FXCollections.observableArrayList(list);
+//	        System.out.println(items22.get(0).getDesignation());
+//	        idTab.setItems(items22);
+//	        
+//	        TreeItem<String> GPAO = new TreeItem<String>("GPAO");
+//	        
+//	        for (int a = 0; a < listA.size(); a++) {
+//	        	ObservableList<Article> itemsA = FXCollections.observableArrayList(listA);
+//		        System.out.println(itemsA.get(a).getArticleCode());
+//		 
+//		        //String A=("Article"+a);
+//
+//		        TreeItem<String> Article = new TreeItem<String>(itemsA.get(a).getArticleCode());
+//		        Article.setValue(itemsA.get(a).getArticleCode());
+//		        
+//		        ObservableList<OperatingRange> items = FXCollections.observableArrayList(itemsA.get(a).getOperatingranges());
+//		        for (OperatingRange operatingRange : items) {
+//		        	TreeItem<String> Gammes = new TreeItem<String>(operatingRange.getCode());
+//		    		Gammes.setValue(operatingRange.getCode());
+//		    		Article.getChildren().addAll(Gammes);
+//		    		
+//		    	
+//				}
+//
+//	         
+//		        
+//	         GPAO.getChildren().addAll(Article);
+//	         idTree.setRoot(GPAO);
+////	         idTree.setCellFactory(TreeView.<String>forTreeView());
+//
+//	 		 
+//	 		    	 
+//	        }
+//	        
+//  
+//	        final TreeView<String> treeView = new TreeView<>(GPAO);  
+//	        
+//	        treeView.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<TreeItem<String>>(){
+//	             public void onChanged(ListChangeListener.Change<? extends TreeItem<String>> c){
+//	            	 
+//	                 System.out.println("onsss"+treeView.getSelectionModel().getSelectedItems());
+//	                 
+//	                 String ch=treeView.getSelectionModel().getSelectedItems().toString();
+//	                 
+//	                 JFXDialogLayout content=new JFXDialogLayout();
+//	                 content.setHeading(new Text("Operating Range"));
+//	           		content.setBody(new Text(ch));
+//	           		JFXDialog jfxDialog=new JFXDialog(stackPaneADD,content,JFXDialog.DialogTransition.TOP);
+//	           		jfxDialog.show();
+//	             }
+//	        
+//	        
+//	    }); 
+//	        
 	         
-		        
-	         GPAO.getChildren().addAll(Article);
-	 	    		 idCheckTree.setRoot(GPAO);
-	 		    	 idCheckTree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
-
-	 		 
-	 		    	 
-	        }
-	        
-  
-	        final CheckTreeView<String> checkTreeView = new CheckTreeView<>(GPAO);
-		       
-	         checkTreeView.getCheckModel().getCheckedItems().addListener(new ListChangeListener<TreeItem<String>>(){
-	             public void onChanged(ListChangeListener.Change<? extends TreeItem<String>> c){
-	                 System.out.println(checkTreeView.getCheckModel().getCheckedItems());
-	                 String ch=checkTreeView.getCheckModel().getCheckedItems().toString();
-	                 JFXDialogLayout content=new JFXDialogLayout();
-	                 content.setHeading(new Text("Operating Range"));
-	           		content.setBody(new Text(ch));
-	           		JFXDialog jfxDialog=new JFXDialog(stackPaneADD,content,JFXDialog.DialogTransition.TOP);
-	           		jfxDialog.show();
-	             }
-	        
-	        
-	    }); 
-	        
-	         
-	         
+	 //*************************************ADD****************************************//        
 	        addop1.setOnMouseClicked((MouseEvent e) -> {
 	
 				try {
@@ -383,7 +420,13 @@ public class OperatingRangeController implements Initializable {
 					//List<Article> listA1= ArticleProxy.findArticleByCode(idArticleComboo.getCheckModel().toString());
 //					List<Article> listA1= ArticleProxy.findArticleByCode("1");
 //
-//					 int idOptR=proxy42.addOperatingRange(optrange);
+					int idOptR=proxy42.addOperatingRange(optrange);
+    	        	 for(int i=0;i<idArticleComboo.getCheckModel().getCheckedItems().size();i++){
+    	        		 System.out.println("here :"+idArticleComboo.getCheckModel().getCheckedItems().get(i)); 
+    	        		 
+    	        		 proxy42.assignOperatingRangeToArticle (idOptR,Integer.valueOf(idArticleComboo.getCheckModel().getCheckedItems().get(i)));
+    	        	 }
+				
 //			        for (int b = 0; b < listA1.size(); b++) {
 //			        	
 //			        	ObservableList<Article> itemsA1 = FXCollections.observableArrayList(listA1);
@@ -397,7 +440,9 @@ public class OperatingRangeController implements Initializable {
 					
 				//	proxy42.addOperatingRange(optrange);
 					
-				//	proxy42.assignOperatingRangeToArticle (idOptR,idA);
+				
+					
+					//proxy42.assignOperatingRangeToArticle (idOptR,idA);
 					//System.out.println("created");
 					
 					   List<OperatingRange> list12 = proxy42.DisplayOperatingRange();
@@ -415,7 +460,7 @@ public class OperatingRangeController implements Initializable {
 					// TODO Auto-generated catch block
 					
 				}
-    	
+    	Tree();
 			 });
 	        
 
@@ -556,6 +601,15 @@ public class OperatingRangeController implements Initializable {
 				    			//Operation opt = new Operation();
 							   List<Operation> listopt1 = proxyOperation1.findOprationByChargId(idTab.getSelectionModel().getSelectedItem().getIdoptrange());
 						        ObservableList<Operation> itemsopt1 = FXCollections.observableArrayList(listopt1);
+						        
+						        if (itemsopt1.size()==0)
+						        {
+						              JFXDialogLayout content=new JFXDialogLayout();
+						               content.setHeading(new Text("No Operation Available"));
+						         		content.setBody(new Text("This Operating Range has no current Operation "));
+						         		JFXDialog jfxDialog=new JFXDialog(stackPaneADD,content,JFXDialog.DialogTransition.TOP);
+						         		jfxDialog.show();
+						        }
 						        opt.setItems(itemsopt1);
 						        
 						        
@@ -937,5 +991,99 @@ public class OperatingRangeController implements Initializable {
 
     
     }
+  public void Tree ()
+  {
+	  try{
+	  Context context = new InitialContext();
+		String OperatingRangejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperatingRangeService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperatingRangeServiceRemote";
+      OperatingRangeServiceRemote proxy =  (OperatingRangeServiceRemote) context.lookup(OperatingRangejndiName);
+      OperatingRange op = new OperatingRange();
+      
+		String jndiNameOperation = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/OperationService!tn.esprit.b4.esprit1718b4eventmanagement.services.OperationServiceRemote";
+		Context contextOperation = new InitialContext();
+		OperationServiceRemote proxyOperation = (OperationServiceRemote) contextOperation.lookup(jndiNameOperation);
+		//Operation opt = new Operation();
+		
+		String jndiNameChargingStation = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ChargingStationService!tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationServiceRemote";
+		Context contextChargingStation = new InitialContext();
+		ChargingStationServiceRemote proxyChargingStation = (ChargingStationServiceRemote) contextChargingStation.lookup(jndiNameChargingStation);
+		ChargingStation ch = new ChargingStation();
+		
+		String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+		Context contextArticle = new InitialContext();
+		ArticleServiceRemote ArticleProxy = (ArticleServiceRemote) contextArticle.lookup(ArticlejndiName);
+		
+		
+      idCodeTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("code"));
+      idDesignationTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("designation"));
+      idDeadlineTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, Integer>("deadline"));
+      idStakingCondTab.setCellValueFactory(new PropertyValueFactory<OperatingRange, String>("stakingcondition"));
+      
+      List<OperatingRange> list = proxy.DisplayOperatingRange();
+      List<Operation> listOpt = proxyOperation.DisplayOperation();
+      List<Article> listA = ArticleProxy.DisplayArticle();
+
     
+      
+      ObservableList<Operation> items4 = FXCollections.observableArrayList(listOpt);
+      //Long N = proxy.CountOperatingRange();
+      ObservableList<OperatingRange> items22 = FXCollections.observableArrayList(list);
+      System.out.println(items22.get(0).getDesignation());
+      idTab.setItems(items22);
+      
+      TreeItem<String> GPAO = new TreeItem<String>("GPAO");
+      
+      for (int a = 0; a < listA.size(); a++) {
+      	ObservableList<Article> itemsA = FXCollections.observableArrayList(listA);
+	        System.out.println(itemsA.get(a).getArticleCode());
+	 
+	        //String A=("Article"+a);
+
+	        TreeItem<String> Article = new TreeItem<String>(itemsA.get(a).getArticleCode());
+	        Article.setValue(itemsA.get(a).getArticleCode());
+	        
+	        ObservableList<OperatingRange> items = FXCollections.observableArrayList(itemsA.get(a).getOperatingranges());
+	        for (OperatingRange operatingRange : items) {
+	        	TreeItem<String> Gammes = new TreeItem<String>(operatingRange.getCode());
+	    		Gammes.setValue(operatingRange.getCode());
+	    		Article.getChildren().addAll(Gammes);
+	    		
+	    	
+			}
+
+       
+	        
+       GPAO.getChildren().addAll(Article);
+       idTree.setRoot(GPAO);
+//       idTree.setCellFactory(TreeView.<String>forTreeView());
+
+		 
+		    	 
+      }
+      
+
+//      final TreeView<String> treeView = new TreeView<>(GPAO);  
+//      
+//      treeView.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<TreeItem<String>>(){
+//           public void onChanged(ListChangeListener.Change<? extends TreeItem<String>> c){
+//          	 
+//               System.out.println("onsss"+treeView.getSelectionModel().getSelectedItems());
+//               
+//               String ch=treeView.getSelectionModel().getSelectedItems().toString();
+//               
+//               JFXDialogLayout content=new JFXDialogLayout();
+//               content.setHeading(new Text("Operating Range"));
+//         		content.setBody(new Text(ch));
+//         		JFXDialog jfxDialog=new JFXDialog(stackPaneADD,content,JFXDialog.DialogTransition.TOP);
+//         		jfxDialog.show();
+//           }
+//      
+//      
+//  }); 
+      
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}   
+  }
 }
