@@ -96,7 +96,7 @@ public class OrderItemService extends GenericDAO<OrdredItem> implements OrderIte
 		for (OrdredItem ordredItem : list) {
 			Boolean state=true;
 			if(!ordredItem.getManufacturingList().isEmpty()){
-				ordredItem.setStatus("In progress");
+				ordredItem.setStatus("in progress");
 				for (NeededItem neededItem : ordredItem.getManufacturingList()) {
 					if(neededItem.getStatus().equals("Pending")){
 						state = false;

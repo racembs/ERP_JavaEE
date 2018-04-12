@@ -52,7 +52,7 @@ public class OrdersService extends GenericDAO<Orders> implements OrdersServiceRe
 			Boolean state=true;
 			if(!orders.getOrder_Item().isEmpty()){
 				for (OrdredItem ordredItem : orders.getOrder_Item()) {
-					if(ordredItem.getStatus().equals("Pending") || ordredItem.getStatus().equals("In progress")){
+					if(!ordredItem.getStatus().equals("finished")){
 						state = false;
 						return;
 					}
