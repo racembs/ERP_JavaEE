@@ -278,6 +278,8 @@ public class ManufacturingPlanningController implements Initializable {
 			TextFields.bindAutoCompletion(ClientTextSearch, items);
 			TextFields.bindAutoCompletion(Client_Text, items);
 			
+			proxyManufacturing.updateStatusToFinished();
+			
 			back1.setOnMouseClicked((MouseEvent e) -> {
 	            System.out.println("Manufacturing Clicked!"); // change functionality
 	            

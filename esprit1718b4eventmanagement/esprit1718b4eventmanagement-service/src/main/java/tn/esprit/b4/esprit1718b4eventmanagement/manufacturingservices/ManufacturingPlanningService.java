@@ -43,6 +43,9 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 	@EJB
 	ArticleServiceLocal articleServ;
 	
+	@EJB
+	ManufacturingPlanningServiceLocal mmm;
+	
 	@PersistenceContext
 	private EntityManager em;
 
@@ -86,7 +89,7 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 			long testEndMillis = startMillis + duration * 60 * 1000;
 			// check if the work is more than 17h
 			// 86400000 =1 day and 61200000=17h and 54000000=15h
-			if ((testEndMillis % (86400000)) > 61200000) {
+			if ((testEndMillis % (86400000)) > 61200000L) {
 				endMillis = testEndMillis + 54000000;
 			} else {
 				endMillis = testEndMillis;
@@ -98,7 +101,8 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 			long testEndMillis = newStartMillis + newDuration * 60 * 1000;
 			// check if the work is more than 17h
 			// 86400000 =1 day and 61200000=17h and 54000000=15h
-			if ((testEndMillis % (86400000)) > 61200000) {
+			Long result = (testEndMillis % (86400000));
+			if (result > 61200000L) {
 				endMillis = testEndMillis + 54000000;
 			} else {
 				endMillis = testEndMillis;
@@ -199,11 +203,13 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 
 	@Override
 	public List<ManufacturingPlanning> displayManufactOfAnOrdredItem(int idOrder, int idArticle) {
+		int x =0;
 		TypedQuery<ManufacturingPlanning> query
 		=em.createQuery("select m from ManufacturingPlanning m left join m.neededItem n where n.orderItem.ordredItemPk.id_Order=:idOrder AND "
-				+ "n.orderItem.ordredItemPk.id_Article=:idArticle" , ManufacturingPlanning.class);
+				+ "n.orderItem.ordredItemPk.id_Article=:idArticle AND m.quantity>:x" , ManufacturingPlanning.class);
 		query.setParameter("idOrder", idOrder);
 		query.setParameter("idArticle", idArticle);
+		query.setParameter("x", x);
 		List<ManufacturingPlanning> manuf=query.getResultList();
 		return manuf;
 	}
@@ -241,11 +247,12 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 					//creating manufacturing planning of the needed Item with quantity of net need
 					ManufacturingPlanning manuf = new ManufacturingPlanning(netQty,startingDate,"in progress",e.getKey());
 					int duration = manufacturingDuration(e.getKey().getNeeded_article(),netQty);
-					Date ending = endingManufacturingDate(startingDate,duration);
+					Date ending = endingManufacturingDate(startingDate, duration);
 					manuf.setDuration(duration);
 					manuf.setEndingDate(ending);
 					em.persist(manuf);
-					e.getKey().getManufacturingPlanning().add(manuf);
+					if(!e.getKey().getManufacturingPlanning().contains(manuf))
+						e.getKey().getManufacturingPlanning().add(manuf);
 					listMan.add(manuf);
 				}
 			}

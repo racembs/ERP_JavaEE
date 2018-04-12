@@ -105,7 +105,7 @@ public class TestManufacturing {
 //		map=proxyNeededItem.SaveNeedItemTree(map);
 		//map= proxyNeededItem.CreateANDSaveNeedItemTree(Parent);
 		NeededItem Parent=proxyNeededItem.find(1);
-		map=proxyNeededItem.findNeededItemTreeByOrdredItem(Parent);
+			//map=proxyNeededItem.findNeededItemTreeByOrdredItem(Parent);
 //		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
 		
 //		NeededItem ParentneededItem = proxyNeededItem.getNeededItemParentOfOrdredItem(2, 33);
@@ -116,31 +116,32 @@ public class TestManufacturing {
 //		System.out.println(proxyNeededItem.CheckReadyLot(e.getKey(), e.getValue()));
 //	}
 		
-		for(Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()){
-			System.out.println("readyLot "+proxyNeededItem.CheckReadyLot(e.getKey(), e.getValue()));
-			System.out.println("Parent");
-			System.out.println(e.getKey().getNeeded_article().getArticleCode() +" "+e.getKey().getLevel());
-			
-			System.out.println("Children");
-			for (NeededItem needChild : e.getValue()) {
-				System.out.println(needChild.getNeeded_article().getArticleCode() +" "+needChild.getLevel());
-			}
-		}
+//		for(Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()){
+//			System.out.println("readyLot "+proxyNeededItem.CheckReadyLot(e.getKey(), e.getValue()));
+//			System.out.println("Parent");
+//			System.out.println(e.getKey().getNeeded_article().getArticleCode() +" "+e.getKey().getLevel());
+//			
+//			System.out.println("Children");
+//			for (NeededItem needChild : e.getValue()) {
+//				System.out.println(needChild.getNeeded_article().getArticleCode() +" "+needChild.getLevel());
+//			}
+//		}
 		
 		
 		
-//		int duration =proxyManufacturing.manufacturingDuration(ParentneededItem.getNeeded_article(), 10);
-//	    System.out.println(duration);
+		//int duration =proxyManufacturing.manufacturingDuration(ParentneededItem.getNeeded_article(), 10);
+		int duration = 5280;
+	    System.out.println(duration);
 	    
-//		Calendar cal = Calendar.getInstance();
-//		cal.set(2018, 03, 8, 11, 0);
-//
-//		Date dt = cal.getTime();
-//		
-//		Date d = proxyManufacturing.endingManufacturingDate(dt, duration);
+		Calendar cal = Calendar.getInstance();
+		cal.set(2018, 03, 22, 11, 0);
+
+		Date dt = cal.getTime();
 		
-//		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd kk:mm");
-//	    System.out.println(sdf.format(d));
+		Date d = proxyManufacturing.endingManufacturingDate(dt, duration);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd kk:mm");
+	    System.out.println(sdf.format(d));
 	    
 //	    List<ManufacturingPlanning> ListMan = proxyManufacturing.ReadyManufacturingPlanning(map, dt);
 //	    for (ManufacturingPlanning manufacturingPlanning : ListMan) {
