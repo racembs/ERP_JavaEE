@@ -20,6 +20,7 @@ public interface ManufacturingPlanningServiceRemote extends IGenericDAO<Manufact
 	public void updateStatusToFinished();
 	public List<ManufacturingPlanning> displayManufactOfAnOrdredItem(int idOrder, int idArticle);
 	public int updateIfOneNeededItem(NeededItem neededItem);
+	public List<ManufacturingPlanning> AfterDeliveryManufacturingPlanning(Map<NeededItem, List<NeededItem>> map);
 
 	public List<ManufacturingPlanning> DisplayManufacturingPlanning();
 }

@@ -216,6 +216,44 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 		needItem.save(neededItem);
 		return neededItem.getId();
 	}
+
+	@Override
+	public List<ManufacturingPlanning> AfterDeliveryManufacturingPlanning(Map<NeededItem, List<NeededItem>> map) {
+		List<ManufacturingPlanning> listMan = new ArrayList<>();
+		for (Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(0);
+			if(e.getKey().getNetNeed()!=0){
+				if(!e.getValue().isEmpty()){
+					Date startingDate =cal.getTime();
+					Set<NeededItem> set = new HashSet<>(e.getValue());
+					for (NeededItem child : set) {
+						if(child.getNetNeed()!=0){
+							if((child.getLevel()==99)&&((startingDate.compareTo(child.getPurchaseDeliveryDate()))<0)){
+								startingDate=child.getPurchaseDeliveryDate();
+							} else {
+								if((!child.getManufacturingPlanning().isEmpty())&&(startingDate.compareTo(child.getManufacturingPlanning().get(child.getManufacturingPlanning().size()-1).getEndingDate())<0))
+									startingDate=child.getManufacturingPlanning().get(child.getManufacturingPlanning().size()-1).getEndingDate();
+							}
+						}
+					}
+					int netQty = e.getKey().getNetNeed();
+					//creating manufacturing planning of the needed Item with quantity of net need
+					ManufacturingPlanning manuf = new ManufacturingPlanning(netQty,startingDate,"in progress",e.getKey());
+					int duration = manufacturingDuration(e.getKey().getNeeded_article(),netQty);
+					Date ending = endingManufacturingDate(startingDate,duration);
+					manuf.setDuration(duration);
+					manuf.setEndingDate(ending);
+					em.persist(manuf);
+					e.getKey().getManufacturingPlanning().add(manuf);
+					listMan.add(manuf);
+				}
+			}
+			
+		}
+		needItem.updateNeedItemTree(map);
+		return listMan;
+	}
 	
 	
 	/////////////////////ONS///////////////////////////////////

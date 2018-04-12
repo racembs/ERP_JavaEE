@@ -1,7 +1,9 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -309,8 +311,20 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 		return mapASC;
 	}
 
-
-
+	@Override
+	public Map<NeededItem, List<NeededItem>> SetPurchaseDeliveryDate(Map<NeededItem, List<NeededItem>> map) {
+		for (Map.Entry<NeededItem, List<NeededItem>> neededItem99 : map.entrySet()) {
+			if(neededItem99.getValue().isEmpty()){
+				int del = neededItem99.getKey().getNeeded_article().getDeliveryTime();
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(cal.getTimeInMillis()-(cal.getTimeInMillis() % (86400000)));
+				cal.setTimeInMillis(cal.getTimeInMillis()+(del+1)*24*60*60*1000+28800000);
+				neededItem99.getKey().setPurchaseDeliveryDate(cal.getTime());
+				update(neededItem99.getKey());
+			}
+		}
+		return map;
+	}
 
 
 

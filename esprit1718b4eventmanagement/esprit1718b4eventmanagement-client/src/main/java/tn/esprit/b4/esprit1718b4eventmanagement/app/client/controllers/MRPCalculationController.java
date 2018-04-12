@@ -312,6 +312,7 @@ public class MRPCalculationController implements Initializable {
         			map = proxyNeededItem.InitialiseMap();
         			AbsoluteParent.setId(proxyNeededItem.SaveParentNeedItemTree(AbsoluteParent));
         			map=proxyNeededItem.CreateANDSaveNeedItemTree(AbsoluteParent);
+        			map=proxyNeededItem.SetPurchaseDeliveryDate(map);
             		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
             		LocalDate localDate = date.getValue();
             		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
@@ -320,6 +321,7 @@ public class MRPCalculationController implements Initializable {
             		calendar.setTime(startDate);
             		calendar.setTimeInMillis(calendar.getTimeInMillis()+28800000);
             		proxyManufacturing.ReadyManufacturingPlanning(map, calendar.getTime());
+            		proxyManufacturing.AfterDeliveryManufacturingPlanning(proxyNeededItem.findNeededItemTreeByOrdredItem(AbsoluteParent));
         		}
         		
         		Make.setVisible(false);

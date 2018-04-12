@@ -1,5 +1,6 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,5 +28,6 @@ public interface NeededItemServiceLocal extends IGenericDAO<NeededItem> {
 	public Map<NeededItem, List<NeededItem>> findNeededItemTreeByOrdredItemLevelAsc(NeededItem ParentneededItem);
 	public Map<NeededItem, List<NeededItem>> InitialiseASCMap();
 	public Map<NeededItem, List<NeededItem>> InitialiseDESCMap();
+	public Map<NeededItem, List<NeededItem>> SetPurchaseDeliveryDate(Map<NeededItem, List<NeededItem>> map);
 
 }
