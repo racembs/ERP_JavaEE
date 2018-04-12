@@ -4,8 +4,11 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
 import java.net.URL;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -125,6 +128,7 @@ public class  StatController implements Initializable {
     	 
     	
     	idStat.setOnMouseClicked((MouseEvent a) -> { 
+    	 	idBC.getData().clear(); 
 			  Parent parent= null;
 			  	try {
 			  	Date date1=java.sql.Date.valueOf(idStart.getValue());
@@ -147,40 +151,59 @@ public class  StatController implements Initializable {
 	        	ManufacturingPlanningServiceRemote proxyManufacturing1=(ManufacturingPlanningServiceRemote) context1.lookup(jndiNameManufacturingPlan1);
 	        	List<ManufacturingPlanning> manufactList =proxyManufacturing1.DisplayManufacturingPlanning();
 	        	
-	        	for (int i = 0; i < manufactList.size(); i++) {
-					if(manufactList.get(i).getStartingDate().compareTo(date1)>=0||manufactList.get(i).getEndingDate().compareTo(date2)<=0)
-					{
-						System.out.println(manufactList.get(i).getQuantity());
-						Integer qt=manufactList.get(i).getQuantity();
+	        	Set<ManufacturingPlanning> set = new HashSet<>(manufactList);
+	        	
+	        	for (ManufacturingPlanning manufacturingPlanning : set) {
+	        		String ch1="";
+	        		Integer x=0;
+	        		if((manufacturingPlanning.getStartingDate().compareTo(date1)>=0)&&(manufacturingPlanning.getEndingDate().compareTo(date2)<=0))
+	        		{
+	        			System.out.println(manufacturingPlanning.getQuantity());
+						Integer qt=manufacturingPlanning.getQuantity();
 						
-						System.out.println(manufactList.get(i).getNeededItem().getNeeded_article().getOperatingranges().size());
-						String ch=manufactList.get(i).getNeededItem().getNeeded_article().getArticleCode();
-						
-						List <OperatingRange> Listopt = manufactList.get(i).getNeededItem().getNeeded_article().getOperatingranges();
-						for (int j = 0; j < Listopt.size(); j++) {
-							List <Operation> Listop = Listopt.get(j).getOperations();
-							for (int k = 0; k < Listop.size(); k++) {
-								System.out.println(Listop.get(k).getUnitproductiontime());
-								Integer UPT=Listop.get(k).getUnitproductiontime();
-								
-								Integer x= qt*UPT;
-								
-								String ch1= manufactList.get(i).getNeededItem().getNeeded_article().getArticleCode();
-						        XYChart.Series series2 = new XYChart.Series<>();
-						        series2.getData().add(new XYChart.Data(ch1,x));
-						        idBC.getData().add(series2);
-						        idBC.setTitle("Manufacturing Time By Article");
-						     
-							}
+						//System.out.println(manufacturingPlanning.getNeededItem().getNeeded_article().getOperatingranges().size());
+						String ch=manufacturingPlanning.getNeededItem().getNeeded_article().getArticleCode();
+						List <OperatingRange> Listopt = manufacturingPlanning.getNeededItem().getNeeded_article().getOperatingranges();
+						Set<OperatingRange> set1 = new HashSet<>(Listopt);
+						for(OperatingRange operatingrange : set1){
+							System.out.println(operatingrange.getDesignation());
 							
+							List <Operation> Listop = operatingrange.getOperations();
+							Set<Operation> set2 = new HashSet<>(Listop);
+							for(Operation operation : set2){
+								System.out.println(operation.getUnitproductiontime());
+								
+								
+							Integer UPT=operation.getUnitproductiontime();
+							
+							
+							x= x+(qt/UPT);
+					  
+//							XYChart.Series series2 = new XYChart.Series<>();
+//					        series2.getData().add(new XYChart.Data(ch1,x));
+//					        idBC.getData().add(series2);
+//					        idBC.setTitle("Manufacturing Time By Article");
+							}
 						}
-					}
-				}
-			  	
+						
+						ch1= manufacturingPlanning.getNeededItem().getNeeded_article().getArticleCode();
+				      
+						XYChart.Series series2 = new XYChart.Series<>();
+				        series2.getData().add(new XYChart.Data(ch1,x));
+				        idBC.getData().add(series2);
+				        idBC.setTitle("Manufacturing Time By Article");
+				       
+	        		}
+	        		
+	        	}
+	        	
+
+	        	
 			  	} catch (Exception e1) {
 	  				// TODO Auto-generated catch block
 	  				e1.printStackTrace();
 	  			}
+			 	
 		  });
 //        OptRStat.setText("20");
 //        idA.setText("1");
