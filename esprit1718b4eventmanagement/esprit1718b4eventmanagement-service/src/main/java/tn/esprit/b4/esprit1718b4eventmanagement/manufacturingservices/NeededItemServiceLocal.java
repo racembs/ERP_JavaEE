@@ -29,5 +29,6 @@ public interface NeededItemServiceLocal extends IGenericDAO<NeededItem> {
 	public Map<NeededItem, List<NeededItem>> InitialiseASCMap();
 	public Map<NeededItem, List<NeededItem>> InitialiseDESCMap();
 	public Map<NeededItem, List<NeededItem>> SetPurchaseDeliveryDate(Map<NeededItem, List<NeededItem>> map);
+	public void updateStatusPurchaseOrder();
 
 }

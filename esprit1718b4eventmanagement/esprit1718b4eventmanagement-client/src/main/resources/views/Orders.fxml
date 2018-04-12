@@ -84,11 +84,12 @@
                                     <Button fx:id="delete" layoutX="666.0" layoutY="185.0" mnemonicParsing="false" onAction="#deleteOrder" prefHeight="30.0" prefWidth="112.0" text="Delete Order" />
                                     <Button fx:id="UpdateClick" layoutX="666.0" layoutY="141.0" mnemonicParsing="false" onAction="#UpdateClick" prefHeight="30.0" prefWidth="112.0" text="Update Order" />
                                     <Button fx:id="deleteItem" layoutX="666.0" layoutY="77.0" mnemonicParsing="false" onAction="#deleteItemAction" prefHeight="30.0" prefWidth="113.0" text="Detele Item" />
-                                    <TableView fx:id="TableItems" layoutX="813.0" layoutY="28.0" onMouseClicked="#TableItemClicked" prefHeight="236.0" prefWidth="341.0">
+                                    <TableView fx:id="TableItems" layoutX="821.0" layoutY="38.0" onMouseClicked="#TableItemClicked" prefHeight="236.0" prefWidth="354.0">
                                        <columns>
                                           <TableColumn fx:id="CodeColumn" prefWidth="95.0" text="CodeItem" />
-                                          <TableColumn fx:id="ArticleColumn" prefWidth="187.0" text="Item Description" />
-                                          <TableColumn fx:id="QtyColumn" prefWidth="535.0" text="Qty" />
+                                          <TableColumn fx:id="ArticleColumn" prefWidth="103.0" text="Item Description" />
+                                          <TableColumn fx:id="QtyColumn" prefWidth="59.0" text="Qty" />
+                                          <TableColumn fx:id="OrdreItemStatus" prefWidth="96.0" text="Status" />
                                        </columns>
                                     </TableView>
                                  </children>

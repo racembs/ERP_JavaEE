@@ -14,6 +14,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
@@ -324,6 +326,21 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 			}
 		}
 		return map;
+	}
+
+	@Override
+	public void updateStatusPurchaseOrder() {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(System.currentTimeMillis());
+		String ready = "ready";
+		int nb=99;
+		Query query = em.createQuery(
+			      "UPDATE NeededItem n SET n.status = :ready " +
+			      "WHERE n.level=:nb AND n.purchaseDeliveryDate < :date");
+			  query.setParameter("ready",ready);
+			  query.setParameter("nb",99);
+			  query.setParameter("date",cal.getTime(),TemporalType.TIMESTAMP).executeUpdate();
+		
 	}
 
 

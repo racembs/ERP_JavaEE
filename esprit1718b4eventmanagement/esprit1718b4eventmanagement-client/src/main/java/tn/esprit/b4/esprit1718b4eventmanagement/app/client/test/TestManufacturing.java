@@ -143,6 +143,9 @@ public class TestManufacturing {
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd kk:mm");
 	    System.out.println(sdf.format(d));
 	    
+	    proxyNeededItem.updateStatusPurchaseOrder();
+	    proxyOrdredItem.updateStatusOrdredItem();
+	    
 //	    List<ManufacturingPlanning> ListMan = proxyManufacturing.ReadyManufacturingPlanning(map, dt);
 //	    for (ManufacturingPlanning manufacturingPlanning : ListMan) {
 //			System.out.println(manufacturingPlanning.getNeededItem().getNeeded_article().getArticleCode());

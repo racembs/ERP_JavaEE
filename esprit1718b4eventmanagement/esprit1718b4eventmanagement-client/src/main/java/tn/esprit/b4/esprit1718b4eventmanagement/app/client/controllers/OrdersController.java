@@ -186,12 +186,17 @@ public class OrdersController implements Initializable {
     @FXML
     private TableColumn<OrdredItem, Integer> QtyColumn;
     
+    @FXML
+    private TableColumn<OrdredItem, String> OrdreItemStatus;
+    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		SubmitUpdate.setVisible(false);
 		CancelUpdate.setVisible(false);
 		TableItems.setVisible(false);
 		deleteItem.setVisible(false);
+		proxyOrdredItem.updateStatusOrdredItem();
+		proxyOrders.updateStatusOrder();
 		displayAllOrdres();
 		java.util.List<Client> ClientList = proxyClientServiceRemote.findAll();
 		ObservableList<String> items = FXCollections.observableArrayList();
@@ -258,6 +263,7 @@ public class OrdersController implements Initializable {
                 return new SimpleStringProperty(param.getValue().getArticle().getArticleCode());
             }
         });
+		OrdreItemStatus.setCellValueFactory(new PropertyValueFactory<OrdredItem, String>("status"));
 	}
 	
 
