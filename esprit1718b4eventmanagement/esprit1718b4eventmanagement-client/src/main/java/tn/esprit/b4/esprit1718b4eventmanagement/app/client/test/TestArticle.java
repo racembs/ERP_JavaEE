@@ -29,13 +29,16 @@ public class TestArticle extends Application {
 		ArticleServiceRemote ArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
 		//Article article =ArticleProxy.findArticleByCode("MatierePremiere");
 		//System.out.println(article.getId());
+		//Article article = new Article();
+		//article.getNomenclatures1().get(0).getQuantity();
 		
 		String jndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/MvtApprovService!tn.esprit.b4.esprit1718b4eventmanagement.services.MvtApprovServiceRemote";
     	Context context1 = new InitialContext();
     	MvtApprovServiceRemote OrdreProxy = (MvtApprovServiceRemote) context1.lookup(jndiName);
     //	System.out.println(OrdreProxy.getOrderByArticle(article.getId()).getQuantity());
 	
-		Parent parent =FXMLLoader.load(getClass().getResource("/views/MgasinierGPAO.fxml"));
+	    //Parent parent =FXMLLoader.load(getClass().getResource("/views/MgasinierGPAO.fxml"));
+    	Parent parent =FXMLLoader.load(getClass().getResource("/views/Article.fxml"));
 		Scene scene=new Scene(parent);
 		scene.getStylesheets().add("/src/main/resouces/views/tab.css");
 		primaryStage.setScene(scene);
