@@ -1,10 +1,13 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -89,12 +92,24 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 		return map;
 		
 	}
-
+	
 	Map<NeededItem, List<NeededItem>> map = new HashMap<>();
+	Map<NeededItem, List<NeededItem>> mapASC = new TreeMap<>(new LevelUp());
+	Map<NeededItem, List<NeededItem>> mapDESC = new TreeMap<>(new LevelDown());
 	
 	@Override
 	public Map<NeededItem, List<NeededItem>> InitialiseMap(){
 		return  map = new HashMap<>();	
+	}
+	
+	@Override
+	public Map<NeededItem, List<NeededItem>> InitialiseASCMap(){
+		return  mapASC = new TreeMap<>(new LevelUp());	
+	}
+	
+	@Override
+	public Map<NeededItem, List<NeededItem>> InitialiseDESCMap() {
+		return  mapASC = new TreeMap<>(new LevelDown());	
 	}
 	
 	@Override
@@ -120,7 +135,11 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 				ChildNeededItem.setNetNeed(0);
 			else
 				ChildNeededItem.setNetNeed(ChildNeededItem.getGrossNeed()-(ChildNeededItem.getNeeded_article().getQuantity()-ChildNeededItem.getNeeded_article().getReservedQuantity()));
-			ChildNeededItem.setReadyLotNumber((Integer) (ChildNeededItem.getNeeded_article().getQuantity()-ChildNeededItem.getNeeded_article().getReservedQuantity())/nomenclature.getQuantity());
+			if((ChildNeededItem.getNeeded_article().getQuantity()-ChildNeededItem.getNeeded_article().getReservedQuantity())<ChildNeededItem.getGrossNeed())
+				ChildNeededItem.setReadyLotNumber((Integer) (ChildNeededItem.getNeeded_article().getQuantity()-ChildNeededItem.getNeeded_article().getReservedQuantity())/nomenclature.getQuantity());
+			else
+				ChildNeededItem.setReadyLotNumber(ParentneededItem.getNetNeed());
+			
 			ChildNeededItem.setStatus("Pending");
 			//Add this ChildNeededItem to the NeededItemList
 			NeededItemList.add(ChildNeededItem);
@@ -146,11 +165,11 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 			Article article = articleServ.findArticle(neededItem.getNeeded_article().getId());
 			article.setReservedQuantity(article.getReservedQuantity()+neededItem.getGrossNeed()-neededItem.getNetNeed());
 			articleServ.updateArticle(article);
+			neededItem.setNeeded_article(article);
 			neededItem.setId(addNeededItem(neededItem));
 		}
 		return map;
 	}
-	
 	
 
 	@Override
@@ -170,7 +189,7 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 		for (NeedNomenclature needednom : listNomenclature) {
 			listChildren.add(needednom.getChild());
 		}
-		map.put(ParentneededItem, listChildren);
+		mapDESC.put(ParentneededItem, listChildren);
 		
 		if(listChildren==null){
 		}
@@ -179,7 +198,7 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 				findNeededItemTreeByOrdredItem(neededItem);
 			}
 		}
-		return map;
+		return mapDESC;
 	}
 
 	@Override
@@ -214,8 +233,98 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 		return map;
 	}
 
+	@Override
+	public Map<NeededItem, List<NeededItem>> CreateANDSaveNeedItemTree(NeededItem ParentneededItem) {
+		//determine all Article childdren of the ParentneededItem
+				List <Nomenclature> nomenclatureList =  articleServ.getFilsArticles(ParentneededItem.getNeeded_article().getId());
+				List <NeededItem> NeededItemList = new ArrayList<>();
+				for (Nomenclature nomenclature : nomenclatureList) {
+					//Create ParentneededItem's Children from the article children determined previously
+					NeededItem ChildNeededItem = new NeededItem();
+					ChildNeededItem.setNeeded_article(nomenclature.getArticleFils());
+					ChildNeededItem.setOrderItem(ParentneededItem.getOrderItem());
+					if(nomenclature.getArticleFils().getType().equals("Matiére-Premiére")){
+						ChildNeededItem.setActionNature("Purchase Order");
+						ChildNeededItem.setLevel(99);
+					}
+					else{
+						ChildNeededItem.setActionNature("Manufacturing Order");
+						ChildNeededItem.setLevel(ParentneededItem.getLevel()+1);
+					}
+					ChildNeededItem.setGrossNeed(ParentneededItem.getNetNeed()*nomenclature.getQuantity());
+					if((ChildNeededItem.getGrossNeed()-(ChildNeededItem.getNeeded_article().getQuantity()-ChildNeededItem.getNeeded_article().getReservedQuantity()))<0)
+						ChildNeededItem.setNetNeed(0);
+					else
+						ChildNeededItem.setNetNeed(ChildNeededItem.getGrossNeed()-(ChildNeededItem.getNeeded_article().getQuantity()-ChildNeededItem.getNeeded_article().getReservedQuantity()));
+					if((ChildNeededItem.getNeeded_article().getQuantity()-ChildNeededItem.getNeeded_article().getReservedQuantity())<ChildNeededItem.getGrossNeed())
+						ChildNeededItem.setReadyLotNumber((Integer) (ChildNeededItem.getNeeded_article().getQuantity()-ChildNeededItem.getNeeded_article().getReservedQuantity())/nomenclature.getQuantity());
+					else
+						ChildNeededItem.setReadyLotNumber(ParentneededItem.getNetNeed());
+					ChildNeededItem.setStatus("Pending");
+					ChildNeededItem.getNeeded_article().setReservedQuantity(ChildNeededItem.getNeeded_article().getReservedQuantity()+ChildNeededItem.getGrossNeed()-ChildNeededItem.getNetNeed());
+					articleServ.updateArticle(ChildNeededItem.getNeeded_article());
+					//Add this ChildNeededItem to the NeededItemList
+					NeededItemList.add(ChildNeededItem);
+					ChildNeededItem.setId(addNeededItem(ChildNeededItem));
+				}
 
+				//put into the map for any parent his children list
+				map.put(ParentneededItem, NeededItemList);
+				
+				if(NeededItemList==null){
+				}
+				else{
+					for (NeededItem neededItem : NeededItemList) {
+						//this is a recursive call to create for each child his children if exist
+						CreateANDSaveNeedItemTree(neededItem);
+					}
+				}
+				return map;
+	}
 
+	@Override
+	public int SaveParentNeedItemTree(NeededItem Parent) {
+		Article article = articleServ.findArticle(Parent.getNeeded_article().getId());
+		article.setReservedQuantity(article.getReservedQuantity()+Parent.getGrossNeed()-Parent.getNetNeed());
+		articleServ.updateArticle(article);
+		Parent.setNeeded_article(article);
+		Parent.setId(addNeededItem(Parent));
+		return Parent.getId();
+	}
+
+	@Override
+	public Map<NeededItem, List<NeededItem>> findNeededItemTreeByOrdredItemLevelAsc(NeededItem ParentneededItem) {
+		List<NeedNomenclature> listNomenclature = needNomenclature.getNeededItemChildren(ParentneededItem.getId());
+		List<NeededItem> listChildren = new ArrayList<>();
+		for (NeedNomenclature needednom : listNomenclature) {
+			listChildren.add(needednom.getChild());
+		}
+		mapASC.put(ParentneededItem, listChildren);
+		
+		if(listChildren==null){
+		}
+		else{
+			for (NeededItem neededItem : listChildren) {
+				findNeededItemTreeByOrdredItemLevelAsc(neededItem);
+			}
+		}
+		return mapASC;
+	}
+
+	@Override
+	public Map<NeededItem, List<NeededItem>> SetPurchaseDeliveryDate(Map<NeededItem, List<NeededItem>> map) {
+		for (Map.Entry<NeededItem, List<NeededItem>> neededItem99 : map.entrySet()) {
+			if(neededItem99.getValue().isEmpty()){
+				int del = neededItem99.getKey().getNeeded_article().getDeliveryTime();
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(cal.getTimeInMillis()-(cal.getTimeInMillis() % (86400000)));
+				cal.setTimeInMillis(cal.getTimeInMillis()+(del+1)*24*60*60*1000+28800000);
+				neededItem99.getKey().setPurchaseDeliveryDate(cal.getTime());
+				update(neededItem99.getKey());
+			}
+		}
+		return map;
+	}
 
 
 

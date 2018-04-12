@@ -56,10 +56,7 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
-import com.google.gdata.client.calendar.*;
-import com.google.gdata.data.calendar.*;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import java.io.IOException;
@@ -275,11 +272,11 @@ public class ChargingStationMenuController implements Initializable {
 			  	try {
 			  		
 			  		VBox vb = new VBox();
-	  				parent  =FXMLLoader.load(getClass().getResource("/views/Stat.fxml"));
+	  				//parent  =FXMLLoader.load(getClass().getResource("/views/Stat.fxml"));
 	  				
 	  				Stage primaryStage= new Stage(); 
 	  			
-	  				idcancel.getScene().getWindow().hide();
+	  				//idcancel.getScene().getWindow().hide();
 	  				
 	  			    vb.setId("root");
 

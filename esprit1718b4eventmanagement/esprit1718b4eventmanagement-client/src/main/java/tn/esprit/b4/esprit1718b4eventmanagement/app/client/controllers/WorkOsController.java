@@ -681,7 +681,7 @@ Tooltip.install(table, tooltip_userName);
     		    		
     		    			 
     		    			 tableview1.setItems(items);
-    		    		//     System.out.println(items.get(0).getDescription()+"tableauuuuuu1");
+
     		    		}
     		    		else
     		    		{ List<PreventiveWork> list = proxypp.DisplayPWorks();

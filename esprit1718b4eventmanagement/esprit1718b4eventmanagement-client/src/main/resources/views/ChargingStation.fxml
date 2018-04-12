@@ -4,7 +4,9 @@
 <?import com.jfoenix.controls.JFXToolbar?>
 <?import java.net.URL?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -32,7 +34,7 @@
       </JFXToolbar>
       <AnchorPane fx:id="holderPane" layoutX="-3.0" layoutY="40.0" prefHeight="702.0" prefWidth="1189.0">
          <children>
-            <AnchorPane prefHeight="702.0" prefWidth="1189.0">
+            <AnchorPane onKeyReleased="#OnKeyReleased2" prefHeight="702.0" prefWidth="1189.0">
                <children>
                   <Label layoutX="104.0" layoutY="45.0" prefHeight="58.0" prefWidth="288.0" text="Charging Stations">
                      <font>
@@ -54,6 +56,14 @@
                         <TableColumn fx:id="idNbDaysTab" prefWidth="97.0" text="Nb Days" />
                         <TableColumn fx:id="idNbHoursTab" prefWidth="122.0" text="Nb Hours" />
                     </columns>
+                     <contextMenu>
+                        <ContextMenu>
+                          <items>
+                            <MenuItem fx:id="menuUpdate" mnemonicParsing="false" onAction="#OnUpdate" text="Update" />
+                              <MenuItem fx:id="menuDelete" mnemonicParsing="false" onAction="#OnDelete" text="Delete" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
                   </TableView>
                   <JFXTextField fx:id="idchs" layoutX="348.0" layoutY="118.0" prefHeight="30.0" prefWidth="250.0" />
                   <ComboBox fx:id="idUser" layoutX="912.0" layoutY="186.0" prefHeight="30.0" prefWidth="175.0" />
@@ -71,29 +81,14 @@
                         <Image url="views/image/searching.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="idAdd" fitHeight="135.0" fitWidth="122.0" layoutX="40.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="idAddchs" fitHeight="135.0" fitWidth="122.0" layoutX="40.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="views/image/add2.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="idDelete" fitHeight="135.0" fitWidth="122.0" layoutX="293.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="views/image/Delete1.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="idUpdate" fitHeight="150.0" fitWidth="110.0" layoutX="166.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="idsubmit" fitHeight="150.0" fitWidth="110.0" layoutX="166.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="views/image/updates.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="idsubmit" fitHeight="135.0" fitWidth="110.0" layoutX="837.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
-                                <image>
-                        <Image url="views/image/okk.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="idcancel" fitHeight="135.0" fitWidth="110.0" layoutX="1031.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
-                              <image>
-                        <Image url="views/image/cancel.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="idicone" fitHeight="58.0" fitWidth="135.0" layoutX="33.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
@@ -116,12 +111,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="idDellb" layoutX="318.0" layoutY="636.0" prefHeight="58.0" prefWidth="83.0" text="Delete" textFill="#cd1212">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="idBack" fitHeight="70.0" fitWidth="103.0" layoutX="1083.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" >
+                  <ImageView fx:id="idBack" fitHeight="70.0" fitWidth="103.0" layoutX="1083.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                      <image>
                         <Image url="views/image/back.png" />
                      </image>

@@ -40,6 +40,10 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ContextMenu;
@@ -54,6 +58,7 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.TreeTableColumn.CellDataFeatures;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -151,8 +156,7 @@ public class ArticleController implements Initializable {
     private Tab tabProcuremrnt;
     @FXML
     private JFXButton BtnAddOrder;
-    @FXML
-    private DatePicker AlarmDate;
+   
     @FXML
     private JFXTextField txtArticleCodeForOrder;
     @FXML
@@ -176,6 +180,22 @@ public class ArticleController implements Initializable {
     private StackPane stackPaneADD;
     @FXML
     private StackPane stackPaneAddChild;
+    @FXML
+    private AreaChart<Integer,String> ArticleChart;
+    @FXML
+    private CategoryAxis axeX;
+    @FXML
+    private NumberAxis axeY;
+    @FXML
+    private JFXTextField txtSearchArticleForChart;
+    @FXML
+    private Label requestDate;  
+    
+    @FXML
+    private ImageView reloadImg;
+    
+    
+    
     
   
     
@@ -188,9 +208,10 @@ public class ArticleController implements Initializable {
     
     	
     	try {
-    		fillTreeTableView("all");
+    		
     		fillTableView("all");
-    		//AuoOrderCreation();
+    		
+            
     		
 		} catch (NamingException e) {
 			}
@@ -207,40 +228,131 @@ comboType.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Produit-Fi
 comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Produit-Fini");
 
     	
-    }    
+    }   
+  
+    @FXML
+    private void OnSearchArticleForChart(KeyEvent event) throws NamingException {
+    	ArticleChart.setTitle("Order Procurement");
+   
+     
+    	
+    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
+    	List<Article> listArticle=aArticleProxy.findArticleByCodeAndType(txtSearchArticleForChart.getText(), "Matiére-Premiére");
+    	if(listArticle.size()==1){
+    		int joursRestant=listArticle.get(0).getQuantity()/listArticle.get(0).getDailyConsumption();
+    		Date dateT=java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
+        	Date AlarmDate=java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
+        	
+        	Date currentDate =java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
 
+
+        	int day= dateT.getDate();
+        	dateT.setDate(day+joursRestant-listArticle.get(0).getDeliveryTime());
+        	int diff=currentDate.compareTo(dateT);
+       
+        	 
+        	XYChart.Series series = new XYChart.Series();
+        	series.getData().add(new XYChart.Data(currentDate.toString(),listArticle.get(0).getQuantity()));
+      
+        	int Quantity=listArticle.get(0).getQuantity();
+        	
+        	for(int i=0;i<joursRestant;i++) {
+        		
+            	
+        		int days=currentDate.getDate();
+        		Quantity=Quantity-listArticle.get(0).getDailyConsumption();
+        		currentDate.setDate(days+1);
+        		
+                series.getData().add(new XYChart.Data(currentDate.toString(),Quantity));
+                
+       
+              
+                
+                
+        	}
+        	series.setName(listArticle.get(0).getArticleCode());
+        	
+        	  ArticleChart.getData().add(series);
+        	  
+        	
+         
+    		
+    	}
+    	   
+    	
+    }
+    
     @FXML
     private void OnAddAction(ActionEvent event) throws NamingException {
     	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
     	Context context = new InitialContext();
     	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
-        
+    	JFXDialogLayout content=new JFXDialogLayout();
+    	aArticleProxy.findArticleByCode(txtArticleCode.getText());
+             
+              if(txtArticleCode.getText().equals("")){
+    		content.setHeading(new Text("                                              Error"));
+    		content.setBody(new Text("wrong Article Code"));
+    		JFXDialog jfxDialog=new JFXDialog(stackPaneADD,content,JFXDialog.DialogTransition.TOP);
+    		jfxDialog.show();
+    	}
+              else if(aArticleProxy.findArticleByCode(txtArticleCode.getText()).size()!=0){
+          		content.setHeading(new Text("                                              Error"));
+          		content.setBody(new Text("Article already existed"));
+          		JFXDialog jfxDialog=new JFXDialog(stackPaneADD,content,JFXDialog.DialogTransition.TOP);
+          		jfxDialog.show();
+          	}
+    	else if(txtUnitCode.getText().equals("")){
+    		content.setHeading(new Text("                                              Error"));
+    		content.setBody(new Text("wrong Unit Code"));
+    		JFXDialog jfxDialog=new JFXDialog(stackPaneADD,content,JFXDialog.DialogTransition.TOP);
+    		jfxDialog.show();
+    	}
+    	else if(txtDescription.getText().equals("")){
+    		content.setHeading(new Text("                                              Error"));
+    		content.setBody(new Text("wrong Description"));
+    		JFXDialog jfxDialog=new JFXDialog(stackPaneADD,content,JFXDialog.DialogTransition.TOP);
+    		jfxDialog.show();
+    	}
+    	
+    	else if(!comboType.isManaged()){
+    		content.setHeading(new Text("                                              Error"));
+    		content.setBody(new Text("wrong Type"));
+    		JFXDialog jfxDialog=new JFXDialog(stackPaneADD,content,JFXDialog.DialogTransition.TOP);
+    		jfxDialog.show();
+    	}
+    	else  if(!txtArticleQuantity.getText().matches("[\\p{Digit}&&[123456789]]+")) {
+       	 content.setHeading(new Text("                                              Error"));
+    		content.setBody(new Text("Please enter a number in Quantity field"));
+    		JFXDialog jfxDialog=new JFXDialog(stackPaneADD,content,JFXDialog.DialogTransition.TOP);
+    		jfxDialog.show();
+        }
+        else if(!txtArticlePrice.getText().matches("[-+]?[0-9]*\\.?[0-9]+")) {
+       	 content.setHeading(new Text("                                              Error"));
+    		content.setBody(new Text("Please enter a float in Price field"));
+    		JFXDialog jfxDialog=new JFXDialog(stackPaneADD,content,JFXDialog.DialogTransition.TOP);
+    		jfxDialog.show();
+        }
+    	else {
+    		
     	
 		Article article=new Article(txtArticleCode.getText(),txtDescription.getText(),
 		txtUnitCode.getText(),comboType.getValue(),Float.valueOf(txtArticlePrice.getText()),Integer.valueOf(txtArticleQuantity.getText()));
-		aArticleProxy.addArticle(article);
+		int idFils=aArticleProxy.addArticle(article);
+		article.setType("Produit-Pere");
+		int idPere=aArticleProxy.addArticle(article);
+		aArticleProxy.addNomenclature(idPere, idFils, 1);
 		
 		
 		
-		JFXDialogLayout content=new JFXDialogLayout();
+		
 		content.setHeading(new Text("                                       Well Done \n"));
-		
 		content.setBody(new Text("This article has been successfully added"));
-		
-		JFXButton button=new JFXButton("close");
 		JFXDialog jfxDialog=new JFXDialog(stackPaneADD,content,JFXDialog.DialogTransition.TOP);
-		button.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				jfxDialog.close();
-				
-			}
-		});
-	//	content.setActions(button);
-		
-		
 		jfxDialog.show();
+    	}
 	 
     }
 
@@ -266,12 +378,19 @@ comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Prod
     	Context context = new InitialContext();
     	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
     	TreeItem<Nomenclature> selectedItem = ArticleTableView.getSelectionModel().getSelectedItem();
-    	
-    	
+    	JFXDialogLayout content=new JFXDialogLayout();
+    	if(!txtChildQuantity.getText().matches("[\\p{Digit}&&[123456789]]+")) {
+          	 content.setHeading(new Text("                                              Error"));
+       		content.setBody(new Text("Please enter a number in Quantity field"));
+       		JFXDialog jfxDialog=new JFXDialog(stackPaneADD,content,JFXDialog.DialogTransition.TOP);
+       		jfxDialog.show();
+           }
+    	else {
+    		
     	
     	aArticleProxy.addNomenclature(selectedItem.getValue().getArticleFils().getId(),aArticleProxy.getArticleListByCode(txtArticleChild.getText()).get(0).getId(),Integer.parseInt(txtChildQuantity.getText()));
 
-		JFXDialogLayout content=new JFXDialogLayout();
+		
 		content.setHeading(new Text("                                       Well Done \n"));
 		
 		content.setBody(new Text("This Child has been successfully added"));
@@ -286,10 +405,10 @@ comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Prod
 				
 			}
 		});
-    	//fillTreeTableView("all");
+    	fillTreeTableView("all");
 		jfxDialog.show();
     	
-  
+    	}
     }
 
     @FXML
@@ -325,7 +444,7 @@ private void fillTreeTableView(String code) throws NamingException {
 	
 	 
 for(int i=0;i<listNomenclature.size();i++) {
-	if(listNomenclature.get(i).getArticlePere().getType().equals("Produit-Fini")&&listNomenclature.get(i).getArticleFils().getType().equals("Produit-Fini")) {
+	if(listNomenclature.get(i).getArticlePere().getType().equals("Produit-Pere")&&listNomenclature.get(i).getArticleFils().getType().equals("Produit-Fini")) {
 		produitFini.add(listNomenclature.get(i));
 		
 	}
@@ -333,7 +452,7 @@ for(int i=0;i<listNomenclature.size();i++) {
 
  }else {
 	 for(int i=0;i<listNomenclature.size();i++) {
-			if(listNomenclature.get(i).getArticlePere().getType().equals("Produit-Fini")&&listNomenclature.get(i).getArticleFils().getType().equals("Produit-Fini")&&listNomenclature.get(i).getArticleFils().getArticleCode().contains(code)) {
+			if(listNomenclature.get(i).getArticlePere().getType().equals("Produit-Pere")&&listNomenclature.get(i).getArticleFils().getType().equals("Produit-Fini")&&listNomenclature.get(i).getArticleFils().getArticleCode().contains(code)) {
 				produitFini.add(listNomenclature.get(i));
 				
 			}
@@ -354,6 +473,7 @@ for(int i=0;i<listNomenclature.size();i++) {
 	 
 	 ArrayDeque <TreeItem<Nomenclature>> queue=new ArrayDeque<>();
 	 queue.add(newItemarticlePere);
+	 
 	
 	 while(!queue.isEmpty()) {
 		 
@@ -463,6 +583,7 @@ private void fillTableView(String code) throws NamingException {
     	alert.setContentText("Are you sure want to delete the "+article.getDescription());
     	java.util.Optional<javafx.scene.control.ButtonType> answer=alert.showAndWait();
     	if(answer.get()==javafx.scene.control.ButtonType.OK) {
+    		
     		aArticleProxy.DeleteArticle(article.getId());
           fillTableView("all");
     	}
@@ -625,8 +746,8 @@ private void fillTableView(String code) throws NamingException {
     	
     	
     	 Article article=aArticleProxy.getArticleListByCode(txtArticleCodeForOrder.getText()).get(0);
-    	 LocalDate  localDateAlarm = AlarmDate.getValue();
-    	 Date AlarmTypeDate = java.sql.Date.valueOf(localDateAlarm);
+    	// LocalDate  localDateAlarm = AlarmDate.getValue();
+    	//Date AlarmTypeDate = java.sql.Date.valueOf(localDateAlarm);
     			 
     	
     			 
@@ -634,18 +755,25 @@ private void fillTableView(String code) throws NamingException {
     	 Date RequestTypeDate = java.sql.Date.valueOf(localDateRequest);
     	 Alert alert = new Alert(Alert.AlertType.WARNING);
         java.util.Date CurrentDate=new java.util.Date();
-    	 if(AlarmTypeDate.compareTo(CurrentDate)<=0) {
+    	/* if(AlarmTypeDate.compareTo(CurrentDate)<=0) {
     		
              alert.setTitle("Wrong Date");
              alert.setHeaderText("Alarm Date is wrong");
             alert.showAndWait();
             
-    	 }else if(RequestTypeDate.compareTo(CurrentDate)<=0){
+    	 }else*/ if(RequestTypeDate.compareTo(CurrentDate)<=0){
     	
     		 alert.setTitle("Wrong Date");
              alert.setHeaderText("Request Date is wrong");
             alert.showAndWait();
     	 }else {
+    		 Date AlarmTypeDate=java.sql.Date.valueOf(localDateRequest);
+    		
+    		 AlarmTypeDate.setDate(RequestTypeDate.getDate()+article.getDeliveryTime()+1);
+    		 AlarmTypeDate.setMonth(RequestTypeDate.getMonth());
+    		 AlarmTypeDate.setYear(RequestTypeDate.getYear());
+    		 article.setEtatOrdre(1);
+    		 aArticleProxy.updateArticle(article);
     		 MvtApprov mvtApprov=new MvtApprov(article,null,Integer.valueOf(txtQuantityForOrder.getText()),AlarmTypeDate,RequestTypeDate,null);
              OrdreProxy.addMvtApprov(mvtApprov);
     	 }
@@ -686,12 +814,17 @@ private void fillTableView(String code) throws NamingException {
     	Context context2 = new InitialContext();
     	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context2.lookup(ArticlejndiName);
     	BtnAddOrder.setDisable(true); 
-    	Article article=aArticleProxy.findArticleByCode(txtArticleCodeForOrder.getText()).get(0);
+		txtQuantityForOrder.setDisable(true);
+		RequestDate.setDisable(true);
+		//requestDate.setDisable(true);
     	
-    	if(article!=null&&article.getType().equals("Matiére-Premiére")) {
+    	if(aArticleProxy.findArticleByCodeAndType(txtArticleCodeForOrder.getText(),"Matiére-Premiére").size()==1) {
 
     	
-    		BtnAddOrder.setDisable(false);  
+    		BtnAddOrder.setDisable(false); 
+    		txtQuantityForOrder.setDisable(false);
+    		RequestDate.setDisable(false);
+    		//requestDate.setDisable(false);
     	
     	}
     	

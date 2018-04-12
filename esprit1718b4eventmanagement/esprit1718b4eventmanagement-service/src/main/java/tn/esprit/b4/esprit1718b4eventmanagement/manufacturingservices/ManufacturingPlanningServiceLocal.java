@@ -18,6 +18,9 @@ public interface ManufacturingPlanningServiceLocal extends IGenericDAO<Manufactu
 	public List<ManufacturingPlanning> ReadyManufacturingPlanning(Map<NeededItem, List<NeededItem>> map,Date startingDate);
 	public void updateStatusToFinished();
 	public List<ManufacturingPlanning> displayManufactOfAnOrdredItem(int idOrder, int idArticle);
+	public int updateIfOneNeededItem(NeededItem neededItem);
+	public List<ManufacturingPlanning> AfterDeliveryManufacturingPlanning(Map<NeededItem, List<NeededItem>> map);
 	
+	public List<ManufacturingPlanning> DisplayManufacturingPlanning();	
 
 }

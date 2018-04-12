@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -21,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -50,17 +54,22 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-
+import tn.esprit.b4.esprit1718b4eventmanagement.app.client.gui.Upload;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote;
 
 /**
@@ -164,6 +173,7 @@ public class AdminRHController implements Initializable {
     private JFXButton edibtn;
     @FXML
     private Tab addduser;
+    private Label broser2;
     /**
      * Initializes the controller class.
      */
@@ -183,7 +193,8 @@ public class AdminRHController implements Initializable {
     	chekGmao.setVisible(false);
 	
 
-    
+    	
+
     		
     			
     		v1.registerValidator(txtfisrtname,Validator.createRegexValidator("", "^[A-Za-z, ]++$", Severity.ERROR));
@@ -326,7 +337,7 @@ Context context;
     		else
     		{ select ="valable";
                 CheckBloc.setSelected(false);}
-    	
+    	user.setNb("0");
     		user.setStatut(select);
     		proxy.update(user);
     		afficher();
@@ -540,8 +551,17 @@ labrole.setText(p7);
     		ColEmail.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
     		ColStatut.setCellValueFactory(new PropertyValueFactory<User, String>("statut"));
     	ColLogin.setCellValueFactory(new PropertyValueFactory<User, String>("login"));
-        ColNum.setCellValueFactory(new PropertyValueFactory<User, String>("numtel"));
-    		
+        //ColNum.setCellValueFactory(new PropertyValueFactory<User, String>("numtel"));
+     
+        ColNum.setCellValueFactory(new Callback<CellDataFeatures<User,String>,ObservableValue<String>>(){
+
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+                return new SimpleStringProperty(param.getValue().getNumtel());
+            }
+        }); 
+        
+        
     	        List<User> list = proxy.findAll();
     	        ObservableList<User> items = FXCollections.observableArrayList(list);
     	        tableau.setItems(items);}
@@ -598,7 +618,15 @@ labrole.setText(p7);
     		ColEmail.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
     		ColStatut.setCellValueFactory(new PropertyValueFactory<User, String>("statut"));
     	ColLogin.setCellValueFactory(new PropertyValueFactory<User, String>("login"));
-        ColNum.setCellValueFactory(new PropertyValueFactory<User, String>("numtel"));
+     //  ColNum.setCellValueFactory(new PropertyValueFactory<User, String>("numtel"));
+       ColNum.setCellValueFactory(new Callback<CellDataFeatures<User,String>,ObservableValue<String>>(){
+
+           @Override
+           public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+               return new SimpleStringProperty(param.getValue().getNumtel());
+           }
+       }); 
+	    
         
         
         List<User> list=new ArrayList<>();
@@ -656,7 +684,7 @@ labrole.setText(p7);
     }
 
     @FXML
-    private void OnBrowserAction(ActionEvent event) throws MalformedURLException {
+    private void OnBrowserAction(ActionEvent event) throws FileNotFoundException, IOException {
     	
     	String path_img;
         FileChooser fileChooser = new FileChooser();
@@ -667,8 +695,11 @@ labrole.setText(p7);
         File selectedFile = fileChooser.showOpenDialog(fileSelected.getScene().getWindow());
 
         if (selectedFile != null) {
-
+            Upload u = new Upload();
+            u.upload(selectedFile);
             imageFile = selectedFile.toURI().toURL().toString();
+            
+      
         	path_img = selectedFile.getName();
 			ss.setText(path_img);
             Image image = new Image(imageFile);
@@ -692,7 +723,22 @@ labrole.setText(p7);
  	    dev.setVisible(true);
     	
     }
-    
+
+    private void OnBrowser11Action(ActionEvent event) throws FileNotFoundException, IOException {
+    	  FileChooser fileChooser = new FileChooser();
+          fileChooser.setTitle("Open Resource File");
+          fileChooser.getExtensionFilters().addAll(
+          new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+
+          File selectedFile = fileChooser.showOpenDialog(null);
+
+          if (selectedFile != null) {
+             
+             Upload u = new Upload();
+             u.upload(selectedFile);
+             broser2.setText(selectedFile.getName());
+    }
+    }
     
    
 }

@@ -15,13 +15,13 @@ public class TestChargingStation {
 		ChargingStationServiceRemote proxy = (ChargingStationServiceRemote) context.lookup(jndiName);
 		ChargingStation ch = new ChargingStation();
 		
-		ch.setCode(10);
+		ch.setCode(5);
 		
-//
-//	
-//		proxy.addChargingStation(2, 2, ch);
+
+	
+//		proxy.addChargingStation(1, 1, ch);
 //		System.out.println("created");
-//		
+		
 //		
 //		
 //		
@@ -29,8 +29,9 @@ public class TestChargingStation {
 //		System.out.println(chs.getCode());
 ////		
 //		
-//		proxy.updateChargingStation(2,2,ch);
-//		System.out.println("modified");
+		proxy.updateChargingStation(2,2,ch);
+		System.out.println("modified");
+		
 		
 		
 		//proxy.deleteChargingStation(1, 2);

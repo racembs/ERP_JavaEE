@@ -67,6 +67,7 @@
                                     <Button fx:id="SubmitUpdate" layoutX="908.0" layoutY="253.0" mnemonicParsing="false" onAction="#SubmitUpdate" prefHeight="30.0" prefWidth="77.0" text="Submit" />
                                     <Button fx:id="CancelUpdate" layoutX="1001.0" layoutY="253.0" mnemonicParsing="false" onAction="#CancelUpdateAction" prefHeight="30.0" prefWidth="78.0" text="Cancel" />
                                     <Button fx:id="Remove" layoutX="381.0" layoutY="141.0" mnemonicParsing="false" onAction="#RemoveItem" prefHeight="30.0" prefWidth="98.0" text="&lt;&lt;Remove" />
+                                    <Button fx:id="back" layoutY="-1.0" mnemonicParsing="false" text="&lt;back" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="313.0" prefWidth="1200.0">

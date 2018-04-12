@@ -12,6 +12,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 
 import java.io.File;
@@ -23,20 +24,33 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.mail.MessagingException;
+import javax.management.Notification;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.sound.midi.Soundbank;
 
+import org.controlsfx.control.Notifications;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
@@ -47,10 +61,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.MvtApprov;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
@@ -79,7 +96,7 @@ public class MgasinierGPAOController implements Initializable {
     @FXML
     private TableColumn<MvtApprov,String> tQuantity;
     @FXML
-    private TableColumn<MvtApprov,String> tAlarmDate;
+    private TableColumn<MvtApprov,Date> tAlarmDate;
     @FXML
     private TableColumn<MvtApprov,String> tRequestDate;
     @FXML
@@ -92,6 +109,12 @@ public class MgasinierGPAOController implements Initializable {
     private DatePicker receptionDate;
     @FXML
     private MenuItem generatePdf;
+    @FXML
+    private JFXCheckBox checkBoxNotif;
+    
+    
+    private static int number;
+    private static boolean notif;
     
     
 
@@ -101,41 +124,112 @@ public class MgasinierGPAOController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        try {
-		fillTableAllOrdres("all");
+    	number=0;
 		AuoOrderCreation();
+		fillTableAllOrdres();
+		String jndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/MvtApprovService!tn.esprit.b4.esprit1718b4eventmanagement.services.MvtApprovServiceRemote";
+		Context context1 = new InitialContext();
+		MvtApprovServiceRemote OrdreProxy = (MvtApprovServiceRemote) context1.lookup(jndiName);
+		number=OrdreProxy.getAllOrders().size();
+		Timeline timeLine = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
+
+		    @Override
+		    public void handle(ActionEvent event) {
+		        
+		    	try {
+		    		
+		    		String jndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/MvtApprovService!tn.esprit.b4.esprit1718b4eventmanagement.services.MvtApprovServiceRemote";
+		    		Context context1 = new InitialContext();
+		    		MvtApprovServiceRemote OrdreProxy = (MvtApprovServiceRemote) context1.lookup(jndiName);
+					AuoOrderCreation();
+					
+					if(OrdreProxy.getAllOrders().size()>number) {
+						number=OrdreProxy.getAllOrders().size();
+						showNotification();
+					}
+				} catch (NamingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    	
+		    }
+		}));
 		
+		timeLine.setCycleCount(timeLine.INDEFINITE);
+		timeLine.play();
 		
+
 	} catch (NamingException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	}
-    }    
-public void fillTableAllOrdres(String code) throws NamingException {
+	} 
+    }   
+    
+    
+   @FXML
+   public void OnRefreshBtnAction(ActionEvent event) throws NamingException {
+	   fillTableAllOrdres();
+	   BtnConfirmOrder.setDisable(true);
+	   receptionDate.setDisable(true);
+   }
+   
+   
+    public void showNotification() {
+    	receptionDate.setDisable(false);
+    	BtnConfirmOrder.setDisable(false);
+    	Image image=new Image("views/image/verified1.png");
+    	Notifications notification=Notifications.create().title("New GPAO Notification")
+    			.text("You have receive new order")
+    			.graphic(null)
+    			.position(Pos.BOTTOM_RIGHT)
+    			.hideAfter(Duration.seconds(10000))
+    			.darkStyle()
+    			.graphic(new ImageView(image));
+    			
+    	
+	
+    	notification.show();
+   
+    }
+    
+    
+    
+    
+    
+public void fillTableAllOrdres() throws NamingException {
 
 	String jndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/MvtApprovService!tn.esprit.b4.esprit1718b4eventmanagement.services.MvtApprovServiceRemote";
 	Context context1 = new InitialContext();
 	MvtApprovServiceRemote OrdreProxy = (MvtApprovServiceRemote) context1.lookup(jndiName);
 	
-	  tArticle.setCellFactory(column -> {
-  	    return new TableCell<MvtApprov, String>() {
+	  /*tAlarmDate.setCellFactory(column -> {
+  	    return new TableCell<MvtApprov, Date>() {
   	        @Override
-  	        protected void updateItem(String item, boolean empty) {
+  	        protected void updateItem(Date item, boolean empty) {
   	            super.updateItem(item, empty);
 
   	            if (item == null || empty) {
   	                setText(null);
   	                setStyle("");
   	            } else {
-  	            
-  	            	setText(item);
-  	            	//setTextFill(Color.WHITE);
-  	               // setStyle("-fx-font-weight: bold");
+  	            	
+  	          
+  	          Date currentDate =java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
+  	          if(item.compareTo(currentDate)<=0) {
+  	        	setText(item.toString());
+  	        	
+  	          }else {
+  	        	setText(item.toString());
+  	          }
+  	        
+  	            	//setTextFill(Color.RED);
+  	               //setStyle("-fx-font-weight: bold");
   	                    
   	               
   	            }
   	        }
   	    };
-  	});
+  	});*/
 	
 	 tArticle.setCellValueFactory(new Callback<CellDataFeatures<MvtApprov,String>,ObservableValue<String>>(){
 
@@ -152,14 +246,9 @@ public void fillTableAllOrdres(String code) throws NamingException {
    
 
  	ObservableList<MvtApprov> ObsListOrders;
-	if(code.equals("all")) {
+	
 		ObsListOrders = FXCollections.observableArrayList(OrdreProxy.getAllOrders());
-	}
-	else {
-		ObsListOrders = FXCollections.observableArrayList(OrdreProxy.getAllOrders());
-		//ObsListOrders = FXCollections.observableArrayList(OrdreProxy.getOrderByArticle(Integer.valueOf(code)));
-		System.out.println(OrdreProxy.getOrderByArticle(Integer.valueOf(code)).getQuantity());
-	}
+	
 	
 	tableAllOrders.setItems(ObsListOrders);
 	tableAllOrders.refresh();
@@ -168,17 +257,27 @@ public void fillTableAllOrdres(String code) throws NamingException {
 
 	
 }
- 
+
+@FXML
+private void OnCheckBoxNotifClicked(ActionEvent actionEvent) throws InterruptedException, NamingException {
+
+		
+		
+		
+		
+		
+	
+	
+
+}
+
+
+
 
 
     @FXML
     private void SearchOrdreFromTableAction(KeyEvent event) throws NamingException {
-    //txtSearchOrder.getText());
-    	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
-		Context context = new InitialContext();
-		ArticleServiceRemote ArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
-		Article article =ArticleProxy.findArticleByCode(txtSearchOrder.getText()).get(0);
-		fillTableAllOrdres(String.valueOf(article.getId()));
+    
     }
 
     @FXML
@@ -201,34 +300,46 @@ public void fillTableAllOrdres(String code) throws NamingException {
     	
     	
     	for(int i=0;i<articles.size();i++) {
+    		if(articles.get(i).getType().equals("Matiére-Premiére")) {
+    		
+    		
     	int joursRestant=articles.get(i).getQuantity()/articles.get(i).getDailyConsumption();
     	 
-    	
+
     	Date dateT=java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
+    	Date AlarmDate=java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
+    	
     	Date currentDate =java.sql.Date.valueOf(LocalDateTime.now().toLocalDate());
 
 
     	int day= dateT.getDate();
-
+    	
+    	
     	dateT.setDate(day+joursRestant-articles.get(i).getDeliveryTime());
+    	AlarmDate.setDate(day+joursRestant+1);
+    	
+    	
     	if(dateT.compareTo(currentDate)<=0 && articles.get(i).getEtatOrdre()==0) {
-    		MvtApprov mvtApprov=new MvtApprov(articles.get(i),null,articles.get(i).getPricipalQuantity()-articles.get(i).getQuantity(),null,dateT,null);
+    	
+    		MvtApprov mvtApprov=new MvtApprov(articles.get(i),null,articles.get(i).getPricipalQuantity()-articles.get(i).getQuantity(),AlarmDate,dateT,null);
     		OrdreProxy.addMvtApprov(mvtApprov);
     		articles.get(i).setEtatOrdre(1);
     		aArticleProxy.updateArticle(articles.get(i));
     	}
     	
     	
-    	
+    		}
     	
     	}
     }
     @FXML
-    private void OnConfirmOrderClicked(ActionEvent event) {
+    private void OnConfirmOrderClicked(ActionEvent event) throws InterruptedException {
+    	
     	receptionDate.setDisable(false);
     	BtnConfirmOrder.setDisable(false);
-    	receptionDate.setOpacity(1);
-    	BtnConfirmOrder.setOpacity(1);
+    
+  	
+    	
     }
     
     @FXML
@@ -280,7 +391,7 @@ public void fillTableAllOrdres(String code) throws NamingException {
    	 
     java.util.Date CurrentDate=new java.util.Date();
     
-	 if(RecptionTypeDate.compareTo(CurrentDate)>=0) {
+	 if(CurrentDate.compareTo(RecptionTypeDate)>=0) {
 		 alert.setTitle("Wrong Date");
          alert.setHeaderText("Reception Date is wrong");
         alert.showAndWait();
@@ -288,12 +399,10 @@ public void fillTableAllOrdres(String code) throws NamingException {
 			mvtApprov.setReceptionDate(RecptionTypeDate);
 	    	
 	    	OrdreProxy.updateMvtApprov(mvtApprov);
-	    	fillTableAllOrdres("all");
+	    	fillTableAllOrdres();
 	    	receptionDate.setDisable(true);
 	    	BtnConfirmOrder.setDisable(true);
 	    	receptionDate.setValue(null);
-	    	receptionDate.setOpacity(0.5);
-	    	BtnConfirmOrder.setOpacity(0.5);
 	    	aArticleProxy.incrementArticleQuantity(mvtApprov.getArticle().getId(), mvtApprov.getQuantity());
 	 }
     	}
@@ -309,7 +418,7 @@ PdfWriter.getInstance(document, new FileOutputStream(path));
 document.open();
 
 document.add(new Paragraph("\n--------------------  Product Request  --------------------------\n\n"
-    + " Article Code :"+order.getArticle().getArticleCode()
+    + " Article Code :"+order.getArticle().getUnitCode()
     + "\n Quantity needed  : "+order.getQuantity()
     +"\n Company : SpotLight GPAO"
     + "\n\n\n"
@@ -330,6 +439,7 @@ alert.show();
 
 
 }
+   
 
     
 }

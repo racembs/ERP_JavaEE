@@ -305,15 +305,25 @@ public class MRPCalculationController implements Initializable {
 
         	Optional<ButtonType> result = alert.showAndWait();
         	if (result.get() == ButtonType.OK){
-        		map=proxyNeededItem.SaveNeedItemTree(map);
-        		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
-        		LocalDate localDate = date.getValue();
-        		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-        		Date startDate = Date.from(instant);
-        		Calendar calendar = Calendar.getInstance();
-        		calendar.setTime(startDate);
-        		calendar.setTimeInMillis(calendar.getTimeInMillis()+28800000);
-        		proxyManufacturing.ReadyManufacturingPlanning(map, calendar.getTime());
+        		if(AbsoluteParent.getNetNeed()==0){
+        			proxyManufacturing.updateIfOneNeededItem(AbsoluteParent);
+        		} else {
+//        			map=proxyNeededItem.SaveNeedItemTree(map);
+        			map = proxyNeededItem.InitialiseMap();
+        			AbsoluteParent.setId(proxyNeededItem.SaveParentNeedItemTree(AbsoluteParent));
+        			map=proxyNeededItem.CreateANDSaveNeedItemTree(AbsoluteParent);
+        			map=proxyNeededItem.SetPurchaseDeliveryDate(map);
+            		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
+            		LocalDate localDate = date.getValue();
+            		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+            		Date startDate = Date.from(instant);
+            		Calendar calendar = Calendar.getInstance();
+            		calendar.setTime(startDate);
+            		calendar.setTimeInMillis(calendar.getTimeInMillis()+28800000);
+            		proxyManufacturing.ReadyManufacturingPlanning(map, calendar.getTime());
+            		proxyManufacturing.AfterDeliveryManufacturingPlanning(proxyNeededItem.findNeededItemTreeByOrdredItem(AbsoluteParent));
+        		}
+        		
         		Make.setVisible(false);
         		date.setVisible(false);
         		Cancel.setText("Exit");
