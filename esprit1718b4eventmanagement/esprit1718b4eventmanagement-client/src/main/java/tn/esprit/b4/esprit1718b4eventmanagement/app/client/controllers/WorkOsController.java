@@ -6,6 +6,10 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ContextMenu;
@@ -32,8 +36,11 @@ import javafx.event.EventHandler;
 import javafx.event.*;
 import javafx.scene.control.cell.*;
 import javafx.scene.text.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -62,6 +69,7 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 
+import javax.mail.MessagingException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
@@ -86,6 +94,7 @@ import javafx.scene.control.TreeItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ArboPereFis;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Arboresence;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.MvtApprov;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.PreventiveWork;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
@@ -401,6 +410,8 @@ progLab.setText(str2);
 		    			{
 		    				start.setVisible(false);
 		    				done.setVisible(true);
+		    				eya1.setVisible(true);
+		    		    	eya2.setVisible(true);
 		    			}
 		    			else {
 		    			if(newValue.getOrderstate().equals("done"))
@@ -408,6 +419,8 @@ progLab.setText(str2);
 		    				start.setVisible(false);
 		    				done.setVisible(false);
 		    				delete.setVisible(true);
+		    				eya1.setVisible(false);
+		    		    	eya2.setVisible(false);
 		    			}
 		    			else{
 		    				start.setVisible(true);
@@ -937,6 +950,7 @@ if(LoginController.user.getPost().equals("technician"))
  		alert.setHeaderText("Selected work order state set to Start");
  		alert.showAndWait();
     	//l'affichage de l interface booking
+ 		start.setVisible(false);
     	
     }
     @FXML
@@ -944,10 +958,16 @@ if(LoginController.user.getPost().equals("technician"))
     	
     	Context context;
     	context = new InitialContext();
-    	
+
+    	Context contexthhh;
+    	contexthhh = new InitialContext();
+    	UserServiceRemote userService222;
     String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
     	
     	WorksUsServiceRemote proxy=(WorksUsServiceRemote) context.lookup(jndiName);
+
+		userService222 = (UserServiceRemote) contexthhh.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
+ 	  	 User u=userService222.find(work.getTechnicianId());
     	 System.out.println(work.getDescription());
     	work.setOrderstate("done");
     	work.setEndDate(new Date());
@@ -957,7 +977,27 @@ if(LoginController.user.getPost().equals("technician"))
  		alert.setHeaderText("Selected work order state set to done! keep the good work ;) ");
  		alert.showAndWait();
     	//l'affichage de l interface booking
-    	
+ 		done.setVisible(false);	
+ 		  FileChooser fileChooser = new FileChooser();
+          fileChooser.setTitle("Save Copy of Report");
+          fileChooser.setInitialDirectory(
+                  new File(System.getProperty("user.home"))
+          );
+          fileChooser.setInitialFileName("Report"+work.getObjet()+new Date()+".pdf");
+          FileChooser.ExtensionFilter pdfExtensionFilter =
+                  new FileChooser.ExtensionFilter(
+                          "PDF - Portable Document Format (.pdf)", "*.pdf");
+          fileChooser.getExtensionFilters().add(pdfExtensionFilter);
+          fileChooser.setSelectedExtensionFilter(pdfExtensionFilter);
+          File file = fileChooser.showSaveDialog(done.getContextMenu());
+
+          if (file != null) {
+              try {
+            	  genereteReportPdf(work,u,file.getPath());
+              } catch (Exception e) {
+                  e.printStackTrace();
+              }
+          }
     }
     @FXML
     private void onclickDelete(ActionEvent event) throws NamingException {
@@ -1525,6 +1565,37 @@ if(LoginController.user.getPost().equals("technician"))
         demo.pack();
         RefineryUtilities.centerFrameOnScreen(demo);
         demo.setVisible(true);
-    }   
+    }  
+    private void genereteReportPdf(UsualWork order,User u ,String path) throws IOException, DocumentException, MessagingException {
+    	Document document = new Document();
+
+PdfWriter.getInstance(document, new FileOutputStream(path));
+
+document.open();
+
+document.add(new Paragraph("\n--------------------  work rapport  --------------------------\n\n"
+    + " object :"+order.getObjet()
+    + "\n Add.Informations  : "+order.getDescription()
+    + "\n equipment  : "+order.getEquipement().getSerialNum()+"--"+order.getEquipement().getFabriquant()
+    +"\n Company : SpotLight CMMS"
+    + "\n\n\n"
+    + "\n Date :"+new java.util.Date()+"\n\n"
+    + " Cordially "
+));
+
+document.addTitle("title");
+document.close();
+
+
+
+Alert alert = new Alert(Alert.AlertType.INFORMATION);
+alert.setTitle("information");
+alert.setHeaderText(null);
+alert.setContentText("The report is successfully generated");
+alert.show();
+
+
+}
+   
 
 }
