@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXProgressBar?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="307.0" prefWidth="338.0" styleClass="blue-label" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.NewController">
+   <children>
+      <GridPane prefHeight="225.0" prefWidth="338.0" styleClass="card">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="106.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="321.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label fx:id="l12" text="Selected equipment" visible="false" />
+            <JFXTextField fx:id="fx4" prefHeight="20.0" prefWidth="258.0" styleClass="yellow-label" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <JFXTextField fx:id="fx1" prefHeight="20.0" prefWidth="300.0" styleClass="yellow-label" stylesheets="@styles.css" text="" GridPane.columnIndex="1" />
+            <JFXTextField fx:id="fx2" prefHeight="20.0" prefWidth="300.0" styleClass="yellow-label" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="fx3" prefHeight="20.0" prefWidth="300.0" styleClass="yellow-label" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <JFXDatePicker fx:id="fx5" prefHeight="20.0" prefWidth="300.0" styleClass="yellow-label"  GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Spinner fx:id="fx6" initialValue="3" max="100" min="0" prefHeight="30.0" prefWidth="85.0">
+            	
+                                             <effect>
+                                                <Glow />
+                                             </effect>
+                                          </Spinner>
+                </children>
+      </GridPane>
+      <JFXButton onAction="#onclickSave" fx:id="savepop" layoutX="119.0" layoutY="247.0" styleClass="green-btn" text="Save" />
+   </children>
+</AnchorPane>

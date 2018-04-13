@@ -7,6 +7,7 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 
 
 import com.jfoenix.controls.JFXButton;
+import javafx.event.ActionEvent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -16,7 +17,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
+import javafx.scene.input.KeyEvent;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
@@ -28,12 +29,14 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.*;
 import javafx.scene.control.cell.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -65,6 +68,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.script.Bindings;
 
+import org.controlsfx.control.PopOver;
+import org.jfree.ui.RefineryUtilities;
+
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -74,6 +80,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TreeItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ArboPereFis;
@@ -92,17 +99,43 @@ import tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Shape;
 import javafx.scene.control.Tooltip;
+import java.util.Arrays;
+
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.DateAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.GanttChart.ExtraData;
+import tn.esprit.b4.esprit1718b4eventmanagement.app.client.gui.GanttChart;
+import com.jfoenix.controls.JFXProgressBar;
 /**
  * FXML Controller class
  *
  * @author ADMIN
  */
 public class WorkOsController implements Initializable {
-
+	  @FXML
+	    private JFXProgressBar allworksPG;
+	    @FXML
+	    private Label labAllworks;
+	    @FXML
+	    private JFXProgressBar doneworksPG;
+	    @FXML
+	    private Label donelab;
+	    @FXML
+	    private JFXProgressBar progworksPG;
+	    @FXML
+	    private Label progLab;
     @FXML
     private JFXTreeView<String> treeviewEq;
     @FXML
     private Tab tabD;
+    @FXML
+    private Tab prevtab;
     @FXML
     private TableView<UsualWork> table;
     @FXML
@@ -124,23 +157,27 @@ public class WorkOsController implements Initializable {
     @FXML
     private TableColumn<UsualWork, String> C9;
     @FXML
-    private TableColumn<PreventiveWork, String> C11;
+    private TableColumn<PreventiveWork, String> d1;
     @FXML
-    private TableColumn<PreventiveWork, String> C21;
+    private TableColumn<PreventiveWork, String> d2;
     @FXML
-    private TableColumn<PreventiveWork, String> C31;
+    private TableColumn<PreventiveWork, String> d3;
     @FXML
-    private TableColumn<PreventiveWork, String> C41;
+    private TableColumn<PreventiveWork, String> d4;
     @FXML
-    private TableColumn<PreventiveWork, String> C51;
+    private TableColumn<PreventiveWork, String> d5;
     @FXML
-    private TableColumn<PreventiveWork, String> C61;
+    private TableColumn<PreventiveWork, String> d6;
     @FXML
-    private TableColumn<PreventiveWork, String> C71;
+    private TableColumn<PreventiveWork, String> d7;
     @FXML
-    private TableColumn<PreventiveWork, String> C81;
+    private TableColumn<PreventiveWork, String> d8;
     @FXML
-    private TableColumn<PreventiveWork, String> C91;
+    private TableColumn<PreventiveWork, String> d9;
+    @FXML
+    private TableColumn<PreventiveWork, String> d10;
+    @FXML
+    private TableColumn<PreventiveWork, String> d11;
     @FXML
     private JFXTextField f1;
     @FXML
@@ -167,6 +204,8 @@ public class WorkOsController implements Initializable {
     @FXML
     private JFXTextField object;
     @FXML
+    private JFXTextField search;
+    @FXML
     private JFXTextArea info;
     @FXML
     private JFXComboBox<String> combotech;
@@ -182,19 +221,45 @@ public class WorkOsController implements Initializable {
     private TableView<?> tableviewsearch;
     @FXML
     private TableView<PreventiveWork> tableview1;
-    @FXML
-    private JFXButton search;
+ 
     @FXML
     private JFXButton save;
     @FXML
     private JFXButton eya1;
     @FXML
     private JFXButton eya2;
+    @FXML
+    private TableColumn<PreventiveWork, String> p1;
+    @FXML
+    private TableColumn<PreventiveWork, String> p2;
+    @FXML
+    private TableColumn<PreventiveWork, String> p3;
+    @FXML
+    private TableColumn<PreventiveWork, String> p4;
+    @FXML
+    private TableColumn<PreventiveWork, String> p5;
+    @FXML
+    private TableColumn<PreventiveWork, String> p6;
+    @FXML
+    private TableColumn<PreventiveWork, String> p7;
+    @FXML
+    private TableColumn<PreventiveWork, String> p8;
+    @FXML
+    private TableColumn<PreventiveWork, String> p9;
+    @FXML
+    private TableColumn<PreventiveWork, String> p10;
+    @FXML
+    private TableColumn<PreventiveWork, String> p11;
+    @FXML
+    private TableColumn<PreventiveWork, String> p12;
     static PreventiveWork workp;
     static UsualWork work;
     static PreventiveWork xxx2=new PreventiveWork();
+    static PreventiveWork newprev;
     @FXML
-    private TableView<?> tableview;
+    private TableView<PreventiveWork> prevtable;
+    @FXML
+    private JFXButton ganttbtn;
     /**
      * Initializes the controller class.
      */
@@ -202,7 +267,17 @@ public class WorkOsController implements Initializable {
 	@Override
     public void initialize(URL url, ResourceBundle rb) {
     	
-		
+
+    	User user = LoginController.user;
+    	if (user.getPost().equals("technician"))
+    	{
+    		prevtab.setDisable(true);
+    	}
+    	else
+    	{
+    		tableview1.setVisible(false);
+    	}
+
     	combotech.getItems().addAll("Mechanical","Electrical ","hydraulic"
     	        ,"unspecified");
 
@@ -238,15 +313,16 @@ public class WorkOsController implements Initializable {
 		table.setEditable(true);
  	//UserServiceRemote userService2;
   	 // l1.setVisible(false);
+		
 		try {
-			
+			DETAILSPrev();
 			DETAILSP();
 			Context contextkk;
 				 contextkk = new InitialContext();
 			 //String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
 			 WorksUsServiceRemote proxykk=(WorksUsServiceRemote) contextkk.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote");
 		
-	
+			 		///////////////////////////
 		    		C1.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("objet"));
 		    		C2.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("description"));
 		    		C3.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("technology"));
@@ -287,7 +363,8 @@ table.setTooltip(tooltip_userName);
 // Or using Tooltip.install
 Tooltip.install(table, tooltip_userName);
 
-		    		if(LoginController.user.getPost().equals("technician"))
+		    		
+if(LoginController.user.getPost().equals("technician"))
 		    		{
 		    			 List<UsualWork> list = proxykk.displayWObyTech(LoginController.user.getId());
 		    			 ObservableList<UsualWork> items = FXCollections.observableArrayList(list);
@@ -303,16 +380,29 @@ Tooltip.install(table, tooltip_userName);
 		    	     System.out.println(items.get(0).getDescription()+"tableauuuuuu");
 		    	    
 		    	     }
-	    	       
-	    	
+List<UsualWork> listprog = proxykk.displayWO();
+List<UsualWork> listdone = proxykk.displayDone();
+List<UsualWork> liststart = proxykk.displayStart();
+allworksPG.setProgress(listprog.size());
+String str = Integer.toString(listprog.size());
+labAllworks.setText(str);
+String str1 = Integer.toString(listdone.size());
+String str2 = Integer.toString(liststart.size());
+doneworksPG.setProgress(listdone.size()/listprog.size());
+donelab.setText(str1);
+progworksPG.setProgress(liststart.size()/listprog.size());
+progLab.setText(str2);
+
 		    		table.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
-		    			
+		    			if (user.getPost().equals("technician"))
+		    	    	{
 		    			//pane.setVisible(true);
 		    			if(newValue.getOrderstate().equals("start"))
 		    			{
 		    				start.setVisible(false);
 		    				done.setVisible(true);
 		    			}
+		    			else {
 		    			if(newValue.getOrderstate().equals("done"))
 		    			{
 		    				start.setVisible(false);
@@ -327,7 +417,7 @@ Tooltip.install(table, tooltip_userName);
 		    				eya2.setVisible(true);
 		    				
 		    			}
-		    				
+		    			}}
 		    			work=newValue;
 		    		}));
 		    		
@@ -457,9 +547,292 @@ Tooltip.install(table, tooltip_userName);
 			e.printStackTrace();
 		}
 	
+tabD.setOnSelectionChanged(new EventHandler<Event>() {
+			
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				if(tabD.isSelected())
+				{
+					inittt();
+					System.out.println("taaaaaaaaaab" );	
+					
+				}
+				
+			}
+		});
 
 	
     }   
+    private void inittt() {
+    	User user = LoginController.user;
+    	if (user.getPost().equals("technician"))
+    	{
+    		prevtab.setDisable(true);
+    	}
+    	else
+    	{
+    		tableview1.setVisible(false);
+    	}
+
+    	combotech.getItems().addAll("Mechanical","Electrical ","hydraulic"
+    	        ,"unspecified");
+
+
+    	 Image icon = new Image (
+    			   getClass().getResourceAsStream("/views/imgs/equi.png"));
+    		
+  				TreeItem<String> equii =  new TreeItem<>("Entreprise", new ImageView(icon));
+    			  equii.setExpanded(true);
+    	delete.setVisible(false);
+    	done.setVisible(false);
+    	start.setVisible(false);
+    	eya1.setVisible(false);
+    	eya2.setVisible(false);
+ 	 Image icon2 = new Image (
+			   getClass().getResourceAsStream("/views/imgs/rsz_1rsz_trash-bin-open.png"));
+		delete.setGraphic(new ImageView(icon2));
+		done.setStyle(
+                "-fx-background-radius: 5em; " +
+                "-fx-min-width: 80px; " +
+                "-fx-min-height: 80px; " +
+                "-fx-max-width: 80px; " +
+                "-fx-max-height: 80px;"
+        );
+		start.setStyle(
+				
+                "-fx-background-radius: 5em; " +
+                "-fx-min-width: 80px; " +
+                "-fx-min-height: 80px; " +
+                "-fx-max-width: 80px; " +
+                "-fx-max-height: 80px;"
+        );
+		table.setEditable(true);
+ 	//UserServiceRemote userService2;
+  	 // l1.setVisible(false);
+		
+		try {
+			DETAILSPrev();
+			DETAILSP();
+			Context contextkk;
+				 contextkk = new InitialContext();
+			 //String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
+			 WorksUsServiceRemote proxykk=(WorksUsServiceRemote) contextkk.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote");
+		
+	
+		    		C1.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("objet"));
+		    		C2.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("description"));
+		    		C3.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("technology"));
+		    		C4.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("orderstate"));
+		    		C5.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("emmergency"));
+				    C6.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("WODate"));
+				    C8.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("endDate"));
+				    C9.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("startDate"));
+				    C7.setCellValueFactory(new Callback<CellDataFeatures<UsualWork,String>,ObservableValue<String>>(){
+
+			              @Override
+			              public ObservableValue<String> call(CellDataFeatures<UsualWork, String> param) {
+			                  return new SimpleStringProperty(param.getValue().getEquipement().getSerialNum()+"--"+param.getValue().getEquipement().getDescription());
+			              }
+			          }); 
+				    
+				      
+			
+				        table.setRowFactory(tv -> new TableRow<UsualWork>() {
+				            @Override
+				            public void updateItem(UsualWork item, boolean empty) {
+				                super.updateItem(item, empty) ;
+				                if (item == null) {
+				                    setStyle("");
+				                } else if (item.getId()==1) {
+				                    setStyle("");
+				                } else {
+				                    setStyle("");
+				                }
+				            }
+				        });
+
+Tooltip tooltip_userName=new Tooltip("Work orders table");
+ 
+// Set tooltip
+table.setTooltip(tooltip_userName);
+ 
+// Or using Tooltip.install
+Tooltip.install(table, tooltip_userName);
+
+		    		
+if(LoginController.user.getPost().equals("technician"))
+		    		{
+		    			 List<UsualWork> list = proxykk.displayWObyTech(LoginController.user.getId());
+		    			 ObservableList<UsualWork> items = FXCollections.observableArrayList(list);
+		    		
+		    			 
+		    			 table.setItems(items);
+		    		     System.out.println(items.get(0).getDescription()+"tableauuuuuu1");
+		    		}
+		    		else
+		    		{ List<UsualWork> list = proxykk.displayWO();
+		    		 ObservableList<UsualWork> items = FXCollections.observableArrayList(list);
+		    		 table.setItems(items);
+		    	     System.out.println(items.get(0).getDescription()+"tableauuuuuu");
+		    	    
+		    	     }
+	    	       
+	    	
+		    		table.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+		    			if (user.getPost().equals("technician"))
+		    	    	{
+		    			//pane.setVisible(true);
+		    			if(newValue.getOrderstate().equals("start"))
+		    			{
+		    				start.setVisible(false);
+		    				done.setVisible(true);
+		    			}
+		    			else {
+		    			if(newValue.getOrderstate().equals("done"))
+		    			{
+		    				start.setVisible(false);
+		    				done.setVisible(false);
+		    				delete.setVisible(true);
+		    			}
+		    			else{
+		    				start.setVisible(true);
+		    				done.setVisible(false);
+		    				delete.setVisible(false);
+		    				eya1.setVisible(true);
+		    				eya2.setVisible(true);
+		    				
+		    			}
+		    			}}
+		    			work=newValue;
+		    		}));
+		    		
+		    		table.getSelectionModel().setCellSelectionEnabled(true);
+		    		ObservableList selectedCells = table.getSelectionModel().getSelectedCells();
+		    		selectedCells.addListener(new ListChangeListener() {
+		    		    @Override
+		    		    public void onChanged(Change c) {
+		    		    	TablePosition<UsualWork, String> tablePosition = (TablePosition) selectedCells.get(0);
+		    		    	int row = tablePosition.getRow();
+		    		    	work=table.getItems().get(row);
+		    		    	 if(tablePosition.getTableColumn().getText().equals("Equipment(Ref--Info)"))
+		    		        {showdetails(table.getItems().get(row).getEquipement());
+		    		    		 Object val = tablePosition.getTableColumn().getCellData(tablePosition.getRow());
+		    		      l12.setVisible(true);
+		    		        System.out.println("Selected Value" + val);
+		    		        
+		    		        }
+
+		    		    }
+		    		});  
+			Context context;
+			context = new InitialContext();
+	    	UserServiceRemote userService2 = (UserServiceRemote) context
+					.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
+
+			
+			List<String>lun = new ArrayList<>();
+			for(int i=0;i<userService2.findAll().size();i++)
+			{
+			lun.add(userService2.findAll().get(i).getFirstname()+" "+userService2.findAll().get(i).getLastname());
+			}
+			ObservableList<String> obList = FXCollections.observableList(lun);
+			
+			techniciancombo.getItems().addAll(obList);
+			String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
+	     	Context context1;
+		
+				context1 = new InitialContext();
+
+		     	ArboresenceServiceRemote Proxy = (ArboresenceServiceRemote) context1.lookup(jndiName2);
+		    	
+	  		 	List<Arboresence> list1 = Proxy.getPereArbo("Principale") ;
+	  		 //	for(int i=0;i<list1.size();i++)
+	  		 		for (Arboresence l1: list1)
+	  		 	{
+	  		 	 TreeItem<String> node = new TreeItem<>(l1.getName(), new ImageView(icon));
+	  		 	 equii.getChildren().add(node);
+	  		 	List<ArboPereFis> list= Proxy.getFilsArbo(l1.getId());
+	  	
+	  		 		for (ArboPereFis l: list)
+	  		 	{
+	  		 	 TreeItem<String> nodej = new TreeItem<>(l.getArboFils().getName(), new ImageView(icon));
+	  		 	 node.setExpanded(true);
+	  		 	 node.getChildren().add(nodej);
+	  		  
+	  		 	List<ArboPereFis> listj= Proxy.getFilsArbo(l.getArboFils().getId());
+	  			for (ArboPereFis uj: listj)
+	  		 	{
+	  		 	TreeItem<String> nodek = new TreeItem<>(uj.getArboFils().getName(), new ImageView(icon));
+	  		 	 nodej.setExpanded(true);
+	  		 	 nodej.getChildren().add(nodek);
+	  			List<ArboPereFis> listk= Proxy.getFilsArbo(uj.getArboFils().getId());
+	  			for (ArboPereFis u: listk)
+	  		 	{
+	  		 	TreeItem<String> nodem= new TreeItem<>(u.getArboFils().getName(), new ImageView(icon));
+	  		 	 nodek.setExpanded(true);
+	  		 	 nodek.getChildren().add(nodem);
+	  		 	List<ArboPereFis> listeq= Proxy.getFilsArbo(u.getArboFils().getId());
+	  			for (ArboPereFis ueq: listeq)
+	  		 	{
+	  		 	TreeItem<String> nodeq= new TreeItem<>(ueq.getArboFils().getName(), new ImageView(icon));
+	  		 	 nodem.setExpanded(true);
+	  		 	 nodem.getChildren().add(nodeq);
+	  		 	List<Equipment> eq= Proxy.DisplayEquipmentbyarbo(ueq.getArboFils());
+	  			for (Equipment q: eq)
+	  		 	{
+	  			 	System.out.println("q.getSerialNum()");
+	  		 	TreeItem<String> nodeequi= new TreeItem<>(q.getSerialNum(), new ImageView(icon));
+	  		 	System.out.println(q.getSerialNum());
+	  		 	nodeq.setExpanded(true);
+	  		 	nodeq.getChildren().add(nodeequi);
+	  		 	}
+	  		 	}
+	  		 	}
+	  		 	
+	  		 	}
+	  		
+	  		 	}
+	  		 	}
+				  treeviewEq.setRoot(equii);
+		    	
+
+				treeviewEq.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>() {
+
+	            @Override
+	            public void changed(
+	            	
+		     	
+	                    ObservableValue<? extends TreeItem<String>> observable,
+	                    TreeItem<String> old_val, TreeItem<String> new_val) {
+	            	
+					try {
+						String jndiNameEq= "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/EquipementService!tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote";
+	        	  	    
+
+		  	    		EquipementServiceRemote proxyeq;
+						proxyeq = (EquipementServiceRemote) context1.lookup(jndiNameEq);
+						 TreeItem<String> selectedItem = new_val;
+		                    System.out.println("Selected Text : " + selectedItem.getValue());
+		                    // do what ever you want
+		                    System.out.println(proxyeq.findEquipementBySerie(selectedItem.getValue()));
+		                    xxx2.setEquipement(proxyeq.findEquipementBySerie(selectedItem.getValue()));
+					} catch (NamingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	               
+	            }
+
+	        });	
+			
+
+	    	   
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+    }
 	private void showdetails(Equipment trader) {
 
 		
@@ -487,7 +860,7 @@ Tooltip.install(table, tooltip_userName);
 					userServicej = (UserServiceRemote) context
 							.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
 					
-					 User tech =userServicej.userbyfstlstname(  techniciancombo.getSelectionModel().getSelectedItem());
+					 User tech =userServicej.userbyfstlstname(techniciancombo.getSelectionModel().getSelectedItem());
 		     	
 		     	//UsualWork uw =xxx2;
 		 //    System.out.println(LoginController.user.getLogin());
@@ -506,6 +879,8 @@ Tooltip.install(table, tooltip_userName);
 
 			        //Convert LocalDate to Date
 			     Date dateFromPicker2 = Date.from(localDate2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+			     
+			     
 			     xxx2.setEndDate(dateFromPicker2);
 				 LocalDate localDate3 = startdate.getValue();
 				
@@ -537,6 +912,7 @@ Tooltip.install(table, tooltip_userName);
 		 		alert.setTitle("Work Request Adding");
 		 		alert.setHeaderText("Succesful :) ");
 		 		alert.showAndWait();}
+		         DETAILSPrev();
 		} catch (NamingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -615,34 +991,67 @@ Tooltip.install(table, tooltip_userName);
     			 WorkPrevServiceRemote proxypp=(WorkPrevServiceRemote) contextkk.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorkPrevService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorkPrevServiceRemote");
  		     	
     	
-    		    		C11.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("objet"));
-    		    		C21.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("description"));
-    		    		C31.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("technology"));
-    		    		C41.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("orderstate"));
-    		    		C51.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("emmergency"));
-    				    C61.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("WODate"));
-    				    C81.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("endDate"));
-    				    C91.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("startDate"));
-    				    C71.setCellValueFactory(new Callback<CellDataFeatures<PreventiveWork,String>,ObservableValue<String>>(){
+    			 d7.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("frequency"));
+		    		d3.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("objet"));
+		    		d4.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("description"));
+		    		d10.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("technology"));
+		    		d8.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("state"));
+		    	
+				    d1.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("CreatDate"));
+				    d6.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("endDate"));
+				    d5.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("startDate"));
+				    d11.setCellValueFactory(new Callback<CellDataFeatures<PreventiveWork,String>,ObservableValue<String>>(){
 
-    			              @Override
-    			              public ObservableValue<String> call(CellDataFeatures<PreventiveWork, String> param) {
-    			                  return new SimpleStringProperty(param.getValue().getEquipement().getSerialNum()+"--"+param.getValue().getEquipement().getDescription());
-    			              }
-    			          }); 
+			              @Override
+			              public ObservableValue<String> call(CellDataFeatures<PreventiveWork, String> param) {
+			                  return new SimpleStringProperty(param.getValue().getEquipement().getSerialNum()+"--"+param.getValue().getEquipement().getDescription());
+			              }
+			          }); 
+				    d2.setCellValueFactory(new Callback<CellDataFeatures<PreventiveWork,String>,ObservableValue<String>>(){
+
+		              @Override
+		              public ObservableValue<String> call(CellDataFeatures<PreventiveWork, String> param) {
+		            	long diff2=param.getValue().getStartDate().getTime()-param.getValue().getTriggerD().getTime();
+		      		long diffDays2 = diff2 / (24 * 60 * 60 * 1000);
+		                  return new SimpleStringProperty(diffDays2+"-days");
+		              }
+		          }); 
+					Context contexthhh;
+		  			contexthhh = new InitialContext();
+		  	   
+			   d9.setCellValueFactory(new Callback<CellDataFeatures<PreventiveWork,String>,ObservableValue<String>>(){
+
+		              @Override
+		              public ObservableValue<String> call(CellDataFeatures<PreventiveWork, String> param) {
+		             	UserServiceRemote userService222;
+						try {
+							
+							userService222 = (UserServiceRemote) contexthhh.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
+					 	  	 User u=userService222.find(param.getValue().getTechnicianId());
+			                  return new SimpleStringProperty(u.getFirstname()+"--"+u.getLastname());
+						} catch (NamingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+		      		
+		            	  	
+		                  return new SimpleStringProperty("-_-");
+		              }
+		          }); 
+				    
 
 
  
 // Set tooltip
 
     				    final ContextMenu contextMenu = new ContextMenu();
-    				    MenuItem cut = new MenuItem("Alert");
-    				    MenuItem copy = new MenuItem("warning days!");
-    				    copy.setStyle("-fx-text-fill:white ;");
-    				    cut.setStyle("-fx-text-fill:white ;");
-    				    contextMenu.setStyle("-fx-background-color: tomato;-fx-text-fill:black ;");
-    				
-    				    contextMenu.getItems().addAll(cut, copy);
+    				    MenuItem cut = new MenuItem("warning days!");
+    				    MenuItem copy = new MenuItem("", new ImageView("/views/imgs/Ambox_warning_psycho.gif"));
+    				  
+    				    cut.setStyle("-fx-text-fill:black ;");
+    				    contextMenu.setStyle("-fx-max-width: 110px;-fx-max-hight: 110px;");
+        				
+    				    contextMenu.getItems().addAll(copy);
     				    cut.setOnAction(new EventHandler<ActionEvent>() {
     				        @Override
     				        public void handle(ActionEvent event) {
@@ -651,7 +1060,7 @@ Tooltip.install(table, tooltip_userName);
     				    });
     			
     				        tableview1.setRowFactory(tv -> new TableRow<PreventiveWork>() {
-    				        	   private Tooltip tooltip = new Tooltip();
+    				        	
     				            @Override
     				            public void updateItem(PreventiveWork item, boolean empty) {
     				                super.updateItem(item, empty) ;
@@ -687,7 +1096,7 @@ Tooltip.install(table, tooltip_userName);
     		    		{ List<PreventiveWork> list = proxypp.DisplayPWorks();
     		    		 ObservableList<PreventiveWork> items = FXCollections.observableArrayList(list);
     		    		 tableview1.setItems(items);
-    		    	     System.out.println(items.get(0).getDescription()+"tableauuuuuu");
+    		    	  //   System.out.println(items.get(0).getDescription()+"tableauuuuuu");
     		    	    
     		    	     }
     	    	       
@@ -781,4 +1190,341 @@ Tooltip.install(table, tooltip_userName);
         stage.setScene(new Scene(root1));  
         stage.show();
     }
+    public void DETAILSPrev() throws NamingException {
+    
+     	//UserServiceRemote userService2;
+      	 // l1.setVisible(false);
+    		try {
+    			
+
+    			Context contextkk;
+    				 contextkk = new InitialContext();
+    			 //String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
+    			 WorkPrevServiceRemote proxypp=(WorkPrevServiceRemote) contextkk.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorkPrevService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorkPrevServiceRemote");
+    			
+    			 p7.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("frequency"));
+    		    		p3.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("objet"));
+    		    		p4.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("description"));
+    		    		p10.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("technology"));
+    		    		p8.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("state"));
+    		    	
+    				    p1.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("CreatDate"));
+    				    p6.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("endDate"));
+    				    p5.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("startDate"));
+    				    p11.setCellValueFactory(new Callback<CellDataFeatures<PreventiveWork,String>,ObservableValue<String>>(){
+
+    			              @Override
+    			              public ObservableValue<String> call(CellDataFeatures<PreventiveWork, String> param) {
+    			                  return new SimpleStringProperty(param.getValue().getEquipement().getSerialNum()+"--"+param.getValue().getEquipement().getDescription());
+    			              }
+    			          }); 
+    				    p2.setCellValueFactory(new Callback<CellDataFeatures<PreventiveWork,String>,ObservableValue<String>>(){
+
+  			              @Override
+  			              public ObservableValue<String> call(CellDataFeatures<PreventiveWork, String> param) {
+  			            	long diff2=param.getValue().getStartDate().getTime()-param.getValue().getTriggerD().getTime();
+  			      		long diffDays2 = diff2 / (24 * 60 * 60 * 1000);
+  			                  return new SimpleStringProperty(diffDays2+"-days");
+  			              }
+  			          }); 
+    					Context contexthhh;
+			  			contexthhh = new InitialContext();
+			  	   
+    			   p9.setCellValueFactory(new Callback<CellDataFeatures<PreventiveWork,String>,ObservableValue<String>>(){
+
+  			              @Override
+  			              public ObservableValue<String> call(CellDataFeatures<PreventiveWork, String> param) {
+  			             	UserServiceRemote userService222;
+							try {
+								
+								userService222 = (UserServiceRemote) contexthhh.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
+						 	  	 User u=userService222.find(param.getValue().getTechnicianId());
+	  			                  return new SimpleStringProperty(u.getFirstname()+"--"+u.getLastname());
+							} catch (NamingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+  			      		
+  			            	  	
+  			                  return new SimpleStringProperty("-_-");
+  			              }
+  			          }); 
+    				    
+ 
+// Set tooltip
+
+    				    final ContextMenu contextMenu = new ContextMenu();
+    				    MenuItem cut = new MenuItem("!");
+    				    MenuItem copy = new MenuItem("", new ImageView("/views/imgs/Ambox_warning_psycho.gif"));
+    				  
+    				    cut.setStyle("-fx-text-fill:white ;");
+    				    contextMenu.setStyle("-fx-background-color: black;-fx-text-fill:white ;-fx-max-width: 100px;");
+    				
+    				    contextMenu.getItems().addAll(cut, copy);
+    				    cut.setOnAction(new EventHandler<ActionEvent>() {
+    				        @Override
+    				        public void handle(ActionEvent event) {
+    				            System.out.println("Cut...");
+    				        }
+    				    });
+    			
+    				        tableview1.setRowFactory(tv -> new TableRow<PreventiveWork>() {
+    				        	
+    				            @Override
+    				            public void updateItem(PreventiveWork item, boolean empty) {
+    				                super.updateItem(item, empty) ;
+    				                if (item == null) {
+    				                    setStyle("");
+    				                } else if (VerifierWarn(item)) {
+    				                    setStyle("-fx-background-color: tomato;");
+    				                    setContextMenu(contextMenu);
+    				                } else {
+    				                    setStyle("");
+    				                }
+    				            }
+    				        });
+
+    Tooltip tooltip_userName=new Tooltip("Preventive Works table");
+     
+    // Set tooltip
+    prevtable.setTooltip(tooltip_userName);
+     
+    // Or using Tooltip.install
+    Tooltip.install(prevtable, tooltip_userName);
+
+    		    		 List<PreventiveWork> list = proxypp.DisplayPWorks();
+    		    		 ObservableList<PreventiveWork> items = FXCollections.observableArrayList(list);
+    		    		 prevtable.setItems(items);
+    		    	  //   System.out.println(items.get(0).getDescription()+"tableauuuuuu");
+    		    	    
+    		    	     
+    	    	       
+    	    	
+    		    		prevtable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+    		    			
+    		    		
+    		    			
+    		    		}));
+    		    		MenuItem mi2 = new MenuItem("update");
+    		    		MenuItem mi1 = new MenuItem("delete");
+    		    		mi1.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                            	Context contextkk;
+               				 try {
+								contextkk = new InitialContext();
+								WorkPrevServiceRemote proxypp=(WorkPrevServiceRemote) contextkk.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorkPrevService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorkPrevServiceRemote");
+		               			
+		                          
+	    		    		    System.out.println("Menu item 1");
+	    		    		    PreventiveWork item = prevtable.getSelectionModel().getSelectedItem();
+	    		    		   
+	    		    		    Alert alert = new Alert(AlertType.CONFIRMATION);
+						    	alert.setTitle("WARNING");
+								alert.setHeaderText("Are You Sure to remove this work?");
+						    	
+						    	if (alert.showAndWait().get () == ButtonType.OK)
+						    	{    
+	                            	
+						    	System.out.println("remooooooove"+item.getId());
+						    		 proxypp.remove(item.getId());
+						    		 
+										DETAILSPrev();
+									
+						    	}
+							} catch (NamingException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+               			 //String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
+               			 
+  }
+                            
+                        });
+    		    		mi2.setOnAction((ActionEvent event) -> {
+    		    		    System.out.println("Menu item 2");
+    		    		    PreventiveWork item = prevtable.getSelectionModel().getSelectedItem();
+    		    		    PopOver popOver = new PopOver();
+    		    		    popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
+    		    		    popOver.setContentNode(new Label("Test"));
+    		    		    popOver.setAutoFix(true);
+    		    		    popOver.setAutoHide(true);
+    		    		    popOver.setHideOnEscape(true);
+    		    		    popOver.setDetachable(false);
+    		    		    newprev= prevtable.getSelectionModel().getSelectedItem();
+    		    		    Node content = null;
+
+    		    		    FXMLLoader fxmlLoader = new FXMLLoader();
+    		    		    try {
+    		    		    	//FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/SparPartsWO.fxml"));
+
+								content = (Parent) fxmlLoader.load(getClass().getResourceAsStream("/views/new.fxml"));
+								  popOver.setContentNode(content);
+
+		    		    		    popOver.show(prevtable.getScene().getWindow());
+		    		    		    popOver.focusedProperty().addListener((observable, oldValue, newValue) -> {
+		    		    		        if (oldValue){    
+		    		    		            // oldValue is true -> current value is false-> no focus               
+		    		    		            // TODO your code here
+		    		    		        	try {
+												DETAILSPrev();
+											} catch (Exception e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+		    		    		        }
+		    		    		    });
+    		    		    } catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+    		    		  
+    		    		});
+
+    		    		ContextMenu menu = new ContextMenu();
+    		    		menu.getItems().add(mi1);
+    		    		menu.getItems().add(mi2);
+    		    		prevtable.setContextMenu(menu);	
+    		    		
+    		} catch (NamingException e1) {
+    			
+    			
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    		}
+    	
+    }
+    @FXML
+    private void recherchePrev(KeyEvent event) {
+             String mot= search.getText();
+    
+         	//UserServiceRemote userService2;
+          	 // l1.setVisible(false);
+        		try {
+        			
+
+        			Context contextkk;
+        				 contextkk = new InitialContext();
+        			 //String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
+        			 WorkPrevServiceRemote proxypp=(WorkPrevServiceRemote) contextkk.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorkPrevService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorkPrevServiceRemote");
+        			
+        			 p7.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("frequency"));
+        		    		p3.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("objet"));
+        		    		p4.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("description"));
+        		    		p10.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("technology"));
+        		    		p8.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("state"));
+        		    	
+        				    p1.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("CreatDate"));
+        				    p6.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("endDate"));
+        				    p5.setCellValueFactory(new PropertyValueFactory<PreventiveWork, String>("startDate"));
+        				    p11.setCellValueFactory(new Callback<CellDataFeatures<PreventiveWork,String>,ObservableValue<String>>(){
+
+        			              @Override
+        			              public ObservableValue<String> call(CellDataFeatures<PreventiveWork, String> param) {
+        			                  return new SimpleStringProperty(param.getValue().getEquipement().getSerialNum()+"--"+param.getValue().getEquipement().getDescription());
+        			              }
+        			          }); 
+        				    p2.setCellValueFactory(new Callback<CellDataFeatures<PreventiveWork,String>,ObservableValue<String>>(){
+
+      			              @Override
+      			              public ObservableValue<String> call(CellDataFeatures<PreventiveWork, String> param) {
+      			            	long diff2=param.getValue().getStartDate().getTime()-param.getValue().getTriggerD().getTime();
+      			      		long diffDays2 = diff2 / (24 * 60 * 60 * 1000);
+      			                  return new SimpleStringProperty(diffDays2+"-days");
+      			              }
+      			          }); 
+        					Context contexthhh;
+    			  			contexthhh = new InitialContext();
+    			  	   
+        			   p9.setCellValueFactory(new Callback<CellDataFeatures<PreventiveWork,String>,ObservableValue<String>>(){
+
+      			              @Override
+      			              public ObservableValue<String> call(CellDataFeatures<PreventiveWork, String> param) {
+      			             	UserServiceRemote userService222;
+    							try {
+    								
+    								userService222 = (UserServiceRemote) contexthhh.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/UserService!tn.esprit.b4.esprit1718b4eventmanagement.services.UserServiceRemote");
+    						 	  	 User u=userService222.find(param.getValue().getTechnicianId());
+    	  			                  return new SimpleStringProperty(u.getFirstname()+"--"+u.getLastname());
+    							} catch (NamingException e) {
+    								// TODO Auto-generated catch block
+    								e.printStackTrace();
+    							}
+      			      		
+      			            	  	
+      			                  return new SimpleStringProperty("-_-");
+      			              }
+      			          }); 
+        				    
+     
+    // Set tooltip
+
+        				    final ContextMenu contextMenu = new ContextMenu();
+        				    MenuItem cut = new MenuItem("warning days!");
+        				    MenuItem copy = new MenuItem("", new ImageView("/views/imgs/Ambox_warning_psycho.gif"));
+        				 cut.setStyle("-fx-text-fill:black ;");
+        				    contextMenu.setStyle("-fx-max-width: 110px;-fx-max-hight: 110px;");
+            				
+        				    contextMenu.getItems().addAll( copy);
+        				    cut.setOnAction(new EventHandler<ActionEvent>() {
+        				        @Override
+        				        public void handle(ActionEvent event) {
+        				            System.out.println("Cut...");
+        				        }
+        				    });
+        			
+        				        tableview1.setRowFactory(tv -> new TableRow<PreventiveWork>() {
+        				        	
+        				            @Override
+        				            public void updateItem(PreventiveWork item, boolean empty) {
+        				                super.updateItem(item, empty) ;
+        				                if (item == null) {
+        				                    setStyle("");
+        				                } else if (VerifierWarn(item)) {
+        				                    setStyle("-fx-background-color: tomato;");
+        				                    setContextMenu(contextMenu);
+        				                } else {
+        				                    setStyle("");
+        				                }
+        				            }
+        				        });
+
+        Tooltip tooltip_userName=new Tooltip("Preventive Works  table");
+         
+        // Set tooltip
+        prevtable.setTooltip(tooltip_userName);
+         
+        // Or using Tooltip.install
+        Tooltip.install(prevtable, tooltip_userName);
+
+        		    		 List<PreventiveWork> list = proxypp.searchPreventiveWork(search.getText());
+        		    		 ObservableList<PreventiveWork> items = FXCollections.observableArrayList(list);
+        		    		 prevtable.setItems(items);
+        		    	  //   System.out.println(items.get(0).getDescription()+"tableauuuuuu");
+        		    	    
+        		    	     
+        	    	       
+        	    	
+        		    		prevtable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+        		    			
+        		    		
+        		    			
+        		    		}));
+        		    		
+        		    	
+        		    		
+        		} catch (NamingException e1) {
+        			
+        			
+        			// TODO Auto-generated catch block
+        			e1.printStackTrace();
+        		}}
+    @FXML
+    private void onGantt(ActionEvent event) throws IOException, NamingException {
+        final GanttChart demo = new GanttChart("Gantt Chart Preventive works");
+        demo.pack();
+        RefineryUtilities.centerFrameOnScreen(demo);
+        demo.setVisible(true);
+    }   
+
 }

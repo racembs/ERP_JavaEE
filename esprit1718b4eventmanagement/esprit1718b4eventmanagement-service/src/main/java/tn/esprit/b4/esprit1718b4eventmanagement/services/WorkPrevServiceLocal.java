@@ -13,4 +13,7 @@ public interface WorkPrevServiceLocal {
 	public void addWP(PreventiveWork w);
 	public List<PreventiveWork> DisplayPWorks();
 	public List<PreventiveWork> displayWPbyTech(int idtech);
+	 public List<PreventiveWork> searchPreventiveWork(String input);
+		public void remove(int idw);
+		public void update(PreventiveWork w);
 }

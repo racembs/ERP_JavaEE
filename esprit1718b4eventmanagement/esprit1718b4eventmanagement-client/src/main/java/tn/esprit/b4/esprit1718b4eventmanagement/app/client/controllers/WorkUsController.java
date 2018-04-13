@@ -31,6 +31,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleGroup;
@@ -60,10 +61,12 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
+import javafx.scene.Parent;
 import javafx.scene.PointLight;
-
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.paint.*;
+import javafx.stage.Stage;
 
 
 /**
@@ -122,6 +125,8 @@ public class WorkUsController implements Initializable {
     private JFXTextField f7;
     @FXML
     private JFXTreeView<String> treeviewEq;
+    URL url1;
+    ResourceBundle rb1;
 
     /**
      * Initializes the controller class.
@@ -257,7 +262,7 @@ public class WorkUsController implements Initializable {
 			}
 			C4.setOnEditCommit((CellEditEvent<UsualWork, String> event) -> {
 				try {
-				
+					 
 					 String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
 					 WorksUsServiceRemote proxy=(WorksUsServiceRemote) context.lookup(jndiName);
 					
@@ -269,7 +274,11 @@ public class WorkUsController implements Initializable {
 			            int row = pos.getRow();
 			            xxx= event.getTableView().getItems().get(row);
 			            if(state.equals("approuved"))
-			            {xxx.setNature(Nature.WorkOrder);}
+			            {xxx.setNature(Nature.WorkOrder);
+			           
+			           
+			            System.out.println( "wo.init(url, rb)");
+			            }
 			            else
 			            	{xxx.setNature(Nature.WorkRequest);}
 			            xxx.setState(state);
@@ -282,8 +291,7 @@ public class WorkUsController implements Initializable {
 			    	
 			    		
 			    		 proxy.updateWork(xxx);
-
-			
+			    	
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -443,6 +451,8 @@ public class WorkUsController implements Initializable {
 	    	        ObservableList<UsualWork> items = FXCollections.observableArrayList(list);
 	    	      //  System.out.println(items.get(0).getDescription());
 	    	       tableview.setItems(items);
+	    	 
+	    	 // 	WorkOsController.init(url1, rb1);
 	    	   
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
@@ -452,6 +462,7 @@ public class WorkUsController implements Initializable {
 		tableview.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
 			
 		}));
+	
     }  
 	private void showdetails(User trader) {
 
@@ -532,7 +543,10 @@ public class WorkUsController implements Initializable {
 		            int row = pos.getRow();
 		            xxx= event.getTableView().getItems().get(row);
 		            if(state.equals("approuved"))
-		            {xxx.setNature(Nature.WorkOrder);}
+		            {xxx.setNature(Nature.WorkOrder);
+		         /*   WorkOsController wo=new WorkOsController();
+		            wo.init(url, rb);*/
+		            }
 		            else
 		            	{xxx.setNature(Nature.WorkRequest);}
 		            xxx.setState(state);

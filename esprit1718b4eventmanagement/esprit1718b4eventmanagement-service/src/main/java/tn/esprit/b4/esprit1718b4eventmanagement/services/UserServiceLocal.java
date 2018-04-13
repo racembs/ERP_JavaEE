@@ -17,4 +17,5 @@ public interface UserServiceLocal extends IGenericDAO<User> {
 	public List<User> SearchLogin(String login);
 	public User findByLogin(String l);
 	public User userbyfstlstname(String login);
+	public User find(int entityID);
 }

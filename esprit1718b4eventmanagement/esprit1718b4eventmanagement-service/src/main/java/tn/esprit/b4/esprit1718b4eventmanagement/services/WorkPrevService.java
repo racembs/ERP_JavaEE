@@ -50,4 +50,23 @@ public class WorkPrevService implements WorkPrevServiceLocal, WorkPrevServiceRem
 		query.setParameter("param2", idtech);
 		return query.getResultList();
 	}
+	@Override 
+    public List<PreventiveWork> searchPreventiveWork(String input){
+    	TypedQuery<PreventiveWork> query = em.createQuery("SELECT c FROM PreventiveWork c WHERE c.objet LIKE :input OR c.technology LIKE :input OR c.description LIKE :input OR c.CreatDate LIKE :input",PreventiveWork.class);
+    	query.setParameter("input", "%" + input + "%");
+    	List<PreventiveWork> results = query.getResultList();
+    	return results;
+    }
+	@Override
+	public void remove(int idw) {
+		PreventiveWork w=em.find(PreventiveWork.class,idw);
+		em.remove(w);
+		
+	}
+	@Override
+	public void update(PreventiveWork w) {
+		em.merge(w);
+		
+	}
+
 }

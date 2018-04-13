@@ -16,8 +16,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -29,35 +27,14 @@
    <children>
       <JFXTabPane layoutX="138.0" layoutY="100.0" prefHeight="684.0" prefWidth="1105.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab text="MANAGE WORK REQUEST">
+          <Tab text="ADD WORK REQUEST">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <HBox layoutX="23.0" layoutY="33.0" prefHeight="135.0" prefWidth="1068.0" spacing="30.0">
+                        <HBox layoutX="23.0" layoutY="33.0" prefHeight="135.0" prefWidth="1068.0" spacing="30.0" />
+                        <AnchorPane layoutY="148.0" prefHeight="318.0" prefWidth="1068.0" styleClass="card-unpadded">
                            <children>
-                        
-                     
-                              <AnchorPane prefHeight="157.0" prefWidth="205.0" style="-fx-background-color: #F39C12;" styleClass="card">
-                                 <children>
-                                    <VBox layoutX="14.0" layoutY="14.0" prefHeight="85.0" prefWidth="159.0">
-                                       <children>
-                                          <Label prefHeight="31.0" prefWidth="153.0" styleClass="custom-white-title-label" text="TODAY" />
-                                          <Label prefHeight="20.0" prefWidth="152.0" styleClass="custom-white-title-label" text="Monday" />
-                                          <Label prefHeight="20.0" prefWidth="151.0" styleClass="custom-white-title-label" text="12/07/2017" />
-                                       </children>
-                                    </VBox>
-                                    <ImageView fitHeight="31.0" fitWidth="50.0" layoutX="143.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../imgs/Copyright.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </HBox>
-                        <AnchorPane layoutX="23.0" layoutY="224.0" prefHeight="413.0" prefWidth="1057.0" styleClass="card-unpadded">
-                           <children>
-                              <VBox layoutX="525.0" layoutY="17.0" prefHeight="376.0" prefWidth="511.0" spacing="10.0">
+                              <VBox layoutX="521.0" layoutY="1.0" prefHeight="376.0" prefWidth="511.0" spacing="10.0">
                                  <children>
                                     <VBox prefHeight="82.0" prefWidth="541.0">
                                        <children>
@@ -77,7 +54,8 @@
                                                 <JFXRadioButton selected="true" text="Urgent">
                                                    <toggleGroup>
                                                       <ToggleGroup fx:id="q" />
-                                                   </toggleGroup></JFXRadioButton>
+                                                   </toggleGroup>
+                                                </JFXRadioButton>
                                                 <JFXRadioButton layoutX="10.0" layoutY="10.0" text="Not Urgent" toggleGroup="$q" />
                                              </children>
                                              <padding>
@@ -89,8 +67,6 @@
                                     <Separator prefWidth="200.0" />
                                     <HBox alignment="CENTER_RIGHT" prefHeight="77.0" prefWidth="511.0" spacing="20.0">
                                        <children>
-                                          <JFXButton styleClass="cancel-button" text="Cancel" />
-                                          <JFXButton prefHeight="27.0" prefWidth="78.0" styleClass="green-btn" text="Edit" />
                                           <JFXButton fx:id="saveWR" layoutX="72.0" layoutY="10.0" onAction="#onclickSave" prefHeight="37.0" prefWidth="100.0" styleClass="blue-btn" text="Save" />
                                        </children>
                                        <padding>
@@ -105,7 +81,7 @@
                               <VBox layoutX="30.0" layoutY="38.0" prefHeight="301.0" prefWidth="424.0" spacing="10.0">
                                  <children>
                                    
-                                    <JFXTextField fx:id="object" focusColor="#00add8" labelFloat="true" layoutX="10.0" layoutY="10.0" promptText="Object" unFocusColor="#868282" />
+                                          <JFXTextField fx:id="object" focusColor="#00add8" labelFloat="true" layoutX="10.0" layoutY="10.0" promptText="Object" unFocusColor="#868282" />
                                      <JFXTextArea fx:id="adInfo" maxWidth="404.0" minWidth="404.0" prefHeight="98.0" prefWidth="404.0" promptText="Additional Information" />
                                     <Label prefHeight="20.0" prefWidth="112.0" style="-fx-text-fill: #868282;" text="Equipment" />
                                     <JFXTreeView fx:id="treeviewEq" accessibleText="Equipement" editable="true" prefHeight="186.0" prefWidth="404.0" styleClass="jfx-decorator" />
@@ -120,7 +96,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="tabD"  text="DETAILS">
+          <Tab fx:id="tabD" text="MANAGE WORK REQUESTS">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

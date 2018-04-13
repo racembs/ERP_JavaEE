@@ -23,4 +23,8 @@ public interface WorksUsServiceRemote {
 	public List<Works> DisplayUSWorks();
 	public List<UsualWork> displayWO();
 	public List<UsualWork> displayWObyTech(int idtech);
+	public List<UsualWork> displayWObyTechStart(int idtech);
+	public List<UsualWork> displayStart();
+	public List<UsualWork> displayDone();
+	
 }

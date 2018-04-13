@@ -136,6 +136,11 @@ public class UserService extends GenericDAO<User> implements UserServiceRemote, 
 		List <User> result= query.getResultList();
 		return result;
 	}
+	
+	@Override
+	public User find(int entityID) {
+		return em.find(User.class, entityID);
+	}
 
 
 

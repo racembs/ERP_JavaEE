@@ -98,4 +98,34 @@ public class WorksUsService implements WorksUsServiceLocal, WorksUsServiceRemote
 	        query.setParameter("n", idW);
 			return query.getSingleResult();
 		}
+		@Override
+		public List<UsualWork> displayWObyTechStart(int idtech) {
+		
+			TypedQuery<UsualWork> query=em.createQuery("SELECT e FROM"
+					+ " UsualWork e WHERE e.nature =:param AND e.technicianId =:param2 And NOT e.orderstate=:p1  And NOT e.orderstate=:p2 ",UsualWork.class);
+			query.setParameter("param", Nature.WorkOrder);
+			query.setParameter("param2", idtech);
+			query.setParameter("p1", "start");
+			query.setParameter("p2", "done");
+			return query.getResultList();
+		}
+	
+		@Override
+		public List<UsualWork> displayStart() {
+		
+			TypedQuery<UsualWork> query=em.createQuery("SELECT e FROM"
+					+ " UsualWork e WHERE e.orderstate =:param ",UsualWork.class);
+			
+			query.setParameter("param", "start");
+			return query.getResultList();
+		}
+		@Override
+		public List<UsualWork> displayDone() {
+		
+			TypedQuery<UsualWork> query=em.createQuery("SELECT e FROM"
+					+ " UsualWork e WHERE e.orderstate =:param ",UsualWork.class);
+			
+			query.setParameter("param", "done");
+			return query.getResultList();
+		}
 }

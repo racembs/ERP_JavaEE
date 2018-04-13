@@ -13,9 +13,15 @@ import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,11 +31,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.PreventiveWork;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.WorkPrevServiceRemote;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote;
 
 /**
  * FXML Controller class
@@ -46,8 +57,9 @@ public class HomeViewController implements Initializable {
     private JFXDrawer drawer;
     @FXML
     private Label txtCurrentWindow;
-
-	/**
+    @FXML
+  private Label count;
+	/**  static 
 	 * Initializes the controller class.
 	 *
 	 * @param url
@@ -55,7 +67,52 @@ public class HomeViewController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+//count.setVisible(false);
 
+		Context contextkk;
+			 try {
+				
+				 contextkk = new InitialContext();
+			 //String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
+			 WorksUsServiceRemote proxykk=(WorksUsServiceRemote) contextkk.lookup("esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote");
+						 if(LoginController.user.getPost().equals("technician"))
+						 {	count.setVisible(true);
+							 List<UsualWork> list = proxykk.displayWObyTechStart(LoginController.user.getId());
+						 String str = Integer.toString(list.size());
+						 System.out.println("notifffffff"+list.size());
+						 
+				    count.setText(str);
+				    Tooltip tooltip_userName=new Tooltip("Work Orders Not Started");
+				    
+				 // Set tooltip
+				 count.setTooltip(tooltip_userName);
+				 Tooltip.install(count, tooltip_userName);
+				 }
+						 else
+						 {
+							 if(LoginController.user.getPost().equals("engineer"))
+							 {count.setVisible(true);
+								 List<UsualWork> list = proxykk.displayWRB();
+								 String str = Integer.toString(list.size());
+								 System.out.println(list.size());
+								 
+						    count.setText(str);
+						    Tooltip tooltip_userName=new Tooltip("Work Requests Not approuved");
+						    
+						 // Set tooltip
+						 count.setTooltip(tooltip_userName); 
+						 Tooltip.install(count, tooltip_userName);
+						 
+							 }
+						 }
+				  
+				 // Or using Tooltip.install
+				 
+			} catch (NamingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	
 		HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(hamburger);
 		transition.setRate(-1);
 		hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
