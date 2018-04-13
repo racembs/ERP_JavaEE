@@ -18,5 +18,6 @@ public interface OrderItemServiceLocal extends IGenericDAO<OrdredItem> {
 	public List<OrdredItem> findItemsOfAnOrder(int idOrder);
 	public List<OrdredItem> findPendingItemsOfAnOrder(int idOrder);
 	public void deleteAllByOrder(int idOrder);
+	public void updateStatusOrdredItem();
 
 }

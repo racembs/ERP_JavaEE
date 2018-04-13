@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeededItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Orders;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
@@ -44,6 +45,25 @@ public class OrdersService extends GenericDAO<Orders> implements OrdersServiceRe
 		return list;
 	}
 	
-	
+	@Override
+	public void updateStatusOrder() {
+		List<Orders> list = findAll();
+		for (Orders orders : list) {
+			Boolean state=true;
+			if(!orders.getOrder_Item().isEmpty()){
+				for (OrdredItem ordredItem : orders.getOrder_Item()) {
+					if(!ordredItem.getStatus().equals("finished")){
+						state = false;
+						return;
+					}
+				}
+				if(state){
+					orders.setStatut("finished");
+					update(orders);
+				}
+					
+			}
+		}
+	}
 
 }

@@ -371,7 +371,7 @@ if(LoginController.user.getPost().equals("technician"))
 		    		
 		    			 
 		    			 table.setItems(items);
-		    		     System.out.println(items.get(0).getDescription()+"tableauuuuuu1");
+		    		//     System.out.println(items.get(0).getDescription()+"tableauuuuuu1");
 		    		}
 		    		else
 		    		{ List<UsualWork> list = proxykk.displayWO();
@@ -1090,7 +1090,7 @@ if(LoginController.user.getPost().equals("technician"))
     		    		
     		    			 
     		    			 tableview1.setItems(items);
-    		    		     //System.out.println(items.get(0).getDescription()+"tableauuuuuu1");
+
     		    		}
     		    		else
     		    		{ List<PreventiveWork> list = proxypp.DisplayPWorks();

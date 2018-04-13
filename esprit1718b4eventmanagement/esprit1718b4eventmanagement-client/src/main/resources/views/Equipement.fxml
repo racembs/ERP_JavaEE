@@ -46,6 +46,10 @@
                                           <Label fx:id="arbofinal" layoutX="565.0" layoutY="512.0" prefHeight="33.0" prefWidth="80.0" text="Label" />
                                           <CheckTreeView fx:id="treeviewarbo11" layoutX="480.0" layoutY="60.0" prefHeight="308.0" prefWidth="462.0" />
                                           <Label layoutX="120.0" layoutY="43.0" />
+                                          <ImageView fx:id="imageView" fitHeight="125.0" fitWidth="169.0" layoutX="78.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+                                          <JFXButton fx:id="btnadd2" layoutX="272.0" layoutY="45.0" onAction="#onBrowserAction" prefHeight="37.0" prefWidth="100.0" styleClass="blue-btn" text="Browser" />
+                                          <Label fx:id="ss" layoutX="247.0" layoutY="99.0" />
+                                          <Label fx:id="fileSelected" layoutX="294.0" layoutY="101.0" />
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -79,6 +83,11 @@
                                           </TableView>
                                           <TextField fx:id="searchtraining1" layoutX="712.0" layoutY="5.0" onKeyReleased="#OnSerarchModifReleased" prefHeight="30.0" prefWidth="323.0" promptText="Search by SerialNum Fabriquant Marque State" styleClass="search-box" />
                                           <JFXTextField fx:id="LieuModif" focusColor="#00add8" labelFloat="true" layoutX="375.0" layoutY="439.0" prefHeight="30.0" prefWidth="99.0" promptText="Lieu" unFocusColor="#868282" />
+                                          <ImageView fx:id="idCal2" fitHeight="139.0" fitWidth="202.0" layoutX="961.0" layoutY="344.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@image/images%20(1).jpg" />
+                                             </image>
+                                          </ImageView>
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -101,8 +110,9 @@
                                                             <TableColumn fx:id="colDescription" editable="false" prefWidth="225.0" text="Description Equipment" />
                                                          </columns>
                                                       </TableView>
-                                                      <Label graphicTextGap="8.0" layoutX="916.0" layoutY="109.0" prefHeight="37.0" prefWidth="112.0" styleClass="green-label" text="Total Equipment :" textFill="#f50707" />
-                                                      <Label fx:id="totalequipment" layoutX="937.0" layoutY="163.0" prefHeight="34.0" prefWidth="60.0" />
+                                                      <Label graphicTextGap="8.0" layoutX="916.0" layoutY="198.0" prefHeight="37.0" prefWidth="112.0" styleClass="green-label" text="Total Equipment :" textFill="#f50707" />
+                                                      <Label fx:id="totalequipment" layoutX="942.0" layoutY="255.0" prefHeight="34.0" prefWidth="60.0" />
+                                                      <ImageView fx:id="imageviewdetail" fitHeight="126.0" fitWidth="169.0" layoutX="909.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true" />
                                                    </children>
                                                 </AnchorPane>
                                                 <HBox prefHeight="100.0" prefWidth="200.0">
@@ -165,11 +175,18 @@
                                                                   </ImageView>
                                                                   <Label graphicTextGap="8.0" layoutX="341.0" layoutY="3.0" prefHeight="37.0" prefWidth="128.0" styleClass="green-label" text="equipment in Service" textFill="#f50707" />
                                                                   <Label fx:id="nbbonne" layoutX="365.0" layoutY="41.0" prefHeight="27.0" prefWidth="89.0" />
-                                                                  <ImageView fx:id="idCal11" fitHeight="98.0" fitWidth="89.0" layoutX="18.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+                                                                  <ImageView fx:id="idCal11" fitHeight="99.0" fitWidth="89.0" layoutX="5.0" layoutY="112.0" onMouseClicked="#calender" pickOnBounds="true" preserveRatio="true">
                                                                      <image>
-                                                                        <Image url="@image/stat.png" />
+                                                                        <Image url="@image/calendar_icon.png" />
                                                                      </image>
                                                                   </ImageView>
+                                                                  <ImageView fx:id="pdf" fitHeight="89.0" fitWidth="97.0" layoutX="240.0" layoutY="105.0" onMouseClicked="#PdfimageClick" pickOnBounds="true" preserveRatio="true">
+                                                                     <image>
+                                                                        <Image url="@image/téléchargement.jpg" />
+                                                                     </image>
+                                                                  </ImageView>
+                                                                  <Label graphicTextGap="8.0" layoutX="344.0" layoutY="119.0" prefHeight="37.0" prefWidth="135.0" styleClass="red-label" text="Generate PDF" textFill="#f50707" />
+                                                                  <Label fx:id="calandar" graphicTextGap="8.0" layoutX="105.0" layoutY="119.0" prefHeight="37.0" prefWidth="141.0" styleClass="cancel-button" text="   Calander " textFill="#e12f2f" />
                                                                </children>
                                                             </AnchorPane>
                                                         </content>

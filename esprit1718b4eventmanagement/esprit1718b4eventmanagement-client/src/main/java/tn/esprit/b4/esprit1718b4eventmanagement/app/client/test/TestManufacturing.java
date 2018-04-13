@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -68,7 +69,7 @@ public class TestManufacturing {
 		ordredItem.setStatus("Pending");
 //		proxyOrdredItem.addOrdredItem(1, 1, ordredItem);
 		
-		OrdredItem orderItem2 = proxyOrdredItem.findOrdredItemById(1,1);
+		OrdredItem orderItem2 = proxyOrdredItem.findOrdredItemById(1,31);
 		System.out.println(orderItem2.getArticle().getType());
 		System.out.println(orderItem2.getOrdredItemPk().getId_Article());
 		
@@ -88,40 +89,52 @@ public class TestManufacturing {
 //		
 //		NeedNomenclature nomenclature = proxyNomenclature.addnomenclature(Father.getId(), Child.getId(), 10);
 		
-		NeededItem Parent = new NeededItem();
-		Parent.setOrderItem(orderItem2);
-		Parent.setNeeded_article(orderItem2.getArticle());
-		Parent.setGrossNeed(orderItem2.getQuantity());
-		Parent.setNetNeed(Parent.getGrossNeed()-Parent.getNeeded_article().getQuantity());
-		//Parent.setReadyLotNumber();
-		Parent.setStatus("Pending");
+//		NeededItem Parent = new NeededItem();
+//		Parent.setOrderItem(orderItem2);
+//		Parent.setNeeded_article(orderItem2.getArticle());
+//		Parent.setGrossNeed(orderItem2.getQuantity());
+//		Parent.setNetNeed(Parent.getGrossNeed()-Parent.getNeeded_article().getQuantity());
+//		//Parent.setReadyLotNumber();
+//		Parent.setStatus("Pending");
 		//Parent.setId(proxyNeededItem.addNeededItem(Parent));
 		
 		Map<NeededItem, List<NeededItem>> map = new HashMap<>();
 		List<NeedNomenclature> needNomenclatureList = new ArrayList<>();
-//		map = proxyNeededItem.InitialiseMap();
+		map = proxyNeededItem.InitialiseDESCMap();
 //		map= proxyNeededItem.CreateNeedItemTree(Parent);
 //		map=proxyNeededItem.SaveNeedItemTree(map);
+		//map= proxyNeededItem.CreateANDSaveNeedItemTree(Parent);
+		NeededItem Parent=proxyNeededItem.find(1);
+			//map=proxyNeededItem.findNeededItemTreeByOrdredItem(Parent);
 //		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
 		
-		NeededItem ParentneededItem = proxyNeededItem.getNeededItemParentOfOrdredItem(1, 1);
-		map=proxyNeededItem.InitialiseMap();
-		map= proxyNeededItem.findNeededItemTreeByOrdredItem(ParentneededItem);
+//		NeededItem ParentneededItem = proxyNeededItem.getNeededItemParentOfOrdredItem(2, 33);
+//		map=proxyNeededItem.InitialiseMap();
+//		map= proxyNeededItem.findNeededItemTreeByOrdredItem(ParentneededItem);
 		
 //		for(Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()){
+//		System.out.println(proxyNeededItem.CheckReadyLot(e.getKey(), e.getValue()));
+//	}
+		
+//		for(Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()){
+//			System.out.println("readyLot "+proxyNeededItem.CheckReadyLot(e.getKey(), e.getValue()));
 //			System.out.println("Parent");
-//			System.out.println(e.getKey().getLevel());
+//			System.out.println(e.getKey().getNeeded_article().getArticleCode() +" "+e.getKey().getLevel());
+//			
 //			System.out.println("Children");
 //			for (NeededItem needChild : e.getValue()) {
-//				System.out.println(needChild.getLevel());
+//				System.out.println(needChild.getNeeded_article().getArticleCode() +" "+needChild.getLevel());
 //			}
 //		}
 		
-		int duration =proxyManufacturing.manufacturingDuration(ParentneededItem.getNeeded_article(), 10);
+		
+		
+		//int duration =proxyManufacturing.manufacturingDuration(ParentneededItem.getNeeded_article(), 10);
+		int duration = 5280;
 	    System.out.println(duration);
 	    
 		Calendar cal = Calendar.getInstance();
-		cal.set(2018, 03, 8, 11, 0);
+		cal.set(2018, 03, 22, 11, 0);
 
 		Date dt = cal.getTime();
 		
@@ -129,6 +142,9 @@ public class TestManufacturing {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd kk:mm");
 	    System.out.println(sdf.format(d));
+	    
+	    proxyNeededItem.updateStatusPurchaseOrder();
+	    proxyOrdredItem.updateStatusOrdredItem();
 	    
 //	    List<ManufacturingPlanning> ListMan = proxyManufacturing.ReadyManufacturingPlanning(map, dt);
 //	    for (ManufacturingPlanning manufacturingPlanning : ListMan) {

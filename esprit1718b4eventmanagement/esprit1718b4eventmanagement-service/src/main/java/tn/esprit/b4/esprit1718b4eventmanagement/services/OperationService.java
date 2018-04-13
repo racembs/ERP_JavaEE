@@ -66,6 +66,8 @@ public class OperationService extends GenericDAO<Operation> implements Operation
 		return result;
 	}
 	
+
+	
 	@Override
 	public List<Operation> findOprationByChargId(int idOperationgRange) {
 		TypedQuery<Operation> query
@@ -74,5 +76,15 @@ public class OperationService extends GenericDAO<Operation> implements Operation
 		List<Operation> list=query.getResultList();
 		return list;
 	}
+
+	@Override
+	public List<Operation> findOpration(String description) {
+		TypedQuery<Operation> query
+		=em.createQuery("SELECT o FROM Operation o WHERE o.description  like :description", Operation.class);
+		query.setParameter("description","%"+description+"%");
+		List<Operation> list=query.getResultList();
+		return list;
+	}
+	
 
 }

@@ -4,22 +4,56 @@
  * and open the template in the editor.
  */
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.calendarfx.model.Calendar;
+import com.calendarfx.model.Calendar.Style;
+import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
+import com.calendarfx.view.CalendarView;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Calendar.Style;
+import com.calendarfx.view.CalendarView;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeView;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Calendar;
+
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.mail.MessagingException;
+import javax.management.Notification;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -28,6 +62,7 @@ import org.controlsfx.validation.Severity;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
@@ -39,6 +74,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
@@ -52,9 +88,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -66,9 +104,13 @@ import javafx.util.Callback;
 import sun.invoke.empty.Empty;
 
 import org.controlsfx.control.CheckTreeView;
+import org.controlsfx.control.Notifications;
+
+import tn.esprit.b4.esprit1718b4eventmanagement.app.client.gui.Upload;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ArboPereFis;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Arboresence;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.MvtApprov;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeededItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote;
@@ -120,7 +162,8 @@ public class EquipmentsController implements Initializable {
     private TableColumn<Equipment,String>  colState;
     @FXML
     private TableColumn<Equipment,String>  colDescription;
- 
+   
+    private String imageFile;
  
   
     @FXML
@@ -194,7 +237,7 @@ public class EquipmentsController implements Initializable {
     private TextField searchtraining1;
     @FXML
     private JFXTextField LieuModif;
- 
+    public static String   serieid;
     ValidationSupport v7= new ValidationSupport();
     ValidationSupport v6= new ValidationSupport();
   		ValidationSupport v5= new ValidationSupport();
@@ -214,7 +257,13 @@ public class EquipmentsController implements Initializable {
   		  			ValidationSupport v12= new ValidationSupport();
   			
   			
-  			
+  		  		private Image image ;	
+  		  	public void goToday() {
+			}
+  			public void goForward() {
+			}
+  			public void goBack() {
+			}
   			
     @FXML
     private CheckTreeView<String> treeviewarbo1;
@@ -233,7 +282,7 @@ public class EquipmentsController implements Initializable {
     private JFXButton btndelete1;
     @FXML
     private CheckTreeView<String> treeviewarbo11;
-    private CheckTreeView<String> treeviewarbo12;
+    
     @FXML
     private ImageView idCal;
     @FXML
@@ -246,6 +295,21 @@ public class EquipmentsController implements Initializable {
     private ImageView idCal11;
     @FXML
     private Label totalequipment;
+    @FXML
+    private ImageView pdf;
+ 
+    @FXML
+    private JFXButton btnadd2;
+    @FXML
+    private Label ss;
+    @FXML
+    private ImageView imageView;
+    @FXML
+    private ImageView imageviewdetail;
+    @FXML
+    private Label fileSelected;
+    @FXML
+    private Label calandar;
 		
     /**
      * Initializes the controller class.
@@ -267,7 +331,7 @@ ComboEquiModif2.setVisible(false);
 ComboEquiModif3.setVisible(false);
 ComboEquiModif4.setVisible(false);
 ComboEquiModif.setVisible(false);
-
+//ss.setVisible(false);
   		/////combo ;
 btnadd11.setVisible(false);
 btnmodifarbo.setVisible(false);
@@ -342,9 +406,7 @@ btnmodifarbo.setVisible(false);
 	
     String lieu=arbofinal.getText();
 
-    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-      Calendar date = Calendar.getInstance();
-      String dateF = df.format(date.getTime());
+   	 
         String jndiName2 = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArboresenceService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArboresenceServiceRemote";
          Context context1 = new InitialContext();
 
@@ -352,16 +414,16 @@ ArboresenceServiceRemote Proxy1 = (ArboresenceServiceRemote) context1.lookup(jnd
 
 Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
 
-    Equipment eq=new Equipment(serie ,desc,stat,dateF,fab,marq,lieu,arbo1);
+    Equipment eq=new Equipment(serie ,desc,stat,LoginController.date1,fab,marq,lieu,ss.getText(),arbo1);
     
 
     Proxy.addEquippement(eq);
-	Alert alert = new Alert(AlertType.INFORMATION);
-	alert.setTitle("Information");
-	alert.setHeaderText("the equipment : " +serialnum.getText()+ "is add in :"+lieu+" with success");
-	alert.showAndWait();
+	
 	  
-    	
+    	Notifications.create()
+    	.title("Equipment Add ")
+    	.text("the Equipment"+ serialnum.getText() +"is add with success").darkStyle()
+    	.showWarning();
 	
     }
     
@@ -419,21 +481,25 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     
     	if(type.equals("Principale"))
     	{	Proxy.addArbo(arbo);
+    	Notifications.create()
+    	.title("Equipment Add ")
+    	.text("the arbo    : "+name.getText()+ "is add  with success").darkStyle()
+    	.showWarning();
+	
     	
-    	
-    	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Information");
-    	alert.setHeaderText("the arbo    : "+name.getText()+ "is add  with success");
-    	alert.showAndWait();
     	refrech();
     	}else{
     		Proxy.addArbo(arbo);
     	
     	Proxy.addArbo(Proxy.getArbo(  adarb.getText()).getId(),	Proxy.getArbo(namee).getId());
-    	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Information");
-    	alert.setHeaderText("the arbo    : " +arbofinal.getText()+"/"+name.getText()+ "is add  with success");
-    	alert.showAndWait();
+    	
+    	Notifications.create()
+    	.title("Equipment Add ")
+    	.text("the arbo    : " +arbofinal.getText()+"/"+name.getText()+ "is add  with success").darkStyle()
+    	.showWarning();
+	
+    	
+    	
     	refrech();
     		}
     		
@@ -458,24 +524,30 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     			context= new InitialContext();
 
     		EquipementServiceRemote proxy=(EquipementServiceRemote) context.lookup(jndiName);
+    		
+ 		    Long x=proxy.Date(LoginController.date1, LoginController.date1);
+ 	nbeqpanne.setText( Long.toString(x));
+ 	Long y=proxy.countequi();
+ 	
+ 	nbbonne.setText( Long.toString(y-x));
+     totalequipment.setText( Long.toString(y));
     		List<Equipment> list2=new ArrayList<>();
     	    	
     		colSerialNum.setCellValueFactory(new PropertyValueFactory<Equipment, String>("SerialNum"));
     		colFabriquant.setCellValueFactory(new PropertyValueFactory<Equipment, String>("Fabriquant"));
     		colMarque.setCellValueFactory(new PropertyValueFactory<Equipment, String>("Marque"));
     		colState.setCellValueFactory(new PropertyValueFactory<Equipment, String>("State"));
+    		   
+    		
+    		
+    	
+    		
+    		
+    		
     		 colDescription.setCellValueFactory(new PropertyValueFactory<Equipment, String>("Description"));
     		 tableau.setTableMenuButtonVisible(true);
     		 
-    		 DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-    		    Calendar date = Calendar.getInstance();
-    		    String dateF = df.format(date.getTime());
-    		    Long x=proxy.Date(dateF, dateF);
-    	nbeqpanne.setText( Long.toString(x));
-    	Long y=proxy.countequi();
     	
-    	nbbonne.setText( Long.toString(y-x));
-        totalequipment.setText( Long.toString(y));
     		//////////////////////////////
     		
     		
@@ -504,8 +576,8 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
                        
                           
                                  
-                                 String serie=tableau.getSelectionModel().getSelectedItem().getSerialNum();
-                                txtserial.setText(serie);
+                            	 serieid= tableau.getSelectionModel().getSelectedItem().getSerialNum();
+                                   txtserial.setText(serieid);
                                  String date=tableau.getSelectionModel().getSelectedItem().getEISDate();
                                  txtdate.setText(date);
                                  String fabriquant=tableau.getSelectionModel().getSelectedItem().getFabriquant();
@@ -519,7 +591,8 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
                                  txtetat.setText(state);
                                  Integer idarbo=tableau.getSelectionModel().getSelectedItem().getArboresence().getId();
                                  
-                                
+                                 Image image = new Image("http://localhost/image/"+tableau.getSelectionModel().getSelectedItem().getImage());
+                                 imageviewdetail.setImage(image);
                 
                
                               	
@@ -537,7 +610,7 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     							Integer id  =tableau.getSelectionModel().getSelectedItem().getId();
     							Alert alert = new Alert(AlertType.CONFIRMATION);
     					    	alert.setTitle("WARNING");
-    							alert.setHeaderText("Are You Sure to remove"+proxy.findEqupment(id).getSerialNum()+"?");
+    							alert.setHeaderText("Are You Sure to remove  ?");
     					    	
     					    	if (alert.showAndWait().get () == ButtonType.OK)
     					    	{    
@@ -545,7 +618,12 @@ Arboresence arbo1=Proxy1.getArbo(arbofinal.getText());
     					    	
     						proxy.DeleteEqupment(id);
     					    	}
-    						
+    					    	try {
+									refrechcount();
+								} catch (NamingException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
     						
     						
     				    	
@@ -1170,7 +1248,14 @@ for (ArboPereFis x3: Arbolist3)
 	 	TreeItem<String> arbo4= new TreeItem<>(x3.getArboFils().getName(), new ImageView(icon));
 Arbo3.setExpanded(true);
 Arbo3.getChildren().add(arbo4);
-	 
+List<ArboPereFis> Arbolist4= Proxy.getFilsArbo( x3.getArboFils().getId());
+for (ArboPereFis x5: Arbolist4)
+	 	{
+	 	TreeItem<String> arbo5= new TreeItem<>(x5.getArboFils().getName(), new ImageView(icon));
+arbo4.setExpanded(true);
+arbo4.getChildren().add(arbo5);
+	 	}
+		
 		
 	 	}
 	 	
@@ -1287,7 +1372,13 @@ refrech();
     	 	TreeItem<String> arbo4= new TreeItem<>(x3.getArboFils().getName(), new ImageView(icon));
     Arbo3.setExpanded(true);
     Arbo3.getChildren().add(arbo4);
-    	 
+	List<ArboPereFis> Arbolist4= Proxy.getFilsArbo( x3.getArboFils().getId());
+    for (ArboPereFis x5: Arbolist4)
+    	 	{
+    	 	TreeItem<String> arbo5= new TreeItem<>(x5.getArboFils().getName(), new ImageView(icon));
+    arbo4.setExpanded(true);
+    arbo4.getChildren().add(arbo5);
+    	 	}
     		
     	 	}
     	 	
@@ -1323,5 +1414,136 @@ refrech();
     private void ONADDEQUI22(Event event) throws NamingException {
     	refrech1();
     }
+
+    @FXML
+    private void calender(MouseEvent event) {
+    	CalendarView calendarView = new CalendarView(); 
+
+        
+
+      
+
+        CalendarSource myCalendarSource = new CalendarSource("My Calendars"); 
+      
+
+        calendarView.getCalendarSources().addAll(myCalendarSource); 
+        Calendar katja = new Calendar("Katja");
+        Calendar dirk = new Calendar("Dirk");
+
+        CalendarSource familyCalendarSource = new CalendarSource("Family");
+        familyCalendarSource.getCalendars().addAll(katja, dirk);
+
+        
+        calendarView.getCalendarSources().setAll(familyCalendarSource);
+        calendarView.setRequestedTime(LocalTime.now());
+        
+        
+    //    calendarView.setEntryDetailsPopOverContentCallback(param -> new MyCustomPopOverContentNode());
+
+
+        
+        Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
+                @Override
+                public void run() {
+                        while (true) {
+                                Platform.runLater(() -> {
+                                        calendarView.setToday(LocalDate.now());
+                                        calendarView.setTime(LocalTime.now());
+                                });
+
+                                try {
+                                        // update every 10 seconds
+                                        sleep(10000);
+                                } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                }
+
+                        }
+                }; 
+        };
+        updateTimeThread.setPriority(Thread.MIN_PRIORITY);
+        updateTimeThread.setDaemon(true);
+        updateTimeThread.start();
+    
+        		
+        
+        
+Stage primaryStage=new Stage();
+      
+        Scene scene = new Scene(calendarView);
+        primaryStage.setTitle("Calendar");
+        primaryStage.setScene(scene);
+        primaryStage.setWidth(800);
+        primaryStage.setHeight(600);
+        primaryStage.centerOnScreen();
+        primaryStage.show();
+    }
+
+
+
+   
+    @FXML
+    private void onBrowserAction(ActionEvent event) throws FileNotFoundException, IOException {
+    	
+    	
+    	
+    	String path_img;
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Image File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files",
+                        "*.bmp", "*.png", "*.jpg", "*.gif")); // limit fileChooser options to image files
+        File selectedFile = fileChooser.showOpenDialog(fileSelected.getScene().getWindow());
+
+        if (selectedFile != null) {
+            Upload u = new Upload();
+            u.upload(selectedFile);
+            imageFile = selectedFile.toURI().toURL().toString();
+            
+      
+        	path_img = selectedFile.getName();
+			ss.setText(path_img);
+            Image image = new Image(imageFile);
+            imageView.setImage(image);
+        } else {
+            fileSelected.setText("Image file selection cancelled.");
+        }
+    	
+    	
+    }
+
+    @FXML
+    private void PdfimageClick(MouseEvent event) throws IOException {
+    	  if(	txtserial.getText().equals(""))
+    	    {	Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Erreur ");
+    		alert.setHeaderText("please select a row  .!!!!");
+    		alert.showAndWait();}else
+    	    {
+    	    	Parent parent= null;
+    	    	parent  =FXMLLoader.load(getClass().getResource("/views/pdf.fxml"));
+    			Scene scene=new Scene(parent);
+    			Stage primaryStage= new Stage(); 
+    			primaryStage.setScene(scene);
+    			primaryStage.show();
+    			pdf.getScene().getWindow().hide();}
+    }
+    
+    
+ void refrechcount() throws NamingException   
+ {	String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/EquipementService!tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceRemote";
+	Context context;
+
+	
+	context= new InitialContext();
+
+EquipementServiceRemote proxy=(EquipementServiceRemote) context.lookup(jndiName);
+
+ Long x=proxy.Date(LoginController.date1, LoginController.date1);
+nbeqpanne.setText( Long.toString(x));
+Long y=proxy.countequi();
+
+nbbonne.setText( Long.toString(y-x));
+totalequipment.setText( Long.toString(y));}
 }
 

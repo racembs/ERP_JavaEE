@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" fx:id="ehoooo" onMouseEntered="#pdf" prefHeight="176.0" prefWidth="354.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.attController">
+   <stylesheets>
+      <URL value="@../styles/styles.css" />
+      <URL value="@styles.css" />
+   </stylesheets>
+   <children>
+      <JFXSpinner fx:id="loggingProgress" layoutX="154.0" layoutY="88.0" prefHeight="90.0" prefWidth="46.0" radius="20.0" />
+      <Label fx:id="fileSelected" layoutX="14.0" />
+   </children>
+</AnchorPane>

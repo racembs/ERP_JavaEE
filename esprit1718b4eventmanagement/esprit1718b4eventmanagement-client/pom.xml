@@ -63,7 +63,7 @@
 			<artifactId>jfoenix</artifactId>
 			<version>1.9.0</version>
 		</dependency>
-		
+
 		<dependency>
 	      <groupId>com.google.apis</groupId>
 	      <artifactId>google-api-services-calendar</artifactId>
@@ -92,7 +92,12 @@
     		<artifactId>jfreechart</artifactId>
     		<version>1.0.19</version>
 		</dependency>
-		
+		<dependency>
+    <groupId>com.calendarfx</groupId>
+    <artifactId>view</artifactId>
+    <version>8.4.2</version>
+</dependency>
+
 	</dependencies>
 
 	<build>

@@ -11,5 +11,6 @@ import tn.esprit.b4.esprit1718b4eventmanagement.utilities.IGenericDAO;
 public interface OrdersServiceRemote extends IGenericDAO<Orders> {
 	public int addOrders(Orders order);
 	public List<Orders> findOrdersByClient(int idClient);
+	public void updateStatusOrder();
 
 }

@@ -98,7 +98,7 @@ public class GanttDemoController extends ApplicationFrame implements Initializab
     public static IntervalCategoryDataset createDataset(List<ManufacturingPlanning> list) {
     	final TaskSeries s1 = new TaskSeries("Scheduled");
     	for (ManufacturingPlanning manuf : list) {
-    		s1.add(new Task(manuf.getNeededItem().getNeeded_article().getArticleCode(), manuf.getStartingDate(), manuf.getEndingDate()));
+    		s1.add(new Task(manuf.getId()+"-"+manuf.getNeededItem().getNeeded_article().getArticleCode(), manuf.getStartingDate(), manuf.getEndingDate()));
 		}
 
         final TaskSeriesCollection collection = new TaskSeriesCollection();

@@ -1,5 +1,6 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -7,9 +8,11 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeededItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItemPk;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
@@ -85,6 +88,28 @@ public class OrderItemService extends GenericDAO<OrdredItem> implements OrderIte
 		query.setParameter("idOrder",idOrder);
 		List<OrdredItem> list=query.getResultList();
 		return list;
+	}
+
+	@Override
+	public void updateStatusOrdredItem() {
+		List<OrdredItem> list = findAll();
+		for (OrdredItem ordredItem : list) {
+			Boolean state=true;
+			if(!ordredItem.getManufacturingList().isEmpty()){
+				ordredItem.setStatus("in progress");
+				for (NeededItem neededItem : ordredItem.getManufacturingList()) {
+					if(neededItem.getStatus().equals("Pending")){
+						state = false;
+						update(ordredItem);
+						return;
+					}
+				}
+				if(state){
+					ordredItem.setStatus("finished");
+					update(ordredItem);
+				}
+			}
+		}
 	}
 
 

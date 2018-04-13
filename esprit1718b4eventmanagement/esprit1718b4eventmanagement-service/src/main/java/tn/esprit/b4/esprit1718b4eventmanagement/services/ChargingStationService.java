@@ -11,6 +11,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 
 
@@ -90,14 +91,22 @@ public class ChargingStationService extends GenericDAO<ChargingStation> implemen
 	}
 	
 	@Override
-	public List<ChargingStation> findd(int code) {
+	public List<ChargingStation> findd(String code) {
+		
 		TypedQuery<ChargingStation> query=em.createQuery(
-				"select o from ChargingStation o where o.code=:code", ChargingStation.class);
-		query.setParameter("code", code);
+				"select o from ChargingStation o where o.description like :code", ChargingStation.class);
+		query.setParameter("code", "%"+code+"%");
 		List <ChargingStation> result= query.getResultList();
 		return result;
 	}
 
-
+	@Override
+	public List<ChargingStation> findByUser(Integer idUser) {
+		TypedQuery<ChargingStation> query
+		=em.createQuery("SELECT o FROM ChargingStation o WHERE o.chargingstationPK.idUser  =:idUser", ChargingStation.class);
+		query.setParameter("idUser",idUser);
+		List<ChargingStation> list=query.getResultList();
+		return list;
+	}
 
 }

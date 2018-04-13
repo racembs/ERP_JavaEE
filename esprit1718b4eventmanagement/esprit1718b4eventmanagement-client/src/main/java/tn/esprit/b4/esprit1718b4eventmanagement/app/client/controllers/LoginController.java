@@ -8,10 +8,13 @@ package tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-
+import com.sun.org.apache.xml.internal.resolver.helpers.PublicId;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 import javax.naming.Context;
@@ -53,7 +56,7 @@ public class LoginController implements Initializable {
     @FXML
     private ImageView imgProgress;
     
-    
+    public static String date1 ;
 public static User user = new User();
     @FXML
     private Hyperlink lienpwdforgot;
@@ -62,6 +65,9 @@ public static User user = new User();
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+    	DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar date = Calendar.getInstance();
+       date1 = df.format(date.getTime());
         // TODO
     }    
 

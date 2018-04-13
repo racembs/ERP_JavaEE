@@ -18,14 +18,14 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "NeededItem")
-public class NeededItem implements Serializable {
+public class NeededItem implements Serializable, Comparable<NeededItem> {
 
 	   
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
 	private String actionNature;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date purchaseDeliveryDate;
 	private int level;
 	@Column(name = "grossNeed")
@@ -43,7 +43,7 @@ public class NeededItem implements Serializable {
 	private Article needed_article;
 	
 	@OneToMany(mappedBy="neededItem",fetch=FetchType.EAGER)
-	private List<ManufacturingPlanning> manufacturingPlanning;
+	private List<ManufacturingPlanning> manufacturingPlanning = new ArrayList<>();
 	
 	@OneToMany(mappedBy="parent",fetch=FetchType.EAGER)
 	private List<NeedNomenclature> nomenclatures;
@@ -215,6 +215,11 @@ public class NeededItem implements Serializable {
 		} else if (!status.equals(other.status))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(NeededItem o) {
+		return this.getNeeded_article().getArticleCode().compareTo(o.getNeeded_article().getArticleCode());
 	}
 
 	

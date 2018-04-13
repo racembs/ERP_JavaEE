@@ -31,7 +31,8 @@ public class Equipment implements Serializable {
 	private String Marque;
 	@Column(name = "Lieu")
 	private String Lieu;
-	
+	@Column(name = "image")
+	private String image;
 	
 	
 	@OneToMany(mappedBy="equipement")
@@ -198,6 +199,25 @@ private List <Works> works;
 	}
 	public void setWorks(List<Works> works) {
 		this.works = works;
+	}
+	public Equipment(String serialNum, String description, String state, String eISDate, String fabriquant,
+			String marque, String lieu, String image, Arboresence arboresence) {
+		super();
+		SerialNum = serialNum;
+		Description = description;
+		State = state;
+		EISDate = eISDate;
+		Fabriquant = fabriquant;
+		Marque = marque;
+		Lieu = lieu;
+		this.image = image;
+		this.arboresence = arboresence;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 

@@ -67,6 +67,7 @@
                                           </TreeTableView>
                                        </children>
                                     </Pane>
+                                    <Button fx:id="back1" layoutY="-1.0" mnemonicParsing="false" text="&lt;back" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="364.0" prefWidth="1200.0">
@@ -120,6 +121,7 @@
                               <ComboBox fx:id="Combo_Article" layoutX="924.0" layoutY="81.0" onAction="#Combo_Article_Action" prefHeight="30.0" prefWidth="177.0" />
                               <Label fx:id="ItemLabel1111" layoutX="818.0" layoutY="80.0" prefHeight="33.0" prefWidth="76.0" text="Article" />
                               <Button fx:id="ganttButton" layoutX="384.0" layoutY="575.0" mnemonicParsing="false" onAction="#ganttAction" prefHeight="30.0" prefWidth="454.0" text="Show gantt Diagram" />
+                              <Button fx:id="back2" layoutY="-1.0" mnemonicParsing="false" text="&lt;back" />
                            </children>
                         </AnchorPane>
                     </content>

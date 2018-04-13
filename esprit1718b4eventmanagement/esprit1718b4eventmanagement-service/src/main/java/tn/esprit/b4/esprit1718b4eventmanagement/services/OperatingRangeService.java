@@ -12,6 +12,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 @Stateless
@@ -54,8 +55,8 @@ public class OperatingRangeService extends GenericDAO<OperatingRange> implements
 	@Override
 	public List<OperatingRange> find(String code) {
 		TypedQuery<OperatingRange> query=em.createQuery(
-				"select o from OperatingRange o where o.code=:code", OperatingRange.class);
-		query.setParameter("code", code);
+				"select o from OperatingRange o where o.code like :code", OperatingRange.class);
+		query.setParameter("code", "%"+code+"%");
 		List <OperatingRange> result= query.getResultList();
 		return result;
 	}
@@ -75,6 +76,14 @@ public class OperatingRangeService extends GenericDAO<OperatingRange> implements
 		return result;
 	}
 	
+	@Override
+	public List<OperatingRange> Display(String stakingcondition) {
+
+		TypedQuery<OperatingRange> query=em.createQuery("SELECT o FROM OperatingRange o WHERE o.stakingcondition =:stakingcondition",OperatingRange.class);
+		query.setParameter("stakingcondition",stakingcondition);
+		List<OperatingRange> list=query.getResultList();
+		return list;
+	}
 	
 	public OperatingRange assignOperatingRangeToArticle (int idOptR, int idArticle){
 		OperatingRange op = em.find(OperatingRange.class, idOptR);
