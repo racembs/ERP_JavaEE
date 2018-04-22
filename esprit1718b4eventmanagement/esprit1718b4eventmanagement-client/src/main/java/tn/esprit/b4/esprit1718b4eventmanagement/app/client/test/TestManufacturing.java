@@ -104,7 +104,9 @@ public class TestManufacturing {
 //		map= proxyNeededItem.CreateNeedItemTree(Parent);
 //		map=proxyNeededItem.SaveNeedItemTree(map);
 		//map= proxyNeededItem.CreateANDSaveNeedItemTree(Parent);
-		NeededItem Parent=proxyNeededItem.find(1);
+		NeededItem Parent=proxyNeededItem.find(12);
+		proxyNeededItem.InitialiseDESCMap();
+		map = proxyNeededItem.findNeededItemTreeByOrdredItem(Parent);
 			//map=proxyNeededItem.findNeededItemTreeByOrdredItem(Parent);
 //		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
 		
@@ -112,9 +114,15 @@ public class TestManufacturing {
 //		map=proxyNeededItem.InitialiseMap();
 //		map= proxyNeededItem.findNeededItemTreeByOrdredItem(ParentneededItem);
 		
-//		for(Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()){
-//		System.out.println(proxyNeededItem.CheckReadyLot(e.getKey(), e.getValue()));
-//	}
+		for(Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()){
+		System.out.println(e.getKey().getNeeded_article().getArticleCode()+ " "+ e.getKey().getNetNeed());
+		Set<NeededItem> set = new HashSet<>(e.getValue()); 
+		System.out.println("**********Valeur*******");
+		for (NeededItem child : set) {
+			System.out.println(child.getNeeded_article().getArticleCode()+ " "+ child.getNetNeed());
+		}
+		System.out.println("***********************");
+	}
 		
 //		for(Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()){
 //			System.out.println("readyLot "+proxyNeededItem.CheckReadyLot(e.getKey(), e.getValue()));
@@ -130,21 +138,21 @@ public class TestManufacturing {
 		
 		
 		//int duration =proxyManufacturing.manufacturingDuration(ParentneededItem.getNeeded_article(), 10);
-		int duration = 5280;
-	    System.out.println(duration);
-	    
-		Calendar cal = Calendar.getInstance();
-		cal.set(2018, 03, 22, 11, 0);
-
-		Date dt = cal.getTime();
-		
-		Date d = proxyManufacturing.endingManufacturingDate(dt, duration,2);
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd kk:mm");
-	    System.out.println(sdf.format(d));
-	    
-	    proxyNeededItem.updateStatusPurchaseOrder();
-	    proxyOrdredItem.updateStatusOrdredItem();
+//		int duration = 5280;
+//	    System.out.println(duration);
+//	    
+//		Calendar cal = Calendar.getInstance();
+//		cal.set(2018, 03, 22, 11, 0);
+//
+//		Date dt = cal.getTime();
+//		
+//		Date d = proxyManufacturing.endingManufacturingDate(dt, duration,2);
+//		
+//		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd kk:mm");
+//	    System.out.println(sdf.format(d));
+//	    
+//	    proxyNeededItem.updateStatusPurchaseOrder();
+//	    proxyOrdredItem.updateStatusOrdredItem();
 	    
 //	    List<ManufacturingPlanning> ListMan = proxyManufacturing.ReadyManufacturingPlanning(map, dt);
 //	    for (ManufacturingPlanning manufacturingPlanning : ListMan) {

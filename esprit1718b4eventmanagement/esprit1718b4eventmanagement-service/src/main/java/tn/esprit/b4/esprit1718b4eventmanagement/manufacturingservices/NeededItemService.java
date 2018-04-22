@@ -111,12 +111,13 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 	
 	@Override
 	public Map<NeededItem, List<NeededItem>> InitialiseDESCMap() {
-		return  mapASC = new TreeMap<>(new LevelDown());	
+		return  mapDESC = new TreeMap<>(new LevelDown());	
 	}
 	
 	@Override
 	public Map<NeededItem, List<NeededItem>> CreateNeedItemTree(NeededItem ParentneededItem){
 		//determine all Article childdren of the ParentneededItem
+		InitialiseMap();
 		List <Nomenclature> nomenclatureList =  articleServ.getFilsArticles(ParentneededItem.getNeeded_article().getId());
 		List <NeededItem> NeededItemList = new ArrayList<>();
 		for (Nomenclature nomenclature : nomenclatureList) {

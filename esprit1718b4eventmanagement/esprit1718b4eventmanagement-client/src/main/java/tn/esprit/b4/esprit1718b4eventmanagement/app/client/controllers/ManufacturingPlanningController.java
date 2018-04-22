@@ -417,7 +417,6 @@ public class ManufacturingPlanningController implements Initializable {
 		    			(ComboArticleSearch.getSelectionModel().getSelectedItem().getOrdredItemPk().getId_Order(), 
 		    					ComboArticleSearch.getSelectionModel().getSelectedItem().getOrdredItemPk().getId_Article());  
   
-			map=proxyNeededItem.InitialiseASCMap();
 	    	map = proxyNeededItem.findNeededItemTreeByOrdredItemLevelAsc(ParentneededItem);
 	    	List<NeededItem> neededItemList =proxyNeededItem.NeedItemList(map);
 	    	

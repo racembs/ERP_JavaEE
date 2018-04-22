@@ -66,6 +66,7 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingPlanning;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeedNomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeededItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
@@ -342,7 +343,12 @@ public class MRPCalculationController implements Initializable {
             		else
             			hourlyPostNumber=3;
             		proxyManufacturing.ReadyManufacturingPlanning(map, calendar.getTime(),hourlyPostNumber);
-            		proxyManufacturing.AfterDeliveryManufacturingPlanning(proxyNeededItem.findNeededItemTreeByOrdredItem(AbsoluteParent),hourlyPostNumber);
+            		proxyNeededItem.InitialiseDESCMap();
+            		List<ManufacturingPlanning> llisst =proxyManufacturing.AfterDeliveryManufacturingPlanning(proxyNeededItem.findNeededItemTreeByOrdredItem(AbsoluteParent),hourlyPostNumber);
+            		for (ManufacturingPlanning manufacturingPlanning : llisst) {
+            			System.out.println(manufacturingPlanning.getNeededItem().getNeeded_article().getArticleCode());
+					}
+            		System.out.println();
         		}
         		
         		Make.setVisible(false);
