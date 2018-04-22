@@ -76,38 +76,56 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 	}
 
 	@Override
-	public Date endingManufacturingDate(Date startingDate, long duration) {
+	public Date endingManufacturingDate(Date startingDate,long duration,int hourlyPost) {
 		float hourNbr = duration / 60;
-		float dayNbr = hourNbr / 9;
+		float dayNbr = hourNbr / (hourlyPost*8);
 		int length = (int) Math.round(dayNbr + 0.5);
 		Calendar c = Calendar.getInstance();
 		c.setTime(startingDate);
 		long startMillis = c.getTimeInMillis();
 		long endMillis = 0;
-		// if it's a work doesn't exceed 1 day
-		if ((length - 1) == 1) {
-			long testEndMillis = startMillis + duration * 60 * 1000;
-			// check if the work is more than 17h
-			// 86400000 =1 day and 61200000=17h and 54000000=15h
-			if ((testEndMillis % (86400000)) > 61200000L) {
-				endMillis = testEndMillis + 54000000;
-			} else {
-				endMillis = testEndMillis;
-			}
+		if(hourlyPost==3){
+			endMillis = startMillis + duration*60*1000;
 		} else {
-			long newDuration = duration - (length - 1) * 9 * 60;
-			long newStartMillis = startMillis + (length - 1) * 24 * 60 * 60 * 1000;
-
-			long testEndMillis = newStartMillis + newDuration * 60 * 1000;
-			// check if the work is more than 17h
-			// 86400000 =1 day and 61200000=17h and 54000000=15h
-			Long result = (testEndMillis % (86400000));
-			if (result > 61200000L) {
-				endMillis = testEndMillis + 54000000;
+			// if it's a work doesn't exceed 1 day
+			if ((length - 1) == 1) {
+				long testEndMillis = startMillis + duration * 60 * 1000;
+				// check if the work is more than 17h
+				// 86400000 =1 day and 61200000=17h and 54000000=15h
+				//endTime = 15h or 23h
+				//jumpTime = 16h or 8h
+				long endTime = (7+8*hourlyPost)*60*60*1000;
+				long rest = (testEndMillis % (86400000));
+				if(rest< 25200000)
+					rest=rest+24*60*60*1000;
+				if (rest >= endTime) {
+					long jumpTime=(24-8*hourlyPost)*60*60*1000;
+					endMillis = testEndMillis + jumpTime;
+				} else {
+					endMillis = testEndMillis;
+				}
 			} else {
-				endMillis = testEndMillis;
+				long newDuration = duration - (length - 1) * 8*hourlyPost * 60;
+				long newStartMillis = startMillis + (length - 1) * 24 * 60 * 60 * 1000;
+
+				long testEndMillis = newStartMillis + newDuration * 60 * 1000;
+				// check if the work is more than 17h
+				// 86400000 =1 day and 61200000=17h and 54000000=15h
+				//endTime = 15h or 23h
+				//jumpTime = 16h or 8h
+				long endTime = (7+8*hourlyPost)*60*60*1000;
+				long rest = (testEndMillis % (86400000));
+				if(rest< 25200000)
+					rest=rest+24*60*60*1000;
+				if (rest >= endTime) {
+					long jumpTime=(24-8*hourlyPost)*60*60*1000;
+					endMillis = testEndMillis + jumpTime;
+				} else {
+					endMillis = testEndMillis;
+				}
 			}
 		}
+		
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(endMillis);
 
@@ -127,7 +145,7 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 	}
 
 	@Override
-	public List<ManufacturingPlanning> ReadyManufacturingPlanning(Map<NeededItem, List<NeededItem>> map,Date startingDate) {
+	public List<ManufacturingPlanning> ReadyManufacturingPlanning(Map<NeededItem, List<NeededItem>> map,Date startingDate,int hourlyPost) {
 		List<ManufacturingPlanning> listMan = new ArrayList<>();
 		for (Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()) {
 			if(!e.getValue().isEmpty()){
@@ -135,8 +153,8 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 				readyLot = needItem.CheckReadyLot(e.getKey(), e.getValue());
 				//creating manufacturing planning of the needed Item with quantity of readyLot
 				ManufacturingPlanning manuf = new ManufacturingPlanning(readyLot,startingDate,"in progress",e.getKey());
-				int duration = manufacturingDuration(e.getKey().getNeeded_article(),readyLot);
-				Date ending = endingManufacturingDate(startingDate,duration);
+				int duration = mmm.manufacturingDuration(e.getKey().getNeeded_article(),readyLot);
+				Date ending = mmm.endingManufacturingDate(startingDate,duration,hourlyPost);
 				manuf.setDuration(duration);
 				manuf.setEndingDate(ending);
 				em.persist(manuf);
@@ -224,7 +242,7 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 	}
 
 	@Override
-	public List<ManufacturingPlanning> AfterDeliveryManufacturingPlanning(Map<NeededItem, List<NeededItem>> map) {
+	public List<ManufacturingPlanning> AfterDeliveryManufacturingPlanning(Map<NeededItem, List<NeededItem>> map, int hourlyPost) {
 		List<ManufacturingPlanning> listMan = new ArrayList<>();
 		for (Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()) {
 			Calendar cal = Calendar.getInstance();
@@ -246,8 +264,8 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 					int netQty = e.getKey().getNetNeed();
 					//creating manufacturing planning of the needed Item with quantity of net need
 					ManufacturingPlanning manuf = new ManufacturingPlanning(netQty,startingDate,"in progress",e.getKey());
-					int duration = manufacturingDuration(e.getKey().getNeeded_article(),netQty);
-					Date ending = endingManufacturingDate(startingDate, duration);
+					int duration = mmm.manufacturingDuration(e.getKey().getNeeded_article(),netQty);
+					Date ending = mmm.endingManufacturingDate(startingDate, duration,hourlyPost);
 					manuf.setDuration(duration);
 					manuf.setEndingDate(ending);
 					em.persist(manuf);

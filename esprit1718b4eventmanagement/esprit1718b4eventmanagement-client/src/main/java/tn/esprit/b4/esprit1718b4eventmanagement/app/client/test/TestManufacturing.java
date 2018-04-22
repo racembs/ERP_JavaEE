@@ -138,7 +138,7 @@ public class TestManufacturing {
 
 		Date dt = cal.getTime();
 		
-		Date d = proxyManufacturing.endingManufacturingDate(dt, duration);
+		Date d = proxyManufacturing.endingManufacturingDate(dt, duration,2);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd kk:mm");
 	    System.out.println(sdf.format(d));

@@ -4,6 +4,7 @@
 <?import java.net.URL?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -44,8 +45,8 @@
                   <TableColumn fx:id="StatusColumn" prefWidth="92.0" text="Status" />
               </columns>
             </TableView>
-            <Button fx:id="Make" layoutX="567.0" layoutY="128.0" mnemonicParsing="false" onAction="#MakeAction" prefHeight="30.0" prefWidth="139.0" text="Make Planning" />
-            <Button fx:id="Cancel" layoutX="567.0" layoutY="188.0" mnemonicParsing="false" onAction="#CancelAction" prefHeight="30.0" prefWidth="139.0" text="Cancel" />
+            <Button fx:id="Make" layoutX="530.0" layoutY="190.0" mnemonicParsing="false" onAction="#MakeAction" prefHeight="30.0" prefWidth="139.0" text="Make Planning" />
+            <Button fx:id="Cancel" layoutX="736.0" layoutY="190.0" mnemonicParsing="false" onAction="#CancelAction" prefHeight="30.0" prefWidth="139.0" text="Cancel" />
             <Button fx:id="ShowButton" layoutX="372.0" layoutY="275.0" mnemonicParsing="false" onAction="#ShowAction" text="Show result" />
             <TreeTableView fx:id="TreeTable" layoutX="32.0" layoutY="28.0" prefHeight="238.0" prefWidth="429.0">
               <columns>
@@ -53,7 +54,10 @@
                 <TreeTableColumn fx:id="QtyColumn" prefWidth="45.0" text="Qty" />
               </columns>
             </TreeTableView>
-            <DatePicker fx:id="date" layoutX="725.0" layoutY="128.0" />
+            <DatePicker fx:id="date" layoutX="710.0" layoutY="51.0" />
+            <ComboBox fx:id="HourlyPostCombo" layoutX="710.0" layoutY="112.0" prefHeight="30.0" prefWidth="206.0" />
+            <Label fx:id="StartLabel" layoutX="530.0" layoutY="51.0" prefHeight="30.0" prefWidth="127.0" text="Starting Date" />
+            <Label fx:id="hourlyLabel" layoutX="530.0" layoutY="112.0" prefHeight="30.0" prefWidth="139.0" text="Hourly Post Number" />
          </children></AnchorPane>
    </children>
    
