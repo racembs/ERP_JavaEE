@@ -274,6 +274,7 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 					manuf.setDuration(duration);
 					manuf.setEndingDate(ending);
 					em.persist(manuf);
+
 					if(!e.getKey().getManufacturingPlanning().contains(manuf))
 						e.getKey().getManufacturingPlanning().add(manuf);
 					listMan.add(manuf);
@@ -292,6 +293,181 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 		TypedQuery<ManufacturingPlanning> query=em.createQuery("SELECT o FROM ManufacturingPlanning o",ManufacturingPlanning.class);
 		List <ManufacturingPlanning> result= query.getResultList();
 		return result;
+	}
+
+	@Override
+	public Map<NeededItem, List<NeededItem>> stakingLaterScheduling(NeededItem ParentneededItem, Date DeliveryDate,
+			int hourlyPost) {
+		
+		Date date = new Date();
+		Map<NeededItem, List<NeededItem>> map = needItem.CreateNeedItemTree(ParentneededItem);
+		Set<ManufacturingPlanning> ReadySet = new HashSet<>(ReadyManufacturingPlanningWithoutSaving(map, hourlyPost)) ;
+		int i =0;
+		for (Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()) {
+			if(e.getKey().getLevel()==0 && e.getKey().getNetNeed()!=0){
+				int netQty = e.getKey().getNetNeed();
+				int duration = mmm.manufacturingDuration(e.getKey().getNeeded_article(),netQty);
+				//creating manufacturing planning of the needed Item with quantity of net need
+				ManufacturingPlanning manuf = new ManufacturingPlanning(netQty, DeliveryDate, duration, "in progress", e.getKey());
+				Date starting = mmm.startingManufacturingDate(DeliveryDate, duration,hourlyPost);
+				manuf.setDuration(duration);
+				manuf.setStartingDate(starting);
+				if(!e.getKey().getManufacturingPlanning().contains(manuf))
+					e.getKey().getManufacturingPlanning().add(manuf);
+				ReadySet.add(manuf);
+				for (NeededItem child : e.getValue()) {
+					if(child.getNetNeed()!=0){
+						int netQtyChild = child.getNetNeed();
+						int durationchild = mmm.manufacturingDuration(child.getNeeded_article(),netQtyChild);
+						//creating manufacturing planning of the needed Item with quantity of net need
+						ManufacturingPlanning manufChild = new ManufacturingPlanning(netQtyChild, manuf.getStartingDate(), durationchild, "in progress", child);
+						Date startingChild = mmm.startingManufacturingDate(manuf.getStartingDate(), durationchild,hourlyPost);
+						manufChild.setDuration(durationchild);
+						manufChild.setStartingDate(startingChild);
+						if(!child.getManufacturingPlanning().contains(manufChild))
+							child.getManufacturingPlanning().add(manufChild);
+						ReadySet.add(manufChild);
+					}
+				}
+			} else {
+				if(e.getKey().getNetNeed()!=0 && e.getKey().getManufacturingPlanning().size()>1 && !e.getValue().isEmpty()){
+					ManufacturingPlanning manuf = e.getKey().getManufacturingPlanning().get(e.getKey().getManufacturingPlanning().size()-1);
+					for (NeededItem child : e.getValue()) {
+						if(child.getNetNeed()!=0 && child.getLevel()!=99){
+							int netQtyChild = child.getNetNeed();
+							int durationchild = mmm.manufacturingDuration(child.getNeeded_article(),netQtyChild);
+							//creating manufacturing planning of the needed Item with quantity of net need
+							ManufacturingPlanning manufChild = new ManufacturingPlanning(netQtyChild, manuf.getStartingDate(), durationchild, "in progress", child);
+							Date startingChild = mmm.startingManufacturingDate(manuf.getStartingDate(), durationchild,hourlyPost);
+							manufChild.setDuration(durationchild);
+							manufChild.setStartingDate(startingChild);
+							if(!child.getManufacturingPlanning().contains(manufChild))
+								child.getManufacturingPlanning().add(manufChild);
+							ReadySet.add(manufChild);
+						}
+					}
+				}
+			}
+			
+		}
+		
+		for (NeededItem neededItem : map.keySet()) {
+			if(!neededItem.getManufacturingPlanning().isEmpty()){
+				Date endingDate = neededItem.getManufacturingPlanning().get(neededItem.getManufacturingPlanning().size()-1).getStartingDate();
+				Date startingDate = mmm.startingManufacturingDate(endingDate,(long) neededItem.getManufacturingPlanning().get(0).getDuration(),hourlyPost);
+				neededItem.getManufacturingPlanning().get(0).setEndingDate(endingDate);
+				neededItem.getManufacturingPlanning().get(0).setStartingDate(startingDate);
+			}
+		}
+		
+		return map;
+	}
+
+	@Override
+	public Date startingManufacturingDate(Date endingDate, long duration, int hourlyPost) {
+		if(duration!=0){
+			float hourNbr = duration / 60;
+			float dayNbr = hourNbr / (hourlyPost*8);
+			int length = (int) Math.round(dayNbr + 0.5);
+			Calendar c = Calendar.getInstance();
+			c.setTime(endingDate);
+			long endMillis = c.getTimeInMillis();
+			long startMillis = 0;
+			if(hourlyPost==3){
+				startMillis = endMillis - duration*60*1000;
+			} else {
+				// if it's a work doesn't exceed 1 day
+				if ((length - 1) == 0) {
+					long testStartMillis;
+					if(((endMillis%86400000) - duration*60*1000)<25200000 && hourlyPost==2){
+						testStartMillis = endMillis - ((duration) * 60 * 1000)- 8*60*60*1000;
+					} else {
+						testStartMillis = endMillis - ((duration) * 60 * 1000);
+					}
+					
+					// check if the work is more than 17h
+					// 86400000 =1 day and 61200000=17h and 54000000=15h
+					//endTime = 15h or 23h
+					//jumpTime = 16h or 8h
+					long endTime = (7+8*hourlyPost)*60*60*1000;
+					long rest = (testStartMillis % (86400000));
+//					if(rest< 25200000)
+//						rest=rest+24*60*60*1000;
+					if (rest >= endTime || rest<=7*60*60*1000) {
+						long jumpTime=(24-8*hourlyPost)*60*60*1000;
+						startMillis = testStartMillis - jumpTime;
+					} else {
+						startMillis = testStartMillis ;
+					}
+				} else {
+					long newDuration = duration - (length - 1) * 8*hourlyPost * 60;
+					long newEndtMillis = endMillis - (length - 1) * 24 * 60 * 60 * 1000;
+					
+					long testStartMillis;
+					if(((newEndtMillis % 86400000) - newDuration*60*1000)<25200000 && hourlyPost==2){
+						testStartMillis = newEndtMillis - newDuration * 60 * 1000 -8*60*60*1000;
+					} else {
+						testStartMillis = newEndtMillis - newDuration * 60 * 1000 ;
+					}
+					
+					// check if the work is more than 17h
+					// 86400000 =1 day and 61200000=17h and 54000000=15h
+					//endTime = 15h or 23h
+					//jumpTime = 16h or 8h
+					long endTime = (7+8*hourlyPost)*60*60*1000;
+					long rest = (testStartMillis % (86400000));
+//					if(rest< 25200000)
+//						rest=rest+24*60*60*1000;
+					if (rest >= endTime || rest<=7*60*60*1000) {
+						long jumpTime=(24-8*hourlyPost)*60*60*1000;
+						startMillis = testStartMillis - jumpTime;
+					} else {
+						startMillis = testStartMillis;
+					}
+				}
+			}
+			
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTimeInMillis(startMillis);
+
+			Date startingDate = calendar.getTime();
+			return startingDate;
+		} else {
+			return endingDate;
+		}
+	}
+
+	@Override
+	public List<ManufacturingPlanning> ReadyManufacturingPlanningWithoutSaving(Map<NeededItem, List<NeededItem>> map,int hourlyPost) {
+		Date date = new Date();
+		List<ManufacturingPlanning> listMan = new ArrayList<>();
+		for (Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()) {
+			if(!e.getValue().isEmpty() && e.getKey().getNetNeed()!=0){
+				int readyLot=0;
+				readyLot = needItem.CheckReadyLot(e.getKey(), e.getValue());
+				//creating manufacturing planning of the needed Item with quantity of readyLot
+				ManufacturingPlanning manuf = new ManufacturingPlanning(readyLot,date,"in progress",e.getKey());
+				int duration = mmm.manufacturingDuration(e.getKey().getNeeded_article(),readyLot);
+				Date ending = mmm.endingManufacturingDate(date,duration,hourlyPost);
+				manuf.setDuration(duration);
+				manuf.setEndingDate(ending);
+				listMan.add(manuf);
+				e.getKey().getManufacturingPlanning().add(manuf);
+				Set<NeededItem> set = new HashSet<>(e.getValue());
+				for (NeededItem child : set) {
+					Nomenclature nom = findNomenclatureByParentChild(e.getKey().getNeeded_article(), child.getNeeded_article());
+					int reserved = child.getNeeded_article().getReservedQuantity();
+					reserved = reserved-(readyLot*nom.getQuantity());
+					child.getNeeded_article().setReservedQuantity(reserved);
+					int realQuantity = child.getNeeded_article().getQuantity();
+					realQuantity= realQuantity-(readyLot*nom.getQuantity());
+					child.getNeeded_article().setQuantity(realQuantity);
+					child.setReadyLotNumber(child.getReadyLotNumber()-readyLot);
+				}
+				e.getKey().setNetNeed(e.getKey().getNetNeed()-readyLot);
+			}
+		}
+		return listMan;
 	}
 	
 	

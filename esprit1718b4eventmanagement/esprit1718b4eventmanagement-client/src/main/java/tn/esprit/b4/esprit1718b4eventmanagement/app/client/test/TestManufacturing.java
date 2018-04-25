@@ -52,9 +52,18 @@ public class TestManufacturing {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy");
 		Date orderDat = dateFormat.parse("18/03/2018");
-		Date deliveryDat = dateFormat.parse("25/03/2018");
+		Date deliveryDat = dateFormat.parse("25/06/2018");
 		Orders order = new Orders(1818,orderDat,deliveryDat,"en attente");
 		Orders order2 = new Orders(1818,orderDat,deliveryDat,"en attente");
+		
+		Calendar cale = Calendar.getInstance();
+		cale.set(2018, 05, 9, 9, 0);
+
+		Date dt = cale.getTime();
+		
+		Date deliveryDate = proxyManufacturing.endingManufacturingDate(dt, 1020,2);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd kk:mm");
 		
 //		order.setClient(client);
 //		int idOrder = proxyOrders.addOrders(order);
@@ -69,7 +78,7 @@ public class TestManufacturing {
 		ordredItem.setStatus("Pending");
 //		proxyOrdredItem.addOrdredItem(1, 1, ordredItem);
 		
-		OrdredItem orderItem2 = proxyOrdredItem.findOrdredItemById(1,31);
+		OrdredItem orderItem2 = proxyOrdredItem.findOrdredItemById(2,33);
 		System.out.println(orderItem2.getArticle().getType());
 		System.out.println(orderItem2.getOrdredItemPk().getId_Article());
 		
@@ -96,17 +105,28 @@ public class TestManufacturing {
 //		Parent.setNetNeed(Parent.getGrossNeed()-Parent.getNeeded_article().getQuantity());
 //		//Parent.setReadyLotNumber();
 //		Parent.setStatus("Pending");
-		//Parent.setId(proxyNeededItem.addNeededItem(Parent));
+		
+		NeededItem Parent = new NeededItem();
+		Parent.setActionNature("Manufacturing Order");
+		Parent.setOrderItem(orderItem2);
+		Parent.setNeeded_article(orderItem2.getArticle());
+		Parent.setGrossNeed(Parent.getOrderItem().getQuantity());
+		if(Parent.getGrossNeed()-(Parent.getNeeded_article().getQuantity()-Parent.getNeeded_article().getReservedQuantity())>0){
+			Parent.setNetNeed(Parent.getGrossNeed()-(Parent.getNeeded_article().getQuantity()-Parent.getNeeded_article().getReservedQuantity()));
+		} else {
+			Parent.setNetNeed(0);
+		}
+		
+		Parent.setStatus("Pending");
 		
 		Map<NeededItem, List<NeededItem>> map = new HashMap<>();
 		List<NeedNomenclature> needNomenclatureList = new ArrayList<>();
-		map = proxyNeededItem.InitialiseDESCMap();
 //		map= proxyNeededItem.CreateNeedItemTree(Parent);
 //		map=proxyNeededItem.SaveNeedItemTree(map);
 		//map= proxyNeededItem.CreateANDSaveNeedItemTree(Parent);
-		NeededItem Parent=proxyNeededItem.find(12);
-		proxyNeededItem.InitialiseDESCMap();
-		map = proxyNeededItem.findNeededItemTreeByOrdredItem(Parent);
+//									NeededItem Parent=proxyNeededItem.find(1);
+//									proxyNeededItem.InitialiseDESCMap();
+//									map = proxyNeededItem.findNeededItemTreeByOrdredItem(Parent);
 			//map=proxyNeededItem.findNeededItemTreeByOrdredItem(Parent);
 //		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
 		
@@ -114,15 +134,31 @@ public class TestManufacturing {
 //		map=proxyNeededItem.InitialiseMap();
 //		map= proxyNeededItem.findNeededItemTreeByOrdredItem(ParentneededItem);
 		
+		proxyNeededItem.InitialiseASCMap();
+		map = proxyManufacturing.stakingLaterScheduling(Parent, deliveryDate, 1);
+		
+//		for(Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()){
+//		System.out.println(e.getKey().getNeeded_article().getArticleCode()+ " "+ e.getKey().getNetNeed());
+//		Set<NeededItem> set = new HashSet<>(e.getValue()); 
+//		System.out.println("**********Valeur*******");
+//		for (NeededItem child : set) {
+//			System.out.println(child.getNeeded_article().getArticleCode()+ " "+ child.getNetNeed());
+//		}
+//		System.out.println("***********************");
+//	}
+		
+		
+		
 		for(Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()){
-		System.out.println(e.getKey().getNeeded_article().getArticleCode()+ " "+ e.getKey().getNetNeed());
-		Set<NeededItem> set = new HashSet<>(e.getValue()); 
-		System.out.println("**********Valeur*******");
-		for (NeededItem child : set) {
-			System.out.println(child.getNeeded_article().getArticleCode()+ " "+ child.getNetNeed());
+			for (ManufacturingPlanning manuf : e.getKey().getManufacturingPlanning()) {
+				System.out.println(manuf.getNeededItem().getNeeded_article().getArticleCode());
+				System.out.println("Starting : "+manuf.getStartingDate());
+				System.out.println("Ending : "+manuf.getEndingDate());
+				System.out.println("Duration : "+manuf.getDuration());
+				System.out.println();
+			}
+			System.out.println("***********************");
 		}
-		System.out.println("***********************");
-	}
 		
 //		for(Map.Entry<NeededItem, List<NeededItem>> e : map.entrySet()){
 //			System.out.println("readyLot "+proxyNeededItem.CheckReadyLot(e.getKey(), e.getValue()));
@@ -141,15 +177,15 @@ public class TestManufacturing {
 //		int duration = 5280;
 //	    System.out.println(duration);
 //	    
-//		Calendar cal = Calendar.getInstance();
-//		cal.set(2018, 03, 22, 11, 0);
-//
-//		Date dt = cal.getTime();
-//		
-//		Date d = proxyManufacturing.endingManufacturingDate(dt, duration,2);
-//		
-//		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd kk:mm");
-//	    System.out.println(sdf.format(d));
+		Calendar cal = Calendar.getInstance();
+		cal.set(2018, 03, 22, 07, 0);
+
+		Date dte = cal.getTime();
+		
+		Date d = proxyManufacturing.endingManufacturingDate(dte, 1020,2);
+		
+		SimpleDateFormat sdfe = new SimpleDateFormat("EEE MMM dd kk:mm");
+	    System.out.println(sdfe.format(d));
 //	    
 //	    proxyNeededItem.updateStatusPurchaseOrder();
 //	    proxyOrdredItem.updateStatusOrdredItem();

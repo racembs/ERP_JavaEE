@@ -117,7 +117,6 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 	@Override
 	public Map<NeededItem, List<NeededItem>> CreateNeedItemTree(NeededItem ParentneededItem){
 		//determine all Article childdren of the ParentneededItem
-		InitialiseMap();
 		List <Nomenclature> nomenclatureList =  articleServ.getFilsArticles(ParentneededItem.getNeeded_article().getId());
 		List <NeededItem> NeededItemList = new ArrayList<>();
 		for (Nomenclature nomenclature : nomenclatureList) {
@@ -150,7 +149,7 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 			NeededItemList.add(ChildNeededItem);
 		}
 		//put into the map for any parent his children list
-		map.put(ParentneededItem, NeededItemList);
+		mapASC.put(ParentneededItem, NeededItemList);
 		
 		if(NeededItemList==null){
 		}
@@ -160,7 +159,7 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 				CreateNeedItemTree(neededItem);
 			}
 		}
-		return map;
+		return mapASC;
 	}
 
 	@Override

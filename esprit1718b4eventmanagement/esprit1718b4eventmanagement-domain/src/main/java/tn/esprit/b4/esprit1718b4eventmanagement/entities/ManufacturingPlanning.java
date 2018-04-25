@@ -107,6 +107,17 @@ public class ManufacturingPlanning implements Serializable {
 		this.status = status;
 		this.neededItem = neededItem;
 	}
+	
+	
+
+	public ManufacturingPlanning(int quantity, Date endingDate, float duration, String status, NeededItem neededItem) {
+		super();
+		this.quantity = quantity;
+		this.endingDate = endingDate;
+		this.duration = duration;
+		this.status = status;
+		this.neededItem = neededItem;
+	}
 
 	public boolean getIs_incremented() {
 		return is_incremented;

@@ -23,4 +23,8 @@ public interface ManufacturingPlanningServiceRemote extends IGenericDAO<Manufact
 	public List<ManufacturingPlanning> AfterDeliveryManufacturingPlanning(Map<NeededItem, List<NeededItem>> map, int hourlyPost);
 
 	public List<ManufacturingPlanning> DisplayManufacturingPlanning();
+	
+	public Map<NeededItem, List<NeededItem>> stakingLaterScheduling(NeededItem ParentneededItem,Date DeliveryDate,int hourlyPost);
+	public Date startingManufacturingDate(Date endingDate,long duration,int hourlyPost);
+	public List<ManufacturingPlanning> ReadyManufacturingPlanningWithoutSaving(Map<NeededItem, List<NeededItem>> map,int hourlyPost);
 }
