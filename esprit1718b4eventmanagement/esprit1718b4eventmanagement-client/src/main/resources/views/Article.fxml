@@ -116,6 +116,13 @@
                                                       <TreeTableColumn fx:id="articleColumn" prefWidth="608.0" text="Article" />
                                                       <TreeTableColumn fx:id="quantityColumn" prefWidth="164.0" text="Quantity" />
                                                    </columns>
+                                                   <contextMenu>
+                                                      <ContextMenu>
+                                                        <items>
+                                                          <MenuItem mnemonicParsing="false" onAction="#OnDeleteFromTreeTableView" text="Delete" />
+                                                        </items>
+                                                      </ContextMenu>
+                                                   </contextMenu>
                                                 </TreeTableView>
                                              </children>
                                           </AnchorPane>

@@ -21,6 +21,8 @@ public interface ArticleServiceRemote {
 	public void updateNomeclature(int idArticlePere, int idArticleFils, int Quantity);
 	public List<Nomenclature> getFilsArticles(int idArticlePere);
 	public List<Nomenclature> getAllFinalArticleNomenclature();
+	public void DeleteNomenclature(Nomenclature nomenclature);
+	public List<Nomenclature> findNomenclature(int idArticlePere,int idArticleFils);
 	
 	public List<Article> getAllArticles();
 	public List<Article> getArticlesByType(String type);

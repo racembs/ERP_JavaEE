@@ -3,6 +3,7 @@ package tn.esprit.b4.esprit1718b4eventmanagement.services;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import javax.persistence.EntityManager;
@@ -17,6 +18,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 
 
 @Stateless
+@LocalBean
 public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 	@PersistenceContext 
 	EntityManager em;
@@ -33,6 +35,30 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 	public void DeleteArticle(int idArticle) {
 		Article article =this.findArticle(idArticle);
 		em.remove(article);
+		
+	}
+	
+	@Override
+	public void DeleteNomenclature(Nomenclature nomenclature) {
+		/*TypedQuery<Nomenclature> query
+		=em.createQuery("delete n from Nomenclature n where n.nomenclauturePk.idArticlePere=:idPere and n.nomenclauturePk.idArticlesFils=:idFils", Nomenclature.class);
+		query.setParameter("idPere", nomenclature.getArticlePere().getId());
+		query.setParameter("idFils", nomenclature.getArticleFils().getId());*/
+		
+		
+		
+		em.remove(findNomenclature(nomenclature.getArticlePere().getId(),nomenclature.getArticleFils().getId()).get(0));
+		
+	}
+	
+	@Override
+	public List<Nomenclature> findNomenclature(int idArticlePere,int idArticleFils) {
+		TypedQuery<Nomenclature> query
+		=em.createQuery("select n from Nomenclature n where n.nomenclauturePk.idArticlePere=:idPere and n.nomenclauturePk.idArticlesFils=:idFils", Nomenclature.class);
+		query.setParameter("idPere", idArticlePere);
+		query.setParameter("idFils", idArticleFils);
+		List<Nomenclature> nomenclature=query.getResultList();
+		return nomenclature;
 		
 	}
 

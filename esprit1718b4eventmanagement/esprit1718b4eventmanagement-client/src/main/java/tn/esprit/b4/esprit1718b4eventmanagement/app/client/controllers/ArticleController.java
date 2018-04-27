@@ -355,7 +355,18 @@ comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Prod
     	}
 	 
     }
-
+    @FXML
+    private void OnDeleteFromTreeTableView() throws NamingException {
+    	TreeItem<Nomenclature> selectedItem = ArticleTableView.getSelectionModel().getSelectedItem();
+     	String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/ArticleService!tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote";
+    	Context context = new InitialContext();
+    	ArticleServiceRemote aArticleProxy = (ArticleServiceRemote) context.lookup(ArticlejndiName);
+    	aArticleProxy.DeleteNomenclature(selectedItem.getValue());
+    	fillTreeTableView("all");
+    	
+    	
+    }
+    
     @FXML
     private void OnTabArticleTreeSelected(Event event) throws NamingException {
   
@@ -406,6 +417,9 @@ comboTypeUpdate.getItems().addAll("Matiére-Premiére","Produit-Semi-Fini","Prod
 			}
 		});
     	fillTreeTableView("all");
+    	txtChildQuantity.setDisable(true);
+    	txtArticleChild.setDisable(true);
+    	BtnAddArticleChild.setDisable(true);
 		jfxDialog.show();
     	
     	}
