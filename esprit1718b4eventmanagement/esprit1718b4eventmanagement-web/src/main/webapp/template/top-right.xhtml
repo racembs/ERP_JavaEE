@@ -4,7 +4,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<h:form rendered="#{identity.isLogged}">
-	    You are logged in as #{identity.user.name} | 
+	    You are logged in as #{identity.user.firstname} | 
 	    <h:commandLink action="#{identity.logout}" value="Logout" />
 	</h:form>
 	<h:form rendered="#{!identity.isLogged}">

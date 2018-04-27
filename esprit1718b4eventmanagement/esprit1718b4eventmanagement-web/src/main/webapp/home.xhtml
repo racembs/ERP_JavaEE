@@ -4,17 +4,26 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/template/template.xhtml">
 
-	<ui:define name="pageTitle">
+	<ui:define name="title">
 				HOME PAGE
 			</ui:define>
-	<ui:define name="pageContent">
+			<ui:define name="logo2">
+			<h:graphicImage library="images" name="spot.png" style="position:absolute;
+left:0;
+right:0;
+margin-left:auto;
+margin-right:auto;" width="160" height="70"/>
+
+			</ui:define>
+	<ui:define name="content">
 
 		<div class="centredZone">
 			<br />
-			<h2>HOME</h2>
+			
 			<br /> <br />
 
 		</div>
 
 	</ui:define>
+
 </ui:composition>

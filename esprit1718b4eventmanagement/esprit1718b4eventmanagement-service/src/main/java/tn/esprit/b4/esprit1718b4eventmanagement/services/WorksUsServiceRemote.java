@@ -26,5 +26,6 @@ public interface WorksUsServiceRemote {
 	public List<UsualWork> displayWObyTechStart(int idtech);
 	public List<UsualWork> displayStart();
 	public List<UsualWork> displayDone();
+	  public List<UsualWork> searchUsualWork(String input);
 	
 }

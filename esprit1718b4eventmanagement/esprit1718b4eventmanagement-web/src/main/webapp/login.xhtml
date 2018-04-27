@@ -2,7 +2,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/template/template.xhtml">
+	template="/template/tempLog.xhtml">
 
 	<ui:define name="pageTitle">
 				LOGIN PAGE
@@ -13,7 +13,7 @@
 			<br />
 			<h2>LOGIN</h2>
 			<br /> <br />
-			<h:form>
+			<h:form id="formlogin">
 				<h:panelGrid columns="2" styleClass="centredForm">
 					<h:outputText value="LOGIN:" />
 					<h:inputText value="#{identity.user.login}" />

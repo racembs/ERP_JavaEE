@@ -32,46 +32,39 @@
             <URL value="@../views/styles.css" />
          </stylesheets>
       </JFXToolbar>
-      <AnchorPane fx:id="holderPane" layoutX="74.0" layoutY="66.0" prefHeight="684.0" prefWidth="1105.0">
+      <AnchorPane fx:id="holderPane" layoutX="74.0" layoutY="40.0" prefHeight="710.0" prefWidth="1125.0">
          <children>
-            <HBox layoutX="822.0" layoutY="-50.0" prefHeight="40.0" prefWidth="199.0">
-               <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        
-            <StackPane layoutX="57.0" layoutY="-13.0" AnchorPane.rightAnchor="-10" AnchorPane.topAnchor="-10">
-         <children>
-            <Circle fx:id="circlecount" radius="16.0" stroke="#f2a7a7" strokeType="INSIDE">
-                                 <fill>
-                                    <RadialGradient centerX="0.5" centerY="0.5" focusDistance="0.023255813953488413" radius="0.6885487194583456">
-                                       <stops>
-                                          <Stop color="#ff3b21" />
-                                          <Stop color="#ff3b21" offset="0.007662835249042145" />
-                                          <Stop color="#ff3b21" offset="0.054982817869415807" />
-                                          <Stop color="#ff3b21" offset="0.0859106529209622" />
-                                          <Stop color="#ff3b21" offset="0.140893470790378" />
-                                          <Stop color="#f8f8f8" offset="1.0" />
-                                       </stops>
-                                    </RadialGradient>
-                                 </fill>
-            </Circle>
-            <Label fx:id="count" graphicTextGap="6.0" text="5" textFill="#fbfafc" textOverrun="WORD_ELLIPSIS" />
-         </children>
-      </StackPane>
-                     </children>
-                  </HBox>
-               </children></HBox>
-            <ImageView fx:id="spot" fitHeight="225.0" fitWidth="480.0" layoutX="266.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" styleClass="card-unpadded">
-               <image>
-                  <Image url="@../views/imgs/27604598_1627055933999691_1980396964_o.png" />
-               </image>
-            </ImageView>
-            <Label alignment="CENTER" graphicTextGap="5.0" layoutX="281.0" layoutY="288.0" lineSpacing="2.0" prefHeight="54.0" prefWidth="423.0" styleClass="card-title" text="WE OPTIMISE MAINTENANCE MANAGEMENT" textFill="#244dee" textOverrun="LEADING_WORD_ELLIPSIS" />
-            <ImageView fitHeight="305.0" fitWidth="350.0" layoutX="340.0" layoutY="342.0" pickOnBounds="true" preserveRatio="true">
+            <HBox layoutX="822.0" layoutY="-50.0" prefHeight="40.0" prefWidth="199.0" />
+            <Label alignment="CENTER" graphicTextGap="5.0" layoutX="281.0" layoutY="165.0" lineSpacing="2.0" prefHeight="54.0" prefWidth="423.0" styleClass="card-title" text="WE OPTIMISE MAINTENANCE MANAGEMENT" textFill="#244dee" textOverrun="LEADING_WORD_ELLIPSIS" />
+            <ImageView fitHeight="305.0" fitWidth="350.0" layoutX="340.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../views/imgs/Overview-2-2.png" />
                </image>
             </ImageView>
+            <HBox layoutX="784.0" layoutY="-33.0" prefHeight="54.0" prefWidth="200.0">
+               <children>
+                  
+            <StackPane layoutX="57.0" layoutY="-13.0" AnchorPane.rightAnchor="-10" AnchorPane.topAnchor="-10">
+   <children>
+      <Circle fx:id="circlecount" radius="16.0" stroke="#f2a7a7" strokeType="INSIDE">
+                           <fill>
+                              <RadialGradient centerX="0.5" centerY="0.5" focusDistance="0.023255813953488413" radius="0.6885487194583456">
+                                 <stops>
+                                    <Stop color="#ff3b21" />
+                                    <Stop color="#ff3b21" offset="0.007662835249042145" />
+                                    <Stop color="#ff3b21" offset="0.054982817869415807" />
+                                    <Stop color="#ff3b21" offset="0.0859106529209622" />
+                                    <Stop color="#ff3b21" offset="0.140893470790378" />
+                                    <Stop color="#f8f8f8" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+      </Circle>
+      <Label fx:id="count" graphicTextGap="6.0" text="5" textFill="#fbfafc" textOverrun="WORD_ELLIPSIS" />
+   </children>
+</StackPane>
+               </children>
+            </HBox>
            
           
          </children></AnchorPane>

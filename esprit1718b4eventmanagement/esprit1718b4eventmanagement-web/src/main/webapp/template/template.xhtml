@@ -1,40 +1,16 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
 <h:head>
-	<title><ui:insert name="pageTitle" /></title>
-	<h:outputStylesheet library="css" name="application.css" />
-	<link rel="shortcut icon" type="image/x-icon"
-		href="#{request.contextPath}/resources/img/favicon.ico" />
-</h:head>
-<h:body>
-	<div id="container">
+<ui:include src="/template/header.xhtml"/>
+<title><ui:insert name="title"></ui:insert></title>
+</h:head> 
+<body> 
+<ui:insert name="content"></ui:insert>
+<ui:include src="/template/footer.xhtml"/>
 
-		<div id="header">
-			<div id="logo">
-				<ui:include src="/template/logo.xhtml" height="70px" />
-			</div>
-			<div id="identity">
-				<ui:include src="/template/top-right.xhtml" />
-			</div>
-		</div>
-
-		<hr></hr>
-		
-		<div class="main">
-			<div id="content">
-				<ui:insert name="pageContent" />
-			</div>
-		</div>
-
-		<hr></hr>
-
-		<div id="footer">
-			<ui:include src="/template/footer.xhtml" />
-		</div>
-
-	</div>
-</h:body>
+</body> 
 </html>

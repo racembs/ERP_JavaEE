@@ -5,20 +5,20 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="684.0" prefWidth="149.0" styleClass="card-unpadded" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.DrawerController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="684.0" prefWidth="149.0" style="-fx-background-color: black;" styleClass="card-unpadded" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.b4.esprit1718b4eventmanagement.app.client.controllers.DrawerController">
    <children>
-      <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="77.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image/cover.jpg" />
+            <Image url="@imgs/27604598_1627055933999691_1980396964_o.png" />
          </image></ImageView>
      
-      <JFXButton fx:id="ProfileBtn" accessibleText="doctorMenu" layoutX="10.0" layoutY="10.0" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Profile" />
-      <JFXButton fx:id="homeBtn" accessibleText="WorkRequest" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Work Request" />     
-      <JFXButton fx:id="appointmentBtn" accessibleText="WorkOrder" layoutX="10.0" layoutY="53.0" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Work Orders" />
-      <JFXButton fx:id="paymentBtn" accessibleText="NeedsStock" layoutX="10.0" layoutY="96.0" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Needs Stock" />
-      <JFXButton fx:id="Equipment" accessibleText="Equipment" layoutX="10.0" layoutY="10.0" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Equipment" /> 
-      <JFXButton fx:id="logoutBtn" accessibleText="logoutMenu" layoutX="10.0" layoutY="182.0" onAction="#logOut" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Log out" />
-      <JFXButton fx:id="exitBtn" accessibleText="exitMenu" layoutX="10.0" layoutY="182.0" onAction="#exit" prefHeight="43.0" prefWidth="200.0" styleClass="drawer-buttons" text="Exit" />
-      <JFXButton prefHeight="227.0" prefWidth="152.0" styleClass="drawer-buttons" text="  " />
+      <JFXButton fx:id="ProfileBtn" accessibleText="doctorMenu" layoutX="10.0" layoutY="10.0" prefHeight="43.0" prefWidth="200.0" style="-fx-background-color: black;" text="Profile" textFill="WHITE" />
+      <JFXButton fx:id="homeBtn" accessibleText="WorkRequest" prefHeight="43.0" prefWidth="200.0" style="-fx-background-color: black;" text="Work Request" textFill="WHITE" />     
+      <JFXButton fx:id="appointmentBtn" accessibleText="WorkOrder" layoutX="10.0" layoutY="53.0" prefHeight="43.0" prefWidth="200.0" style="-fx-background-color: black;" text="Work Orders" textFill="WHITE" />
+      <JFXButton fx:id="paymentBtn" accessibleText="NeedsStock" layoutX="10.0" layoutY="96.0" prefHeight="43.0" prefWidth="200.0" style="-fx-background-color: black;" text="Needs Stock" textFill="WHITE" />
+      <JFXButton fx:id="Equipment" accessibleText="Equipment" layoutX="10.0" layoutY="10.0" prefHeight="43.0" prefWidth="200.0" style="-fx-background-color: black;" text="Equipment" textFill="WHITE" /> 
+      <JFXButton fx:id="logoutBtn" accessibleText="logoutMenu" layoutX="10.0" layoutY="182.0" onAction="#logOut" prefHeight="43.0" prefWidth="200.0" style="-fx-background-color: black;" text="Log out" textFill="WHITE" />
+      <JFXButton fx:id="exitBtn" accessibleText="exitMenu" layoutX="10.0" layoutY="182.0" onAction="#exit" prefHeight="43.0" prefWidth="200.0" style="-fx-background-color: black;" text="Exit" textFill="RED" />
+      <JFXButton prefHeight="227.0" prefWidth="152.0" style="-fx-background-color: black;" text="  " />
    </children>
 </VBox>

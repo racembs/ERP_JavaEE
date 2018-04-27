@@ -403,9 +403,13 @@ public class WorkUsController implements Initializable {
 				context= new InitialContext();
 			 String jndiName="esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/WorksUsService!tn.esprit.b4.esprit1718b4eventmanagement.services.WorksUsServiceRemote";
 			 WorksUsServiceRemote proxy=(WorksUsServiceRemote) context.lookup(jndiName);
-			 C9.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("id_user"));
-			 
-	
+			 C9.setCellValueFactory(new Callback<CellDataFeatures<UsualWork,String>,ObservableValue<String>>(){
+
+	              @Override
+	              public ObservableValue<String> call(CellDataFeatures<UsualWork, String> param) {
+	                  return new SimpleStringProperty(param.getValue().getUser().getFirstname()+"--"+param.getValue().getUser().getLastname());
+	              }
+	          }); 
 		    		C1.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("objet"));
 		    		C2.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("description"));
 		    		C3.setCellValueFactory(new PropertyValueFactory<UsualWork, String>("technology"));

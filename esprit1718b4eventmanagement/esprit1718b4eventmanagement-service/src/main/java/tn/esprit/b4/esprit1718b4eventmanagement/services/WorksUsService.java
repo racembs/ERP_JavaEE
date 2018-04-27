@@ -7,6 +7,7 @@ import javax.persistence.TypedQuery;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nature;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.PreventiveWork;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Tool;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
@@ -128,4 +129,11 @@ public class WorksUsService implements WorksUsServiceLocal, WorksUsServiceRemote
 			query.setParameter("param", "done");
 			return query.getResultList();
 		}
+		@Override 
+	    public List<UsualWork> searchUsualWork(String input){
+	    	TypedQuery<UsualWork> query = em.createQuery("SELECT c FROM UsualWork c WHERE c.objet LIKE :input OR c.technology LIKE :input OR c.description LIKE :input OR c.CreatDate LIKE :input",UsualWork.class);
+	    	query.setParameter("input", "%" + input + "%");
+	    	List<UsualWork> results = query.getResultList();
+	    	return results;
+	    }
 }
