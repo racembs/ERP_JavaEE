@@ -66,6 +66,7 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingPlanning;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeedNomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeededItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
@@ -160,6 +161,15 @@ public class MRPCalculationController implements Initializable {
     
     @FXML
     private Button ShowButton;
+    
+    @FXML
+    private ComboBox<String> HourlyPostCombo;
+
+    @FXML
+    private Label StartLabel;
+
+    @FXML
+    private Label hourlyLabel;
     
     NeededItem AbsoluteParent = new NeededItem();
     List<NeededItem> neededItemList = new ArrayList<>();
@@ -280,7 +290,12 @@ public class MRPCalculationController implements Initializable {
             TreeItem<String> item = new TreeItem<String> ("Message" + i);            
             rootItem.getChildren().add(item);
         }        
-        //Tree.setRoot(rootItem);
+        List<String> list = new ArrayList<String>() ;
+        list.add("One- From 7h to 15h");
+        list.add("Two- From 7h to 23h");
+        list.add("Three- 24h/24h");
+        ObservableList<String> items = FXCollections.observableArrayList(list);
+    	HourlyPostCombo.setItems(items);
 	}
 	
    @FXML
@@ -319,9 +334,21 @@ public class MRPCalculationController implements Initializable {
             		Date startDate = Date.from(instant);
             		Calendar calendar = Calendar.getInstance();
             		calendar.setTime(startDate);
-            		calendar.setTimeInMillis(calendar.getTimeInMillis()+28800000);
-            		proxyManufacturing.ReadyManufacturingPlanning(map, calendar.getTime());
-            		proxyManufacturing.AfterDeliveryManufacturingPlanning(proxyNeededItem.findNeededItemTreeByOrdredItem(AbsoluteParent));
+            		calendar.setTimeInMillis(calendar.getTimeInMillis()+25200000);
+                    int hourlyPostNumber = 1;
+            		if (HourlyPostCombo.getSelectionModel().getSelectedItem().equals("One- From 7h to 15h"))
+            			hourlyPostNumber=1;
+            		else if(HourlyPostCombo.getSelectionModel().getSelectedItem().equals("Two- From 7h to 23h"))
+            			hourlyPostNumber=2;
+            		else
+            			hourlyPostNumber=3;
+            		proxyManufacturing.ReadyManufacturingPlanning(map, calendar.getTime(),hourlyPostNumber);
+            		proxyNeededItem.InitialiseDESCMap();
+            		List<ManufacturingPlanning> llisst =proxyManufacturing.AfterDeliveryManufacturingPlanning(proxyNeededItem.findNeededItemTreeByOrdredItem(AbsoluteParent),hourlyPostNumber);
+            		for (ManufacturingPlanning manufacturingPlanning : llisst) {
+            			System.out.println(manufacturingPlanning.getNeededItem().getNeeded_article().getArticleCode());
+					}
+            		System.out.println();
         		}
         		
         		Make.setVisible(false);

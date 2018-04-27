@@ -111,7 +111,7 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 	
 	@Override
 	public Map<NeededItem, List<NeededItem>> InitialiseDESCMap() {
-		return  mapASC = new TreeMap<>(new LevelDown());	
+		return  mapDESC = new TreeMap<>(new LevelDown());	
 	}
 	
 	@Override
@@ -133,10 +133,12 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 				ChildNeededItem.setLevel(ParentneededItem.getLevel()+1);
 			}
 			ChildNeededItem.setGrossNeed(ParentneededItem.getNetNeed()*nomenclature.getQuantity());
+			//NetNeed is zero if available quantity in stock is bigger than the gross need. Else NetNeed=GrossNeed-AvailableQtyInstock
 			if((ChildNeededItem.getGrossNeed()-(ChildNeededItem.getNeeded_article().getQuantity()-ChildNeededItem.getNeeded_article().getReservedQuantity()))<0)
 				ChildNeededItem.setNetNeed(0);
 			else
 				ChildNeededItem.setNetNeed(ChildNeededItem.getGrossNeed()-(ChildNeededItem.getNeeded_article().getQuantity()-ChildNeededItem.getNeeded_article().getReservedQuantity()));
+			//Ready lot is the availableQty/NomenclatureQty : it's an indicator of how many lot is ready to manufact. the parent
 			if((ChildNeededItem.getNeeded_article().getQuantity()-ChildNeededItem.getNeeded_article().getReservedQuantity())<ChildNeededItem.getGrossNeed())
 				ChildNeededItem.setReadyLotNumber((Integer) (ChildNeededItem.getNeeded_article().getQuantity()-ChildNeededItem.getNeeded_article().getReservedQuantity())/nomenclature.getQuantity());
 			else
@@ -147,7 +149,7 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 			NeededItemList.add(ChildNeededItem);
 		}
 		//put into the map for any parent his children list
-		map.put(ParentneededItem, NeededItemList);
+		mapASC.put(ParentneededItem, NeededItemList);
 		
 		if(NeededItemList==null){
 		}
@@ -157,7 +159,7 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 				CreateNeedItemTree(neededItem);
 			}
 		}
-		return map;
+		return mapASC;
 	}
 
 	@Override
@@ -342,6 +344,8 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 			  query.setParameter("date",cal.getTime(),TemporalType.TIMESTAMP).executeUpdate();
 		
 	}
+	
+	
 
 
 
