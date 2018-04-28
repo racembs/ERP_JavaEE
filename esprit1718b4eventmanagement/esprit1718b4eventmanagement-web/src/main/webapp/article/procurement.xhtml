@@ -5,6 +5,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+	 <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'></h:outputStylesheet>
+    <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css'></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="articleStyle.css"></h:outputStylesheet>
 <h:head>
 <ui:include src="/template/gpaoHeader.xhtml" />
 </h:head>
@@ -17,6 +20,43 @@
 					<div id="gpaoBody" class="clearfix">
 <!--//__________________________________________________________________________________________________________________-->
 
+        <h2 style="color:#2ea7f2"><i>Add New Order</i></h2><br />
+     <div class="col-100">
+ <h:outputText value="Article Code: "/>
+ <h:inputText  class="effect-2"  value="#{treeBean.articleCode}" />
+<span class="focus-border"></span>
+</div>
+
+<br />
+ <div class="col-100">
+ <h:outputText value="Quantity: " />
+ <h:inputText  class="effect-2"  value="#{treeBean.quantity}"/>
+<span class="focus-border"></span>
+</div>
+
+
+ <div class="col-100">
+ <h:outputText value="Reception Date " />
+ <p:calendar id="mask" value="#{procrementBean.receptionDate}" pattern="dd-MM-yyyy" />
+
+</div>
+
+<center>
+
+
+			<div class="col-sm-8 col-sm-offset-2">
+				<br /><br />
+			<h:commandButton action="#{treeBean.addArticle()}" class="btn-primary btn" value="submit" />
+		    <h:commandButton action="#{treeBean.reset()}" class="btn-inverse btn" value="Reset" ></h:commandButton>
+		    <h:commandButton action="#{treeBean.updteArticle()}" class="btn-primary btn" value="Update" />
+		    
+			
+			
+			</div>
+	
+	
+</center>
+
 		
 
 <!--//__________________________________________________________________________________________________________________-->
@@ -26,5 +66,6 @@
 		</div>
 	</div>
 </h:body>
+
 <ui:include src="/template/footer.xhtml" />
 </html>

@@ -26,15 +26,12 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 	@Override
 	public int addArticle(Article article) {
 		em.persist(article);
-		/*Article Newarticle=new Article(article.getArticleCode(),article.getDescription(),article.getUnitCode(),article.getType()
-				,article.getPmp(),article.getQuantity());
-		em.persist(Newarticle);*/
 		return article.getId();
 		}
 	@Override
 	public void DeleteArticle(int idArticle) {
-		Article article =this.findArticle(idArticle);
-		em.remove(article);
+		em.remove(em.find(Article.class,idArticle));
+		
 		
 	}
 	

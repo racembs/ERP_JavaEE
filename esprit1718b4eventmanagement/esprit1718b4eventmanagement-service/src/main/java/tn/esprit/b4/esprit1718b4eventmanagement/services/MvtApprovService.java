@@ -2,13 +2,14 @@ package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
 import java.util.List;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.MvtApprov;
-
+@LocalBean
 @Stateless
 public class MvtApprovService implements MvtApprovServiceLocal,MvtApprovServiceRemote {
 	@PersistenceContext 
