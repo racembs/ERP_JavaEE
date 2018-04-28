@@ -42,15 +42,14 @@ public class UserService extends GenericDAO<User> implements UserServiceRemote, 
 		String jpql = "SELECT u FROM User u WHERE u.login = :param1";
 		Query query = em.createQuery(jpql);
 		query.setParameter("param1", l);
-		try {
+		
 			user = (User) query.getSingleResult();
 			System.out.println("User found " + user.getLogin());
 			return user;
-		} catch (Exception e) {
-			System.err.println("User Not found");
-		}
+		
+		
 
-		return null;
+		
 	}
 
 	

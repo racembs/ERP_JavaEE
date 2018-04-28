@@ -26,11 +26,22 @@ public class Identity {
 	public String doLogin() {
 		String navigateTo = "";
 		User userLoggedIn = userServiceLocal.login(user.getLogin(), user.getPassword());
-		if (userLoggedIn != null) {
+		if (userLoggedIn.getRole().equals("GMAO")) {
 			isLogged = true;
 			user = userLoggedIn;
 			navigateTo = "/home?faces-redirect=true";
-		} else {
+		}
+		else if (userLoggedIn.getRole().equals("GPAO")) {
+			isLogged = true;
+			user = userLoggedIn;
+			navigateTo = "/articleTree?faces-redirect=true";
+		} 
+		else if (userLoggedIn.getRole().equals("ResponsableRH")) {
+			isLogged = true;
+			user = userLoggedIn;
+			navigateTo = "/home?faces-redirect=true";
+		}  
+			else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"Veuillez insérer un login et un mot de passe valide", ""));
 			return "/login?faces-redirect=true";

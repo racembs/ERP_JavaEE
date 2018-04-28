@@ -200,6 +200,7 @@ private List <Works> works;
 	public void setWorks(List<Works> works) {
 		this.works = works;
 	}
+
 	public Equipment(String serialNum, String description, String state, String eISDate, String fabriquant,
 			String marque, String lieu, String image, Arboresence arboresence) {
 		super();

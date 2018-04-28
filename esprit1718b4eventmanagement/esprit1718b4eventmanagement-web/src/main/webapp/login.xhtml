@@ -1,29 +1,80 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/template/tempLog.xhtml">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<ui:include src="/template/tempLog.xhtml"/>
+</h:head>
+<h:body>
+	<div class="page-container">
+		<div class="left-content">
+			<div class="mother-grid-inner">
+				<!--header start here-->
+				<div class="header-main">
+					<div id="gpaoBody" class="clearfix">
+<!--//__________________________________________________________________________________________________________________-->
 
-	<ui:define name="pageTitle">
-				LOGIN PAGE
-			</ui:define>
-	<ui:define name="pageContent">
+		
+	<div class="main-wthree">
+	<div class="container">
+	<div class="sin-w3-agile">
+		<h2>Sign In</h2>
+		
+		
+		
+		<h:form id="formlogin" 	 	>	
+			<div class="password-agileits">
+			
+				<span class="username">Username:</span>
+				<input value="#{identity.user.login}" type="text" name="name" class="name" ></input>
+				<span class="username">Password:</span>
+				<input value="#{identity.user.password}" type="text" name="name" class="name" ></input>
+	
+			</div>
+		
+			
+		<h:commandButton action="#{identity.doLogin()}" value="SUBMIT" />
+			
+			
+					</h:form>
+		
+			
+					
+			
+				
+		<div class="rem-for-agile">
+				<input type="checkbox" name="remember" class="remember"></input> Remember me<br></br>
+				<a href="#">Forgot Password</a><br></br>
+			</div>
+			<div class="clearfix"></div>
+	
+				<div class="back">
+					<a href="index.html">Back to home</a>
+				</div>
+				
+					
 
-		<div class="centredZone">
-			<br />
-			<h2>LOGIN</h2>
-			<br /> <br />
-			<h:form id="formlogin">
-				<h:panelGrid columns="2" styleClass="centredForm">
-					<h:outputText value="LOGIN:" />
-					<h:inputText value="#{identity.user.login}" />
-					<h:outputText value="PASSWORD:" />
-					<h:inputSecret value="#{identity.user.password}" />
-					<h:commandButton action="#{identity.doLogin()}" value="SUBMIT" />
-					<h:messages styleClass="error" />
-				</h:panelGrid>
-			</h:form>
+	</div>
+	</div>
+	</div>
+	
+
+<!--//__________________________________________________________________________________________________________________-->
+					</div>
+				</div>
+			</div>
 		</div>
+	</div>
+</h:body>
+<ui:include src="/template/loginTemplate.xhtml"/>
+</html>
 
-	</ui:define>
-</ui:composition>
+
+
+
+
+

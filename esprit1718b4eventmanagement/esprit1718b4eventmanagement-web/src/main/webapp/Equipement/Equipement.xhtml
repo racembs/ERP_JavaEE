@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<ui:include src="/template/gmaoHeader.xhtml" />
+</h:head>
+<h:body>
+	<div class="page-container">
+		<div class="left-content">
+			<div class="mother-grid-inner">
+				<!--header start here-->
+				<div class="header-main">
+					<div id="gpaoBody" class="clearfix">
+<!--//__________________________________________________________________________________________________________________-->
+
+				
+		<h:form>
+
+	<h1>add Equipment</h1>
+			<h:panelGrid columns="2">
+				<h:outputText value="SerialNum :" />
+				<h:inputText
+					value="#{equipementBean.equipment.serialNum}" />
+				<h:outputText value="State :" />
+				<h:inputText
+					value="#{equipementBean.equipment.state}" />
+				<h:outputText value="Fabriquant :" />
+				<h:inputText
+					value="#{equipementBean.equipment.fabriquant}" />
+				<h:outputText value="Marque :" />
+				<h:inputText
+					value="#{equipementBean.equipment.marque}" />
+						
+						<h:outputText value="Description :" />
+				<h:inputText
+					value="#{equipementBean.equipment.description}" />
+			</h:panelGrid>
+			<h:form>
+				<p:growl id="growl" life="2000" />
+				<h:panelGrid columns="1" cellpadding="5">
+					<p:commandButton value="Save equipment" id="ajax" update="growl"
+						actionListener="#{equipementBean.doSaveOrUpdateEquipment()}"
+						styleClass="ui-priority-primary" icon="ui-icon-disk"
+						onclick="PF('dlg1').show();" />
+				</h:panelGrid>
+				<p:dialog header="Add Equipment" widgetVar="dlg1" position="center" responsive="true">
+					<h:outputText value="Equipment added succesfully!" />
+				</p:dialog>
+			</h:form>
+		</h:form>
+
+				
+
+
+
+<!--//__________________________________________________________________________________________________________________-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:body>
+<ui:include src="/template/footer.xhtml" />
+</html>
