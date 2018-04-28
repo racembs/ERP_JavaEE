@@ -41,6 +41,9 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 	NeededItemServiceLocal needItem;
 	
 	@EJB
+	NeedNomenclatureServiceLocal needNom;
+	
+	@EJB
 	ArticleServiceLocal articleServ;
 	
 	@EJB
@@ -57,6 +60,12 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 		super(ManufacturingPlanning.class);
 	}
 
+	@Override
+	public int addManufacturingPlanning(ManufacturingPlanning manuf) {
+		em.persist(manuf);
+		return manuf.getId();
+	}
+	
 	@Override
 	public int manufacturingDuration(Article article, int quantity) {
 		int duration = 0;
@@ -164,6 +173,7 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 				manuf.setEndingDate(ending);
 				em.persist(manuf);
 				listMan.add(manuf);
+				e.getKey().getManufacturingPlanning().add(manuf);
 				Set<NeededItem> set = new HashSet<>(e.getValue());
 				for (NeededItem child : set) {
 					Nomenclature nom = findNomenclatureByParentChild(e.getKey().getNeeded_article(), child.getNeeded_article());
@@ -275,8 +285,11 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 					manuf.setEndingDate(ending);
 					em.persist(manuf);
 
-					if(!e.getKey().getManufacturingPlanning().contains(manuf))
+					if(!e.getKey().getManufacturingPlanning().contains(manuf)){
+						manuf.setNeededItem(e.getKey());
 						e.getKey().getManufacturingPlanning().add(manuf);
+					}
+						
 					listMan.add(manuf);
 				}
 			}
@@ -350,13 +363,41 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 			}
 			
 		}
-		
+		//Scheduling ready manufacturing planning with Just in time manufacturing planning
 		for (NeededItem neededItem : map.keySet()) {
 			if(!neededItem.getManufacturingPlanning().isEmpty()){
-				Date endingDate = neededItem.getManufacturingPlanning().get(neededItem.getManufacturingPlanning().size()-1).getStartingDate();
-				Date startingDate = mmm.startingManufacturingDate(endingDate,(long) neededItem.getManufacturingPlanning().get(0).getDuration(),hourlyPost);
-				neededItem.getManufacturingPlanning().get(0).setEndingDate(endingDate);
-				neededItem.getManufacturingPlanning().get(0).setStartingDate(startingDate);
+				if(neededItem.getManufacturingPlanning().size()>1){
+					Date endingDate = neededItem.getManufacturingPlanning().get(neededItem.getManufacturingPlanning().size()-1).getStartingDate();
+					Date startingDate = mmm.startingManufacturingDate(endingDate,(long) neededItem.getManufacturingPlanning().get(0).getDuration(),hourlyPost);
+					neededItem.getManufacturingPlanning().get(0).setEndingDate(endingDate);
+					neededItem.getManufacturingPlanning().get(0).setStartingDate(startingDate);
+				} else {
+					NeededItem parent = new NeededItem();
+					for (Map.Entry<NeededItem,List<NeededItem>> need : map.entrySet()) {
+						if(need.getValue().contains(neededItem)){
+							parent = need.getKey();
+						}
+					}
+					Date endingDate = parent.getManufacturingPlanning().get(neededItem.getManufacturingPlanning().size()-1).getStartingDate();
+					Date startingDate = mmm.startingManufacturingDate(endingDate,(long) neededItem.getManufacturingPlanning().get(0).getDuration(),hourlyPost);
+					neededItem.getManufacturingPlanning().get(0).setEndingDate(endingDate);
+					neededItem.getManufacturingPlanning().get(0).setStartingDate(startingDate);
+				}
+				
+			}
+		}
+		
+		//Setting Normally purchase delivery date for purchase order
+		for (Map.Entry<NeededItem, List<NeededItem>> neededItem : map.entrySet()) {
+			if(!neededItem.getValue().isEmpty() && !neededItem.getKey().getManufacturingPlanning().isEmpty()
+					&& neededItem.getKey().getManufacturingPlanning().size()>1){
+				for (NeededItem neededItem99 : neededItem.getValue()) {
+					if(neededItem99.getLevel()==99){
+						Date deliv = neededItem.getKey().getManufacturingPlanning().get(neededItem.getKey().getManufacturingPlanning().size()-1).getStartingDate();
+						neededItem99.setPurchaseDeliveryDate(deliv);
+					}
+				}
+				
 			}
 		}
 		
@@ -469,6 +510,8 @@ public class ManufacturingPlanningService extends GenericDAO<ManufacturingPlanni
 		}
 		return listMan;
 	}
+
+	
 	
 	
 

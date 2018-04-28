@@ -116,8 +116,15 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 	
 	@Override
 	public Map<NeededItem, List<NeededItem>> CreateNeedItemTree(NeededItem ParentneededItem){
+		if(ParentneededItem.getLevel()==0){
+			Article article = articleServ.findArticle(ParentneededItem.getNeeded_article().getId()) ;
+			article.setReservedQuantity(article.getReservedQuantity()+ParentneededItem.getGrossNeed()-ParentneededItem.getNetNeed());
+			articleServ.updateArticle(article);
+			ParentneededItem.setNeeded_article(article);
+		}
 		//determine all Article childdren of the ParentneededItem
 		List <Nomenclature> nomenclatureList =  articleServ.getFilsArticles(ParentneededItem.getNeeded_article().getId());
+		//em.clear();
 		List <NeededItem> NeededItemList = new ArrayList<>();
 		for (Nomenclature nomenclature : nomenclatureList) {
 			//Create ParentneededItem's Children from the article children determined previously
@@ -145,6 +152,7 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 				ChildNeededItem.setReadyLotNumber(ParentneededItem.getNetNeed());
 			
 			ChildNeededItem.setStatus("Pending");
+			ChildNeededItem.getNeeded_article().setReservedQuantity(ChildNeededItem.getNeeded_article().getReservedQuantity()+ChildNeededItem.getGrossNeed()-ChildNeededItem.getNetNeed());
 			//Add this ChildNeededItem to the NeededItemList
 			NeededItemList.add(ChildNeededItem);
 		}
@@ -166,13 +174,33 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 	public Map<NeededItem, List<NeededItem>> SaveNeedItemTree(Map<NeededItem, List<NeededItem>> map) {
 		for (NeededItem neededItem : map.keySet()) {
 			//Add all key and that mean add all neededItem
-			Article article = articleServ.findArticle(neededItem.getNeeded_article().getId());
-			article.setReservedQuantity(article.getReservedQuantity()+neededItem.getGrossNeed()-neededItem.getNetNeed());
-			articleServ.updateArticle(article);
-			neededItem.setNeeded_article(article);
+//			Article article = articleServ.findArticle(neededItem.getNeeded_article().getId());
+//			article.setReservedQuantity(article.getReservedQuantity()+neededItem.getGrossNeed()-neededItem.getNetNeed());
+//			articleServ.updateArticle(article);
+//			neededItem.setNeeded_article(article);
 			neededItem.setId(addNeededItem(neededItem));
 		}
+		for (List<NeededItem> list : map.values()) {
+			for (NeededItem neededItem : list) {
+				if(neededItem.getId()==0){
+					
+					neededItem.setId(findNeededItemByNeededArticle(neededItem.getNeeded_article(),neededItem.getOrderItem()).getId());
+				}
+			}
+		}
+		
 		return map;
+	}
+	
+	@Override
+	public NeededItem findNeededItemByNeededArticle(Article article,OrdredItem ordredItem){
+		TypedQuery<NeededItem> query
+		=em.createQuery("select n from NeededItem n where n.needed_article=:article AND "
+				+ "n.orderItem=:ordredItem" , NeededItem.class);
+		query.setParameter("ordredItem", ordredItem);
+		query.setParameter("article", article);
+		NeededItem nomenclature=query.getSingleResult();
+		return nomenclature;
 	}
 	
 
@@ -288,10 +316,10 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 
 	@Override
 	public int SaveParentNeedItemTree(NeededItem Parent) {
-		Article article = articleServ.findArticle(Parent.getNeeded_article().getId());
-		article.setReservedQuantity(article.getReservedQuantity()+Parent.getGrossNeed()-Parent.getNetNeed());
-		articleServ.updateArticle(article);
-		Parent.setNeeded_article(article);
+//		Article article = articleServ.findArticle(Parent.getNeeded_article().getId());
+//		article.setReservedQuantity(article.getReservedQuantity()+Parent.getGrossNeed()-Parent.getNetNeed());
+//		articleServ.updateArticle(article);
+//		Parent.setNeeded_article(article);
 		Parent.setId(addNeededItem(Parent));
 		return Parent.getId();
 	}
@@ -329,6 +357,32 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 		}
 		return map;
 	}
+	
+	@Override
+	public Map<NeededItem, Date> getPurchaseOrderDateForStakingLatestScheduling(
+			Map<NeededItem, List<NeededItem>> map) {
+		Map<NeededItem, Date> mapOderDate = new HashMap<>();
+		for (Map.Entry<NeededItem, List<NeededItem>> neededItem : map.entrySet()) {
+			if(!neededItem.getValue().isEmpty() && !neededItem.getKey().getManufacturingPlanning().isEmpty()
+					&& neededItem.getKey().getManufacturingPlanning().size()>1){
+				for (NeededItem neededItem99 : neededItem.getValue()) {
+					if(neededItem99.getLevel()==99){
+//						Date deliv = neededItem.getKey().getManufacturingPlanning().get(neededItem.getKey().getManufacturingPlanning().size()-1).getStartingDate();
+//						neededItem99.setPurchaseDeliveryDate(deliv);
+						int del = neededItem99.getNeeded_article().getDeliveryTime();
+						Calendar cal = Calendar.getInstance();
+						cal.setTime(neededItem99.getPurchaseDeliveryDate());
+						cal.setTimeInMillis(cal.getTimeInMillis()-(cal.getTimeInMillis() % (86400000)));
+						cal.setTimeInMillis(cal.getTimeInMillis()-(del+1)*24*60*60*1000+28800000);
+						Date purchaseOrderDate = cal.getTime();
+						mapOderDate.put(neededItem99, purchaseOrderDate);
+					}
+				}
+				
+			}
+		}
+		return mapOderDate;
+	}
 
 	@Override
 	public void updateStatusPurchaseOrder() {
@@ -344,6 +398,8 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 			  query.setParameter("date",cal.getTime(),TemporalType.TIMESTAMP).executeUpdate();
 		
 	}
+
+	
 	
 	
 

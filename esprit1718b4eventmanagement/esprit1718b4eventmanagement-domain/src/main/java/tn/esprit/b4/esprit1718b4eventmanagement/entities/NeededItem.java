@@ -42,13 +42,13 @@ public class NeededItem implements Serializable, Comparable<NeededItem> {
 	@ManyToOne(cascade=CascadeType.MERGE)
 	private Article needed_article;
 	
-	@OneToMany(mappedBy="neededItem",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="neededItem",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	private List<ManufacturingPlanning> manufacturingPlanning = new ArrayList<>();
 	
-	@OneToMany(mappedBy="parent",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="parent",fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<NeedNomenclature> nomenclatures;
 	
-	@OneToMany(mappedBy="child",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="child",fetch=FetchType.EAGER , cascade=CascadeType.ALL)
 	private List<NeedNomenclature> nomenclatures1;
 	
 	

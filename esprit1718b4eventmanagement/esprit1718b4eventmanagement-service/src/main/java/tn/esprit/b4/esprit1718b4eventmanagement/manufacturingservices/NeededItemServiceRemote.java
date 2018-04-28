@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.ejb.Remote;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeedNomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeededItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItem;
@@ -17,6 +18,7 @@ public interface NeededItemServiceRemote extends IGenericDAO<NeededItem> {
 	public Map<NeededItem, NeedNomenclature> addChildrenNeededItem(NeededItem neededItem);
 	public Map<NeededItem, List<NeededItem>> CreateNeedItemTree(NeededItem ParentneededItem);
 	public Map<NeededItem, List<NeededItem>> SaveNeedItemTree(Map<NeededItem, List<NeededItem>> map);
+	public NeededItem findNeededItemByNeededArticle(Article article,OrdredItem ordredItem);
 	public Map<NeededItem, List<NeededItem>> CreateANDSaveNeedItemTree(NeededItem ParentneededItem);
 	public Map<NeededItem, List<NeededItem>> updateNeedItemTree(Map<NeededItem, List<NeededItem>> map);
 	public Map<NeededItem, List<NeededItem>> InitialiseMap();
@@ -29,6 +31,7 @@ public interface NeededItemServiceRemote extends IGenericDAO<NeededItem> {
 	public Map<NeededItem, List<NeededItem>> InitialiseASCMap();
 	public Map<NeededItem, List<NeededItem>> InitialiseDESCMap();
 	public Map<NeededItem, List<NeededItem>> SetPurchaseDeliveryDate(Map<NeededItem, List<NeededItem>> map);
+	public Map<NeededItem, Date> getPurchaseOrderDateForStakingLatestScheduling(Map<NeededItem, List<NeededItem>> map);
 	public void updateStatusPurchaseOrder();
 
 }

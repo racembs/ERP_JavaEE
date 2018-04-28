@@ -1,8 +1,11 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -46,11 +49,12 @@ public class NeedNomenclatureService extends GenericDAO<NeedNomenclature> implem
 	}
 	
 	@Override
-	public List<NeedNomenclature> SaveNeedItemTreeNomenclature(Map<NeededItem, List<NeededItem>> map) {
-		List <NeedNomenclature> list = new ArrayList<>();
+	public Set<NeedNomenclature> SaveNeedItemTreeNomenclature(Map<NeededItem, List<NeededItem>> map) {
+		Set <NeedNomenclature> list = new HashSet<>();
 		for (Map.Entry<NeededItem, List<NeededItem>> entry1 : map.entrySet()) {
 			if(!entry1.getValue().isEmpty()){
-				for (NeededItem ChildNeededItem : entry1.getValue()) {
+				Set<NeededItem> set = new HashSet<>(entry1.getValue());
+				for (NeededItem ChildNeededItem : set) {
 					list.add(addnomenclature(entry1.getKey().getId()
 							, ChildNeededItem.getId(), ChildNeededItem.getNetNeed()));
 				}
@@ -84,4 +88,14 @@ public class NeedNomenclatureService extends GenericDAO<NeedNomenclature> implem
 		List<NeedNomenclature> nomenclature=query.getResultList();
 		return nomenclature;
 	}
+
+	@Override
+	public NeedNomenclature getNeededItemParent(int idChild) {
+		TypedQuery<NeedNomenclature> query
+		=em.createQuery("select n from NeedNomenclature n where n.needNomenclaturePk.idChild=:idChild", NeedNomenclature.class);
+		query.setParameter("idChild", idChild);
+		NeedNomenclature nomenclature=query.getSingleResult();
+		return nomenclature;
+	}
+	
 }

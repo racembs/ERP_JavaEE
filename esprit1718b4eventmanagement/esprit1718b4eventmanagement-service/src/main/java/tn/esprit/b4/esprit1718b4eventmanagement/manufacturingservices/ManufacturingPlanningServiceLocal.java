@@ -13,6 +13,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.utilities.IGenericDAO;
 
 @Local
 public interface ManufacturingPlanningServiceLocal extends IGenericDAO<ManufacturingPlanning> {
+	public int addManufacturingPlanning(ManufacturingPlanning manuf);
 	public int manufacturingDuration(Article article,int quantity);
 	public Date endingManufacturingDate(Date startingDate,long duration,int hourlyPost);
 	public List<ManufacturingPlanning> ReadyManufacturingPlanning(Map<NeededItem, List<NeededItem>> map,Date startingDate,int hourlyPost);

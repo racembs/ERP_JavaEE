@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -173,12 +175,12 @@ public class MRPCalculationController implements Initializable {
     
     NeededItem AbsoluteParent = new NeededItem();
     List<NeededItem> neededItemList = new ArrayList<>();
-    List<NeedNomenclature> needNomenclatureList =new ArrayList<>();
+    Set<NeedNomenclature> needNomenclatureList =new HashSet<>() ;
     Map<NeededItem, List<NeededItem>> map = new HashMap<>();
     
     void initData(NeededItem Parent) {
     	AbsoluteParent=Parent;
-		map = proxyNeededItem.InitialiseMap();
+		map = proxyNeededItem.InitialiseASCMap();
 		map= proxyNeededItem.CreateNeedItemTree(AbsoluteParent);
 		List<NeedNomenclature> needNomenclatureList = proxyNomenclature.DisplayTreeNomenclatureFromMap(map);
     	neededItemList=proxyNeededItem.NeedItemList(map);
@@ -324,9 +326,10 @@ public class MRPCalculationController implements Initializable {
         			proxyManufacturing.updateIfOneNeededItem(AbsoluteParent);
         		} else {
 //        			map=proxyNeededItem.SaveNeedItemTree(map);
-        			map = proxyNeededItem.InitialiseMap();
-        			AbsoluteParent.setId(proxyNeededItem.SaveParentNeedItemTree(AbsoluteParent));
-        			map=proxyNeededItem.CreateANDSaveNeedItemTree(AbsoluteParent);
+//        			map = proxyNeededItem.InitialiseMap();
+//        			AbsoluteParent.setId(proxyNeededItem.SaveParentNeedItemTree(AbsoluteParent));
+//        			map=proxyNeededItem.CreateANDSaveNeedItemTree(AbsoluteParent);
+        			map = proxyNeededItem.SaveNeedItemTree(map);
         			map=proxyNeededItem.SetPurchaseDeliveryDate(map);
             		needNomenclatureList = proxyNomenclature.SaveNeedItemTreeNomenclature(map);
             		LocalDate localDate = date.getValue();
@@ -344,7 +347,21 @@ public class MRPCalculationController implements Initializable {
             			hourlyPostNumber=3;
             		proxyManufacturing.ReadyManufacturingPlanning(map, calendar.getTime(),hourlyPostNumber);
             		proxyNeededItem.InitialiseDESCMap();
-            		List<ManufacturingPlanning> llisst =proxyManufacturing.AfterDeliveryManufacturingPlanning(proxyNeededItem.findNeededItemTreeByOrdredItem(AbsoluteParent),hourlyPostNumber);
+            		NeededItem paren = new NeededItem();
+            		for (NeededItem needNomenclature : map.keySet()) {
+						if(needNomenclature.getLevel()==0)
+							paren=needNomenclature;
+					}
+            		Map<NeededItem, List<NeededItem>> map2 = proxyNeededItem.findNeededItemTreeByOrdredItem(proxyNeededItem.find(paren.getId()));
+//            		for (Map.Entry<NeededItem, List<NeededItem>> e : map2.entrySet()) {
+//						System.out.println(e.getKey().getNeeded_article().getArticleCode()+" "+e.getKey().getNetNeed());
+//						System.out.println("valeur");
+//						for (NeededItem neededItem : e.getValue()) {
+//							System.out.println(neededItem.getNeeded_article().getArticleCode());
+//						}
+//						System.out.println("*************");
+//					}
+            		List<ManufacturingPlanning> llisst =proxyManufacturing.AfterDeliveryManufacturingPlanning(map2,hourlyPostNumber);
             		for (ManufacturingPlanning manufacturingPlanning : llisst) {
             			System.out.println(manufacturingPlanning.getNeededItem().getNeeded_article().getArticleCode());
 					}
