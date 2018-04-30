@@ -10,8 +10,10 @@ import com.jfoenix.controls.JFXTextField;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -65,6 +67,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ManufacturingPlanning;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperationPK;
@@ -412,21 +415,33 @@ public class OperatingRangeController implements Initializable {
 					optrange.setDeadline(Deadline);
 					
 					optrange.setStakingcondition(idStakingCond.getValue().toString());
-			        
+
 					
-//					int idA = idArticleCombo.getSelectionModel().getSelectedItem().getId();
-					//System.out.println("onssssss"+idArticleComboo.getCheckModel());
-					
-					//List<Article> listA1= ArticleProxy.findArticleByCode(idArticleComboo.getCheckModel().toString());
-//					List<Article> listA1= ArticleProxy.findArticleByCode("1");
-//
 					int idOptR=proxy42.addOperatingRange(optrange);
-    	        	 for(int i=0;i<idArticleComboo.getCheckModel().getCheckedItems().size();i++){
-    	        		 System.out.println("here :"+idArticleComboo.getCheckModel().getCheckedItems().get(i)); 
-    	        		 
-    	        		 proxy42.assignOperatingRangeToArticle (idOptR,Integer.valueOf(idArticleComboo.getCheckModel().getCheckedItems().get(i)));
-    	        	 }
+					
+//    	        	 for(int i=0;i<idArticleComboo.getCheckModel().getCheckedItems().size();i++){
+//    	        		 System.out.println("here :"+idArticleComboo.getCheckModel().getCheckedItems().get(i)); 
+//    	        		 List<Article> listA1 =ArticleProxy.findArticleByCode(idArticleComboo.getCheckModel().getCheckedItems().get(i));
+//    	        			
+//    		               JFXDialogLayout content=new JFXDialogLayout();
+//    		               content.setHeading(new Text("Articles Affected"));
+//    		         		content.setBody(new Text(idArticleComboo.getCheckModel().getCheckedItems().get(i)));
+//    		         		JFXDialog jfxDialog=new JFXDialog(stackPaneADD,content,JFXDialog.DialogTransition.TOP);
+//    		         		jfxDialog.show();
+////    	        		 Set<Article> set = new HashSet<>(listA1);
+////    	        		 //System.out.println(Integer.valueOf(idArticleComboo.getCheckModel().getCheckedItems().get(i)));
+////    	        		 for (Article article : set) 
+////    	        		 {
+////    	        			 int idA=article.getId();
+////        	        		 //proxy42.assignOperatingRangeToArticle (idOptR,idA); 
+////        	        		 System.out.println("okk");
+////    	        		 }
+//    	        		 
+//    	        	 }
 				
+			
+					
+					
 //			        for (int b = 0; b < listA1.size(); b++) {
 //			        	
 //			        	ObservableList<Article> itemsA1 = FXCollections.observableArrayList(listA1);
