@@ -7,10 +7,7 @@ import java.util.List;
 import javax.persistence.ManyToOne;
 import javax.persistence.*;
 
-/**
- * Entity implementation class for Entity: WorkStation
- *
- */
+
 @Entity
 
 public class ChargingStation implements Serializable {
@@ -123,7 +120,22 @@ public class ChargingStation implements Serializable {
 
 	public void setOperations(List<Operation> operations) {
 		this.operations = operations;
-	}   
+	}
+
+	public ChargingStation(int code, String naturepost, int nbday, int nbhours, String description,User user, Equipment equipement) {
+		super();
+		this.code = code;
+		this.naturepost = naturepost;
+		this.nbday = nbday;
+		this.nbhours = nbhours;
+		this.description = description;
+		this.User = user;
+		this.equipement = equipement;
+	}
+
+
+
+ 
 
 	
 }
