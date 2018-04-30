@@ -18,29 +18,47 @@
 <!--//__________________________________________________________________________________________________________________-->
 
 				
-		<h:form>
+	 <h:form id="formupdate" class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <h2 style="text-align: center" class="col-sm-4">ADD Equipment</h2>
+            </div>
+            <hr/>
+            <div class="form-group">
+                <h:outputLabel for="username" class="control-label col-sm-2">SERIAL NUMBER:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText id="name-id" value="#{equipementBean.equipment.serialNum}" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <h:outputLabel for="email" class="control-label col-sm-2">FABRIQUANT:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText  id="email-id" value="#{equipementBean.equipment.fabriquant}" class="form-control"/>
+                </div>
+            </div>
+            
+             <div class="form-group">
+                <h:outputLabel for="cpu" class="control-label col-sm-2">MARQUE:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText id="cpu" value="#{equipementBean.equipment.marque}" class="form-control"/>
+                </div>
+            </div>
+               <div class="form-group">
+                <h:outputLabel for="cpu" class="control-label col-sm-2">DESCRIPTION:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText id="cpu1" value="#{equipementBean.equipment.description}" class="form-control"/>
+                </div>
+            </div>
+   
 
-	<h1>add Equipment</h1>
-			<h:panelGrid columns="2">
-				<h:outputText value="SerialNum :" />
-				<h:inputText
-					value="#{equipementBean.equipment.serialNum}" />
-				<h:outputText value="State :" />
-				<h:inputText
-					value="#{equipementBean.equipment.state}" />
-				<h:outputText value="Fabriquant :" />
-				<h:inputText
-					value="#{equipementBean.equipment.fabriquant}" />
-				<h:outputText value="Marque :" />
-				<h:inputText
-					value="#{equipementBean.equipment.marque}" />
-						
-						<h:outputText value="Description :" />
-				<h:inputText
-					value="#{equipementBean.equipment.description}" />
-			</h:panelGrid>
-			<h:form>
-				<p:growl id="growl" life="2000" />
+             <div class="form-group">
+                <h:outputLabel for="servic" class="control-label col-sm-2">STATE:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText id="servic" value="#{equipementBean.equipment.state}" class="form-control"/>
+                </div>
+            </div>
+            
+          <p:growl id="growl" life="2000" />
 				<h:panelGrid columns="1" cellpadding="5">
 					<p:commandButton value="Save equipment" id="ajax" update="growl"
 						actionListener="#{equipementBean.doSaveOrUpdateEquipment()}"
@@ -50,12 +68,8 @@
 				<p:dialog header="Add Equipment" widgetVar="dlg1" position="center" responsive="true">
 					<h:outputText value="Equipment added succesfully!" />
 				</p:dialog>
-			</h:form>
-		</h:form>
-
-				
-
-
+        </h:form>
+			
 
 <!--//__________________________________________________________________________________________________________________-->
 					</div>

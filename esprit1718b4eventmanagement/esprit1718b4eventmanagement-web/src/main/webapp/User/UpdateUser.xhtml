@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<ui:include src="/template/UserHeader.xhtml" />
+</h:head>
+<h:body>
+	<div class="page-container">
+		<div class="left-content">
+			<div class="mother-grid-inner">
+				<!--header start here-->
+				<div class="header-main">
+					<div id="gpaoBody" class="clearfix">
+<!--//__________________________________________________________________________________________________________________-->
+
+				
+	 <h:form id="formupdateuser" class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <h2 style="text-align: center" class="col-sm-4">Update User</h2>
+            </div>
+            <hr/>
+      
+            
+             <div class="form-group">
+                <h:outputLabel for="cpu" class="control-label col-sm-2">Login:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText id="cpu" value="#{userBean.userr.login}" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+            <h:outputLabel for="cpu" class="control-label col-sm-2">Statut:</h:outputLabel>
+                <div class="col-sm-4">
+               <h:selectOneMenu value="#{userBean.user.statut}">
+   <f:selectItem itemValue="valable" itemLabel="valable" />
+   <f:selectItem itemValue="Bloquer" itemLabel="Bloquer" />                   
+</h:selectOneMenu>
+                </div>
+            </div>
+               <div class="form-group">
+                <h:outputLabel for="cpu" class="control-label col-sm-2">Role:</h:outputLabel>
+                <div class="col-sm-4">
+               <h:selectOneMenu value="#{userBean.user.role}">
+   <f:selectItem itemValue="GMAO" itemLabel="GMAO" />
+   <f:selectItem itemValue="GPAO" itemLabel="GPAO" />                   
+</h:selectOneMenu>
+                   </div></div>
+          
+           <div class="form-group">
+                <h:outputLabel for="cpu" class="control-label col-sm-2">Post:</h:outputLabel>
+                <div class="col-sm-4">
+             <h:selectOneMenu value="#{userBean.user.post}">
+   <f:selectItem itemValue="techician" itemLabel="techician" />
+   <f:selectItem itemValue="operator" itemLabel="operator" />                   
+</h:selectOneMenu>
+     </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-4">
+                    <h:commandButton value="Save" action="#{userBean.Update()}" class="btn btn-primary updateBtnStyle" />
+                </div>
+            </div>
+        </h:form>
+				
+
+    
+	
+
+<!--//__________________________________________________________________________________________________________________-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:body>
+<ui:include src="/template/footer.xhtml" />
+</html>

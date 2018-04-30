@@ -17,35 +17,24 @@
 					<div id="gpaoBody" class="clearfix">
 <!--//__________________________________________________________________________________________________________________-->
 
-   <center><h2><h:outputText value="Equipement"/></h2></center>
+  
 
           
   <center>
-  <h:form id="Equipement1Form">
-  <div class="col-sm-4">
-     <h:outputText value="Recherche by :"/>
-     <h:selectOneMenu value="#{equipementBean.equipment.fabriquant}">
-   <f:selectItem itemValue="serialNum" itemLabel="serialNum" />
-   <f:selectItem itemValue="fabriquant" itemLabel="fabriquant" />  
-     <f:selectItem itemValue="fabriquant" itemLabel="Marque" />                  
-</h:selectOneMenu>
-     </div>
-                      <div class="col-sm-4">
-                    <h:inputText  id="email-id" value="#{equipementBean.equipment.image}" class="form-control"/>
-                </div>
-                
+  <h:form id="Equipement3Form">
+  
 
 
                 
-<div class="col-sm-4">
-
- <h:commandButton action="#{equipementBean.find()}" value="Rechercher" class="btn btn-primary" />
-</div>
+<div class="rem-for-agile">
+			
+				<a href="ListEquipement.jsf">Back</a><br></br>
+			</div>
 </h:form>
  </center>
 
     <h:form id="EquipementForm">
-        <h:dataTable id="offers" binding="#{table}" value="#{equipementBean.equipments}" var="equi" class="table table-striped table-hover table-bordered tableUpdated">
+        <h:dataTable id="offers" binding="#{table}" value="#{equipementBean.equipments1}" var="equi" class="table table-striped table-hover table-bordered tableUpdated">
          
             <h:column>
                 <f:facet name="header">Serial Number</f:facet>

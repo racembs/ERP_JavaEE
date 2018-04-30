@@ -26,18 +26,18 @@
 		
 		
 		
-		<h:form id="formlogin" 	 	>	
+		<h:form id="formilogin2" 	 	>	
 			<div class="password-agileits">
 			
 				<span class="username">Username:</span>
-				<input value="#{identity.user.login}" type="text" name="name" class="name" ></input>
+				<h:inputText  value="#{identity.login}" name="name" class="name" />
 				<span class="username">Password:</span>
-				<input value="#{identity.user.password}" type="text" name="name" class="name" ></input>
+				<h:inputText  value="#{identity.password}" name="name" class="name" />
 	
 			</div>
 		
 			
-		<h:commandButton action="#{identity.doLogin()}" value="SUBMIT" />
+		 <h:commandButton value="Login" action="#{identity.doLogin()}" class="btn btn-primary updateBtnStyle" />
 			
 			
 					</h:form>

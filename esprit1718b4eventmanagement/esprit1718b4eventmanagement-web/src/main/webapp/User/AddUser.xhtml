@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<ui:include src="/template/UserHeader.xhtml" />
+</h:head>
+<h:body>
+	<div class="page-container">
+		<div class="left-content">
+			<div class="mother-grid-inner">
+				<!--header start here-->
+				<div class="header-main">
+					<div id="gpaoBody" class="clearfix">
+<!--//__________________________________________________________________________________________________________________-->
+
+				
+	 <h:form id="formupdateuser" class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <h2 style="text-align: center" class="col-sm-4">ADD User</h2>
+            </div>
+            <hr/>
+            <div class="form-group">
+                <h:outputLabel for="username" class="control-label col-sm-2">FirstName</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText id="name-id" value="#{userBean.user.firstname}" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <h:outputLabel for="email" class="control-label col-sm-2">LastName:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText  id="email-id" value="#{userBean.user.lastname}" class="form-control"/>
+                </div>
+            </div>
+            
+             <div class="form-group">
+                <h:outputLabel for="cpu" class="control-label col-sm-2">Email:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText id="cpu" value="#{userBean.user.email}" class="form-control"/>
+                </div>
+            </div>
+               <div class="form-group">
+                <h:outputLabel for="cpu" class="control-label col-sm-2">Phone Number:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText id="cpu1" value="#{userBean.user.numtel}" class="form-control"/>
+                </div>
+            </div>
+           
+            <div class="form-group">
+                <h:outputLabel for="servic" class="control-label col-sm-2">Login:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText id="serviic" value="#{userBean.user.login}" class="form-control"/>
+                </div>
+            </div>
+             <div class="form-group">
+                <h:outputLabel for="servic" class="control-label col-sm-2">PassWord:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText id="servic1" value="#{userBean.user.password}" class="form-control"/>
+                </div>
+            </div>
+             <div class="form-group">
+                <h:outputLabel for="servic" class="control-label col-sm-2">Role:</h:outputLabel>
+              <div class="col-sm-4">
+<h:selectOneMenu value="#{userBean.user.role}">
+   <f:selectItem itemValue="GMAO" itemLabel="GMAO" />
+   <f:selectItem itemValue="GPAO" itemLabel="GPAO" />                   
+</h:selectOneMenu>
+
+
+</div>
+</div>
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-4">
+                    <h:commandButton value="Save" action="#{userBean.doSaveOrUpdate()}" class="btn btn-primary updateBtnStyle" />
+                </div>
+            </div>
+            
+        </h:form>
+				
+
+    
+
+
+<!--//__________________________________________________________________________________________________________________-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:body>
+<ui:include src="/template/footer.xhtml" />
+</html>

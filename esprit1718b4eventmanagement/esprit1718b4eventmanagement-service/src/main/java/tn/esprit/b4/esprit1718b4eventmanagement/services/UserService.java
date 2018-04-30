@@ -21,6 +21,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 /**
  * Session Bean implementation class UserService
  */
+@LocalBean
 @Stateless
 public class UserService extends GenericDAO<User> implements UserServiceRemote, UserServiceLocal {
 
@@ -56,22 +57,13 @@ public class UserService extends GenericDAO<User> implements UserServiceRemote, 
 
 	@Override
 	public User login(String login, String password) {
-		User user = null;
-		String jpql = "SELECT u FROM User u WHERE u.login = :param1 AND u.password = :param2";
-		Query query = em.createQuery(jpql);
-		query.setParameter("param1", login);
-		query.setParameter("param2", password);
-		try {
-			user = (User) query.getSingleResult();
-			System.out.println("User found " + user.getLogin());
-			return user;
-		} catch (Exception e) {
-			System.err.println("User Not found");
-		}
+		User user =new User();
 
-		return null;
+			user = em.createQuery("SELECT u FROM User u WHERE u.login=:l AND u.password=:p", User.class)
+					.setParameter("l", login).setParameter("p", password).getSingleResult();
+		
+		return user;
 	}
-
 
 
 

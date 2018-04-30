@@ -507,7 +507,7 @@ public class ChargingStationMenuController implements Initializable {
 	  			}
 		  });
     	
-    	}
+    }
     }    
     
 

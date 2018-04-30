@@ -75,6 +75,14 @@ public class EquipementService extends GenericDAO<Equipment>  implements Equipem
 			List<Equipment> equipment=query.getResultList();
 			return equipment;
 		}
+		@Override
+		public List<Equipment> findEquipementSerialNum(String serie ) {
+			TypedQuery<Equipment > query
+			=em.createQuery("SELECT a FROM Equipment  a WHERE a.SerialNum= :code", Equipment.class);
+			query.setParameter("code", serie );
+			List<Equipment> equipment=query.getResultList();
+			return equipment;
+		}
 		
 		
 		//***********************************ONS*****************************//
