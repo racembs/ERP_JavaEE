@@ -131,11 +131,10 @@ public class ChargingStationBean implements Serializable {
 		ChargingStationServices.deleteChargingStation(idEquipement, idUser);
 	}
 	
-	public void Add()
+	public void AddChargingStation()
 	{
-		ChargingStation chs=new ChargingStation(code, naturepost, nbday, nbhours, description, user, equipement);
+		ChargingStationServices.ajouter(new ChargingStation(code, naturepost, nbday, nbhours, description, user, equipement));
 
-		ChargingStationServices.ajouter(chs);
 	}
 
 }

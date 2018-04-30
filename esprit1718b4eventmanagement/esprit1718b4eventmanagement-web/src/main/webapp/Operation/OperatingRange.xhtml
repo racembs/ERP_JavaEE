@@ -68,22 +68,22 @@
 		</h:column> 
 		
 		</h:dataTable>
-		</h:form>
+		
 		
 		<br></br>
 		 <h2 style="color:#2ea7f2"><i> Add Operating Range</i></h2><br />
-		<h:form>
+		
 			<h:panelGrid columns="2">
 			<h:outputText value="Code" />
-			<h:inputText value="#{operatingRanges.code}" />
+			<h:inputText value="#{OperatingRangeBean.code}" />
 			<h:outputText value="Designation" />
-			<h:inputText value="#{operatingRanges.designation}" />
+			<h:inputText value="#{OperatingRangeBean.designation}" />
 			<h:outputText value="Deadline" />
-			<h:inputText value="#{operatingRanges.deadline}" />
+			<h:inputText value="#{OperatingRangeBean.deadline}" />
 			
 			
 			<h:outputText value="StakingCondition" />
-			<h:selectOneMenu value="#{operatingRanges.stakingcondition}">
+			<h:selectOneMenu value="#{OperatingRangeBean.stakingcondition}">
 			<f:selectItem itemLabel="Choose A Staking Condition" itemValue=""/>
 			<f:selectItem itemValue="Consecutive"/>
 			<f:selectItem itemValue="Overlap"/>
@@ -91,8 +91,8 @@
 			<f:selectItem itemValue="Parallel"/>
 			</h:selectOneMenu>
 		</h:panelGrid>
-		</h:form>
-		<h:form>
+		
+		
 		<h:commandButton style="color:#2ea7f2" action="#{OperatingRangeBean.Add()}" class="btn-default btn" value="Add" />
 		
 

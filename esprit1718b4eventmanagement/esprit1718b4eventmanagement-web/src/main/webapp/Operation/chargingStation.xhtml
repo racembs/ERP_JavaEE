@@ -87,41 +87,40 @@
 		</h:column>
 		
 		</h:dataTable>
-		</h:form>
+		
 		
 			<br></br>
 		 <h2 style="color:#2ea7f2"><i> Add Charging Station</i></h2><br />
-		<h:form>
+		
 			<h:panelGrid columns="2">
 			
 			<h:outputText value="User" />
-			<h:selectOneMenu value="#{chargingStations.user}">
+			<h:selectOneMenu value="#{ChargingStationBean.user}">
 			<f:selectItems value="#{ChargingStationBean.userList}" var="users" itemLabel="#{users.firstname}" itemValue="users"/>
 			</h:selectOneMenu>
 	
 		    <h:outputText value="Equipement" />
-			<h:selectOneMenu value="#{chargingStations.equipement}">
+			<h:selectOneMenu value="#{ChargingStationBean.equipement}">
 			<f:selectItems value="#{ChargingStationBean.equipementList}" var="equipements" itemLabel="#{equipements.description}" itemValue="equipements"/>
 			</h:selectOneMenu>
 			
 					
 			<h:outputText value="Code" />
-			<h:inputText value="#{chargingStations.code}" />
+			<h:inputText value="#{ChargingStationBean.code}" />
 			<h:outputText value="Description" />
-			<h:inputText value="#{chargingStations.description}" />
+			<h:inputText value="#{ChargingStationBean.description}" />
 			<h:outputText value="Nature Post" />
-			<h:inputText value="#{chargingStations.naturepost}" />
+			<h:inputText value="#{ChargingStationBean.naturepost}" />
 			<h:outputText value="Nb Days" />
-			<h:inputText value="#{chargingStations.nbday}" />
-				<h:outputText value="Nb Hours" />
-			<h:inputText value="#{chargingStations.nbhours}" />
+			<h:inputText value="#{ChargingStationBean.nbday}" />
+			<h:outputText value="Nb Hours" />
+			<h:inputText value="#{ChargingStationBean.nbhours}" />
 			
 			</h:panelGrid>
-		</h:form>
-		<h:form>
+	
 		
 			
-			<h:commandButton style="color:#2ea7f2" action="#{ChargingStationBean.Add()}" class="btn-default btn" value="Add" />
+			<h:commandButton style="color:#2ea7f2" action="#{ChargingStationBean.AddChargingStation()}" class="btn-default btn" value="Add" />
 			
 </h:form>
 <!--//__________________________________________________________________________________________________________________-->
