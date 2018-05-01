@@ -11,7 +11,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.FacesComponent;
 import javax.naming.NamingException;
 
-
+import tn.esprit.b4.esprit1718b4eventmanagement.EquiBean.EquipementBean;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
@@ -132,9 +132,21 @@ public class ChargingStationBean implements Serializable {
 	}
 	
 	public void AddChargingStation()
-	{
-		ChargingStationServices.ajouter(new ChargingStation(code, naturepost, nbday, nbhours, description, user, equipement));
-
+	{ 
+	  ChargingStation ChS = new ChargingStation();
+	  ChS.setCode(code);
+	  ChS.setDescription(description);
+	  ChS.setNaturepost(naturepost);
+	  ChS.setNbday(nbday);
+	  ChS.setNbhours(nbhours);
+//	  ChS.setEquipement(equipement);
+//	  ChS.setUser(user);
+//	  e=equipement.getId();
+//	  u=user.getId();
+		//ChargingStationServices.ajouter(new ChargingStation(code, naturepost, nbday, nbhours, description, user, equipement));
+	ChargingStationServices.addChargingStation(4, 4, ChS);
 	}
 
+	
+	
 }
