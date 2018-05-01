@@ -21,21 +21,6 @@
 <!--//__________________________________________________________________________________________________________________-->
    <h2 style="color:#2ea7f2"><i>Operating Range</i></h2><br />
 
-			<h:form>
-							<p:treeTable value="#{OperatingRangeBean.root}" var="operatingrange"
-								dynamic="true" selectionMode="single">
-
-
-								<p:column headerText="Article code">
-									<h:outputText
-										value="#{operatingrange}" />
-								</p:column>
-								<p:column headerText="Quantity">
-									<h:outputText value="#{operatingrange}" />
-								</p:column>
-
-							</p:treeTable>
-						</h:form>
 
 <h:form>
 	<h:dataTable value="#{OperatingRangeBean.operatingRanges}" var="operatingRanges" border="2" selectionMode="single">

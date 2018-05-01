@@ -46,11 +46,8 @@ public class OperatingRangeBean implements Serializable {
 	private List <OperatingRange> OperatingRanges;
 	@EJB
 	public OperatingRangeService OperatingRangeServices;
-	@EJB
-	public ArticleService ArticleServices;
-	@EJB
-	public OperationService OperationServices;
-	private TreeNode root;
+
+	
     @PostConstruct
     public void init() throws NamingException {
     	
@@ -117,58 +114,6 @@ public class OperatingRangeBean implements Serializable {
     }
     
     
-    public void Tree ()
-    {
-  	
-    	root= new DefaultTreeNode("Root",null);
-        List<OperatingRange> list = OperatingRangeServices.DisplayOperatingRange();
-        List<Operation> listOpt = OperationServices.DisplayOperation();
-        List<Article> listA = ArticleServices.DisplayArticle();
-
-      
-        
-        ObservableList<Operation> items4 = FXCollections.observableArrayList(listOpt);
-        ObservableList<OperatingRange> items22 = FXCollections.observableArrayList(list);
-        System.out.println(items22.get(0).getDesignation());
-      //  idTab.setItems(items22);
-        
-        TreeItem<String> GPAO = new TreeItem<String>("GPAO");
-        
-        for (int a = 0; a < listA.size(); a++) {
-        
-  	
-
-  	       // TreeItem<String> Article = new TreeItem<String>(itemsA.get(a).getArticleCode());
-  	        //Article.setValue(itemsA.get(a).getArticleCode());
-        	TreeNode node0=new DefaultTreeNode(listA.get(a).getArticleCode());
-  	        root.getChildren().add(node0);
-  	        ObservableList<OperatingRange> items = FXCollections.observableArrayList(listA.get(a).getOperatingranges());
-  	        for (OperatingRange operatingRange : items) {
-  	        	TreeItem<String> Gammes = new TreeItem<String>(operatingRange.getCode());
-  	    		Gammes.setValue(operatingRange.getCode());
-  	    		TreeNode node1=new DefaultTreeNode(operatingRange.getCode());
-  	    		node0.getChildren().add(node1);
-  	    		
-  	    	
-  			}
-
-         
-  	        
-       //  GPAO.getChildren().addAll(Article);
-       //  idTree.setRoot(GPAO);
-	    	 
-        }
-
-        
-  	 
-    }
-	public TreeNode getRoot() {
-		return root;
-	}
-	public void setRoot(TreeNode root) {
-		this.root = root;
-	}
-
     
     
 }
