@@ -133,6 +133,16 @@ public class ChargingStation implements Serializable {
 		this.equipement = equipement;
 	}
 
+	public ChargingStation(int code, String naturepost, int nbday, int nbhours, String description) {
+		super();
+		this.code = code;
+		this.naturepost = naturepost;
+		this.nbday = nbday;
+		this.nbhours = nbhours;
+		this.description = description;
+		
+	}
+
 
 
  
