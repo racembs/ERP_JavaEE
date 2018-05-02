@@ -2,20 +2,112 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">  
       
-      <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'></h:outputStylesheet>
-    <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css'></h:outputStylesheet>
-        <h:outputStylesheet library="css" name="articleStyle.css"></h:outputStylesheet>
+      
 
 <h:head>
-<ui:include src="/template/gpaoHeader.xhtml"/>
-<title><ui:insert name="title"></ui:insert></title>
+<h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'></h:outputStylesheet>
+    <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css'></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="articleStyle.css"></h:outputStylesheet>
+        
+        <title>Pooled Admin Panel Category Flat Bootstrap Responsive Web Template | Home :: w3layouts</title>
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+
+<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+
+<h:outputStylesheet library="css" name="morris.css"></h:outputStylesheet>
+
+<h:outputStylesheet library="css" name="font-awesome.css"></h:outputStylesheet>
+
+<!-- <h:outputScript library="js" name="jquery-2.1.4.min.js"></h:outputScript> -->
+
+
+<h:outputStylesheet href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400'></h:outputStylesheet>
+
+<h:outputStylesheet href='//fonts.googleapis.com/css?family=Montserrat:400,700'></h:outputStylesheet>
+
+<h:outputStylesheet library="css" name="icon-font.min.css"></h:outputStylesheet>
 </h:head> 
 <body> 
+
+<div>
 <div class="page-container">	
    <div class="left-content">
 	   <div class="mother-grid-inner">
+				
+
+  <!--//content-inner-->
+			<!--/sidebar-menu-->
+				<div class="sidebar-menu">
+					<header class="logo1">
+						<a href="#" class="sidebar-icon"> <span class="gmao">GPAO</span> </a> 
+					</header>
+						<div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
+                           <div class="menu">
+									<ul id="menu" >
+									
+									
+										<li><a href="#"><span>Article</span><div class="clearfix"></div></a>
+										<ul id="menu-academico-sub" >
+										   <li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/article/articleManagement.jsf">Article management</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/article/articleTree.jsf">Article Tree</a></li>
+											
+										  </ul>
+										  </li>
+										
+									<li><a href="/esprit1718b4eventmanagement-web/article/procurement.jsf"><span>Procurement</span><div class="clearfix"></div></a></li>
+									<li><a href="gallery.html"><span>Charging Stations</span><div class="clearfix"></div></a>
+									<ul id="menu-academico-sub" >
+										   <li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/article/articleManagement.jsf">Equipement</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/article/articleTree.jsf">User</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/Operation/chargingStation.jsf">All</a></li>
+										  </ul>
+									</li>
+									<li><a href="/esprit1718b4eventmanagement-web/Operation/OperatingRange.jsf"><span>Operating Range</span><div class="clearfix"></div></a></li>
+									<li><a href="https://calendar.google.com/calendar/b/2/r"><span>Calendar</span><div class="clearfix"></div></a></li>
+									<li><a href="/esprit1718b4eventmanagement-web/Operation/Dashboard.jsf"><span>Dashboard</span><div class="clearfix"></div></a></li>
+									<li><a href="gallery.html"><span>Orders</span><div class="clearfix"></div></a>
+									<ul id="menu-academico-sub" >
+										   <li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/Manufacturing/Client.jsf">Client</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/Manufacturing/Orders.jsf">Orders Management</a></li>	
+										  </ul>
+										  </li>
+									<li><a href="gallery.html"><span>Manufacturing</span><div class="clearfix"></div></a></li>
+									
+								  </ul>
+								</div>
+							  </div>
+							  <div class="clearfix"></div>		
+							</div>
+							<script>
+							var toggle = true;
+										
+							$(".sidebar-icon").click(function() {                
+							  if (toggle)
+							  {
+								$(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+								$("#menu span").css({"position":"absolute"});
+								$(".gmao").hide();
+							  }
+							  else
+							  {
+								$(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+								setTimeout(function() {
+								  $("#menu span").css({"position":"relative"});
+								}, 400);
+								$(".gmao").show();
+							  }
+											
+											toggle = !toggle;
+										});
+							</script>
+	
+
             <!--header start here-->
 				<div class="header-main">
 					<div class="header-left">
@@ -53,10 +145,8 @@
 			<ui:insert name="content"></ui:insert>
 		</div>
 	</div>
-</div>
-				
+</div>		
 
-<ui:include src="/template/footer.xhtml"/>
 
 </body> 
 </html>
