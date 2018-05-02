@@ -54,6 +54,22 @@
                     <h:inputText id="servic" value="#{equipementBean.equipement1.state}" class="form-control"/>
                 </div>
             </div>
+            
+                <p:growl id="msgs" showDetail="true" escape="false"/>
+							<p:treeTable value="#{arboBean.root}" var="arbo"
+								dynamic="true" selectionMode="single">
+
+
+								<p:column headerText="Equipment Emplacement">
+									<h:outputText
+										value="#{arboBean.getArboperfis(arbo)}" />
+								</p:column>
+							 <p:column style="width:24px">
+            <p:commandLink  oncomplete="PF('documentDialog').show()" title="View Detail" styleClass="ui-icon ui-icon-search">
+                <f:setPropertyActionListener value="#{arbo}" target="#{equipementBean.equipement1.arboresence}" />
+            </p:commandLink>
+        </p:column>
+							</p:treeTable>
             <div class="form-group">
                 <div class="col-sm-2"></div>
                 <div class="col-sm-4">

@@ -13,6 +13,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.Column;
 
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
+
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceLocal;
 
@@ -23,8 +26,8 @@ public class EquipementBean {
 	@EJB
 	private EquipementServiceLocal equipementServiceLocal;
 	private List<Equipment> equipments = new ArrayList<>();
-	private static List<Equipment> equipments1;
-	static Equipment equipement1;
+	private  List<Equipment> equipments1;
+	private static Equipment equipement1;
 
 
 	@PostConstruct
@@ -38,7 +41,11 @@ public class EquipementBean {
 	private static Equipment selectedEquipment;
 
 
-
+	  
+	  public void handleFileUpload(FileUploadEvent event) {
+			UploadedFile file = event.getFile();
+			equipment.setImage(file.getFileName());
+	  }
 	
 	public String UpdateB(Equipment equi){
 	
@@ -51,6 +58,9 @@ public class EquipementBean {
 	public  void doSaveOrUpdateEquipment() {
 		
 		equipementServiceLocal.addEquippement(equipment);
+		FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage("Successful Add" ) );
 	
 	}
 public  String find() {
@@ -87,6 +97,7 @@ public String Refrech(){return "ListEquipement.xhtml?faces-redirect=true";}
 	equipment.setMarque(equipement1.getMarque());
 	equipment.setState(equipement1.getState());
 	equipment.setSerialNum(equipement1.getSerialNum());
+	equipment.setArboresence(equipement1.getArboresence());
 
 		equipementServiceLocal.updateEquipment(equipment);
 		return "ListEquipement.xhtml?faces-redirect=true";

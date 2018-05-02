@@ -1,19 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-                xmlns:p="http://primefaces.org/ui"> 
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
 
-
-
-<title>Pooled Admin Panel Category Flat Bootstrap Responsive Web Template | Home :: w3layouts</title>
-<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<meta name="keywords" content="Pooled Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui">
+        
+          <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- Bootstrap Core CSS -->
 <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
 <!-- <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />-->
@@ -38,6 +32,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- <link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />-->
 <!-- //lined-icons -->
 
+<!-- 9bal l head -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- baad l body -->
+
 <div>
    <div class="page-container">
    <!--/content-inner-->
@@ -56,21 +67,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                            <div class="menu">
 									<ul id="menu" >
 									
-										<li><a href="Equipement.jsf"><span>Equipement</span><div class="clearfix"></div></a>
+									
+										<li><a href="#"><span>Article</span><div class="clearfix"></div></a>
 										<ul id="menu-academico-sub" >
-										   <li id="menu-academico-avaliacoes" ><a href="Equipement.jsf">ADD Equipement</a></li>
-											<li id="menu-academico-avaliacoes" ><a href="ListEquipement.jsf">List Equipement</a></li>
-											<li id="menu-academico-avaliacoes" ><a href="Arbo.jsf">New Tree </a></li>
-											<li id="menu-academico-avaliacoes" ><a href="Analyse.jsf">Analyse</a></li>
+										   <li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/article/articleManagement.jsf">Article management</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/article/articleTree.jsf">Article Tree</a></li>
+											
 										  </ul>
 										  </li>
+										
 									<li><a href="/esprit1718b4eventmanagement-web/article/procurement.jsf"><span>Procurement</span><div class="clearfix"></div></a></li>
-									<li><a href="gallery.html"><span>Charging Stations</span><div class="clearfix"></div></a></li>
-									<li><a href="gallery.html"><span>Operating Range</span><div class="clearfix"></div></a></li>
+									<li><a href="gallery.html"><span>Charging Stations</span><div class="clearfix"></div></a>
+									<ul id="menu-academico-sub" >
+										   <li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/article/articleManagement.jsf">Equipement</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/article/articleTree.jsf">User</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/Operation/chargingStation.jsf">All</a></li>
+										  </ul>
+									</li>
+									<li><a href="/esprit1718b4eventmanagement-web/Operation/OperatingRange.jsf"><span>Operating Range</span><div class="clearfix"></div></a></li>
 									<li><a href="gallery.html"><span>Manufacturing</span><div class="clearfix"></div></a></li>
-									<li><a href="gallery.html"><span>Charging Stations</span><div class="clearfix"></div></a></li>
 									<li><a href="gallery.html"><span>Orders</span><div class="clearfix"></div></a></li>
 									<li><a href="gallery.html"><span>Clients</span><div class="clearfix"></div></a></li>
+									<li><a href="https://calendar.google.com/calendar/b/2/r"><span>Calendar</span><div class="clearfix"></div></a></li>
+									<li><a href="/esprit1718b4eventmanagement-web/Operation/Dashboard.jsf"><span>Dashboard</span><div class="clearfix"></div></a></li>
 									 
 									
 								  </ul>
@@ -103,4 +122,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div>
 	</div>
 	</div>
-</ui:composition>
+<h:head>
+
+</h:head>
+<h:body>
+	<div class="page-container">
+		<div class="left-content">
+			<div class="mother-grid-inner">
+				<!--header start here-->
+				<div class="header-main">
+					<div id="gpaoBody" class="clearfix">
+<!--//__________________________________________________________________________________________________________________-->
+<p:dock>
+<p:menuitem value="Home" icon="/assets/images/icon/19.png" url="#" />
+<p:menuitem value="Music" icon="/assets/images/icon/24.png" url="#" />
+<p:menuitem value="Video" icon="/assets/images/ui/avatar3.png" url="#"/>
+<p:menuitem value="Email" icon="/assets/images/ui/avatar3.png" url="#"/>
+<p:menuitem value="Link" icon="/assets/images/ui/avatar3.pngg" url="#"/>
+<p:menuitem value="RSS" icon="/assets/images/ui/avatar3.png" url="#"/>
+<p:menuitem value="History" icon="/assets/images/ui/avatar3.png" url="#"/>
+</p:dock>
+<!--//__________________________________________________________________________________________________________________-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:body>
+
+</html>

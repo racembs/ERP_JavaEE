@@ -30,11 +30,14 @@
 					<div id="gpaoBody" class="clearfix">
 					
 
-        <h2 style="color:#2ea7f2"><i>Add Equipment</i></h2><br />
-    
+        <h2 style="color:#2ea7f2"><i>Add / Update Emplacment</i></h2><br />
 
-							
-                   <p:growl id="msgs" showDetail="true" escape="false"/>
+<p:commandButton value="Refrech" 
+						actionListener="#{arboBean.Refreche()}"
+						styleClass="ui-priority-primary" icon="ui-icon-disk"
+						onclick="PF('dlg1').show();" />
+
+   <p:growl id="msgs" showDetail="true" escape="false"/>
 							<p:treeTable value="#{arboBean.root}" var="arbo"
 								dynamic="true" selectionMode="single">
 
@@ -45,72 +48,37 @@
 								</p:column>
 							 <p:column style="width:24px">
             <p:commandLink  oncomplete="PF('documentDialog').show()" title="View Detail" styleClass="ui-icon ui-icon-search">
-                <f:setPropertyActionListener value="#{arbo}" target="#{equipementBean.equipment.arboresence}" />
+                <f:setPropertyActionListener value="#{arbo}" target="#{arboBean.equi.arboresence}" />
             </p:commandLink>
         </p:column>
 							</p:treeTable>
-							 	 <p:fileUpload fileUploadListener="#{equipementBean.handleFileUpload()}" auto="true" />
 							
-							 
-						
-           <div class="col-sm-4">
+							
+							 <div class="col-sm-4">
+     <h:outputText value="Type :"/>
+     <h:selectOneMenu value="#{arboBean.type}">
+   <f:selectItem itemValue="Principale" itemLabel="Principale" />
+   <f:selectItem itemValue="Secondaire" itemLabel="Secondaire" />  
                 
-               <h:outputText value="SERIAL NUMBER: "/>
-                    <h:inputText id="name-id" value="#{equipementBean.equipment.serialNum}" class="effect-2"/>
-                <span class="focus-border"></span>
-             
+</h:selectOneMenu>
+         <span class="focus-border"></span>
+     </div>
+    <div >
+     <h:outputText value="name:"/>
+      </div>
+      <div class="col-sm-4">
                 
-            </div>
-               <div class="col-sm-4">
-              
-                    <h:outputText value="FABRIQUANT: "/>
-                   <h:inputText  id="email-id" value="#{equipementBean.equipment.fabriquant}" class="effect-2"/>
-               <span class="focus-border"></span>
-             
-            </div>
-            
-          <div class="col-sm-4">
                 
-
-               
-                     <h:outputText value="MARQUE: "/>
-                   <h:inputText id="cpu" value="#{equipementBean.equipment.marque}" class="effect-2"/>
-                <span class="focus-border"></span>
-                </div>
-           
-                <div class="col-sm-4">
-              
-               <h:outputText value="DESCRIPTION:"/>
-                    <h:inputText id="cpu1" value="#{equipementBean.equipment.description}" class="effect-2"/>
+                    <h:inputText id="servic" value="#{arboBean.name}" class="effect-2"/>
               <span class="focus-border"></span>
-              
-            </div>
-   
-
-          <div class="col-sm-4">
-                
-                <h:outputText value="STATE:"/>
-                    <h:inputText id="servic" value="#{equipementBean.equipment.state}" class="effect-2"/>
-              <span class="focus-border"></span>
-             
-            </div>
-       
-               
-             
-            
+             </div> 
          
-				<h:panelGrid columns="1" cellpadding="5">
-				 <p:growl id="msg" showDetail="true" escape="false"/>
-					<p:commandButton value="Save equipment" id="ajax" update="msgs"
-						actionListener="#{equipementBean.doSaveOrUpdateEquipment()}"
+                		<h:panelGrid columns="1" cellpadding="5">
+					<p:commandButton value="Save " 
+						actionListener="#{arboBean.doSaveOrUpdatearbo()}"
 						styleClass="ui-priority-primary" icon="ui-icon-disk"
-						onclick="PF('msg').show();" />
+						onclick="PF('dlg1').show();" />
 				</h:panelGrid>
-				<p:dialog header="Add Equipment" widgetVar="dlg1" position="center" responsive="true">
-					<h:outputText value="Equipment added succesfully!" />
-				</p:dialog>
-				
-
 
 
 					</div>					
