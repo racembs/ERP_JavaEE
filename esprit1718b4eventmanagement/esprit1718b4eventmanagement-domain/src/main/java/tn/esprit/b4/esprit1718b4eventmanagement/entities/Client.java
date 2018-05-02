@@ -75,5 +75,10 @@ public class Client implements Serializable {
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 	}
+	@Override
+	public String toString() {
+		return company;
+	}
+	
    
 }

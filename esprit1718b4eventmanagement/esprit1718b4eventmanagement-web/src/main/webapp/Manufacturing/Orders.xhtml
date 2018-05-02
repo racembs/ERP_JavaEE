@@ -1,15 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui"
-	  template="/template/templateGPAO.xhtml">
-	  
-	  
+      template="/template/templateGPAO.xhtml">  
+      
+      
+
 <ui:define name="content">
+
 <div class="inner-block">
     <div class="cols-grids panel-widget">
 		<div class="chute chute-center text-center">
@@ -24,22 +25,24 @@
 <h:form id="addForm">
 <div class="header-main">
 	<div id="gpaoBody" class="clearfix">
-		<h2 style="color:#2ea7f2"><i>Add / Update Client</i></h2><br />
+		<h2 style="color:#2ea7f2"><i>Add Orders</i></h2><br />
      	<div class="col-100">
  			<h:outputText value="Company: "/>
- 			<h:inputText  class="effect-2" required="true" requiredMessage="le champs company est obligatoire" 
- 						  value="#{clientBean.company}" />
+ 			<h:selectOneMenu class="effect-2" value="#{ordersBean.idOrder}">
+	  					<f:selectItems value="#{ordersBean.listclients}" 
+	  					var="client" itemValue="#{client.id}"
+	  					itemLabel="#{client}"/>
+	  				</h:selectOneMenu>
 			<span class="focus-border"></span>
 		</div>
 		
 		<div class="clearfix"> </div>
 		
 		<div class="col-100">
-			<h:outputText value="Email: " />
- 			<h:inputText id="email" class="effect-2" required="true" requiredMessage="le champs email est obligatoire"  
- 						  value="#{clientBean.email}">
- 				<f:validateRegex pattern=".+\@.+\..+"/>
- 			</h:inputText>
+			<h:outputText value="Delivery Date: " />
+ 			<p:calendar id="mask1" class="effect-2" value="#{ordersBean.deliveryDate}" pattern="dd-MM-yyyy" >
+ 				<f:convertDateTime pattern="dd-MM-yyyy"/>
+ 			</p:calendar>
 			<span class="focus-border"></span>
 			<h:message for="email" style="color:green"/>
 		</div>
@@ -66,6 +69,41 @@
 <br/>		
 <div style= "visibility: hidden;">hidden</div>
  
+<div class="header-main">
+	<div id="gpaoBody" class="clearfix">
+		<h2 style="color:#2ea7f2"><i>Display All Client</i></h2><br />
+		
+		<div class="container">
+  			<h3>Company</h3>
+  			<p>Display all Company List:</p> 
+  			     
+  			     <p:commandButton value="Select Employees" type="button" onclick="PF('dlg').show();"/>
+
+    <h:form id="formm">
+        <p:dialog header="Employee Selection Dialog" widgetVar="dlg" modal="true">
+            <p:selectManyMenu value="#{ordersBean.status}">
+                <f:selectItems value="#{ordersBean.listclients}" var="emp"
+                               itemLabel="#{emp}" itemValue="#{emp.company}"/>
+            </p:selectManyMenu>
+            <p:commandButton value="Submit" update="selectedEmpPanel" onclick="PF('dlg').hide();"/>
+        </p:dialog>
+        
+        <h3>Selected Employees:</h3>
+        <h:panelGrid id="selectedEmpPanel" columns="1">
+            <ui:repeat value="#{ordersBean.client}" var="emp">
+                <h:outputText value="#{ordersBean.client}"/>
+                <br/>
+            </ui:repeat>
+        </h:panelGrid>
+        
+        </h:form>
+		</div>
+	</div>
+</div>
+
+<br/>		
+<div style= "visibility: hidden;">hidden</div>
+
 <div class="header-main">
 	<div id="gpaoBody" class="clearfix">
 		<h2 style="color:#2ea7f2"><i>Display All Client</i></h2><br />
@@ -122,8 +160,6 @@
 
 <br/>		
 <div style= "visibility: hidden;">hidden</div>
- 
+
 </ui:define>
-
-
 </ui:composition>
