@@ -24,6 +24,7 @@
 
 <h:form>
 	<h:dataTable value="#{ChargingStationBean.chargingStations}" var="chargingStations" border="2" selectionMode="single">
+		
 		<h:column>
 		<f:facet name="header">
 		<h:outputText value="User" />
@@ -87,13 +88,15 @@
 		</h:column>
 		
 		</h:dataTable>
-		
+	</h:form>	
 		
 			<br></br>
 		 <h2 style="color:#2ea7f2"><i> Add Charging Station</i></h2><br />
 		
-			<h:panelGrid columns="2">
 			
+	
+					
+
 			<h:outputText value="User" />
 			<h:selectOneMenu value="#{ChargingStationBean.user}">
 			<f:selectItems value="#{ChargingStationBean.userList}" var="users" itemLabel="#{users.firstname}" itemValue="users"/>
@@ -102,10 +105,14 @@
 		    <h:outputText value="Equipement" />
 			<h:selectOneMenu value="#{ChargingStationBean.equipement}">
 			<f:selectItems value="#{ChargingStationBean.equipementList}" var="equipements" itemLabel="#{equipements.description}" itemValue="equipements"/>
-			</h:selectOneMenu>
-			
-					
-			<h:outputText value="Code" />
+			</h:selectOneMenu>		
+	
+		
+<h:form>
+		
+				
+		
+        	<h:outputText value="Code" />
 			<h:inputText value="#{ChargingStationBean.code}" />
 			<h:outputText value="Description" />
 			<h:inputText value="#{ChargingStationBean.description}" />
@@ -115,10 +122,6 @@
 			<h:inputText value="#{ChargingStationBean.nbday}" />
 			<h:outputText value="Nb Hours" />
 			<h:inputText value="#{ChargingStationBean.nbhours}" />
-			
-			</h:panelGrid>
-	
-		
 			
 			<h:commandButton style="color:#2ea7f2" action="#{ChargingStationBean.AddChargingStation()}" class="btn-default btn" value="Add" />
 			

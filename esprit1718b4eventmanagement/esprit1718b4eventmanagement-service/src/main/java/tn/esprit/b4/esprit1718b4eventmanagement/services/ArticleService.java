@@ -232,13 +232,7 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 	public void AutoOrderGenerateByMinimumQuantity() {
 		
 		List<Article> list = getArticlesByType("Matiére-Premiére");
-//		for(int i=0;i<neededitems.size()-1;i++) {
-//		if(){
-//			}
-//			neededitems.remove(neededitems.get(i));
-//		}
-//		
-//	}
+
 		for(int i=0;i<list.size();i++) {
 			
 			if(list.get(i).getQuantity()<=list.get(i).getMinQuantity()) {
@@ -250,9 +244,9 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 				
 				int needed=list.get(i).getPricipalQuantity()-list.get(i).getQuantity();
 				
-				MvtApprov approv=new MvtApprov(list.get(i),null,needed,alarmDate,Date,null);
+			//	MvtApprov approv=new MvtApprov(list.get(i),null,needed,alarmDate,Date,null);
 				MvtApprovService mvtApprovService=new MvtApprovService();
-				mvtApprovService.addMvtApprov(approv);
+				mvtApprovService.addMvtApprov(new MvtApprov(list.get(i),null,needed,alarmDate,Date,null));
 			}
 		}
 	}

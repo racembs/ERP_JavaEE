@@ -5,6 +5,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+	 <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'></h:outputStylesheet>
+    <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css'></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="articleStyle.css"></h:outputStylesheet>
 <h:head>
 <ui:include src="/template/gpaoHeader.xhtml" />
 </h:head>
@@ -16,25 +19,15 @@
 				<div class="header-main">
 					<div id="gpaoBody" class="clearfix">
 <!--//__________________________________________________________________________________________________________________-->
+  <h:outputLink id="print" value="#{request.requestURI}">
+	<f:param name="javax.faces.RenderKitId" value="PDF"/>
+	<f:param name="print.pdf.baseURL" value="http://localhost/test/"/>
+	<table border="2" width="200" >
+	 <h:outputText value="Article 1    "/> <h:outputText value="    Quantity 20"/> <br></br></table>
+	<table border="2" width="200"><h:outputText value="Article 2    "/> <h:outputText value="    Quantity 50"/><br></br></table>
+	<table border="2" width="200"><h:outputText value="Article 3    "/> <h:outputText value="    Quantity 100"/><br></br></table>
 
-							<h:form>
-							<p:treeTable value="#{treeBean.root}" var="nomenclature"
-								dynamic="true" selectionMode="single" orientation="horizontal">
-
-
-								<p:column headerText="Article code">
-									<h:outputText
-										value="#{treeBean.getArticleFilsCode(nomenclature)}" />
-								</p:column>
-								<p:column headerText="Quantity">
-									<h:outputText value="#{treeBean.getQuantity(nomenclature)}" />
-								</p:column>
-
-							</p:treeTable>
-						</h:form>
-
-
-
+</h:outputLink>
 <!--//__________________________________________________________________________________________________________________-->
 					</div>
 				</div>
@@ -42,5 +35,6 @@
 		</div>
 	</div>
 </h:body>
+
 <ui:include src="/template/footer.xhtml" />
 </html>

@@ -34,6 +34,8 @@ public class ProcurementBean implements Serializable {
 	private Date alarmDate;
 	private Date requestDate;
 	private Date receptionDate;
+	private int minQuantity;
+	private int maxQuantity;
 	private List<Article> articles;
 	private String articleCode;
 	private int dailyConsumption;
@@ -50,13 +52,29 @@ public class ProcurementBean implements Serializable {
     
     @PostConstruct
     public void init() throws NamingException {
-    //	articleService.AutoOrderGenerateByMinimumQuantity();
+    	AutoOrderGenerateByMinimumQuantity();
 		 }
-    
+  
+public void updateMinMaxQuantity() {
+	Article article=articleService.getArticleListByCode(articleCode).get(0);
+	article.setPricipalQuantity(maxQuantity);
+	article.setMinQuantity(minQuantity);
+	articleService.updateArticle(article);
+}
+
+public void updateMinMaxQuantityForAlArticles() {
+	List<Article> list =articleService.getAllArticles();
+	 for(int i=0;i<list.size();i++) {
+		 list.get(i).setMinQuantity(minQuantity);
+		 list.get(i).setPricipalQuantity(maxQuantity);
+		 articleService.updateArticle(list.get(i));
+		}
+}
+
 public List<String> findArticles(String query){
 	 List<Article> list =articleService.getArticlesByType("Matiére-Premiére");
 	 List<String> stringList=new ArrayList<>();
-	 for(int i=0;i<list.size()-1;i++) {
+	 for(int i=0;i<list.size();i++) {
 		 if(list.get(i).getArticleCode().toUpperCase().contains(query)||list.get(i).getArticleCode().toLowerCase().contains(query)) {
 			 stringList.add(list.get(i).getArticleCode());
 		 }
@@ -75,7 +93,7 @@ public void updateArticleParamaters() {
 	articleService.updateArticle(article);
 }
 public void reset() {
-	this.quantity=10;
+	this.quantity=0;
 	this.receptionDate=null;
 }
 
@@ -217,6 +235,46 @@ public void confirmReception(int orderId) {
 
 	public void setDeliveryTime(int deliveryTime) {
 		this.deliveryTime = deliveryTime;
+	}
+	
+	
+
+
+
+public int getMinQuantity() {
+		return minQuantity;
+	}
+
+	public void setMinQuantity(int minQuantity) {
+		this.minQuantity = minQuantity;
+	}
+
+	public int getMaxQuantity() {
+		return maxQuantity;
+	}
+
+	public void setMaxQuantity(int maxQuantity) {
+		this.maxQuantity = maxQuantity;
+	}
+
+public void AutoOrderGenerateByMinimumQuantity() {
+		
+		List<Article> list = articleService.getArticlesByType("Matiére-Premiére");
+
+		for(int i=0;i<list.size();i++) {
+			
+			if(list.get(i).getQuantity()<=list.get(i).getMinQuantity()) {
+				
+				java.util.Date Date=new java.util.Date();
+				java.util.Date alarmDate=new java.util.Date();
+				
+				alarmDate.setDate(alarmDate.getDate()+list.get(i).getDeliveryTime()+1);
+				
+				int needed=list.get(i).getPricipalQuantity()-list.get(i).getQuantity();
+
+				approvService.addMvtApprov(new MvtApprov(list.get(i),null,needed,alarmDate,Date,null));
+			}
+		}
 	}
 	
 	
