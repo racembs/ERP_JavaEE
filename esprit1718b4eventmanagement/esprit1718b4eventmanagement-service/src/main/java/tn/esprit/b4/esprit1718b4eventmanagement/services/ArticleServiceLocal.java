@@ -17,6 +17,7 @@ public interface ArticleServiceLocal {
 	public Article findArticle(int idArticle);
 	public void DeleteArticle(int idArticle);
 	
+	
 	public void addNomenclature(int idArticlePere,int idArticleFils,int Quantity);
 	public void updateNomeclature(int idArticlePere, int idArticleFils, int Quantity);
 	public List<Nomenclature> getFilsArticles(int idArticlePere);
