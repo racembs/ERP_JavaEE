@@ -23,6 +23,16 @@
 
 
 <h:form>
+
+							<p:treeTable value="#{OperatingRangeBean.root}" var="operatingrange"
+								dynamic="true" selectionMode="single">
+								<p:column headerText="Article - Operating Range">
+									<h:outputText
+										value="#{operatingrange}" />
+								</p:column>
+							</p:treeTable>
+
+
 	<h:dataTable value="#{OperatingRangeBean.operatingRanges}" var="operatingRanges" border="2" selectionMode="single">
 		<h:column>
 		<f:facet name="header">

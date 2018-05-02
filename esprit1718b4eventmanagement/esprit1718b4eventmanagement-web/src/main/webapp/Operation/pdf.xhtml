@@ -19,7 +19,7 @@
 				<div class="header-main">
 					<div id="gpaoBody" class="clearfix">
 <!--//__________________________________________________________________________________________________________________-->
-  <h:outputLink id="print" value="#{request.requestURI}">
+<!--   <h:outputLink id="print" value="#{request.requestURI}">
 	<f:param name="javax.faces.RenderKitId" value="PDF"/>
 	<f:param name="print.pdf.baseURL" value="http://localhost/test/"/>
 	<table border="2" width="200" >
@@ -27,7 +27,12 @@
 	<table border="2" width="200"><h:outputText value="Article 2    "/> <h:outputText value="    Quantity 50"/><br></br></table>
 	<table border="2" width="200"><h:outputText value="Article 3    "/> <h:outputText value="    Quantity 100"/><br></br></table>
 
-</h:outputLink>
+</h:outputLink> -->
+
+<h:form>
+<h:commandButton style="color:#2ea7f2" action="#{PdfBean.Pdf()}" class="btn-default btn" value="Confirm" />
+
+</h:form>
 <!--//__________________________________________________________________________________________________________________-->
 					</div>
 				</div>

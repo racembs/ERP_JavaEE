@@ -16,6 +16,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ChargingStationService;
@@ -29,7 +30,15 @@ public class ChargingStationBean implements Serializable {
 	private String naturepost;
 	private int nbday;
 	private int nbhours;
+	private String userFirstName;
+	public String serialNum;
 	private String description;
+	private static int eqid;
+	private static int uid;
+	
+	private static int eq;
+	private static int us;
+	private static int id;
 	private static final long serialVersionUID = 1L;
 	private ChargingStationPK chargingstationPK;
 	private User user;
@@ -47,6 +56,29 @@ public class ChargingStationBean implements Serializable {
     public void init() throws NamingException {
     	
     }
+    public List<String> findUser(String query){
+    List<User> list=UserServices.findAll();
+    List<String> sList =new ArrayList<>();
+    for(int i=0;i<list.size();i++){
+    	if(list.get(i).getLogin().toUpperCase().contains(query)||list.get(i).getLogin().toLowerCase().contains(query)){
+    		sList.add(list.get(i).getLogin());
+    	}
+    
+    }
+    return sList;
+    }
+    
+    public List<String> findEquipement(String query){
+        List<Equipment> list=EquipementService.getAllEquipment();
+        List<String> sList =new ArrayList<>();
+        for(int i=0;i<list.size();i++){
+        	if(list.get(i).getSerialNum().toUpperCase().contains(query)||list.get(i).getSerialNum().toLowerCase().contains(query)){
+        		sList.add(list.get(i).getSerialNum());
+        	}
+        
+        }
+        return sList;
+        }
     
 	public List<Equipment> getEquipementList() {
 		EquipementList= EquipementService.DisplayEquipment();
@@ -125,6 +157,22 @@ public class ChargingStationBean implements Serializable {
 		ChargingStations = chargingStations;
 	}
 
+	
+
+	public String getUserFirstName() {
+		return userFirstName;
+	}
+	public void setUserFirstName(String userFirstName) {
+		this.userFirstName = userFirstName;
+	}
+	
+	
+	public String getSerialNum() {
+		return serialNum;
+	}
+	public void setSerialNum(String serialNum) {
+		this.serialNum = serialNum;
+	}
 	public void delete(Integer idEquipement,Integer idUser)
 	{
 		
@@ -143,9 +191,46 @@ public class ChargingStationBean implements Serializable {
 //	  ChS.setUser(user);
 //	  e=equipement.getId();
 //	  u=user.getId();
-		//ChargingStationServices.ajouter(new ChargingStation(code, naturepost, nbday, nbhours, description, user, equipement));
-	ChargingStationServices.addChargingStation(4, 4, ChS);
+	  Equipment eq = new Equipment();
+	  eq=EquipementService.findEquipementBySerie(serialNum);
+	  
+	  User us = new User();
+	  us=UserServices.findByLogin(userFirstName);
+	  
+	  eqid=eq.getId();
+	  uid=us.getId();
+		//ChargingStationServices.ajouter(new ChargingStation(code, naturepost, nbday, nbhours, description, us, eq));
+	ChargingStationServices.addChargingStation(eqid, uid, ChS);
 	}
+	
+	
+	   public void update(ChargingStation ch) {
+	    	this.setCode(ch.getCode());
+	    	this.setDescription(ch.getDescription());
+	    	this.setNaturepost(ch.getNaturepost());
+	    	this.setNbday(ch.getNbday());
+	    	this.setNbhours(ch.getNbhours());
+	    	this.setUserFirstName(ch.getUser().getLogin());
+	    	this.setSerialNum(ch.getEquipement().getSerialNum());
+	    	
+	    	equipement=EquipementService.findEquipementBySerie(serialNum);
+	    	user=UserServices.findByLogin(userFirstName);
+	    
+	    	eq=ch.getEquipement().getId();
+	    	us=ch.getUser().getId();
+	    	
+	 	
+		}
+	    public void Confirm(){
+	    	ChargingStation chs =ChargingStationServices.findChargingStation(eq, us);
+	    	chs.setCode(code);
+	    	chs.setNaturepost(naturepost);
+	    	chs.setNbday(nbday);
+	    	chs.setNbhours(nbhours);
+	    	chs.setDescription(description);
+
+	    	ChargingStationServices.update(chs);
+	    }
 
 	
 	
