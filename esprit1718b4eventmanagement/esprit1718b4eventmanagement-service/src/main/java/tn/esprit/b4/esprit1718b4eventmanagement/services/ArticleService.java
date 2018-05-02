@@ -98,6 +98,7 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 		article.setDeliveryTime(newArticle.getDeliveryTime());
 		article.setEtatOrdre(newArticle.getEtatOrdre());
 		article.setPricipalQuantity(newArticle.getPricipalQuantity());
+		article.setMinQuantity(newArticle.getMinQuantity());
 		
 	}
 
@@ -228,6 +229,35 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 	}
 	
 	
+	public void AutoOrderGenerateByMinimumQuantity() {
+		
+		List<Article> list = getArticlesByType("Matiére-Premiére");
+//		for(int i=0;i<neededitems.size()-1;i++) {
+//		if(){
+//			}
+//			neededitems.remove(neededitems.get(i));
+//		}
+//		
+//	}
+		for(int i=0;i<list.size();i++) {
+			
+			if(list.get(i).getQuantity()<=list.get(i).getMinQuantity()) {
+				
+				java.util.Date Date=new java.util.Date();
+				java.util.Date alarmDate=new java.util.Date();
+				
+				alarmDate.setDate(alarmDate.getDate()+list.get(i).getDeliveryTime()+1);
+				
+				int needed=list.get(i).getPricipalQuantity()-list.get(i).getQuantity();
+				
+				MvtApprov approv=new MvtApprov(list.get(i),null,needed,alarmDate,Date,null);
+				MvtApprovService mvtApprovService=new MvtApprovService();
+				mvtApprovService.addMvtApprov(approv);
+			}
+		}
+	}
+	
+//***********************************************Auto Order Generate**************************************************	
 	
 	
 	

@@ -1,6 +1,7 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.mBeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +25,6 @@ import tn.esprit.b4.esprit1718b4eventmanagement.services.MvtApprovService;
 @FacesComponent("procurementBean")
 @ManagedBean(name="procurementBean")
 @SessionScoped
-@ApplicationScoped
 public class ProcurementBean implements Serializable {
 	private Integer id ; 
 
@@ -50,11 +50,23 @@ public class ProcurementBean implements Serializable {
     
     @PostConstruct
     public void init() throws NamingException {
-    
+    //	articleService.AutoOrderGenerateByMinimumQuantity();
 		 }
-
+    
+public List<String> findArticles(String query){
+	 List<Article> list =articleService.getArticlesByType("Matiére-Premiére");
+	 List<String> stringList=new ArrayList<>();
+	 for(int i=0;i<list.size()-1;i++) {
+		 if(list.get(i).getArticleCode().toUpperCase().contains(query)||list.get(i).getArticleCode().toLowerCase().contains(query)) {
+			 stringList.add(list.get(i).getArticleCode());
+		 }
+		
+		}
+	 return stringList;
+}
 public void addOrder() {
-	approvService.addMvtApprov(new MvtApprov(article, null, quantity,null, null,null));
+	article=articleService.findArticleByCode(articleCode).get(0);
+	approvService.addMvtApprov(new MvtApprov(article, null, quantity,null, null,receptionDate));
 }
 
 public void updateArticleParamaters() {
@@ -161,8 +173,8 @@ public void confirmReception(int orderId) {
 	}
 	
 	public List<Article> getArticles() {
-		 List<Article>list =articleService.getArticlesByType("Matiére-Premiére");
-			
+		 //List<Article>list =articleService.getArticlesByType("Matiére-Premiére");
+		 List<Article> list =articleService.findArticleByCode(articleCode);	
 			return list;
 	}
 
