@@ -5,6 +5,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -16,18 +17,24 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.Column;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.Order;
 
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
+import com.itextpdf.text.log.Logger;
+
 import javafx.scene.control.TreeItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Client;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Orders;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItemPk;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.ClientServiceLocal;
+import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrderItemServiceLocal;
+import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrdersServiceLocal;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleService;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceLocal;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleServiceRemote;
@@ -41,38 +48,156 @@ public class OrdersBean implements Serializable {
 	private Date deliveryDate;
 	private Date orderDate;
 	private Client client;
+	private int selectedArticleId;
+	private int selectedClientId;
+	private int selectedOrderId;
+	private OrdredItemPk selectedOrdredItemPk = new OrdredItemPk(1,1) ;
 	
+	public int getSelectedArticleId() {
+		return selectedArticleId;
+	}
+
 	private OrdredItemPk idPk;
 	private int code;
 	private int quantity;
 	private String statusOrdredItem;
-	private Article article;
+	private Article article = new Article();
 	private Order order;
 	
-	private OrdredItem selectedOrdredItem;
-	private List<Order> ListOrders;
-	private List<OrdredItem> ListOrdredItem;
+	private Orders selectedOrder;
+	private OrdredItem selectedOrdredItem = new OrdredItem();
+	private List<OrdredItem> selectedOrdredItemList ;
+	private List<Orders> ListOrders;
+	private List<OrdredItem> ListOrdredItem = new ArrayList<>();
 	private List<Client> Listclients;
-	private List <Article> produitFini;
+	private List <Article> produitFini = new ArrayList<>();
+	private List<String> test = new ArrayList<>();
 	
 	@EJB
 	ClientServiceLocal clientService;
 	
 	@EJB
 	ArticleServiceLocal articleService;
+	
+	@EJB
+	OrderItemServiceLocal ordredItemService;
+	
+	@EJB
+	OrdersServiceLocal ordersService;
+	
+	private static java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger("MyLogging");
 	 
 	private static final long serialVersionUID = 3350653785168926842L;
     
     @PostConstruct
     public void init() throws NamingException {
-    		
+    	
 		}
     
-    public void save(){
-    	ListOrdredItem.add(selectedOrdredItem);
+    public void testDate(){
+    	
+    	System.out.println(clientService.findAll().get(0).getCompany());
     }
     
-    public void delete(Client client){
+    public void save(){
+    	
+    	OrdredItem orItem = new OrdredItem();
+    	Article articlef = articleService.findArticle(selectedArticleId);
+    	orItem.setArticle(articlef);
+    	orItem.setQuantity(quantity);
+    	orItem.setStatus("Pending");
+    	boolean etat = false;
+    	for (OrdredItem order : ListOrdredItem) {
+			if(order.getArticle().equals(articlef))
+				etat=true;
+		}
+    	if(etat==false)
+    		ListOrdredItem.add(orItem);
+    	
+    	
+    }
+    
+    public void updateQuantity(){
+    	OrdredItem odredItem = ordredItemService.findOrdredItemById(selectedOrdredItemPk.getId_Order(), selectedOrdredItemPk.getId_Article());
+    	odredItem.setQuantity(quantity);
+    	ordredItemService.update(odredItem);
+    	
+    }
+    
+    public void updateOrdredItemList(){
+    	OrdredItem orItem = new OrdredItem();
+    	Article articlef = articleService.findArticle(selectedArticleId);
+    	orItem.setArticle(articlef);
+    	orItem.setQuantity(quantity);
+    	orItem.setCode((selectedOrderId*5+33)*19+(int) Math.random()*5);
+    	orItem.setStatus("Pending");
+    	boolean etat = false;
+    	for (OrdredItem order : selectedOrdredItemList) {
+			if(order.getArticle().equals(articlef))
+				etat=true;
+		}
+    	if(etat==false){
+    		selectedOrdredItemList.add(orItem);
+        	ordredItemService.addOrdredItem(selectedOrderId, articlef.getId(), orItem);
+    	}
+    		
+    }
+    
+    public void delete(OrdredItem ordredItem){
+    	if(ListOrdredItem.remove(ordredItem))
+    		LOGGER.info("delete sucess");
+    	else
+    		LOGGER.info("Failed to delete");
+    }
+    
+    public void updateSelection(OrdredItem ordredItem){
+    	ordredItemService.update(ordredItem);
+    }
+    
+    public void deleteSelection(OrdredItem ordredItem){
+    	ordredItemService.delete(ordredItem);
+    }
+    
+    public void clear(){
+    	deliveryDate=null;
+    	selectedClientId=0;
+    	ListOrdredItem.clear();
+    }
+    
+    public void addOrder(){
+    	Orders order = new Orders();
+    	order.setDelivery_date(deliveryDate);
+    	order.setOrder_date(new Date());
+    	order.setStatut("Pending");
+    	Client clientt = clientService.find(selectedClientId);
+    	order.setClient(clientt);
+    	ordersService.addOrders(order);
+    	int id = order.getId();
+    	order.setReference((id*17+47)*10);
+    	ordersService.update(order);
+    	int i=0;
+		for (OrdredItem ordredItem : ListOrdredItem) {
+			i++;
+			OrdredItem newOrdredItem = new OrdredItem();
+			newOrdredItem.setQuantity(ordredItem.getQuantity());
+			newOrdredItem.setStatus("pending");
+			newOrdredItem.setCode((id*5+33)*19+i);
+			ordredItemService.addOrdredItem(order.getId(), ordredItem.getArticle().getId(), newOrdredItem);
+		}
+		clear();
+    }
+    
+    public void updateOrder(){
+    	Orders order = ordersService.find(selectedOrderId);
+    	order.setDelivery_date(deliveryDate);
+    	ordersService.update(order);
+    }
+    
+    public void deleteOrder(Orders order){
+    	ordersService.delete(order);
+    }
+
+	public void delete(Client client){
     	clientService.delete(client);
     }
 
@@ -172,11 +297,11 @@ public class OrdersBean implements Serializable {
 		this.order = order;
 	}
 
-	public List<Order> getListOrders() {
-		return ListOrders;
+	public List<Orders> getListOrders() {
+		return ListOrders = ordersService.findAll();
 	}
 
-	public void setListOrders(List<Order> listOrders) {
+	public void setListOrders(List<Orders> listOrders) {
 		ListOrders = listOrders;
 	}
 
@@ -202,14 +327,14 @@ public class OrdersBean implements Serializable {
 
 
 
-	public OrdredItem getSelectedOrdredItem() {
-		return selectedOrdredItem;
+	public List<OrdredItem> getSelectedOrdredItemList() {
+		return selectedOrdredItemList = ordredItemService.findItemsOfAnOrder(selectedOrderId);
 	}
 
 
 
-	public void setSelectedOrdredItem(OrdredItem selectedOrdredItem) {
-		this.selectedOrdredItem = selectedOrdredItem;
+	public void setSelectedOrdredItemList(List<OrdredItem> selectedOrdredItemList) {
+		this.selectedOrdredItemList = selectedOrdredItemList;
 	}
 
 
@@ -224,7 +349,55 @@ public class OrdersBean implements Serializable {
 		this.produitFini = produitFini;
 	}
     
-    
+	public void setSelectedArticleId(int selectedArticleId) {
+		this.selectedArticleId = selectedArticleId;
+	}
+
+	public int getSelectedClientId() {
+		return selectedClientId;
+	}
+
+	public void setSelectedClientId(int selectedClientId) {
+		this.selectedClientId = selectedClientId;
+	}
+
+	public Orders getSelectedOrder() {
+		return selectedOrder;
+	}
+
+	public void setSelectedOrder(Orders selectedOrder) {
+		this.selectedOrder = selectedOrder;
+	}
+
+	public int getSelectedOrderId() {
+		return selectedOrderId;
+	}
+
+	public void setSelectedOrderId(int selectedOrderId) {
+		this.selectedOrderId = selectedOrderId;
+	}
+
+	public OrdredItemPk getSelectedOrdredItemPk() {
+		return selectedOrdredItemPk;
+	}
+
+	public void setSelectedOrdredItemPk(OrdredItemPk selectedOrdredItemPk) {
+		this.selectedOrdredItemPk = selectedOrdredItemPk;
+	}
+
+	public OrdredItem getSelectedOrdredItem() {
+		try{
+			selectedOrdredItem = ordredItemService.findOrdredItemById(selectedOrdredItemPk.getId_Order(), selectedOrdredItemPk.getId_Article());
+		}catch(NoResultException e){
+			
+		}
+		return selectedOrdredItem;
+		
+	}
+
+	public void setSelectedOrdredItem(OrdredItem selectedOrdredItem) {
+		this.selectedOrdredItem = selectedOrdredItem;
+	}
  
 
 }

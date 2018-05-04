@@ -14,6 +14,14 @@ public class OrdredItemPk implements Serializable {
 	private Integer id_Article;
 	@Column(name="id_Order",nullable=true)
 	private Integer id_Order;
+	
+	public OrdredItemPk() {
+	}
+	
+	public OrdredItemPk(Integer id_Article, Integer id_Order) {
+		this.id_Article = id_Article;
+		this.id_Order = id_Order;
+	}
 	public Integer getId_Article() {
 		return id_Article;
 	}
