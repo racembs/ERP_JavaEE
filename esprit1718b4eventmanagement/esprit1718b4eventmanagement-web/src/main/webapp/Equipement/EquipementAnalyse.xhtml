@@ -73,10 +73,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                   <h:outputText value="Marque:#{car.marque}" />
                     <h:outputText value="Description:#{car.description}" />
                     
-             <p:commandButton value="Voir Plus" 
-						actionListener="#{analyseBean.redirection(car)}"
-						 icon="ui-icon-disk"
-					 />
+                <p:commandLink  oncomplete="PF('carDialog').show()" title="View Detail">
+                    <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
+                    <f:setPropertyActionListener value="#{car}" target="#{car.serialNum}" />
+                </p:commandLink>
              </h:panelGrid>
         </p:panel>
  

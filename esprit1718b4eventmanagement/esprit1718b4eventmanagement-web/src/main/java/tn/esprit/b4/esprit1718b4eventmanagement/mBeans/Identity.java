@@ -15,7 +15,7 @@ public class Identity {
 	
 
 	
-	private  User user ;
+	public static  User user ;
 	@EJB
 	private UserServiceLocal userSer;
 	private static String login ;

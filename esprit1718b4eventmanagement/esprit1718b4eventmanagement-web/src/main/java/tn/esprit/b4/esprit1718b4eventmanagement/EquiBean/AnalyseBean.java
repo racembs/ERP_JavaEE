@@ -19,6 +19,7 @@ import javax.security.auth.login.LoginContext;
 import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.model.chart.PieChartModel;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.AnalyseServiceLocal;
 
@@ -64,6 +65,8 @@ public class AnalyseBean  {
 		  nbequidispo=ServiceLocal.count()-nbequipanne;
 	
 }
+	  public void  redirection( Equipment equi)
+	  {}
 	
 	  public void test()
 	  {
