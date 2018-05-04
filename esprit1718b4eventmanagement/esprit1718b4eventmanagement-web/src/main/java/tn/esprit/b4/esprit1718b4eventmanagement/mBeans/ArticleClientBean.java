@@ -1,6 +1,7 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.mBeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +15,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Orders;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.OrdredItem;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrderItemService;
 import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.OrdersService;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleService;
@@ -26,7 +28,9 @@ public class ArticleClientBean implements Serializable {
 	private static final long serialVersionUID = 3350653785168926842L;
 	private String articleCode;
 	private String description;
-
+	
+    private static int idA;
+    private static int idO;
 	private float pmp;
 	private int quantity;
 	private int qte =0;
@@ -45,6 +49,13 @@ public class ArticleClientBean implements Serializable {
 	    @PostConstruct
 	    public void init() throws NamingException {
 	    }
+
+
+
+
+
+
+
 
 
 
@@ -108,12 +119,41 @@ public class ArticleClientBean implements Serializable {
 		public void setPmp(float pmp) {
 			this.pmp = pmp;
 		}
-
-	 
+	
+	    public List<String> findArticle(String query){
+	        List<Article> list=ArticleServices.getArticlesByType("Produit-Fini");
+	        List<String> ListArt =new ArrayList<>();
+	        for(int i=0;i<list.size();i++){
+	        	if(list.get(i).getArticleCode().toUpperCase().contains(query)||list.get(i).getArticleCode().toLowerCase().contains(query)){
+	        		ListArt.add(list.get(i).getArticleCode());
+	        	}
+	        
+	        }
+	        return ListArt;
+	        }
+	    
+	    
 		public void Confirm()
 		{
 			
-			ArticleServices.DeleteArticle(41);
+			//ArticleServices.DeleteArticle(41);
+			
+			Article article = new Article();
+			article.setArticleCode("azertyu");
+			 article =ArticleServices.findArticle(19);
+			 
+			 Orders order = new Orders();
+	
+			 order.setId(50);
+			OrdredItem newOrdredItem = new OrdredItem();
+			newOrdredItem.setQuantity(qte);
+			Float x = (float) 3.5;
+			List<Article> listA =ArticleServices.findArticleByCode(articleCode);
+			for (int i = 0; i < listA.size(); i++) {
+				idA=listA.get(i).getId();
+			}
+			
+			OrderItemServices.addOrdredItem(1, idA, newOrdredItem);
 
 		}
 

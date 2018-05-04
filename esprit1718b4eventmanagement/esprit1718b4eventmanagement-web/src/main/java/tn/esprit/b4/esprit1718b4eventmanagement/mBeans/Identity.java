@@ -48,6 +48,11 @@ public class Identity {
 			
 			navigateTo = "/articleManagement?faces-redirect=true";
 		}
+	else if (user.getRole().equals("Client")) {
+			
+			
+			navigateTo = "/Operation/client?faces-redirect=true";
+		}
 
 			else {
 			

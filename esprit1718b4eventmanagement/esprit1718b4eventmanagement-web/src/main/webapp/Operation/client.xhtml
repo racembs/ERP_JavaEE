@@ -55,19 +55,63 @@
 				<div class="header-main">
 					<div id="gpaoBody" class="clearfix">
 
-						<h2 style="color: #2ea7f2">
-							<i>Add New Child</i>
-						</h2>
-							<h:commandButton action="#{ArticleClientBean.Confirm()}" class="btn-default btn" value="Delete" />
-					
-					
 
-				
+			<div class="col-100">
+ 			<h:outputText style="color:#2ea7f2" value="User : " />
+ 			<h:outputText value="#{identity.user.firstname} "/>
+ 			<h:outputText value="#{identity.user.lastname}"/>
+		
+		</div>
+		
+		
+	
+					<h:dataTable value="#{ArticleClientBean.articles}" var="articles" border="2" selectionMode="single">
+		
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="Code" />
+		</f:facet>
+		<h:outputText value="#{articles.articleCode}" />
+		</h:column>
+	
+		
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="Description" />
+		</f:facet>
+		<h:outputText value="#{articles.description}" />
+		</h:column>
+		
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="Price" />
+		</f:facet>
+		<h:outputText value="#{articles.pmp}" />
+		</h:column>
+		
+
+		</h:dataTable>
 
 
-
-
-
+   <h2 style="color:#2ea7f2"><i>Order</i></h2><br />			
+		    <div class="col-100">
+ 			<h:outputText value="Article Code "/>
+ 			<p:autoComplete id="art" value="#{ArticleClientBean.articleCode}" completeMethod="#{ArticleClientBean.findArticle}"></p:autoComplete>
+ 			
+ 			</div>
+		
+				<div class="col-100">
+ 			<h:outputText value="Quantity " />
+ 			<h:inputText  class="effect-2" value="#{ArticleClientBean.qte}"/>
+			<span class="focus-border"></span>
+		</div>
+		<center>
+		<div class="col-sm-8 col-sm-offset-2"><br /><br />
+			<h:commandButton action="#{ArticleClientBean.Confirm()}" class="btn-primary btn" value="Confirm" />
+		    <h:commandButton action="#{ArticleClientBean.Reset()}" class="btn-inverse btn" value="Reset" ></h:commandButton>
+		    <h:commandButton action="#{ArticleClientBean.Pay()}" class="btn-primary btn" value="Pay" />
+		</div>	
+		</center>
 
 
 						
