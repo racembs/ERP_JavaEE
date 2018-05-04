@@ -45,7 +45,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 </h:head>
 <h:body >
 
-<!--//_____________________________________________________Add Article____________________________________________________-->
+<!--//_____________________________________________________Add Order____________________________________________________-->
 
 <div class="page-container">
 		<div class="left-content">
@@ -77,7 +77,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 
  <div class="col-100">
  <h:outputText value="Request Date:" />
- <p:calendar id="mask1" value="#{procurementBean.receptionDate}" pattern="dd-MM-yyyy" >
+ <p:calendar id="mask1" value="#{procurementBean.requestDate}" pattern="dd-MM-yyyy" >
  <f:convertDateTime pattern="dd-MM-yyyy"/>
  </p:calendar>
 
@@ -88,7 +88,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 			<div class="col-sm-8 col-sm-offset-2">
 				<br /><br />
-			<h:commandButton action="#{procurementBean.addOrder()}" class="btn-primary btn" value="submit" />
+			<h:commandButton action="#{procurementBean.addOrder()}"  onclick="PF('dlg2').show();" class="btn-primary btn" value="submit" />
 		    <h:commandButton action="#{procurementBean.reset()}" class="btn-inverse btn" value="Reset" ></h:commandButton>
 		   
 		    
@@ -99,7 +99,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 	
 </center>
     
-    
+    <p:dialog header="Modal Dialog" widgetVar="dlg2" height="100">
+    <h:outputText value="the order is successfully added" />
+</p:dialog>   
     
     				
     

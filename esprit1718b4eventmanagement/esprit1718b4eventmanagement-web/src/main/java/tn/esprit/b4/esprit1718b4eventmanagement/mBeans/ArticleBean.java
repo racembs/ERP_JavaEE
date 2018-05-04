@@ -7,10 +7,12 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.FacesComponent;
+import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -69,6 +71,9 @@ public class ArticleBean implements Serializable {
     
 public void addArticle() {
 	articleService.addArticle(new Article(articleCode, description, unitCode, type, pmp, quantity));
+	FacesContext context = FacesContext.getCurrentInstance();
+    
+    context.addMessage(null, new FacesMessage("Successful Add" ) );
 }
 
 

@@ -172,7 +172,7 @@ public List<String> findArticles(String query){
 }
 public void addOrder() {
 	article=articleService.findArticleByCode(articleCode).get(0);
-	approvService.addMvtApprov(new MvtApprov(article, null, quantity,null, null,receptionDate));
+	approvService.addMvtApprov(new MvtApprov(article, null, quantity,null,requestDate,null));
 }
 
 public void updateArticleParamaters() {

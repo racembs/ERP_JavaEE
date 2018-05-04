@@ -44,37 +44,7 @@
 </h:head>
 <h:body>
 <h:form id="treeForm">
-	<div class="page-container">
-		<div class="left-content">
-			<div class="mother-grid-inner">
-				<!--header start here-->
-				<div class="header-main">
-					<div id="gpaoBody" class="clearfix">
-<!--//______________________________________________________tree Node____________________________________________________________-->
 
-
-						<br />
-						
-							<p:tree value="#{treeBean.root}" id="tree"
-								selection="#{treeBean.selectedNode}" selectionMode="single"
-								var="node" orientation="horizontal">
-							
-								<p:treeNode>
-									<h:outputText value="#{node}" />
-								</p:treeNode>
-							</p:tree>
-						 <p:contextMenu for="tree">
-        <p:menuitem value="Delete" update="tree" actionListener="#{treeBean.deleteNode}" icon="ui-icon-close"/>
-    </p:contextMenu>
-
-
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div style="visibility: hidden;">hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden</div>
 
 	<!--//_________________________________________ Update Tree Node___________________________________________________________-->
 
@@ -88,46 +58,11 @@
 						<h2 style="color: #2ea7f2">
 							<i>Add New Child</i>
 						</h2>
-						<br />
+							<h:commandButton action="#{ArticleClientBean.Confirm()}" class="btn-default btn" value="Delete" />
+					
 					
 
-							<div class="col-100">
-								<h:outputText value="Article: " />
-								<br />
-								<p:autoComplete id="autoCompleteArticle"
-									value="#{treeBean.articleCode}"
-									completeMethod="#{procurementBean.findArticles}" />
-
-							</div>
-							<div class="col-100">
-								<h:outputText value="Quantity: " />
-								<h:inputText class="effect-2" value="#{treeBean.quantity}" />
-								<span class="focus-border"></span>
-							</div>
-
-
-
-
-
-
-							<center>
-
-
-								<div class="col-sm-8 col-sm-offset-2">
-									<br />
-									<br />
-									<h:commandButton action="#{treeBean.updateNomenclature()}"
-										class="btn-primary btn" value="submit" />
-									<h:commandButton action="#{procurementBean.reset()}"
-										class="btn-inverse btn" value="Reset"></h:commandButton>
-
-
-
-
-								</div>
-
-
-							</center>
+				
 
 
 
