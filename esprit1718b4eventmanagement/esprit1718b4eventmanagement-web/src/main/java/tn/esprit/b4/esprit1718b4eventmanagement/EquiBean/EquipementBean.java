@@ -1,7 +1,10 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.EquiBean;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,8 +17,10 @@ import javax.faces.context.FacesContext;
 import javax.persistence.Column;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.TreeNode;
 import org.primefaces.model.UploadedFile;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Arboresence;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementServiceLocal;
 
@@ -28,7 +33,23 @@ public class EquipementBean {
 	private List<Equipment> equipments = new ArrayList<>();
 	private  List<Equipment> equipments1;
 	private static Equipment equipement1;
+	private int Id;
+	private Arboresence arbo;
+	private String SerialNum;
+	
+	private String Description;
 
+	private String State;
+
+	private String EISDate;
+
+	private String Fabriquant;
+
+	private String Marque;
+
+	private String Lieu;
+	
+	private String image;
 
 	@PostConstruct
 	public void init() {
@@ -56,8 +77,10 @@ public class EquipementBean {
 		}
 
 	public  void doSaveOrUpdateEquipment() {
-		
-		equipementServiceLocal.addEquippement(equipment);
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+	      Calendar date = Calendar.getInstance();
+	   String  d = df.format(date.getTime());
+		equipementServiceLocal.addEquippement(new Equipment(SerialNum, Description, State,d, Fabriquant, Marque,"","tt", arbo));
 		FacesContext context = FacesContext.getCurrentInstance();
         
         context.addMessage(null, new FacesMessage("Successful Add" ) );
@@ -170,5 +193,113 @@ public String Refrech(){return "ListEquipement.xhtml?faces-redirect=true";}
 	}
 
 	
+	  public void info() {
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "PrimeFaces Rocks."));
+	    }
+	 
+	    public void warn() {
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", "Watch out for PrimeFaces."));
+	    }
+	 
+	    public void error() {
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Contact admin."));
+	    }
+	 
+	    public void fatal() {
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", "System Error"));
+	    }
 
+		public EquipementServiceLocal getEquipementServiceLocal() {
+			return equipementServiceLocal;
+		}
+
+		public void setEquipementServiceLocal(EquipementServiceLocal equipementServiceLocal) {
+			this.equipementServiceLocal = equipementServiceLocal;
+		}
+
+		public int getId() {
+			return Id;
+		}
+
+		public void setId(int id) {
+			Id = id;
+		}
+
+		public String getSerialNum() {
+			return SerialNum;
+		}
+
+		public void setSerialNum(String serialNum) {
+			SerialNum = serialNum;
+		}
+
+		public String getDescription() {
+			return Description;
+		}
+
+		public void setDescription(String description) {
+			Description = description;
+		}
+
+		public String getState() {
+			return State;
+		}
+
+		public void setState(String state) {
+			State = state;
+		}
+
+		public String getEISDate() {
+			return EISDate;
+		}
+
+		public void setEISDate(String eISDate) {
+			EISDate = eISDate;
+		}
+
+		public String getFabriquant() {
+			return Fabriquant;
+		}
+
+		public void setFabriquant(String fabriquant) {
+			Fabriquant = fabriquant;
+		}
+
+		public String getMarque() {
+			return Marque;
+		}
+
+		public void setMarque(String marque) {
+			Marque = marque;
+		}
+
+		public String getLieu() {
+			return Lieu;
+		}
+
+		public void setLieu(String lieu) {
+			Lieu = lieu;
+		}
+
+		public String getImage() {
+			return image;
+		}
+
+		public void setImage(String image) {
+			this.image = image;
+		}
+
+		public void setEquipments(List<Equipment> equipments) {
+			this.equipments = equipments;
+		}
+
+		public Arboresence getArbo() {
+			return arbo;
+		}
+
+		public void setArbo(Arboresence arbo) {
+			this.arbo = arbo;
+		}
+		
+	    
 }

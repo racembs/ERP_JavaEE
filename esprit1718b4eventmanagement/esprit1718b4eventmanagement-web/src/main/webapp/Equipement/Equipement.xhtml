@@ -45,7 +45,7 @@
 								</p:column>
 							 <p:column style="width:24px">
             <p:commandLink  oncomplete="PF('documentDialog').show()" title="View Detail" styleClass="ui-icon ui-icon-search">
-                <f:setPropertyActionListener value="#{arbo}" target="#{equipementBean.equipment.arboresence}" />
+                <f:setPropertyActionListener value="#{arbo}" target="#{equipementBean.arbo}" />
             </p:commandLink>
         </p:column>
 							</p:treeTable>
@@ -56,7 +56,7 @@
            <div class="col-sm-4">
                 
                <h:outputText value="SERIAL NUMBER: "/>
-                    <h:inputText id="name-id" value="#{equipementBean.equipment.serialNum}" class="effect-2"/>
+                    <h:inputText id="name-id" value="#{equipementBean.serialNum}" class="effect-2"/>
                 <span class="focus-border"></span>
              
                 
@@ -64,7 +64,7 @@
                <div class="col-sm-4">
               
                     <h:outputText value="FABRIQUANT: "/>
-                   <h:inputText  id="email-id" value="#{equipementBean.equipment.fabriquant}" class="effect-2"/>
+                   <h:inputText  id="email-id" value="#{equipementBean.fabriquant}" class="effect-2"/>
                <span class="focus-border"></span>
              
             </div>
@@ -74,14 +74,14 @@
 
                
                      <h:outputText value="MARQUE: "/>
-                   <h:inputText id="cpu" value="#{equipementBean.equipment.marque}" class="effect-2"/>
+                   <h:inputText id="cpu" value="#{equipementBean.marque}" class="effect-2"/>
                 <span class="focus-border"></span>
                 </div>
            
                 <div class="col-sm-4">
               
                <h:outputText value="DESCRIPTION:"/>
-                    <h:inputText id="cpu1" value="#{equipementBean.equipment.description}" class="effect-2"/>
+                    <h:inputText id="cpu1" value="#{equipementBean.description}" class="effect-2"/>
               <span class="focus-border"></span>
               
             </div>
@@ -90,7 +90,7 @@
           <div class="col-sm-4">
                 
                 <h:outputText value="STATE:"/>
-                    <h:inputText id="servic" value="#{equipementBean.equipment.state}" class="effect-2"/>
+                    <h:inputText id="servic" value="#{equipementBean.state}" class="effect-2"/>
               <span class="focus-border"></span>
              
             </div>

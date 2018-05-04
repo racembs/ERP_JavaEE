@@ -54,6 +54,11 @@ public class Works implements Serializable {
 	referencedColumnName="Id",insertable=true,updatable=true)
 	private Equipment equipement;
 
+			public Works() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 			public String getObjet() {
 				return objet;
 			}

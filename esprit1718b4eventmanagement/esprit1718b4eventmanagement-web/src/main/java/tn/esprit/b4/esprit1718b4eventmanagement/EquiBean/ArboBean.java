@@ -39,14 +39,14 @@ public class ArboBean  {
 	/**
 	 * 
 	 */
-	private TreeNode selectedNode;
+	private static TreeNode selectedNode;
 	private static final long serialVersionUID = 1L;
 	private TreeNode root;
-	private Arboresence rb=new Arboresence();
-	private Arboresence rb1=new Arboresence();
-	private Equipment equi=new Equipment();
-	private String type;
-	private String name;
+	private static Arboresence rb=new Arboresence();
+	private static Arboresence rb1=new Arboresence();
+	private static Equipment equi=new Equipment();
+	private static String type;
+	private static String name;
 	@EJB
 	private ArboresenceServiceLocal ServiceLocal;
 	  @PostConstruct
@@ -145,18 +145,16 @@ public class ArboBean  {
 public String doSaveOrUpdatearbo() {
 		if(type.equals("Principale"))
 		{
-			rb.setName(name);
-			name="";
-	ServiceLocal.addArbo(rb);}
+			
+	ServiceLocal.addArbo(new Arboresence(name,"Principale"));}
 		else if(type.equals("Secondaire"))
-		{rb.setName(name);
-			ServiceLocal.addArbo(rb);
+		{
+			ServiceLocal.addArbo(new Arboresence(name,"Secondaire"));
 		ServiceLocal.addArbo(equi.getArboresence().getId(), ServiceLocal.getArbo(name).getId());	
-	name="";
-	type="";
+
 		}
 		fill3();
-		rb=null;
+		
 		return "Arbo.xhtml?faces-redirect=true";
 	}
 
