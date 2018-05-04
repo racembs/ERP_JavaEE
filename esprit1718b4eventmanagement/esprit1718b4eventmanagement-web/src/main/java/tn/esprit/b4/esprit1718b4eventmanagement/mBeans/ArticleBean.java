@@ -40,23 +40,39 @@ public class ArticleBean implements Serializable {
 	ArticleService articleService;
 	private static final long serialVersionUID = 3350653785168926842L;
 	private TreeNode root;
+	private static TreeNode selectedNode;  
     
+	
+	
     @PostConstruct
     public void init() throws NamingException {
-    	fill3();
-    	//fill();
-//    	Article article=new Article();
-//    	article.setArticleCode("code");
-//    	article.setQuantity(1);
-//    	root = new DefaultTreeNode(article);
-//    	
-//    	TreeNode node0 = new DefaultTreeNode(article,root);
-//    	node0.setExpanded(true);
-//    	root.getChildren().add(new DefaultTreeNode(article));
+    	fillTreeNode();
+
 		 }
+    
+    
+    public void updateNomenclature() {
+    	articleService.addNomenclature(articleService.findArticleByCode(selectedNode.toString()).get(0).getId()
+    			, articleService.findArticleByCode(articleCode).get(0).getId(), quantity);
+    	fillTreeNode();
+    }
+    public void deleteNode() { 
+    	Nomenclature nomenclature=articleService.findNomenclature(articleService.findArticleByCode(selectedNode.getParent().toString()).get(0).getId(),
+    			articleService.findArticleByCode(selectedNode.toString()).get(0).getId()).get(0);
+    	articleService.DeleteNomenclature(nomenclature);
+        selectedNode.getChildren().clear();
+        selectedNode.getParent().getChildren().remove(selectedNode);
+        selectedNode.setParent(null);
+         
+        selectedNode = null;
+    }  
+    
 public void addArticle() {
 	articleService.addArticle(new Article(articleCode, description, unitCode, type, pmp, quantity));
 }
+
+
+
 public void deleteArticle(Integer idArticle) {
 	articleService.DeleteArticle(idArticle);
 	//this.quantity=idArticle;
@@ -86,170 +102,10 @@ public void updteArticle() {
 	articleService.updateArticle(article);
 }
     
-    public void fill() {
-root = new DefaultTreeNode("Root", null);
 
-              
-        
-        List<Nomenclature> listNomenclature;
-		 List<Nomenclature> produitFini =  new ArrayList<Nomenclature>();
-		 listNomenclature=articleService.getAllFinalArticleNomenclature();
-			for(int i=0;i<listNomenclature.size();i++) {
-			if(listNomenclature.get(i).getArticlePere().getType().equals("Produit-Pere")&&listNomenclature.get(i).getArticleFils().getType().equals("Produit-Fini")) {
-				produitFini.add(listNomenclature.get(i));
-				
-			}
-		}
-		 for(int i=0;i<produitFini.size();i++) {
-			 TreeNode node0 = new DefaultTreeNode(produitFini.get(i).getArticleFils());
-			 root.getChildren().add(node0);
-  
-		 
-		 ArrayDeque <TreeNode> queue=new ArrayDeque<>();
-		 queue.add(node0);
-		 
-		
-		 while(!queue.isEmpty()) {
-			 
-		
-			//Nomenclature TreeItemHead=queue.getFirst();
-			TreeNode TreeItemHead = queue.getFirst();
-			 queue.removeFirst();
-			//Article article= articleService.findArticleByCode(TreeItemHead.toString()).get(0);
-//			 List<Nomenclature> listNomenclatureFils=articleService.getFilsArticles(TreeItemHead.get);
-//					 //getArticleFils().getId());
-//			 for(int j=0;j<listNomenclatureFils.size();j++) {
-//				// newItemarticleFils=new TreeItem<>(listNomenclatureFils.get(j));
-//				 TreeNode newItemarticleFils = new DefaultTreeNode(listNomenclatureFils.get(j));
-//				 TreeItemHead.getChildren().add(newItemarticleFils);
-//				 queue.addLast(newItemarticleFils);
-//				 
-//		
-//		
-//			 }
-		 }
-		  }
-		 
-    }
-    
-    
-    public void fillTree() {
-    	root = new DefaultTreeNode("Root", null);
-
-    	              
-    	        
-    	        List<Nomenclature> listNomenclature;
-    			 List<Nomenclature> produitFini =  new ArrayList<Nomenclature>();
-    			 listNomenclature=articleService.getAllFinalArticleNomenclature();
-    				for(int i=0;i<listNomenclature.size();i++) {
-    				if(listNomenclature.get(i).getArticlePere().getType().equals("Produit-Pere")&&listNomenclature.get(i).getArticleFils().getType().equals("Produit-Fini")) {
-    					produitFini.add(listNomenclature.get(i));
-    					
-    				}
-    			}
-    			 for(int i=0;i<produitFini.size();i++) {
-    				 TreeNode node0 = new DefaultTreeNode(produitFini.get(i));
-    				 root.getChildren().add(node0);
-    	  
-    			 
-    			 ArrayDeque <Nomenclature> queue=new ArrayDeque<>();
-    			 queue.add(produitFini.get(i));
-    			 
-    			
-    			 while(!queue.isEmpty()) {
-    				 
-    			
-    				Nomenclature TreeItemHead=queue.getFirst();
-    				TreeNode newTreeNode = new DefaultTreeNode(TreeItemHead);
-    				//TreeNode TreeItemHead = queue.getFirst();
-    				 queue.removeFirst();
-    				//Article article= articleService.findArticleByCode(TreeItemHead.getArticleFils().getId());
-    				 List<Nomenclature> listNomenclatureFils=articleService.getFilsArticles(TreeItemHead.getArticleFils().getId());
-    						 //getArticleFils().getId());
-    				 for(int j=0;j<listNomenclatureFils.size();j++) {
-    					
-    					 //TreeNode newItemarticleFils = new DefaultTreeNode(listNomenclatureFils.get(j).getArticleFils().getArticleCode());
-    					 newTreeNode.getChildren().add(new DefaultTreeNode(listNomenclatureFils.get(j)));
-    					 queue.addLast(listNomenclatureFils.get(j));
-    					 
-    			
-    			
-    				 }
-    			 }
-    			  }
-    			 
-    	    }
-    	    
-    
-    
- public void fillTreeNode() throws NamingException {
-	
-			root = new DefaultTreeNode("Root", null);	
-		 List<Nomenclature> listNomenclature;
-		 List<Nomenclature> produitFini =  new ArrayList<Nomenclature>();
-		 listNomenclature=articleService.getAllFinalArticleNomenclature();
-
-		 
-		 
-		
-		 
-	for(int i=0;i<listNomenclature.size();i++) {
-		if(listNomenclature.get(i).getArticlePere().getType().equals("Produit-Pere")&&listNomenclature.get(i).getArticleFils().getType().equals("Produit-Fini")) {
-			produitFini.add(listNomenclature.get(i));
-			
-		}
-	}
-	
-	
-	
-	
-	
- 
- for(int i=0;i<listNomenclature.size();i++) {
-	 List<Nomenclature> articlePere=produitFini;
+ public void fillTreeNode() {
 	 
-	 //newItemarticlePere=new TreeItem<>(articlePere.get(i));
-	 TreeNode newItemarticlePere = new DefaultTreeNode(articlePere.get(i).getArticleFils().getArticleCode());
-	 root.getChildren().add(newItemarticlePere);
-	 
-	
-	
-	 
-	 ArrayDeque <Nomenclature> queue=new ArrayDeque<>();
-	 queue.add(articlePere.get(i));
-	 
-	
-	 while(!queue.isEmpty()) {
-		 
-	
-		//Nomenclature TreeItemHead=queue.getFirst();
-		TreeNode TreeItemHead = new DefaultTreeNode(queue.getFirst().getArticleFils().getArticleCode());
-		 queue.removeFirst();
-		
-		 List<Nomenclature> listNomenclatureFils=articleService.getFilsArticles(queue.getFirst().getArticleFils().getId());
-		 for(int j=0;j<listNomenclatureFils.size();j++) {
-			// newItemarticleFils=new TreeItem<>(listNomenclatureFils.get(j));
-			 TreeNode newItemarticleFils = new DefaultTreeNode(listNomenclatureFils.get(j).getArticleFils().getArticleCode());
-			 TreeItemHead.getChildren().add(newItemarticleFils);
-			 queue.addLast(listNomenclatureFils.get(i));
-			 
-	
-	
-		 }
-	 }
-	 
-	 
-
- }
-
-	
-	 
- }
- 
- 
- public void fill3() {
-	 
-	 root = new DefaultTreeNode("Root", null);
+	 root = new DefaultTreeNode("Matiére Premiére", null);
 		 List<Nomenclature> listNomenclature;
 		 List<Nomenclature> produitFini =  new ArrayList<Nomenclature>();
 		 listNomenclature=articleService.getAllFinalArticleNomenclature();
@@ -264,36 +120,33 @@ root = new DefaultTreeNode("Root", null);
 	}
 
 	 
-	 
-	 	TreeItem<Nomenclature> newItemarticlePere;
-	 	TreeItem<Nomenclature> newItemarticleFils=null;
+
 	 for(int i=0;i<produitFini.size();i++) {
 		 List<Nomenclature> articlePere=produitFini;
 		 
-		// newItemarticlePere=new TreeItem<>(articlePere.get(i));
-		 TreeNode newNode = new DefaultTreeNode(articlePere.get(i));
-		// root = new DefaultTreeNode(newNode);
+		 TreeNode newNode = new DefaultTreeNode(articlePere.get(i).getArticleFils().getArticleCode());
+	
 		 root.getChildren().add(newNode);
 		 
 		
 		
 		 
-		 ArrayDeque <Nomenclature> queue=new ArrayDeque<>();
-		 queue.add(articlePere.get(i));
+		 ArrayDeque <TreeNode> queue=new ArrayDeque<>();
+		 queue.add(newNode);
 		 
 		
 		 while(!queue.isEmpty()) {
 			 
 		
-			Nomenclature TreeItemHead=queue.getFirst();
+			TreeNode TreeItemHead=queue.getFirst();
 			 queue.removeFirst();
 			
-			 List<Nomenclature> listNomenclatureFils=articleService.getFilsArticles(TreeItemHead.getArticleFils().getId());
+			 List<Nomenclature> listNomenclatureFils=articleService.getFilsArticles(articleService.findArticleByCode(TreeItemHead.toString()).get(0).getId());
 			 for(int j=0;j<listNomenclatureFils.size();j++) {
-				// newItemarticleFils=new TreeItem<>(listNomenclatureFils.get(j));
-				 TreeNode newNodeFils = new DefaultTreeNode(listNomenclatureFils.get(j));
-				 newNode.getChildren().add(newNodeFils);
-				 queue.addLast(listNomenclatureFils.get(j));
+				
+				 TreeNode newNodeFils = new DefaultTreeNode(listNomenclatureFils.get(j).getArticleFils().getArticleCode());
+				 TreeItemHead.getChildren().add(newNodeFils);
+				 queue.addLast(newNodeFils);
 				 
 		
 		
@@ -304,6 +157,10 @@ root = new DefaultTreeNode("Root", null);
 		
 	 }
  }
+ 
+ 
+ 
+ 
  public ArticleService getArticleService() {
 	return articleService;
 }
@@ -394,6 +251,12 @@ public Article getArticleFils(Nomenclature n) {
 	public TreeNode getRoot() {
         return root;
     }
+	public TreeNode getSelectedNode() {
+		return selectedNode;
+	}
+	public void setSelectedNode(TreeNode selectedNode) {
+		this.selectedNode = selectedNode;
+	}
 	
 	
 }

@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.MvtApprov;
 @LocalBean
 @Stateless
@@ -48,5 +49,11 @@ public class MvtApprovService implements MvtApprovServiceLocal,MvtApprovServiceR
 	MvtApprov ordre=query.getSingleResult();
 	return ordre;
 	}
-
+	public Long calculerArticleOrders(int id) {
+	TypedQuery<Long> query
+	=em.createQuery("select COUNT(m) from MvtApprov m where m.article.Id=:id", Long.class);
+	query.setParameter("id",id);
+	Long ordre=query.getSingleResult();
+	return ordre;
+}
 }

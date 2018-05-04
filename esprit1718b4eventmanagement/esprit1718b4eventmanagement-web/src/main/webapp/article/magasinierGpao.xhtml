@@ -14,7 +14,32 @@
     <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css'></h:outputStylesheet>
         <h:outputStylesheet library="css" name="articleStyle.css"></h:outputStylesheet>
         
-    
+          
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- Bootstrap Core CSS -->
+<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+<!-- <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />-->
+<!-- Custom CSS -->
+<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+<!-- <link href="css/style.css" rel='stylesheet' type='text/css' />-->
+<h:outputStylesheet library="css" name="morris.css"></h:outputStylesheet>
+<!-- <link rel="stylesheet" href="css/morris.css" type="text/css"/>-->
+<!-- Graph CSS -->
+<h:outputStylesheet library="css" name="font-awesome.css"></h:outputStylesheet>
+<!-- <link href="css/font-awesome.css" rel="stylesheet"> </link>-->
+<!-- jQuery -->
+<h:outputScript library="js" name="jquery-2.1.4.min.js"></h:outputScript>
+
+<!-- //jQuery -->
+<h:outputStylesheet href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400'></h:outputStylesheet>
+<!-- <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>-->
+<h:outputStylesheet href='//fonts.googleapis.com/css?family=Montserrat:400,700'></h:outputStylesheet>
+<!-- <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'></link>-->
+<!-- lined-icons -->
+<h:outputStylesheet library="css" name="icon-font.min.css"></h:outputStylesheet>
+<!-- <link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />-->
+<!-- //lined-icons -->
+        
 <h:head>
 
 </h:head>
@@ -31,10 +56,10 @@
 
  <h2 style="color:#2ea7f2"><i>Orders List</i></h2><br />
  
-<h:dataTable value="#{procurementBean.orders}" var="orders" border="2" selectionMode="single">
+<h:dataTable id="table" value="#{procurementBean.orders}" var="orders" border="2" selectionMode="single">
 		<h:column>
 		<f:facet name="header">
-		<h:outputText value="Article Code" />
+		<h:outputText   value="Article Code" />
 		</f:facet>
 		<h:outputText value="#{orders.article.articleCode}" />
 		</h:column>
@@ -67,11 +92,30 @@
 		</f:facet>
 		<h:commandButton  action="#{procurementBean.confirmReception(orders.id)}" class="btn-inverse btn" value="Confirm Reception" ></h:commandButton>
 		</h:column>
+		<h:column>
+		<f:facet name="">
+		</f:facet>
+<p:commandButton  value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+   <p:printer target="to_print" />
+   </p:commandButton>
+<h:outputText style= "visibility: hidden;" value="#{orders.article.articleCode}" />
+		</h:column>
+ 
+
 		
+	
+		
+	
 		
 		</h:dataTable>
 
-    
+<br/>
+
+
+
+
+
+
     				
 					</div>
 				</div>
@@ -82,10 +126,19 @@
 	
 	
 	
-<!--//_________________________________________Update Article___________________________________________________________-->
+<!--//_________________________________________  Printer  ___________________________________________________________-->
+
+
+
+
 
 </h:form>
+<script>
+function hide(){
+	 document.getElementById('to_print').style.visibility = 'visible';
+}
+</script>
 </h:body>
-<ui:include src="/template/footer.xhtml" />
+
 
 </html>

@@ -43,7 +43,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
 <ui:include src="/template/gpaoHeader.xhtml" />
 </h:head>
-<h:body>
+<h:body >
+
 <!--//_____________________________________________________Add Article____________________________________________________-->
 
 <div class="page-container">
@@ -54,16 +55,15 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 					<div id="gpaoBody" class="clearfix">
 					
 
- <h2 style="color:#2ea7f2"><i>Orders List</i></h2><br />
+ <h2 style="color:#2ea7f2"><i>Add New Order</i></h2><br />
  <h:form id="addForm">
- <p:commandButton value="Basic" type="button" onclick="PF('dlg1').show();" />
- <p:dialog header="Basic Dialog" widgetVar="dlg1" minHeight="40">
-    <h:outputText value="Resistance to PrimeFaces is futile!" />
-</p:dialog>
-<div class="col-100">
-<br/>
- <p:autoComplete id="countryList" value="#{procurementBean.articleCode}" completeMethod="#{procurementBean.findArticles}" />   
 
+
+<div class="col-100">
+
+<h:outputText value="Article: "/>
+<br/>
+<p:autoComplete id="countryList" value="#{procurementBean.articleCode}" completeMethod="#{procurementBean.findArticles}" />   
 </div>
 
 
@@ -76,7 +76,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
  <div class="col-100">
- <h:outputText value="Reception Date " />
+ <h:outputText value="Request Date:" />
  <p:calendar id="mask1" value="#{procurementBean.receptionDate}" pattern="dd-MM-yyyy" >
  <f:convertDateTime pattern="dd-MM-yyyy"/>
  </p:calendar>
@@ -130,17 +130,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
  <h:form id="UpdateMinMax">
 
 <div class="col-100">
+<h:outputText value="Article: "/>
 <br/>
  <p:autoComplete id="autoCompleteArticle" value="#{procurementBean.articleCode}" completeMethod="#{procurementBean.findArticles}" />   
 
-</div>
-
-
-
- <div class="col-100">
- <h:outputText value="Min Quantity: "/>
- <h:inputText  class="effect-2"  value="#{procurementBean.minQuantity}"/>
-<span class="focus-border"></span>
 </div>
 
  <div class="col-100">
@@ -148,6 +141,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
  <h:inputText  class="effect-2"  value="#{procurementBean.maxQuantity}"/>
 <span class="focus-border"></span>
 </div>
+
+ <div class="col-100">
+ <h:outputText value="Min Quantity: "/>
+ <h:inputText  class="effect-2"  value="#{procurementBean.minQuantity}"/>
+<span class="focus-border"></span>
+</div>
+
+
 
 
 <center>
@@ -195,6 +196,11 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
  <h2 style="color:#2ea7f2"><i>Auto Order Settings For All Articles</i></h2><br />
  <h:form id="UpdateMinMaxForAllArticles">
 
+ <div class="col-100">
+ <h:outputText value="Initial Quantity: "/>
+ <h:inputText  class="effect-2"  value="#{procurementBean.maxQuantity}"/>
+<span class="focus-border"></span>
+</div>
 
  <div class="col-100">
  <h:outputText value="Min Quantity: "/>
@@ -202,11 +208,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 <span class="focus-border"></span>
 </div>
 
- <div class="col-100">
- <h:outputText value="Initial Quantity: "/>
- <h:inputText  class="effect-2"  value="#{procurementBean.maxQuantity}"/>
-<span class="focus-border"></span>
-</div>
+
 
 
 <center>
@@ -238,9 +240,52 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 			</div>
 		</div>
 	</div>
-<div style= "visibility: hidden;">hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden</div>  
-</h:body>
+<div style= "visibility: hidden;">hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden</div>
 
+<!--//_____________________________________________________ Chart ____________________________________________________-->
+
+<div class="page-container">
+		<div class="left-content">
+			<div class="mother-grid-inner">
+				<!--header start here-->
+				<div class="header-main">
+					<div id="gpaoBody" class="clearfix">
+					
+
+ <h2 style="color:#2ea7f2"><i>Articles Chart</i></h2><br />
+ <h:form id="chart">
+
+<h:outputText value="Initial Quantity " style="color:orange"/><br/>
+<h:outputText value="minimal Quantity " style="color:LightSeaGreen"/><br/>
+<br/>
+
+
+<p:chart type="line" model="#{procurementBean.areaModel}" style="height:300px" />
+<br />
+<center>
+
+
+			<div class="col-sm-8 col-sm-offset-2">
+<h:commandButton action="#{procurementBean.refresh()}" class="btn-primary btn" value="refresh" style="margin-right: 0px"/>
+</div>
+</center>
+    
+	
+</h:form>
+
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		
+
+
+		    <div style= "visibility: hidden;">hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden</div> 
+	
+
+</h:body>
 <!--//_________________________________________ Menu ___________________________________________________________-->
 <div>
    <div class="page-container">
@@ -315,4 +360,5 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 	</div>
 	</div>
 	</div>
+	
 </html>
