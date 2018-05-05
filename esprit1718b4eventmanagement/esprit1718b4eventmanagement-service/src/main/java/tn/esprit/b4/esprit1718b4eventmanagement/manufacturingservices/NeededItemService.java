@@ -157,6 +157,9 @@ public class NeededItemService extends GenericDAO<NeededItem> implements NeededI
 			NeededItemList.add(ChildNeededItem);
 		}
 		//put into the map for any parent his children list
+		if(mapASC.containsKey(ParentneededItem)){
+			
+		}
 		mapASC.put(ParentneededItem, NeededItemList);
 		
 		if(NeededItemList==null){

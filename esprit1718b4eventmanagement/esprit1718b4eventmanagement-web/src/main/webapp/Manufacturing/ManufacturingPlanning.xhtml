@@ -25,7 +25,7 @@
 
 <div class="header-main">
 	<div id="gpaoBody" class="clearfix">
-		<h2 style="color:#2ea7f2"><i>Add Orders</i></h2><br />
+		<h2 style="color:#2ea7f2"><i>Manufacturing Resources Planning</i></h2><br />
 		<h:form id="tableForm">
 		<center>
      	<div class="col-100">
@@ -67,66 +67,55 @@
 		</div>
 		</center>
 		<center>		
-			<h:commandButton action="#{ordersBean.addOrder()}" class="btn-primary btn" value="Calculte" />
+			<p:commandButton action="#{manufacturingPlanningBean.selectOrdredItemChoosed()}" oncomplete="PF('ItemDialog').show()" class="btn-primary btn" value="Calculte" />
 		</center>
 
 			
-	
-			     <p:dataTable id="ordredItemTable" var="ordredItem" value="#{ordersBean.listOrdredItem}" paginator="false" rows="10">
-			
-			         <p:column>
-			             <f:facet name="header" >
-			                 <h:outputText value="Code" />
-			             </f:facet>
-			             <h:outputText value="#{ordredItem.article.articleCode}" />
-			         </p:column>
-			
-			         <p:column>
-			             <f:facet name="header">
-			                 <h:outputText value="Quantity" />
-			             </f:facet>
-			             <h:outputText value="#{ordredItem.quantity}" />
-			         </p:column>
-			         
-			         <p:column>
-			         	<p:commandButton action="#{ordersBean.delete(ordredItem)}" class="btn btn-warning" value="Delete" update=":tableForm:ordredItemTable">
-			         	</p:commandButton>
-			         </p:column>
-			
-			     </p:dataTable>
-			     <p:commandButton value="addItem" class="btn btn-primary" update=":dlgForm:display" oncomplete="PF('ItemDialog').show()">
-			                 <f:setPropertyActionListener value="#{ordredItem}"
-			                     target="#{ordersBean.selectedOrdredItem}" />
-			     </p:commandButton>
-
-		<center>
-		<div class="col-sm-8 col-sm-offset-2"><br /><br />
-			<h:commandButton action="#{ordersBean.addOrder()}" class="btn-primary btn" value="submit" />
-		    <h:commandButton action="#{clientBean.reset()}" class="btn-inverse btn" value="Reset" ></h:commandButton>
-		    <h:commandButton action="#{ordersBean.testDate()}" class="btn-primary btn" value="Update" />
-		</div>	
-		</center>
 		</h:form>
-		<p:dialog header="Add Items to order" widgetVar="ItemDialog" resizable="false"
-			               width="400" showEffect="explode" hideEffect="explode">
+		<p:dialog header="MRP calculation" widgetVar="ItemDialog" resizable="false"
+			               width="1100" showEffect="explode" hideEffect="explode">
 				  <h:form id="dlgForm">
-				
-				
-				         <h:panelGrid id="display" columns="2" cellpadding="4">
-				
-				
-				           <h:outputText value="Article" />          
-				           <p:selectOneMenu value="#{ordersBean.selectedArticleId}">
-					  					<f:selectItems value="#{ordersBean.produitFini}" 
-					  					var="arti" itemValue="#{arti.id}"
-					  					itemLabel="#{arti.articleCode}"/>
-					  				</p:selectOneMenu>
-				
-				             <h:outputText value="Quantity" />
-				             <h:inputText value="#{ordersBean.quantity}" />
-				
-				         </h:panelGrid>
-			       		 <p:commandButton value="Add Item" action="#{ordersBean.save()}" update=":tableForm:ordredItemTable" oncomplete="PF('ItemDialog').hide()"/>
+						<center>
+						
+							<div class="col-100">
+					 			<h:outputText value="Staking method : "/>
+					 			<h:selectOneMenu id="comboStaking" class="effect-2" value="#{manufacturingPlanningBean.choosedMethod}">
+					 						<f:selectItem itemLabel="Select a staking method" itemValue="" />
+						  					<f:selectItems value="#{manufacturingPlanningBean.stakingMethod}" 
+						  					var="choosedMethod" itemValue="#{choosedMethod}"
+						  					itemLabel="#{choosedMethod}"/>
+						  				</h:selectOneMenu>
+								<span class="focus-border"></span>
+							</div>
+							
+							<div class="col-100">
+					 			<h:outputText value="Shift work : "/>
+					 			<h:selectOneMenu id="comboShift" class="effect-2" value="#{manufacturingPlanningBean.choosedShiftWorkNumber}">
+					 						<f:selectItem itemLabel="select shift work number" itemValue="" />
+						  					<f:selectItems value="#{manufacturingPlanningBean.shiftWorkNumber}" 
+						  					var="number" itemValue="#{number}"
+						  					itemLabel="#{number}"/>
+						  				</h:selectOneMenu>
+								<span class="focus-border"></span>
+							</div>
+							
+							<div class="col-100">
+								<h:outputText value="Select starting Date: " />
+					 			<p:calendar id="date1" class="effect-2" value="#{manufacturingPlanningBean.startingDate}" pattern="dd-MM-yyyy" >
+					 				<f:convertDateTime pattern="dd-MM-yyyy"/>
+					 			</p:calendar>
+								<span class="focus-border"></span>
+							</div>
+							
+						</center>
+						<div class="clearfix"> </div>
+						<center>
+						<div class="col-100"></div>
+						<div class="col-100">
+			       		 <p:commandButton id="btn" value="Make Planning" action="#{manufacturingPlanningBean.makePlanningAction()}" />
+			       		 <span class="focus-border"></span>
+			       		 </div>
+			       		 </center>
 			      </h:form>
 			 </p:dialog>
 	</div>
