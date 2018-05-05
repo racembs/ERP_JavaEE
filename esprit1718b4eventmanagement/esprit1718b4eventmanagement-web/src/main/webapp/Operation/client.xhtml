@@ -107,20 +107,61 @@
 		</div>
 		<center>
 		<div class="col-sm-8 col-sm-offset-2"><br /><br />
-			<h:commandButton action="#{ArticleClientBean.Confirm()}" class="btn-primary btn" value="Confirm" />
-		    <h:commandButton action="#{ArticleClientBean.Reset()}" class="btn-inverse btn" value="Reset" ></h:commandButton>
-		    <h:commandButton action="#{ArticleClientBean.Pay()}" class="btn-primary btn" value="Pay" />
-		</div>	
+		<p:growl id="msgs" showDetail="true" escape="false"/>
+		<h:commandButton onclick="PF('msg').show();" action="#{ArticleClientBean.AddClt()}" class="btn-primary btn" value="Add" />
+		<h:commandButton onclick="PF('msg').show();" action="#{ArticleClientBean.Confirm()}" class="btn-primary btn" value="Confirm" />
+		 
+		  </div>	
+		  <br /><br /><br />
 		</center>
 
 
-						
+
+
+
+
+<h:dataTable value="#{ArticleClientBean.ordredItems}" var="ordredItems" border="2" selectionMode="single">
+			
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="Code" />
+		</f:facet>
+		<h:outputText value="#{ordredItems.article.articleCode}" />
+		</h:column>
+	
+		
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="Quantity" />
+		</f:facet>
+		<h:outputText value="#{ordredItems.quantity}" />
+		</h:column>
+		
+
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="Delete" />
+		</f:facet>
+		<h:commandButton  action="#{ArticleClientBean.Delete(ordredItems)}" class="btn-primary btn" value="Delete" />
+		</h:column>		
+
+
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="Update" />
+		</f:facet>
+		<h:commandButton  action="#{ArticleClientBean.Update(ordredItems)}" class="btn-primary btn" value="Update" />
+		</h:column>	
+		</h:dataTable>
+			<h:commandButton style="color:#2ea7f2" action="#{ArticleClientBean.Payer()}" class="btn-default btn" value="Have A Bill" />
+		
 
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 	</h:form>
 	<div style="visibility: hidden;">hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden</div>
 
