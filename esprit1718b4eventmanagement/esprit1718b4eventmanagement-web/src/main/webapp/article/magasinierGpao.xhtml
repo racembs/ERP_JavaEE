@@ -7,7 +7,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:pe="http://primefaces.org/ui/extensions" >
 
  
   <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'></h:outputStylesheet>
@@ -44,7 +45,7 @@
 
 </h:head>
 <h:body>
-<!--//_____________________________________________________Add Article____________________________________________________-->
+<!--//_____________________________________________________ Orders List____________________________________________________-->
 <h:form id="addForm">
 <div class="page-container">
 		<div class="left-content">
@@ -56,7 +57,9 @@
 
  <h2 style="color:#2ea7f2"><i>Orders List</i></h2><br />
  
+
 <h:dataTable id="table" value="#{procurementBean.orders}" var="orders" border="2" selectionMode="single">
+
 		<h:column>
 		<f:facet name="header">
 		<h:outputText   value="Article Code" />
@@ -82,23 +85,29 @@
 		
 		<h:column>
 		<f:facet name="header">
-		<h:outputText value="Reception Date" />
+		<h:outputText value="Reception Date" id="to_print" />
 		</f:facet>
 		<h:outputText value="#{orders.receptionDate}" />
 		</h:column>
 		
 		<h:column>
-		<f:facet name="">
+		<f:facet name="header">
+		<h:outputText value="Delivered in " />
 		</f:facet>
+		<pe:timer  
+        timeout="#{orders.quantity}" 
+        format="HH:mm:ss"/> 
+		</h:column>
+		
+		<h:column>
 		<h:commandButton  action="#{procurementBean.confirmReception(orders.id)}" class="btn-inverse btn" value="Confirm Reception" ></h:commandButton>
 		</h:column>
 		<h:column>
-		<f:facet name="">
-		</f:facet>
-<p:commandButton  value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
-   <p:printer target="to_print" />
-   </p:commandButton>
-<h:outputText style= "visibility: hidden;" value="#{orders.article.articleCode}" />
+
+		<h:commandButton  action="#{procurementBean.generatePdf(orders)}" class="btn-inverse btn" value="download pdf" ></h:commandButton>
+ 
+   
+<!-- <h:outputText value="#{orders.article.articleCode}" /> -->
 		</h:column>
  
 
@@ -112,8 +121,7 @@
 <br/>
 
 
-
-
+ 
 
 
     				
@@ -130,15 +138,20 @@
 
 
 
+   
 
 
 </h:form>
+
+
+
 <script>
 function hide(){
 	 document.getElementById('to_print').style.visibility = 'visible';
 }
+
 </script>
 </h:body>
-
+ 
 
 </html>

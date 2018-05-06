@@ -27,6 +27,11 @@
 			<artifactId>itextpdf</artifactId>
 			<version>5.1.0</version>
 		</dependency>
+	<dependency>
+    <groupId>org.primefaces.extensions</groupId>
+    <artifactId>primefaces-extensions</artifactId>
+    <version>3.0.0</version>
+</dependency>
 		<dependency>
 			<groupId>tn.esprit.b4</groupId>
 			<artifactId>esprit1718b4eventmanagement-service</artifactId>

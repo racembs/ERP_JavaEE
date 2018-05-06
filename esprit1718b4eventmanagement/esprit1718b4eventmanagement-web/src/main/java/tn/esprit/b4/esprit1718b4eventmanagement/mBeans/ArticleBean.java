@@ -72,8 +72,7 @@ public class ArticleBean implements Serializable {
 public void addArticle() {
 	articleService.addArticle(new Article(articleCode, description, unitCode, type, pmp, quantity));
 	FacesContext context = FacesContext.getCurrentInstance();
-    
-    context.addMessage(null, new FacesMessage("Successful Add" ) );
+    context.addMessage(null, new FacesMessage("Article is successfully added" ) );
 }
 
 
@@ -81,6 +80,8 @@ public void addArticle() {
 public void deleteArticle(Integer idArticle) {
 	articleService.DeleteArticle(idArticle);
 	//this.quantity=idArticle;
+	FacesContext context = FacesContext.getCurrentInstance();
+    context.addMessage(null, new FacesMessage("Article is successfully deleted" ) );
 }
 
 
@@ -105,6 +106,8 @@ public void updteArticle() {
 	Article article=new Article(articleCode, description, unitCode, type, pmp, quantity);
 	article.setId(this.getIdArticle());
 	articleService.updateArticle(article);
+	FacesContext context = FacesContext.getCurrentInstance();
+    context.addMessage(null, new FacesMessage("Article is successfully updated" ) );
 }
     
 

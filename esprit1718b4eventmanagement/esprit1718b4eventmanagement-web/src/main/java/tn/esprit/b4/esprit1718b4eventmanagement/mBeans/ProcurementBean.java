@@ -1,31 +1,61 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.mBeans;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
+
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.Schedule;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.FacesComponent;
-
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.naming.NamingException;
 import javax.persistence.Column;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.codec.Base64.InputStream;
+import com.itextpdf.text.pdf.codec.Base64.OutputStream;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.MvtApprov;
@@ -52,8 +82,9 @@ public class ProcurementBean implements Serializable {
 	private int dailyConsumption;
 	private int deliveryTime;
 	private List<MvtApprov> orders;
-
+	public Paragraph ordersParagraph;
     private LineChartModel areaModel;
+
 
 	
 	 
@@ -62,14 +93,75 @@ public class ProcurementBean implements Serializable {
 	@EJB
 	MvtApprovService approvService;
 	private static final long serialVersionUID = 3350653785168926842L;
-	
-    
-    @PostConstruct
+	 private static final int DEFAULT_BUFFER_SIZE = 10240; 
+	 
+	  public void downloadPDF() throws IOException {
+
+	        // Prepare.
+	        FacesContext facesContext = FacesContext.getCurrentInstance();
+	        ExternalContext externalContext = facesContext.getExternalContext();
+	        HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
+
+	        File file = new File("C:\\Users\\RBS\\Desktop\\","test.pdf");
+	        BufferedInputStream input = null;
+	        BufferedOutputStream output = null;
+
+	        try {
+	            // Open file.
+	            input = new BufferedInputStream(new FileInputStream(file), DEFAULT_BUFFER_SIZE);
+
+	            // Init servlet response.
+	            response.reset();
+	            response.setHeader("Content-Type", "application/pdf");
+	            response.setHeader("Content-Length", String.valueOf(file.length()));
+	            response.setHeader("Content-Disposition", "inline; filename=\"" + "test.pdf" + "\"");
+	            output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
+
+	            // Write file contents to response.
+	            byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+	            int length;
+	            while ((length = input.read(buffer)) > 0) {
+	                output.write(buffer, 0, length);
+	            }
+
+	            // Finalize task.
+	            output.flush();
+	        } finally {
+	            // Gently close streams.
+	            close(output);
+	            close(input);
+	        }
+
+	        // Inform JSF that it doesn't need to handle response.
+	        // This is very important, otherwise you will get the following exception in the logs:
+	        // java.lang.IllegalStateException: Cannot forward after response has been committed.
+	        facesContext.responseComplete();
+	    }
+
+	    // Helpers (can be refactored to public utility class) ----------------------------------------
+
+	    private static void close(Closeable resource) {
+	        if (resource != null) {
+	            try {
+	                resource.close();
+	            } catch (IOException e) {
+	                // Do your thing with the exception. Print it, log it or mail it. It may be useful to 
+	                // know that this will generally only be thrown when the client aborted the download.
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+
+
+	@PostConstruct
     public void init() throws NamingException {
     	AutoOrderGenerateByMinimumQuantity();
     	createAreaModel();
     	
 		 }
+    
+    
+     
 
     public List<MvtApprov> sortOrderList() {
     	
@@ -95,8 +187,7 @@ public class ProcurementBean implements Serializable {
 		
     }
     
-    
-    
+  
     
     private void createAreaModel() {
     	List<MvtApprov> list=sortOrderList();
@@ -375,6 +466,56 @@ public void AutoOrderGenerateByMinimumQuantity() {
 		}
 	}
 	
-	
+public void generatePdf(MvtApprov order) throws IOException{
+	try {
+    	   try {
+    	
+    String FILE = "C:\\Users\\RBS\\Desktop\\test.pdf";
+Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
+      Font.BOLD, BaseColor.DARK_GRAY);
+Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,
+      Font.NORMAL, BaseColor.RED);
+Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,
+      Font.BOLD, BaseColor.GRAY);
+Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 9,
+      Font.BOLD);
+  
+  
+              Document my_pdf_report = new Document();
+              PdfWriter.getInstance(my_pdf_report, new FileOutputStream(FILE));
+              my_pdf_report.open();  
+              
+        		
+              Paragraph preface = new Paragraph("", catFont);
+              preface.setAlignment(Element.ALIGN_CENTER);
+              ordersParagraph = new Paragraph("Facture");
+                  
+              my_pdf_report.add(preface);
+              my_pdf_report.add(ordersParagraph);
+              ordersParagraph.setAlignment(Element.ALIGN_LEFT);        	  
+              
+              Calendar c = Calendar.getInstance();
+            my_pdf_report.add(new Paragraph("Date : "+c.getTime()));
+      		my_pdf_report.add(new Paragraph("Aticle UnitCode : "+order.getArticle().getUnitCode()));
+      	    my_pdf_report.add(new Paragraph("Quantity : "+order.getQuantity())); 
+      	    my_pdf_report.add(new Paragraph("   ")); 
+      	    my_pdf_report.add(new Paragraph("   "));  
+         
+
+            my_pdf_report.close();              
+
+            
+            
+            
+}catch (FileNotFoundException e) {
+e.printStackTrace();
+}
+ }catch (DocumentException e) {
+	  e.printStackTrace();
+	  }
+	downloadPDF();
+    	   
+
+}
 	
 }
