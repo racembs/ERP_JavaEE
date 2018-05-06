@@ -419,5 +419,12 @@ public class ArticleClientBean implements Serializable {
 			    
 			    
 		   }
+		   
+		   public String Reclamation()
+		   {
+			   String navigateTo = "";
+			   navigateTo = "/Operation/ReclamOp?faces-redirect=true";
+				return navigateTo;
+		   }
 
 }

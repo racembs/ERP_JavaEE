@@ -15,4 +15,6 @@ public class DashboardBean implements Serializable {
 	    public void init() throws NamingException {
 	    	
 	    }
+	 
+	 
 }

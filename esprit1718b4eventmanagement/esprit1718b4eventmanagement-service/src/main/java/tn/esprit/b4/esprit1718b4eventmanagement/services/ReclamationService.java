@@ -32,10 +32,10 @@ public void Add(Reclamation cs)
 
 
 @Override
-public ReclamationPk addReclamation(int idEquipement, int idUser, Reclamation Rec) {
+public ReclamationPk addReclamation(int idArticle, int idUser, Reclamation Rec) {
 		
 	ReclamationPk Rpk = new ReclamationPk();
-	Rpk.setId_equipment(idEquipement);
+	Rpk.setId(idArticle);
 	Rpk.setIdUser(idUser);
 	Rec.setReclamationPK(Rpk);
 	em.persist(Rec);

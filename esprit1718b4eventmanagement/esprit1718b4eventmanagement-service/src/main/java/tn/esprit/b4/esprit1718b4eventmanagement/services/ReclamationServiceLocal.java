@@ -10,5 +10,5 @@ import tn.esprit.b4.esprit1718b4eventmanagement.utilities.IGenericDAO;
 @Local
 public interface ReclamationServiceLocal extends IGenericDAO<Reclamation> {
 	public void Add(Reclamation cs);
-	public ReclamationPk addReclamation(int idEquipement, int idUser, Reclamation Rec);
+	public ReclamationPk addReclamation(int idArticle, int idUser, Reclamation Rec);
 }

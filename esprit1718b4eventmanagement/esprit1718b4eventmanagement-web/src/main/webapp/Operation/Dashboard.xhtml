@@ -20,16 +20,14 @@
       function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
+          ['Type Reclamation', 'Number'],
+          ['Quality',     11],
+          ['Livraison',      2],
+          ['Price',  2]
         ]);
 
         var options = {
-          title: 'My Daily Activities'
+          title: 'Reclamation'
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -38,31 +36,7 @@
       }
     </script>
  
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2004',  1000,      400],
-          ['2005',  1170,      460],
-          ['2006',  660,       1120],
-          ['2007',  1030,      540]
-        ]);
-
-        var options = {
-          title: 'Company Performance',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-        chart.draw(data, options);
-      }
-    </script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart', 'bar']});
@@ -74,7 +48,7 @@
         var chartDiv = document.getElementById('chart_div');
 
         var data = google.visualization.arrayToDataTable([
-          ['Galaxy', 'Distance', 'Brightness'],
+          ['Articles', 'Sale', 'Reclamation'],
           ['Canis Major Dwarf', 8000, 23.3],
           ['Sagittarius Dwarf', 24000, 4.5],
           ['Ursa Major II Dwarf', 30000, 14.3],
@@ -85,8 +59,8 @@
         var materialOptions = {
           width: 900,
           chart: {
-            title: 'Nearby galaxies',
-            subtitle: 'distance on the left, brightness on the right'
+            title: 'Articles',
+            subtitle: 'Sales , Reclamation'
           },
           series: {
             0: { axis: 'distance' }, // Bind series 0 to an axis named 'distance'.
@@ -94,8 +68,8 @@
           },
           axes: {
             y: {
-              distance: {label: 'parsecs'}, // Left y-axis.
-              brightness: {side: 'right', label: 'apparent magnitude'} // Right y-axis.
+              distance: {label: 'Sales'}, // Left y-axis.
+              brightness: {side: 'right', label: 'Reclamation'} // Right y-axis.
             }
           }
         };
@@ -131,6 +105,7 @@
         drawMaterialChart();
     };
     </script>
+
     
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -139,45 +114,24 @@
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Age', 'Weight'],
-          [ 8,      12],
-          [ 4,      5.5],
-          [ 11,     14],
-          [ 4,      5],
-          [ 3,      3.5],
-          [ 6.5,    7]
+          ['Month', 'Demand', 'Offre '],
+          ['Jan',  1000,      400],
+          ['Feb',  1170,      4600],
+          ['Mar',  6600,       1120],
+          ['Apr',  1030,      5400],
+          ['May',  6000,      7000],
+          ['Jun',  1030,      5400],
+          ['Jul',  505,      5000],
+          ['Aug',  1030,      450],
+          ['Sep',  1200,      6300],
+          ['Oct',  600,      200],
+          ['Nov',  4200,      2000],
+          ['Dec',  6000,      7500]
         ]);
 
         var options = {
-          title: 'Age vs. Weight comparison',
-          hAxis: {title: 'Age', minValue: 0, maxValue: 15},
-          vAxis: {title: 'Weight', minValue: 0, maxValue: 15},
-          legend: 'none'
-        };
-
-        var chart = new google.visualization.ScatterChart(document.getElementById('chart_div1'));
-
-        chart.draw(data, options);
-      }
-    </script>
-    
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2013',  1000,      400],
-          ['2014',  1170,      460],
-          ['2015',  660,       1120],
-          ['2016',  1030,      540]
-        ]);
-
-        var options = {
-          title: 'Company Performance',
-          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+          title: 'Articles PANA100 Offre/Demand ',
+          hAxis: {title: 'Month',  titleTextStyle: {color: '#333'}},
           vAxis: {minValue: 0}
         };
 
@@ -186,68 +140,7 @@
       }
     </script>
     
-   
-     <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
 
-      // Load the Visualization API and the controls package.
-      google.charts.load('current', {'packages':['corechart', 'controls']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawDashboard);
-
-      // Callback that creates and populates a data table,
-      // instantiates a dashboard, a range slider and a pie chart,
-      // passes in the data and draws it.
-      function drawDashboard() {
-
-        // Create our data table.
-        var data = google.visualization.arrayToDataTable([
-          ['Name', 'Donuts eaten'],
-          ['Michael' , 5],
-          ['Elisa', 7],
-          ['Robert', 3],
-          ['John', 2],
-          ['Jessica', 6],
-          ['Aaron', 1],
-          ['Margareth', 8]
-        ]);
-
-        // Create a dashboard.
-        var dashboard = new google.visualization.Dashboard(
-            document.getElementById('dashboard_div'));
-
-        // Create a range slider, passing some options
-        var donutRangeSlider = new google.visualization.ControlWrapper({
-          'controlType': 'NumberRangeFilter',
-          'containerId': 'filter_div',
-          'options': {
-            'filterColumnLabel': 'Donuts eaten'
-          }
-        });
-
-        // Create a pie chart, passing some options
-        var pieChart = new google.visualization.ChartWrapper({
-          'chartType': 'PieChart',
-          'containerId': 'chart_div9',
-          'options': {
-            'width': 900,
-            'height': 500,
-            'pieSliceText': 'value',
-            'legend': 'right'
-          }
-        });
-
-        // Establish dependencies, declaring that 'filter' drives 'pieChart',
-        // so that the pie chart will only display entries that are let through
-        // given the chosen slider range.
-        dashboard.bind(donutRangeSlider, pieChart);
-
-        // Draw the dashboard.
-        dashboard.draw(data);
-      }
-    </script>
 </h:head>
 <h:body>
 	<div class="page-container">
@@ -261,9 +154,8 @@
 
 
  
- <div id="curve_chart" style="width: 900px; height: 500px"></div>
+
  <div id="chart_div" style="width: 900px; height: 500px;"></div>
- <div id="chart_div1" style="width: 900px; height: 500px;"></div>
  <div id="chart_div2" style="width: 900px; height: 500px;"></div>
  <div id="piechart" style="width: 900px; height: 500px;"></div>
  

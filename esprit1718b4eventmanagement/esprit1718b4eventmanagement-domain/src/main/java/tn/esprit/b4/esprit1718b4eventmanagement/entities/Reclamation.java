@@ -25,8 +25,7 @@ public class Reclamation implements Serializable {
 	@Column(name = "DateCreation" , nullable=true)
 	private Date datecreation;
 	
-	@Column(name = "DateSolution" , nullable=true)
-	private Date datesolution;
+
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -41,13 +40,57 @@ public class Reclamation implements Serializable {
 	private User User;
 	
 	@ManyToOne
-	@JoinColumn(name="id_equipement",referencedColumnName="Id",insertable=false,updatable=false)
-	private Equipment equipement;
+	@JoinColumn(name="Id",referencedColumnName="Id",insertable=false,updatable=false)
+	private Article article;
 	
 	
 
 	public Reclamation() {
 		super();
+	}
+
+
+
+	public Reclamation(int code, String subject, String description, Date datecreation, ReclamationPk reclamationPK,
+			tn.esprit.b4.esprit1718b4eventmanagement.entities.User user, Article article) {
+		super();
+		this.code = code;
+		this.subject = subject;
+		this.description = description;
+		this.datecreation = datecreation;
+		this.reclamationPK = reclamationPK;
+		User = user;
+		this.article = article;
+	}
+
+
+
+	public User getUser() {
+		return User;
+	}
+
+
+
+	public void setUser(User user) {
+		User = user;
+	}
+
+
+
+	public Article getArticle() {
+		return article;
+	}
+
+
+
+	public void setArticle(Article article) {
+		this.article = article;
+	}
+
+
+
+	public void setReclamationPK(ReclamationPk reclamationPK) {
+		this.reclamationPK = reclamationPK;
 	}
 
 
@@ -100,16 +143,6 @@ public class Reclamation implements Serializable {
 
 
 
-	public Date getDatesolution() {
-		return datesolution;
-	}
-
-
-
-	public void setDatesolution(Date datesolution) {
-		this.datesolution = datesolution;
-	}
-
 
 
 	
@@ -122,49 +155,7 @@ public class Reclamation implements Serializable {
 
 
 
-	public void setReclamationPK(ReclamationPk reclamationPK) {
-		this.reclamationPK = reclamationPK;
-	}
 
-
-
-	public User getUser() {
-		return User;
-	}
-
-
-
-	public void setUser(User user) {
-		User = user;
-	}
-
-
-
-	public Equipment getEquipement() {
-		return equipement;
-	}
-
-
-
-	public void setEquipement(Equipment equipement) {
-		this.equipement = equipement;
-	}
-
-
-
-	public Reclamation(int code, String subject, String description, Date datecreation, Date datesolution,
-			ReclamationPk reclamationPK, tn.esprit.b4.esprit1718b4eventmanagement.entities.User user,
-			Equipment equipement) {
-		super();
-		this.code = code;
-		this.subject = subject;
-		this.description = description;
-		this.datecreation = datecreation;
-		this.datesolution = datesolution;
-		this.reclamationPK = reclamationPK;
-		User = user;
-		this.equipement = equipement;
-	}
 
 	
 	

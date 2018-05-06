@@ -1,4 +1,4 @@
-
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -50,44 +50,33 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="header-main">
 					<div id="gpaoBody" class="clearfix">
 <!--//__________________________________________________________________________________________________________________-->
-   <h2 style="color:#2ea7f2"><i>Reclamation</i></h2><br />
-
-<form id="rec">
+<h:form id="add">
+		 <h2 style="color:#2ea7f2"><i> Reclamation</i></h2><br />
+		
+			
+	
+	
 <h:panelGrid columns="2">	
+<h:outputText value="User" />			
+<h:outputText value="#{identity.user.firstname} "/>
+<h:outputText value="Article" />
+<p:autoComplete id="e" value="#{ReclamOpBean.code}" completeMethod="#{ReclamOpBean.findArticle}"></p:autoComplete>
+	
+        	<h:outputText value="Email" />
+			<h:inputText value="#{identity.user.email}" />
+			<h:outputText value="Subject" />
+			<h:inputText class="form-control" value="#{ReclamOpBean.subject}" />
+			<h:outputText value="Description" />
+			<h:inputText value="#{ReclamOpBean.description}" />
 
-  <div class="form-group">
-    <input type="text" value="#{ReclamOpBean.userFirstName}"  placeholder="user" />
-  <input value="#{ReclamOpBean.serialNum}" type="text" placeholder="equip"  />
-  </div>
-  
-  <div class="form-group">
-    <label for="exampleFormControlInput1">Email address</label>
-    <input type="email" value="#{ReclamOpBean.email}" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" required="Please write your email" />
-  <input class="form-control" value="#{ReclamOpBean.subject}" type="text" placeholder="Subject" required="Please specifie the subject" />
-  </div>
-
-<div class="form-group">
-    <label for="exampleFormControlTextarea1">Description</label>
-    <input type="text" class="form-control" value="#{ReclamOpBean.description}" required="Please write your reclamation"/>
-  </div>
- 
-  
-  <div class="custom-file">
-    <input type="file" class="custom-file-input" id="validatedCustomFile" />
-    <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-  </div>
-  
-   <div class="form-group row">
-    <div class="col-sm-10">
-    <h:commandButton style="color:#2ea7f2" action="#{ReclamOpBean.AddReclam()}" class="btn-default btn" value="Send" />
-
-    </div>
-  </div>
-  
-  </h:panelGrid>
-</form>
-
-</div>
+			
+			<h:commandButton style="color:#2ea7f2" action="#{ReclamOpBean.AddReclam()}" class="btn-default btn" value="Add" />
+	    
+</h:panelGrid>
+					
+</h:form>
+<!--//__________________________________________________________________________________________________________________-->
+					</div>
 				</div>
 			</div>
 		</div>

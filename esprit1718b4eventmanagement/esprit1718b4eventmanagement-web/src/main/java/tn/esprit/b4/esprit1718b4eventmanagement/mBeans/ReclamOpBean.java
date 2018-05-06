@@ -12,9 +12,11 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.FacesComponent;
 import javax.naming.NamingException;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Reclamation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
+import tn.esprit.b4.esprit1718b4eventmanagement.services.ArticleService;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.EquipementService;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.ReclamationService;
 import tn.esprit.b4.esprit1718b4eventmanagement.services.UserService;
@@ -27,8 +29,24 @@ public class ReclamOpBean implements Serializable {
 	private String description;
 	private String subject;
 	private String userFirstName;
-	private String serialNum;
-	private Equipment equipement;
+	private String code;
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public Article getArticle() {
+		return article;
+	}
+
+	public void setArticle(Article article) {
+		this.article = article;
+	}
+
+	private Article article;
 	private User user;
 	
 	private static int eqid;
@@ -39,7 +57,9 @@ public class ReclamOpBean implements Serializable {
 	UserService UserServices;
 	
 	@EJB
-	EquipementService EquipementService;
+	ArticleService ArticleServices;
+	
+	
 	public String getEmail() {
 		return email;
 	}
@@ -72,13 +92,6 @@ public class ReclamOpBean implements Serializable {
 		this.userFirstName = userFirstName;
 	}
 
-	public String getSerialNum() {
-		return serialNum;
-	}
-
-	public void setSerialNum(String serialNum) {
-		this.serialNum = serialNum;
-	}
 
 	private static final long serialVersionUID = 1L;
 	
@@ -96,20 +109,25 @@ public class ReclamOpBean implements Serializable {
 	  Reclamation Reclam = new Reclamation();
 	  Calendar c = Calendar.getInstance();
 	  Reclam.setCode(1);
-//	  Reclam.setDatecreation(c.getTime());
-//	  Reclam.setSubject(subject);
-//	  Reclam.setDescription(description);
+ Reclam.setDatecreation(c.getTime());
+  Reclam.setSubject(subject);
+	  Reclam.setDescription(description);
 //	  
 //	  Equipment eq = new Equipment();
 //	  eq=EquipementService.findEquipementBySerie(serialNum);
+  
+	 
+	  List<Article> listART=ArticleServices.findArticleByCode(code);
+	  for (int i = 0; i < listART.size(); i++) {
+		  eqid=listART.get(i).getId();
+	}
+	  User us = new User();
+	  us=UserServices.findByLogin(userFirstName);
 //	  
-//	  User us = new User();
-//	  us=UserServices.findByLogin(userFirstName);
+
+	  uid=us.getId();
 //	  
-//	  eqid=eq.getId();
-//	  uid=us.getId();
-//	  
-	ReclamationServices.addReclamation(1, 1, Reclam);
+	ReclamationServices.addReclamation(eqid,uid, Reclam);
 	}
     
     public List<String> findUser(String query){
@@ -124,25 +142,19 @@ public class ReclamOpBean implements Serializable {
         return sList;
         }
         
-        public List<String> findEquipement(String query){
-            List<Equipment> list=EquipementService.getAllEquipment();
+        public List<String> findArticle(String query){
+            List<Article> list=ArticleServices.DisplayArticle();
             List<String> sList =new ArrayList<>();
             for(int i=0;i<list.size();i++){
-            	if(list.get(i).getSerialNum().toUpperCase().contains(query)||list.get(i).getSerialNum().toLowerCase().contains(query)){
-            		sList.add(list.get(i).getSerialNum());
+            	if(list.get(i).getArticleCode().toUpperCase().contains(query)||list.get(i).getArticleCode().toLowerCase().contains(query)){
+            		sList.add(list.get(i).getArticleCode());
             	}
             
             }
             return sList;
             }
 
-		public Equipment getEquipement() {
-			return equipement;
-		}
 
-		public void setEquipement(Equipment equipement) {
-			this.equipement = equipement;
-		}
 
 		public User getUser() {
 			return user;

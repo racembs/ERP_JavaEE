@@ -6,30 +6,31 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class ReclamationPk implements Serializable{
 	private static final long serialVersionUID = 1L;
-	@Column(name="id_equipement")
-	private Integer id_equipment;
+	@Column(name = "Id")
+	private int Id;
 	
 	@Column(name="idUser")
 	private Integer idUser;
 	
-	public Integer getId_equipment() {
-		return id_equipment;
-	}
-	public void setId_equipment(Integer id_equipment) {
-		this.id_equipment = id_equipment;
-	}
+	
 	public Integer getIdUser() {
 		return idUser;
 	}
 	public void setIdUser(Integer idUser) {
 		this.idUser = idUser;
 	}
+	public int getId() {
+		return Id;
+	}
+	public void setId(int id) {
+		Id = id;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + Id;
 		result = prime * result + ((idUser == null) ? 0 : idUser.hashCode());
-		result = prime * result + ((id_equipment == null) ? 0 : id_equipment.hashCode());
 		return result;
 	}
 	@Override
@@ -41,17 +42,15 @@ public class ReclamationPk implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		ReclamationPk other = (ReclamationPk) obj;
+		if (Id != other.Id)
+			return false;
 		if (idUser == null) {
 			if (other.idUser != null)
 				return false;
 		} else if (!idUser.equals(other.idUser))
 			return false;
-		if (id_equipment == null) {
-			if (other.id_equipment != null)
-				return false;
-		} else if (!id_equipment.equals(other.id_equipment))
-			return false;
 		return true;
 	}
+	
 	
 }
