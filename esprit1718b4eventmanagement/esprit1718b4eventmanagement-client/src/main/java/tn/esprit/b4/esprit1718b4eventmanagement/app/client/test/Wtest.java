@@ -1,6 +1,7 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.app.client.test;
 
 import java.lang.reflect.Proxy;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,60 +47,9 @@ public class Wtest {
 		String ArticlejndiName = "esprit1718b4eventmanagement-ear/esprit1718b4eventmanagement-service/AnalyseService!tn.esprit.b4.esprit1718b4eventmanagement.services.AnalyseServiceRemote";
 		Context context = new InitialContext();
 		AnalyseServiceRemote ArticleProxy = (AnalyseServiceRemote) context.lookup(ArticlejndiName);
-		long MTTR=0;
 		
-		  List<UsualWork> wr= ArticleProxy.ListWorks(1);
-	Integer i1=0;
 		
-		ArrayList< Date > liststar = new ArrayList<>();
-		ArrayList< Date > listend = new ArrayList<>();
-		
-		  for(UsualWork i: wr)
-		  {
-			  listend.add(i.getEndDate());
-		
-			 
-		  i1=i1+1;
-			 
-			
-			  
-		  }
-		  for(UsualWork i: wr)
-		  {
-			  liststar.add(i.getStartDate());
-		
-			 
-		  i1=i1+1;
-			 
-			
-			  
-		  }
-			if ((i1==0)||(i1==1)){
-				System.out.println("Erreur");
-				
-			}
-			else
-			{
-		  for(int j=0;j<listend.size();j++)
-		  {
-		  if(j==listend.size())
-		  {
-			 
-		  System.out.println("tstt");
-			  
-		  }
-		  else
-		  { System.out.println(listend.get(j));
-		  System.out.println(liststar.get(j+1));
-		  MTTR=MTTR+ ArticleProxy.nbrDayDate(listend.get(j),liststar.get(j+1));
-System.out.println(MTTR);	
-		  }
-		  }
-		
-			}
-			
-			
-		
+	   System.out.println(ArticleProxy.MTBF(2));
 	
 	
      // proxy.addWR(uw);

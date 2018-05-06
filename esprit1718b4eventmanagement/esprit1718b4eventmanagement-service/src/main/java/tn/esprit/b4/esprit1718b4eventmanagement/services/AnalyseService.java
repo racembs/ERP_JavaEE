@@ -17,6 +17,8 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.ArboPereFis;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ArboPereFisPk;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Arboresence;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NomenclaturePk;
@@ -44,6 +46,15 @@ public class AnalyseService implements AnalyseServiceLocal,AnalyseServiceRemote{
 		=em.createQuery("SELECT COUNT(c) FROM Works c WHERE c.startDate <=STR_TO_DATE('" + datedeb + "', '%d/%m/%Y') "
 	                + "and c.endDate >=STR_TO_DATE('" + datefin + "', '%d/%m/%Y')",Long.class);
 
+		Long train=query.getSingleResult();
+		return train;
+	}
+	@Override
+	public Long Eat(String datedeb,String datefin, int id) {
+		TypedQuery<Long> query
+		=em.createQuery("SELECT COUNT(c) FROM Works c WHERE (c.startDate <=STR_TO_DATE('" + datedeb + "', '%d/%m/%Y') "
+	                + "and c.endDate >=STR_TO_DATE('" + datefin + "', '%d/%m/%Y') ) and c.equipement.Id =:input",Long.class);
+		query.setParameter("input",id);
 		Long train=query.getSingleResult();
 		return train;
 	}
@@ -147,16 +158,58 @@ Integer i1=0;
 	
 	  }
 	  }
+	  return MTTR;
 	  }
-	 return MTTR;
+	
 			
 	  }
+
 	  @Override
-		public Long Availibitity(Long MTTR,Long MTBF)
-		{Long AVB=MTBF/(MTBF+MTTR);
-	return AVB;
+			public Long DP(Integer idequi)
+			{
+			long DP=0;
+		List<UsualWork> wr=ListWorks(idequi);
+
+	  for(UsualWork i: wr)
+	  {
+		DP=DP+nbrDayDate(i.getStartDate(),i.getEndDate());  
+	  }
+		
+			
+	  return DP;
+			
+	  }  
+	  
+	  @Override
+		public ChargingStation findChargingStationByEquipement(int idEquipement) {
+			TypedQuery<ChargingStation> query
+			=em.createQuery("SELECT a FROM ChargingStation a WHERE a.chargingstationPK.id_equipment= :id", ChargingStation.class);
+			query.setParameter("id",idEquipement);
+			ChargingStation equipment=query.getSingleResult();
+			return equipment ;
+			
+		}
+	  @Override
+			public Double Cout(Integer idequi)
+			
+			{Double cout =0.0;
+		
+		
+		Integer nb  = (int) (long) DP(idequi);
+		ChargingStation ch =findChargingStationByEquipement(idequi);
+		
+			cout=(double) (ch.getNbhours()*nb*(ch.getNbday()/7)*ch.getCode()*(1-Availibitity(MTTR(idequi), MTBF(idequi))));
+				return cout;
+					
 	  }
 	  
+	  
+	  
+	  @Override
+		public float Availibitity(Long MTTR,Long MTBF)
+		{float AVB=(float)MTBF/((float)MTBF+(float)MTTR);
+	return AVB;
+	  }
 
 }
   

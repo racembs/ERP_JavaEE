@@ -7,8 +7,9 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
 	  template="/template/templateGPAO.xhtml">
+	
 	  
-	  
+
 <ui:define name="content">
 <div class="inner-block">
     <div class="cols-grids panel-widget">
@@ -21,11 +22,13 @@
 		</div>
 	</div>
 </div>
+<h1 style="font-family:verdana;">This is a heading</h1>
+<p style="font-family:courier;">This is a paragraph.</p>
 <h:form id="addForm">
 <div class="header-main">
 	<div id="gpaoBody" class="clearfix">
 		<h2 style="color:#2ea7f2"><i>Add / Update Client</i></h2><br />
-   
+
   		  <p:calendar value="#{analyseBean.datebeb}" ></p:calendar>
  <p:calendar value="#{analyseBean.datefin}" ></p:calendar>
      

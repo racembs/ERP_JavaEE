@@ -20,7 +20,9 @@ import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 import org.primefaces.model.UploadedFile;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ArboPereFis;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Arboresence;
@@ -61,6 +63,36 @@ public class ArboBean  {
 	public void setSelectedNode(TreeNode selectedNode) {
 		this.selectedNode = selectedNode;
 	}
+	private static String name1;
+public void updatename()
+{
+	
+	if(!ServiceLocal.verifAllArboresence(name2).isEmpty())
+{
+	FacesContext context = FacesContext.getCurrentInstance();
+    
+    context.addMessage(null, new FacesMessage(name2+"Exist DEJA " ) );
+ 
+}
+else
+{
+    Arboresence arbo =ServiceLocal.getArbo(equi.getArboresence().getName());
+    arbo.setName(name2);
+  ServiceLocal.updateArbo(arbo);	
+  
+  
+	FacesContext context = FacesContext.getCurrentInstance();
+    
+    context.addMessage(null, new FacesMessage("Successful Add" ) );
+    fill3();
+}
+
+}
+public String refrech()
+{
+	return "Arbo.xhtml?faces-redirect=true";
+	
+}
 
 	public void fill3() {
 		  List<Arboresence> Arbo=new ArrayList<>();
@@ -143,19 +175,40 @@ public class ArboBean  {
 		
 	}
 public String doSaveOrUpdatearbo() {
-		if(type.equals("Principale"))
-		{
-			
-	ServiceLocal.addArbo(new Arboresence(name,"Principale"));}
-		else if(type.equals("Secondaire"))
-		{
-			ServiceLocal.addArbo(new Arboresence(name,"Secondaire"));
-		ServiceLocal.addArbo(equi.getArboresence().getId(), ServiceLocal.getArbo(name).getId());	
-
-		}
-		fill3();
+	
+	
+	
+	if(!ServiceLocal.verifAllArboresence(name).isEmpty())
+{
+	FacesContext context = FacesContext.getCurrentInstance();
+    
+    context.addMessage(null, new FacesMessage(name+"Exist DEJA " ) );
+ 
+}
+else
+{
+	if(type.equals("Principale"))
+	{
 		
-		return "Arbo.xhtml?faces-redirect=true";
+ServiceLocal.addArbo(new Arboresence(name,"Principale"));
+
+FacesContext context = FacesContext.getCurrentInstance();
+
+context.addMessage(null, new FacesMessage("Successful Add" ) );}
+	else if(type.equals("Secondaire"))
+	{
+		ServiceLocal.addArbo(new Arboresence(name,"Secondaire"));
+	ServiceLocal.addArbo(equi.getArboresence().getId(), ServiceLocal.getArbo(name).getId());	
+	FacesContext context = FacesContext.getCurrentInstance();
+
+	context.addMessage(null, new FacesMessage("Successful Add" ) );
+	}
+	fill3();
+	
+	
+}
+	return "Arbo.xhtml?faces-redirect=true"; 
+		
 	}
 
 
@@ -241,6 +294,16 @@ public void setEqui(Equipment equi) {
 
 
 
+	public String getName1() {
+		return name1;
+	}
+
+
+	public void setName1(String name1) {
+		this.name1 = name1;
+	}
+
+
 	public void setRb(Arboresence rb) {
 		this.rb = rb;
 	}
@@ -251,6 +314,15 @@ public void setEqui(Equipment equi) {
 	            FacesContext.getCurrentInstance().addMessage(null, message);
 	        }
 	    }
+	     private static String name2;
+		public String getName2() {
+			return name2;
+		}
+
+
+		public void setName2(String name2) {
+			this.name2 = name2;
+		}
 	     
 	
 }

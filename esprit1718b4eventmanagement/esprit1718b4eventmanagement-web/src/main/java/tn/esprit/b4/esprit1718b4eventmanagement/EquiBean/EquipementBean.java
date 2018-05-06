@@ -36,7 +36,7 @@ public class EquipementBean {
 	private int Id;
 	private Arboresence arbo;
 	private String SerialNum;
-	
+	private static UploadedFile file;
 	private String Description;
 
 	private String State;
@@ -49,7 +49,16 @@ public class EquipementBean {
 
 	private String Lieu;
 	
-	private String image;
+	private static String image;
+	private int selectedOrderId;
+	
+	public int getSelectedOrderId() {
+		return selectedOrderId;
+	}
+
+	public void setSelectedOrderId(int selectedOrderId) {
+		this.selectedOrderId = selectedOrderId;
+	}
 
 	@PostConstruct
 	public void init() {
@@ -65,7 +74,7 @@ public class EquipementBean {
 	  
 	  public void handleFileUpload(FileUploadEvent event) {
 			UploadedFile file = event.getFile();
-			equipment.setImage(file.getFileName());
+			image=file.getFileName();
 	  }
 	
 	public String UpdateB(Equipment equi){
@@ -80,7 +89,8 @@ public class EquipementBean {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 	      Calendar date = Calendar.getInstance();
 	   String  d = df.format(date.getTime());
-		equipementServiceLocal.addEquippement(new Equipment(SerialNum, Description, State,d, Fabriquant, Marque,"","tt", arbo));
+	  
+		equipementServiceLocal.addEquippement(new Equipment(SerialNum, Description, State,d, Fabriquant, Marque,"","", arbo));
 		FacesContext context = FacesContext.getCurrentInstance();
         
         context.addMessage(null, new FacesMessage("Successful Add" ) );
@@ -299,6 +309,14 @@ public String Refrech(){return "ListEquipement.xhtml?faces-redirect=true";}
 
 		public void setArbo(Arboresence arbo) {
 			this.arbo = arbo;
+		}
+
+		public UploadedFile getFile() {
+			return file;
+		}
+
+		public void setFile(UploadedFile file) {
+			this.file = file;
 		}
 		
 	    
