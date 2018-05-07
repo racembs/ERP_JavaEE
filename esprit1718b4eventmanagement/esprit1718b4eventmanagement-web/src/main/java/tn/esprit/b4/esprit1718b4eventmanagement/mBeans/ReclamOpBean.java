@@ -131,10 +131,8 @@ public class ReclamOpBean implements Serializable {
 //	  
 
 	ReclamationServices.addReclamation(eqid,uid, Reclam);
-	
-//	FacesContext context1 = FacesContext.getCurrentInstance();
-//	
-//    context1.addMessage(null, new FacesMessage("Your complaint has been sent" ) );
+	FacesContext context1 = FacesContext.getCurrentInstance();
+    context1.addMessage(null, new FacesMessage("Your complaint has been sent" ) );
 
 	}
     

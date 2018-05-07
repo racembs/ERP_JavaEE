@@ -433,5 +433,10 @@ public class ArticleClientBean implements Serializable {
 			   navigateTo = "/Operation/ReclamOp?faces-redirect=true";
 				return navigateTo;
 		   }
+		   
+		  public void Clean(){
+			  
+			  OrderItemServices.deleteAllByOrder(3);
+		  }
 
 }

@@ -69,8 +69,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<h:outputText value="Description" />
 			<h:inputText value="#{ReclamOpBean.description}" />
 
-			
-			<h:commandButton style="color:#2ea7f2" action="#{ReclamOpBean.AddReclam()}" class="btn-default btn" value="Add" />
+			<p:growl id="msgs" showDetail="true" escape="false"/>
+			<h:commandButton onclick="PF('msg').show();" style="color:#2ea7f2" action="#{ReclamOpBean.AddReclam()}" class="btn-default btn" value="Add" />
 	    
 </h:panelGrid>
 					
