@@ -7,9 +7,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.FacesComponent;
+import javax.faces.context.FacesContext;
 import javax.naming.NamingException;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
@@ -122,12 +124,18 @@ public class ReclamOpBean implements Serializable {
 		  eqid=listART.get(i).getId();
 	}
 	  User us = new User();
-	  us=UserServices.findByLogin(userFirstName);
+//	  us=UserServices.findByLogin(userFirstName);
 //	  
 
-	  uid=us.getId();
+	  uid=Identity.user.getId();
 //	  
+
 	ReclamationServices.addReclamation(eqid,uid, Reclam);
+	
+//	FacesContext context1 = FacesContext.getCurrentInstance();
+//	
+//    context1.addMessage(null, new FacesMessage("Your complaint has been sent" ) );
+
 	}
     
     public List<String> findUser(String query){

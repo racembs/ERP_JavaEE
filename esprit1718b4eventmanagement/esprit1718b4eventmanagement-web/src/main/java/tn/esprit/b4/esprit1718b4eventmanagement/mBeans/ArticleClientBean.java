@@ -237,7 +237,7 @@ public class ArticleClientBean implements Serializable {
 				    context.addMessage(null, new FacesMessage("Insufficient quantity of this item"+listA.get(i).getArticleCode() ) );
 				}
 				else{
-					OrderItemServices.addOrdredItem(1, idA, newOrdredItem);
+					OrderItemServices.addOrdredItem(3, idA, newOrdredItem);
 					FacesContext context = FacesContext.getCurrentInstance();
 					
 				    context.addMessage(null, new FacesMessage("Order accepted, Valid quantity" ) );
@@ -266,8 +266,15 @@ public class ArticleClientBean implements Serializable {
 		   public void Confirm(){
 			   Article art = ArticleServices.findArticle(idAUpdate);
 			   OrdredItem ordredItems=OrderItemServices.findOrdredItemById(idOUpdate, idAUpdate);
+			   if (qte>ordredItems.getQuantity())
+			   {
+			   FacesContext context = FacesContext.getCurrentInstance();
+			    context.addMessage(null, new FacesMessage("Insufficient quantity of this item"+ordredItems.getArticle().getArticleCode() ) );
+			   }
+			   else{
 			   ordredItems.setQuantity(qte);
 			   OrderItemServices.mergeOrdredItem(idOUpdate, idAUpdate, ordredItems);
+			   }
 		   }
 		   
 		   
@@ -375,7 +382,7 @@ public class ArticleClientBean implements Serializable {
 			                  
 			                  Calendar c = Calendar.getInstance();
 			          		my_pdf_report.add(new Paragraph("Nom Société : Esprit PDEV JEE"));
-			          		my_pdf_report.add(new Paragraph("Nom Client : GPAO - GMAO"));
+			          		my_pdf_report.add(new Paragraph("Nom Client : "+Identity.user.getFirstname()+""+Identity.user.getLastname()));
 			          		my_pdf_report.add(new Paragraph("Date : "+c.getTime()));
 			          		my_pdf_report.add(new Paragraph("Adresse : Esprit"));
 			          		my_pdf_report.add(new Paragraph("Num Tel : 216123654"));

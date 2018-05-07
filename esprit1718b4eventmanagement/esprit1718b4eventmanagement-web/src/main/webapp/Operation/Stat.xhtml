@@ -47,6 +47,13 @@
 <h2 style="color:#2ea7f2;"><i>Statistic</i></h2>
 
 <br /><br />
+<h:form style=" text-align: right;">
+
+
+<h:commandButton  action="#{PdfBean.Pdf()}" class="btn-default btn" value="Purchase Order" />
+
+</h:form>
+
 <p:chart type="bar" model="#{chartView.barModel}" style="height:300px"/>
 <br /><br />
 <p:chart type="pie" model="#{chartView.pieModel1}" style="width:800px;height:400px" />
@@ -97,8 +104,9 @@
 									<li><a href="gallery.html"><span>Clients</span><div class="clearfix"></div></a></li>
 									<li><a href="https://calendar.google.com/calendar/b/2/r"><span>Calendar</span><div class="clearfix"></div></a></li>
 									<li><a href="/esprit1718b4eventmanagement-web/Operation/disc/index.jsf"><span>Dashboard</span><div class="clearfix"></div></a></li>
-									 <li><a href="/esprit1718b4eventmanagement-web/Operation/Stat.jsf"><span>Statistic</span><div class="clearfix"></div></a></li>
-									
+									<li><a href="/esprit1718b4eventmanagement-web/Operation/Stat.jsf"><span>Statistic</span><div class="clearfix"></div></a></li>
+									<li><a href="/esprit1718b4eventmanagement-web/"><span>LogOut</span><div class="clearfix"></div></a></li>
+          
 									
 								  </ul>
 								</div>
