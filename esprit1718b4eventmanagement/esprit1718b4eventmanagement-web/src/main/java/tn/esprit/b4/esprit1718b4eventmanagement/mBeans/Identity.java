@@ -58,6 +58,10 @@ public class Identity {
 		
 		
 		navigateTo = "/Operation/disc/index?faces-redirect=true";
+	}else if (user.getPost().equals("storekeeper")) {
+		
+		
+		navigateTo = "/article/magasinierGpao?faces-redirect=true";
 	}
 			else {
 			

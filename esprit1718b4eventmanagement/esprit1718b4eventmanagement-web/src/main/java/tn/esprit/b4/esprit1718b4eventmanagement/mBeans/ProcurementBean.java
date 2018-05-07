@@ -105,8 +105,35 @@ public class ProcurementBean implements Serializable {
 	    	
 			 }
 	 
-	public void	addToBasket(MvtApprov order) {
-		panierOrdres.add(order);
+	public String addToBasket(MvtApprov order) {
+		if(order.getReceptionDate()!=null) {
+			FacesContext context = FacesContext.getCurrentInstance();
+		    context.addMessage(null, new FacesMessage("order is already delivered" ) );	
+		    return "background-color: red !important;";
+		}
+		else {
+			
+		
+		boolean test=false;
+	
+	for (int i=0;i<panierOrdres.size();i++) {
+		if(order.getArticle().getArticleCode().equals(panierOrdres.get(i).getArticle().getArticleCode())) {
+			test=true;
+		}
+	}
+
+		if(test) {
+			FacesContext context = FacesContext.getCurrentInstance();
+		    context.addMessage(null, new FacesMessage("order is already added" ) );
+		    return "background-color: red !important;";
+		}else {
+			panierOrdres.add(order);FacesContext context = FacesContext.getCurrentInstance();
+		    context.addMessage(null, new FacesMessage("order is successfully added" ) );
+		    return "background-color: green !important;";
+		}
+		}	
+		
+	
 	}
 	public void removeFromBasket(MvtApprov order) {
 		panierOrdres.remove(order);
@@ -276,18 +303,18 @@ public class ProcurementBean implements Serializable {
     
   
     
-    private void createAreaModel() {
+ private void createAreaModel() {
     	List<MvtApprov> list=sortOrderList();
         areaModel = new LineChartModel();
 
         LineChartSeries minChart = new LineChartSeries();
         minChart.setFill(true);
         minChart.setLabel("Min");
- for(int i=0 ;i<list.size();i++) {
+        for(int i=0 ;i<list.size();i++) {
 	 minChart.set(list.get(i).getArticle().getArticleCode()+
 			 " ("+String.valueOf(approvService.calculerArticleOrders(list.get(i).getArticle().getId()))+") "
-			 , list.get(i).getArticle().getPricipalQuantity());
- }
+			 , list.get(i).getArticle().getPricipalQuantity()-list.get(i).getArticle().getMinQuantity());
+        }
        
         
  

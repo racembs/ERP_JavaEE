@@ -40,7 +40,7 @@
 <h:outputStylesheet library="css" name="icon-font.min.css"></h:outputStylesheet>
 <!-- <link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />-->
 <!-- //lined-icons -->
-        
+   
 <h:head>
 
 </h:head>
@@ -48,6 +48,7 @@
 <!--//_____________________________________________________ Panier ____________________________________________________-->
 
 <p:dialog header="Basket" widgetVar="dlg1" minHeight="40">
+<h:form>
   <h:dataTable id="panier" value="#{procurementBean.panierOrdres}" var="panier" border="2" selectionMode="single">
 
 		<h:column>
@@ -86,7 +87,7 @@
 		
  
   <h:column>
-  <h:commandButton  action="#{procurementBean.removeFromBasket(orders)}" class="btn-inverse btn" value="remove from basket" ></h:commandButton>
+  <h:commandButton  action="#{procurementBean.removeFromBasket(panier)}" class="btn-inverse btn" value="remove from basket" ></h:commandButton>
 		
   </h:column>
  
@@ -96,11 +97,14 @@
 	
 		
 		</h:dataTable>
+		<br/>
+		<center>
 		<h:commandButton  action="#{procurementBean.generatePdf(panier)}" class="btn-inverse btn" value="download pdf" ></h:commandButton>
-
+</center>
+</h:form>
 </p:dialog>
 
-<!--//_____________________________________________________ Orders List____________________________________________________-->
+<!--//_____________________________________________________ Orders List ____________________________________________________-->
 <h:form id="addForm">
 <div class="page-container">
 		<div class="left-content">
@@ -113,7 +117,8 @@
  <h2 style="color:#2ea7f2"><i>Orders List</i></h2><br />
  <p:commandButton class="btn-inverse btn" value="#{procurementBean.getBasketSize()}" type="button" onclick="PF('dlg1').show();" />
 
-
+ 
+ 
 <h:dataTable id="table" value="#{procurementBean.orders}" var="orders" border="2" selectionMode="single">
 
 		<h:column>
@@ -171,7 +176,7 @@
 		</h:column>
 		<h:column>
 
-		<h:commandButton  action="#{procurementBean.addToBasket(orders)}" class="btn-inverse btn" value="add to basket" ></h:commandButton>
+		<h:commandButton onclick="PF('msgs').show();"  update="msgs" actionListener="#{procurementBean.addToBasket(orders)}" class="btn-inverse btn" value="add to basket" ></h:commandButton>
  
    
 <!-- <h:outputText value="#{orders.article.articleCode}" /> -->
@@ -180,6 +185,8 @@
 
 		
 	
+  
+ 
 		
 	
 		
@@ -187,7 +194,7 @@
 
 <br/>
 
-
+<p:growl id="msgs" showDetail="true" />
  
 
 
