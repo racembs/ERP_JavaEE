@@ -13,9 +13,11 @@ import java.util.Calendar;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.FacesComponent;
+import javax.faces.context.FacesContext;
 import javax.naming.NamingException;
 
 import com.itextpdf.text.BaseColor;
@@ -132,7 +134,7 @@ public class PdfBean implements Serializable {
                   
                   Calendar c = Calendar.getInstance();
           		my_pdf_report.add(new Paragraph("Nom Société : Esprit PDEV JEE"));
-          		my_pdf_report.add(new Paragraph("Nom Client : GPAO - GMAO"));
+          		my_pdf_report.add(new Paragraph("Nom Client : "+Identity.user.getFirstname()+""+Identity.user.getLastname()));
           		my_pdf_report.add(new Paragraph("Date : "+c.getTime()));
           		my_pdf_report.add(new Paragraph("Adresse : Esprit"));
           		my_pdf_report.add(new Paragraph("Num Tel : 216123654"));
@@ -147,7 +149,8 @@ public class PdfBean implements Serializable {
                 img2.setCompressionLevel(5);
                 
                 my_pdf_report.add(img2);
-                my_pdf_report.close();              
+                my_pdf_report.close();   
+              
              
              //     Desktop.getDesktop().open(new File("C:\\Users\\ons\\Documents\\FirstPdf.pdf"));
                 
@@ -165,7 +168,8 @@ public class PdfBean implements Serializable {
 	 }catch (IOException e) {
 		  e.printStackTrace();
 		  }
-
+		  
+		 
 }
   
 		

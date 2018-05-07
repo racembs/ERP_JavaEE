@@ -99,6 +99,14 @@ p {
     color: #a1ed82;
 }
 
+.device.Lubrication {
+    background-color: #5eb85e;
+}
+
+.device.Lubrication a:hover {
+    color: #a1ed82;
+} 
+
 .device.Electronics {   
     background-color: #0f90d1;
 }
@@ -115,11 +123,20 @@ p {
     color: #fad232;
 }
 
+
 .device.Other {
     background-color: #db524d;
 }
 
 .device.Other a:hover {
+    color: #ff907d;
+}
+
+.device.Motor {
+    background-color: #db524d;
+}
+
+.device.Motor a:hover {
     color: #ff907d;
 }
 
