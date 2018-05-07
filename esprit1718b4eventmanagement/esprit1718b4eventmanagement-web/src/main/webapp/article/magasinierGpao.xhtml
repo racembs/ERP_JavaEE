@@ -45,6 +45,61 @@
 
 </h:head>
 <h:body>
+<!--//_____________________________________________________ Panier ____________________________________________________-->
+
+<p:dialog header="Basket" widgetVar="dlg1" minHeight="40">
+  <h:dataTable id="panier" value="#{procurementBean.panierOrdres}" var="panier" border="2" selectionMode="single">
+
+		<h:column>
+		<f:facet name="header">
+		<h:outputText   value="Article Code" />
+		</f:facet>
+		<h:outputText value="#{panier.article.articleCode}" />
+		</h:column>
+	
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="Request Date" />
+		</f:facet>
+		<h:outputText value="#{panier.requestDate}" />
+		</h:column>
+		
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="Alarm Date" />
+		</f:facet>
+		<h:outputText value="#{panier.alarmDate}" />
+		</h:column>
+		
+
+		
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="Reception Date" id="to_print" />
+		</f:facet>
+		<h:outputText value="#{panier.receptionDate}" />
+		</h:column>
+		
+		
+		
+
+		
+ 
+  <h:column>
+  <h:commandButton  action="#{procurementBean.removeFromBasket(orders)}" class="btn-inverse btn" value="remove from basket" ></h:commandButton>
+		
+  </h:column>
+ 
+
+		
+	
+	
+		
+		</h:dataTable>
+		<h:commandButton  action="#{procurementBean.generatePdf(panier)}" class="btn-inverse btn" value="download pdf" ></h:commandButton>
+
+</p:dialog>
+
 <!--//_____________________________________________________ Orders List____________________________________________________-->
 <h:form id="addForm">
 <div class="page-container">
@@ -56,7 +111,8 @@
 					
 
  <h2 style="color:#2ea7f2"><i>Orders List</i></h2><br />
- 
+ <p:commandButton class="btn-inverse btn" value="#{procurementBean.getBasketSize()}" type="button" onclick="PF('dlg1').show();" />
+
 
 <h:dataTable id="table" value="#{procurementBean.orders}" var="orders" border="2" selectionMode="single">
 
@@ -94,9 +150,20 @@
 		<f:facet name="header">
 		<h:outputText value="Delivered in " />
 		</f:facet>
+		<h:graphicImage style="#{procurementBean.getDiplayOption(orders)}" library="images" name="delivered.png" />
+		<h:graphicImage style="#{procurementBean.getDiplayOptionNotDelivered(orders)}" library="images" name="ndelivered.png" />
 		<pe:timer  
-        timeout="#{orders.quantity}" 
-        format="HH:mm:ss"/> 
+        timeout="#{procurementBean.getRemainingTime(orders)}"  
+        format="human"
+        visible="#{procurementBean.getVisibility(orders)}"
+        />  
+        <pe:timer  
+        timeout="#{procurementBean.getAlarmRaminingTime(orders)}"  
+        format="HH:mm:ss"
+        visible="#{procurementBean.getAlarmVisibility(orders)}"
+        />  
+		
+		
 		</h:column>
 		
 		<h:column>
@@ -104,7 +171,7 @@
 		</h:column>
 		<h:column>
 
-		<h:commandButton  action="#{procurementBean.generatePdf(orders)}" class="btn-inverse btn" value="download pdf" ></h:commandButton>
+		<h:commandButton  action="#{procurementBean.addToBasket(orders)}" class="btn-inverse btn" value="add to basket" ></h:commandButton>
  
    
 <!-- <h:outputText value="#{orders.article.articleCode}" /> -->
@@ -136,6 +203,11 @@
 	
 <!--//_________________________________________  Printer  ___________________________________________________________-->
 
+<!-- <p:sidebar widgetVar="sidebar3" position="top" baseZIndex="10000"> -->
+<!--     <h1 style="font-weight:normal">Top Sidebar</h1> -->
+<!--     <p:commandButton value="Cancel" oncomplete="PF('sidebar3').hide()"/> -->
+    
+<!-- </p:sidebar > -->
 
 
    
@@ -145,10 +217,14 @@
 
 
 
-<script>
-function hide(){
-	 document.getElementById('to_print').style.visibility = 'visible';
-}
+<script  type="text/javascript">
+// function hide(){
+// 	document.getElementById('timer').style.visibility = 'hidden';
+	
+	 
+// }
+// document.addEventListener('DOMContentLoaded', function() {
+// }, false);
 
 </script>
 </h:body>

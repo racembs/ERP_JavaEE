@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -84,6 +84,7 @@ public class ProcurementBean implements Serializable {
 	private List<MvtApprov> orders;
 	public Paragraph ordersParagraph;
     private LineChartModel areaModel;
+    private static List<MvtApprov> panierOrdres=new ArrayList<>();
 
 
 	
@@ -94,7 +95,102 @@ public class ProcurementBean implements Serializable {
 	MvtApprovService approvService;
 	private static final long serialVersionUID = 3350653785168926842L;
 	 private static final int DEFAULT_BUFFER_SIZE = 10240; 
+
 	 
+
+		@PostConstruct
+	    public void init() throws NamingException {
+	    	AutoOrderGenerateByMinimumQuantity();
+	    	createAreaModel();
+	    	
+			 }
+	 
+	public void	addToBasket(MvtApprov order) {
+		panierOrdres.add(order);
+	}
+	public void removeFromBasket(MvtApprov order) {
+		panierOrdres.remove(order);
+	}
+	public String getBasketSize() {
+		return "Basket ("+panierOrdres.size()+")";
+	}
+	 
+ public int getRemainingTime(MvtApprov order) {
+	 java.util.Date Date=new java.util.Date();
+	 int day=(order.getRequestDate().getDate()+order.getArticle().getDeliveryTime()-Date.getDate());
+		if(day>0) {
+			return day*24*3600;
+		}
+		else {
+			return 1;
+		}
+	 }
+ 
+ public boolean getAlarmVisibility(MvtApprov order) {
+	 java.util.Date Date=new java.util.Date();
+	 int day=(order.getRequestDate().getDate()+order.getArticle().getDeliveryTime()-Date.getDate());
+		if(day<=0&&order.getReceptionDate()==null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+ }
+ public long getAlarmRaminingTime(MvtApprov order) {
+	 java.util.Date Date=new java.util.Date();
+	 long second;
+	 
+	 if(Date.getHours()>12) {
+		 Date.setHours(Date.getHours()-12);
+		 second=12*3600+((12-Date.getHours()-1)*3600)+(60-Date.getMinutes())*60+(60-Date.getSeconds());
+	 }else {
+		 second=((12-Date.getHours()-1)*3600)+(60-Date.getMinutes())*60+(60-Date.getSeconds());
+	 }
+	
+			return second;
+	
+ }
+ public String getDiplayOption(MvtApprov order) {
+	 java.util.Date Date=new java.util.Date();
+	 int day=(order.getRequestDate().getDate()+order.getArticle().getDeliveryTime()-Date.getDate());
+	 if(order.getReceptionDate()==null) {
+		
+		 return "display:none";
+		 
+	 }
+	 else return "";
+	 
+ }
+ public String getDiplayOptionNotDelivered(MvtApprov order) {
+	 java.util.Date Date=new java.util.Date();
+ if(order.getReceptionDate()!=null||(Date.getDate()<order.getAlarmDate().getDate()&&Date.getHours()<12)) {
+		 
+		 return "display:none";
+		 
+	 }
+	 else return "";
+ }
+ public boolean getVisibility(MvtApprov order) {
+	 java.util.Date Date=new java.util.Date();
+	 int day=(order.getRequestDate().getDate()+order.getArticle().getDeliveryTime()-Date.getDate());
+		
+	 if(order.getReceptionDate()!=null) {
+		
+			 return false;
+		 }
+		 
+	 
+	 else if(day<=0) {
+		 return false;
+	 }else {
+		 return true; 
+	 }
+}
+	
+	 
+ 
+
+ 
 	  public void downloadPDF() throws IOException {
 
 	        // Prepare.
@@ -138,8 +234,7 @@ public class ProcurementBean implements Serializable {
 	        facesContext.responseComplete();
 	    }
 
-	    // Helpers (can be refactored to public utility class) ----------------------------------------
-
+	
 	    private static void close(Closeable resource) {
 	        if (resource != null) {
 	            try {
@@ -153,14 +248,6 @@ public class ProcurementBean implements Serializable {
 	    }
 
 
-	@PostConstruct
-    public void init() throws NamingException {
-    	AutoOrderGenerateByMinimumQuantity();
-    	createAreaModel();
-    	
-		 }
-    
-    
      
 
     public List<MvtApprov> sortOrderList() {
@@ -423,6 +510,18 @@ public void confirmReception(int orderId) {
 	}
 	
 	
+
+
+
+public List<MvtApprov> getPanierOrdres() {
+		return panierOrdres;
+	}
+
+
+
+	public void setPanierOrdres(List<MvtApprov> panierOrdres) {
+		this.panierOrdres = panierOrdres;
+	}
 
 
 
