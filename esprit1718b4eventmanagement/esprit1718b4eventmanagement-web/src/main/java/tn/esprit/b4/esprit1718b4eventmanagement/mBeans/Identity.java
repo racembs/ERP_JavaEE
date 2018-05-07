@@ -46,8 +46,9 @@ public class Identity {
 		else if (user.getRole().equals("GPAO")) {
 			
 			
-			navigateTo = "/articleManagement?faces-redirect=true";
+			navigateTo = "/article/articleManagement?faces-redirect=true";
 		}
+
 	else if (user.getRole().equals("Client")) {
 			
 			
