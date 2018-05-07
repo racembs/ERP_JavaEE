@@ -3,6 +3,7 @@ package tn.esprit.b4.esprit1718b4eventmanagement.services;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import javax.persistence.EntityManager;
@@ -17,7 +18,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 
 
-
+@LocalBean
 @Stateless
 public class EquipementService extends GenericDAO<Equipment>  implements EquipementServiceLocal,EquipementServiceRemote{
 	@PersistenceContext 

@@ -1,0 +1,178 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+	template="/template/template.xhtml">
+
+	
+	<ui:define name="head">
+        <script type="text/javascript">
+            PrimeFaces.locales['tr'] = {
+                closeText: 'kapat',
+                prevText: 'geri',
+                nextText: 'ileri',
+                currentText: 'bugün',
+                monthNames: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran',
+                    'Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
+                monthNamesShort: ['Oca','Şub','Mar','Nis','May','Haz',
+                    'Tem','Ağu','Eyl','Eki','Kas','Ara'],
+                dayNames: ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'],
+                dayNamesShort: ['Pz','Pt','Sa','Ça','Pe','Cu','Ct'],
+                dayNamesMin: ['Pz','Pt','Sa','Ça','Pe','Cu','Ct'],
+                weekHeader: 'Hf',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                month: 'Ay',
+                week: 'Hafta',
+                day: 'Gün',
+                allDayText : 'Tüm Gün'
+            };
+        </script>
+        <style type="text/css">
+            .value {
+                width: 1000px;
+            }
+        </style>
+    </ui:define>
+    
+
+
+    <ui:define name="implementation">
+
+	<p:dialog class="dialog" id="favDialog">
+  <form >
+    <section>
+      <p><label for="favAnimal">Favorite animal:</label>
+      <select id="favAnimal">
+        <option></option>
+        <option>Brine shrimp</option>
+        <option>Red panda</option>
+        <option>Spider monkey</option>
+      </select></p>
+    </section>
+    <menu>
+      <p:commandButton id="cancel" type="reset">Cancel</p:commandButton>
+      <p:commandButton type="submit">Confirm</p:commandButton>
+    </menu>
+  </form>
+</p:dialog>
+<menu>
+  <p:commandButton class="addbut" id="updateDetails">Update details</p:commandButton>
+</menu>
+	
+	<h:outputStylesheet library="css" name="table-style.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="basictable.css"></h:outputStylesheet>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#table').basictable();
+
+      $('#table-breakpoint').basictable({
+        breakpoint: 768
+      });
+
+      $('#table-swap-axis').basictable({
+        swapAxis: true
+      });
+
+      $('#table-force-off').basictable({
+        forceResponsive: false
+      });
+
+      $('#table-no-resize').basictable({
+        noResize: true
+      });
+
+      $('#table-two-axis').basictable();
+
+      $('#table-max-height').basictable({
+        tableWrapper: true
+      });
+    });
+	$(".addbut").click(function() { 
+		$(".dialog").showModal(); });
+
+</script>
+<p:dialog id="ex" header="Dynamic Dialog" widgetVar="dia" dynamic="true">  
+    <h:outputText value="This content is loaded lazy." />  
+</p:dialog>
+<h1>h1</h1>
+<h:form id="form5">
+ <p:commandButton value="Basic" type="button" onclick="PF('dlg1').show();" />
+<p:dialog header="Basic Dialog" widgetVar="dlg1" minHeight="40">
+    <h:outputText value="Resistance to PrimeFaces is futile!" />
+</p:dialog>
+  </h:form>
+<h1>h1</h1>
+	<div class="agile-grids">	
+				<!-- tables -->
+				
+				<div class="agile-tables">
+					<div class="w3l-table-info">
+					
+<h:dataTable value="#{workBean.pworks}" var="pwork" >
+<h:column>
+<f:facet name="header">
+<h:outputText value="object" />
+</f:facet>
+<h:outputText value="#{pwork.objet}" />
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Add.Info" />
+</f:facet>
+<h:outputText value="#{pwork.description}" />
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="" />
+</f:facet>
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="prenom" />
+</f:facet>
+<h:outputText value="" />
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="role" />
+</f:facet>
+<h:outputText value="" />
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Actif" />
+</f:facet>
+<h:outputText value="" />
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="action" />
+</f:facet>
+<h:outputText value="" />
+</h:column>
+
+</h:dataTable>
+<!-- cal -->
+
+<!-- cal -->
+</div>
+</div>
+</div>
+
+	</ui:define>
+	
+		<div class="centredZone">
+			<br />
+			
+			<br /> <br />
+
+		</div>
+
+
+
+</ui:composition>

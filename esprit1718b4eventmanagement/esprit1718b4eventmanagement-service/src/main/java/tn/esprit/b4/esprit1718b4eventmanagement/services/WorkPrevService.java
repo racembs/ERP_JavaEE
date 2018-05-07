@@ -27,7 +27,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
  * Session Bean implementation class UserService
  */
 @Stateless
-
+@LocalBean
 public class WorkPrevService implements WorkPrevServiceLocal, WorkPrevServiceRemote {
 	@PersistenceContext(unitName="spotlight-ejb")
 	EntityManager em;
@@ -68,5 +68,28 @@ public class WorkPrevService implements WorkPrevServiceLocal, WorkPrevServiceRem
 		em.merge(w);
 		
 	}
+	public PreventiveWork findObject(String obj) {
+		TypedQuery<PreventiveWork> query
+		=em.createQuery("select n from PreventiveWork n where n.objet=:obj", PreventiveWork.class);
+		query.setParameter("obj", obj);
+		PreventiveWork p=query.getSingleResult();
+		return p;
+	}
+	public PreventiveWork findID(int idw) {
+		
+		return em.find(PreventiveWork.class,idw);
+	}
+///////////////////////////////////////////////Preventive stategy efficiency///////////////////////////		
 
+	public Double calculPefficiency() {
+	//DecimalFormat df=new DecimalFormat("#%");
+	Query query1 = em.createQuery("select count(*) from PreventiveWork ");
+	Long done=(Long) query1.getSingleResult();
+	Query query2 = em.createQuery("select count(*) from UsualWork c");
+	Long tot=(Long) query2.getSingleResult();
+	Double d=done.doubleValue();
+	Double t=tot.doubleValue();
+	return d/t;
+	}
+	
 }

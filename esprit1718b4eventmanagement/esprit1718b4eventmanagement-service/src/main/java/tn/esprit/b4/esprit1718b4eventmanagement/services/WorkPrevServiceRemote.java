@@ -22,4 +22,5 @@ public interface WorkPrevServiceRemote {
 		public void remove(int idw);
 		public void update(PreventiveWork w);
 	
+		
 }

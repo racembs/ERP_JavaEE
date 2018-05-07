@@ -1,0 +1,223 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                >
+
+    <ui:define name="head">
+        <script type="text/javascript">
+            PrimeFaces.locales['tr'] = {
+                closeText: 'kapat',
+                prevText: 'geri',
+                nextText: 'ileri',
+                currentText: 'bugün',
+                monthNames: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran',
+                    'Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
+                monthNamesShort: ['Oca','Şub','Mar','Nis','May','Haz',
+                    'Tem','Ağu','Eyl','Eki','Kas','Ara'],
+                dayNames: ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'],
+                dayNamesShort: ['Pz','Pt','Sa','Ça','Pe','Cu','Ct'],
+                dayNamesMin: ['Pz','Pt','Sa','Ça','Pe','Cu','Ct'],
+                weekHeader: 'Hf',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                month: 'Ay',
+                week: 'Hafta',
+                day: 'Gün',
+                allDayText : 'Tüm Gün'
+            };
+        </script>
+        <style type="text/css">
+            .value {
+                width: 1000px;
+            }
+        </style>
+    </ui:define>
+    
+
+
+    <ui:define name="implementation">
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="keywords" content="Pooled Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- Bootstrap Core CSS -->
+<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+<!-- <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />-->
+<!-- Custom CSS -->
+<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+<!-- <link href="css/style.css" rel='stylesheet' type='text/css' />-->
+<h:outputStylesheet library="css" name="morris.css"></h:outputStylesheet>
+<!-- <link rel="stylesheet" href="css/morris.css" type="text/css"/>-->
+<!-- Graph CSS -->
+<h:outputStylesheet library="css" name="font-awesome.css"></h:outputStylesheet>
+<!-- <link href="css/font-awesome.css" rel="stylesheet"> </link>-->
+<!-- jQuery -->
+
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- Bootstrap Core CSS -->
+<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+<!-- <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />-->
+<!-- Custom CSS -->
+<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+<!-- <link href="css/style.css" rel='stylesheet' type='text/css' />-->
+<h:outputStylesheet library="css" name="morris.css"></h:outputStylesheet>
+<!-- <link rel="stylesheet" href="css/morris.css" type="text/css"/>-->
+<!-- Graph CSS -->
+<h:outputStylesheet library="css" name="font-awesome.css"></h:outputStylesheet>
+<!-- <link href="css/font-awesome.css" rel="stylesheet"> </link>-->
+
+<h:outputStylesheet href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400'></h:outputStylesheet>
+<!-- <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>-->
+<h:outputStylesheet href='//fonts.googleapis.com/css?family=Montserrat:400,700'></h:outputStylesheet>
+<!-- <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'></link>-->
+<!-- lined-icons -->
+<h:outputStylesheet library="css" name="icon-font.min.css"></h:outputStylesheet>
+<!-- <link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />-->
+<!-- //lined-icons -->
+
+<div>
+   <div class="page-container">
+   <!--/content-inner-->
+<div class="left-content">
+	   <div class="mother-grid-inner">
+             <!--header start here-->
+				<div class="header-main">
+					
+					<div class="logo-w3-agile" style="background-color: white ;  width: auto; height: 87px;">
+					<ui:insert name="logo2"></ui:insert>
+								
+							</div>
+					
+						 
+					
+							
+				     <div class="clearfix"> </div>	
+				</div>
+
+  <!--//content-inner-->
+			<!--/sidebar-menu-->
+				<div class="sidebar-menu">
+					<header class="logo1">
+						<a href="#" class="sidebar-icon"> <span class="gmao">GMAO</span> </a> 
+					</header>
+						<div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
+                           <div class="menu">
+									<ul id="menu" >
+									
+									
+										<li ><a href="#" ><i class="fa fa-tachometer"></i> <span >Dashboard</span><div class="clearfix"></div></a></li>
+										
+										
+										  <li id="menu-academico" ><h:link icon="ui-icon-trash" outcome="/faces/schedule.xhtml" value="Preventive works Planning"/><div class="clearfix"></div></li>
+									<li><a href="gallery.html"><i class="fa fa-picture-o" aria-hidden="true"></i><span>Gallery</span><div class="clearfix"></div></a></li>
+									<li id="menu-academico" ><a href="charts.html"><i class="fa fa-bar-chart"></i><span>Charts</span><div class="clearfix"></div></a></li>
+									 <li id="menu-academico" ><a href="#"><i class="fa fa-list-ul" aria-hidden="true"></i><span> Short Codes</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
+										   <ul id="menu-academico-sub" >
+										   <li id="menu-academico-avaliacoes" ><a href="icons.html">Icons</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="typography.html">Typography</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="faq.html">Faq</a></li>
+										  </ul>
+										</li>
+									<li id="menu-academico" ><a href="errorpage.html"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i><span>Error Page</span><div class="clearfix"></div></a></li>
+									  <li id="menu-academico" ><a href="#"><i class="fa fa-cogs" aria-hidden="true"></i><span> UI Components</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
+										   <ul id="menu-academico-sub" >
+										   <li id="menu-academico-avaliacoes" ><a href="button.html">Buttons</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="grid.html">Grids</a></li>
+										  </ul>
+										</li>
+									 <li><a href="tabels.html"><i class="fa fa-table"></i>  <span>Tables</span><div class="clearfix"></div></a></li>
+									<li><a href="maps.html"><i class="fa fa-map-marker" aria-hidden="true"></i>  <span>Maps</span><div class="clearfix"></div></a></li>
+							        <li id="menu-academico" ><a href="#"><i class="fa fa-file-text-o"></i>  <span>Pages</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
+										 <ul id="menu-academico-sub" >
+											<li id="menu-academico-boletim" ><a href="calendar.html">Calendar</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="signin.html">Sign In</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="signup.html">Sign Up</a></li>
+											
+
+										  </ul>
+									 </li>
+									<li><a href="#"><i class="fa fa-check-square-o nav_icon"></i><span>Forms</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
+									  <ul>
+										<li><a href="input.html"> Input</a></li>
+										<li><a href="validation.html">Validation</a></li>
+									</ul>
+									</li>
+								  </ul>
+								</div>
+							  </div>
+							  <div class="clearfix"></div>		
+							</div>
+							<script>
+							var toggle = true;
+										
+							$(".sidebar-icon").click(function() {                
+							  if (toggle)
+							  {
+								$(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+								$("#menu span").css({"position":"absolute"});
+								$(".gmao").hide();
+								$(".linkitem").hide();
+							  }
+							  else
+							  {
+								$(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+								setTimeout(function() {
+								  $("#menu span").css({"position":"relative"});
+								}, 400);
+								$(".gmao").show();
+								$(".linkitem").show();
+							  }
+											
+											toggle = !toggle;
+										});
+							</script>
+	</div>
+	</div>
+	</div>
+
+  
+<h:panelGrid columns="1"  style="margin: auto;">
+    <p:chart type="line" model="#{animateTraderBean.animatedModel1}" style="width:625px;" />
+    <p:chart type="bar" model="#{animateTraderBean.animatedModel2}" seriesColors="FFFFFF" style="width:625px;" />
+    
+    
+</h:panelGrid>
+        <p:spacer></p:spacer>
+
+<h:panelGrid columns="1" style="margin: auto;" >
+
+<h:panelGrid columns="1" style="margin:auto;">
+
+<p:chart type="metergauge" model="#{animateTraderBean.meterGaugeModel2}" animated="true" style="width:400px;height:250px" />
+  <p:spacer></p:spacer>
+</h:panelGrid>
+  <p:spacer></p:spacer>
+<h:panelGrid columns="1" style="margin:auto;">
+<div class="jqplot-title" style=" text-align: center;color:#666;">Works Preformed on time</div>
+<h:panelGrid columns="1" style="background-color: white ;margin:auto;">
+<p:knob id="knoooooob" labelTemplate="{value}"  animated="true" disabled="true" colorTheme="hot-sneaks" />
+</h:panelGrid>
+</h:panelGrid>
+  <p:spacer></p:spacer>
+<h:panelGrid columns="1"  >
+<div class="jqplot-title" style=" text-align: center;color:#666;">Top 2 Productive technician</div>
+<h:panelGrid columns="2" style="background-color: white ;height:200px;width:380px;margin: auto;">
+ <h:outputText value="#{animateTraderBean.l.get(0)[0]}" />
+<p:rating value="#{animateTraderBean.l.get(0)[1]}" readonly="true"/>
+ <h:outputText value="#{animateTraderBean.l.get(1)[0]}" />
+<p:rating value="#{animateTraderBean.l.get(1)[1]}" readonly="true"/>
+</h:panelGrid>
+</h:panelGrid>
+</h:panelGrid>
+
+ 
+  </ui:define>
+
+
+</ui:composition>

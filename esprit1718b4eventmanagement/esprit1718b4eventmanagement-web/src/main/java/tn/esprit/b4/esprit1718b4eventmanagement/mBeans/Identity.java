@@ -26,6 +26,7 @@ public class Identity {
 	public String doLogin() {
 		String navigateTo = "";
 		User userLoggedIn = userServiceLocal.login(user.getLogin(), user.getPassword());
+	
 		if (userLoggedIn.getRole().equals("GMAO")) {
 			isLogged = true;
 			user = userLoggedIn;

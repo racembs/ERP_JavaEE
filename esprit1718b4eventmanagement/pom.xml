@@ -23,7 +23,7 @@
 		<wildfly.version>8.2.0.Final</wildfly.version>
 		<hibernate.core.version>4.3.5.Final</hibernate.core.version>
 		<guava.version>18.0</guava.version>
-		<primefaces.version>5.1</primefaces.version>
+		<primefaces.version>6.2</primefaces.version>
 		<ejb.spec.version>3.2</ejb.spec.version>
 
 		<!-- Plugin versions and properties -->

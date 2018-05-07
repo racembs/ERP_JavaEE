@@ -5,6 +5,8 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 
 
 import java.util.List;
+import java.util.Map;
+
 import javax.ejb.Remote;
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Equipment;
@@ -27,5 +29,11 @@ public interface WorksUsServiceRemote {
 	public List<UsualWork> displayStart();
 	public List<UsualWork> displayDone();
 	  public List<UsualWork> searchUsualWork(String input);
+		public Long WorkOntime();
+		public List<Object> Top5ProdTech();
+		Double calculPMCw1();
+		Double calculPMCw2();
+		
+
 	
 }

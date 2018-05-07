@@ -21,6 +21,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 /**
  * Session Bean implementation class UserService
  */
+@LocalBean
 @Stateless
 public class UserService extends GenericDAO<User> implements UserServiceRemote, UserServiceLocal {
 
