@@ -6,7 +6,9 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Reclamation;
@@ -30,7 +32,15 @@ public void Add(Reclamation cs)
 	
 }
 
+@Override
+public Long findReclamation(String subject) {
 
+	TypedQuery<Long> query =em.createQuery("SELECT COUNT(a) FROM Reclamation a WHERE a.subject=:subject", Long.class);
+	query.setParameter("subject",subject);
+	
+	
+	return query.getSingleResult();
+}
 @Override
 public ReclamationPk addReclamation(int idArticle, int idUser, Reclamation Rec) {
 		
@@ -39,6 +49,8 @@ public ReclamationPk addReclamation(int idArticle, int idUser, Reclamation Rec) 
 	Rpk.setIdUser(idUser);
 	Rec.setReclamationPK(Rpk);
 	em.persist(Rec);
+
+	
 	return Rpk;
 }
 }

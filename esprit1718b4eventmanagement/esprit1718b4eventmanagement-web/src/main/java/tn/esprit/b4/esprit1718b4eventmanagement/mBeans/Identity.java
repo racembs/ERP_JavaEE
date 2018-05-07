@@ -53,7 +53,11 @@ public class Identity {
 			
 			navigateTo = "/Operation/client?faces-redirect=true";
 		}
-
+	else if (user.getRole().equals("Operator")) {
+		
+		
+		navigateTo = "/Operation/disc/index?faces-redirect=true";
+	}
 			else {
 			
 			return "/login?faces-redirect=true";
