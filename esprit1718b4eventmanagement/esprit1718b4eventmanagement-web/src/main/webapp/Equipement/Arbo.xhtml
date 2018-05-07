@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      template="/template/templateGMAO.xhtml">  
+        <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'></h:outputStylesheet>
+    <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css'></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="articleStyle.css"></h:outputStylesheet>
+        
+      
+
+<ui:define name="content">
+
+<div class="inner-block">
+    <div class="cols-grids panel-widget">
+		<div class="chute chute-center text-center">
+			<div class="row mb40">
+					<div class="col-md-12">
+						<div class="demo-grid"></div>
+	
+
+<div class="header-main">
+	<div id="gpaoBody" class="clearfix">
+		<h2 style="color:#2ea7f2"><i>Analyse</i></h2><br />
+	
+
+				<p:dock>
+<p:menuitem value="Home" icon="/resources/images/t.gif" url="#" />
+<p:menuitem value="Music" icon="/resources/images/serveur.jpg" url="#" />
+
+<p:menuitem value="Email" icon="/assets/images/ui/avatar3.png" url="#"/>
+<p:menuitem value="Link" icon="/assets/images/ui/avatar3.pngg" url="#"/>
+<p:menuitem value="RSS" icon="/assets/images/ui/avatar3.png" url="#"/>
+<p:menuitem value="History" icon="/assets/images/ui/avatar3.png" url="#"/>
+</p:dock>  
+		<h:form id="addForm">
+
+
+        <h2 style="color:#2ea7f2"><i>Add / Update Emplacment</i></h2><br />
+
+<p:commandButton value="Refrech" 
+						actionListener="#{arboBean.Refreche()}"
+						styleClass="ui-priority-primary" icon="ui-icon-disk"
+						onclick="PF('dlg1').show();" />
+
+   <p:growl id="msgs1" showDetail="true" escape="false"/>
+							<p:treeTable value="#{arboBean.root}" var="arbo"
+								dynamic="true" selectionMode="single">
+
+
+								<p:column headerText="Equipment Emplacement">
+									<h:outputText
+										value="#{arboBean.getArboperfis(arbo)}" />
+								</p:column>
+							 <p:column style="width:24px">
+            <p:commandLink  oncomplete="PF('documentDialog').show()" title="View Detail" styleClass="ui-icon ui-icon-search">
+                <f:setPropertyActionListener value="#{arbo}" target="#{arboBean.equi.arboresence}" />
+            </p:commandLink>
+        </p:column>
+        
+         <p:column style="width:24px">
+        	<p:commandLink oncomplete="PF('ItemDialog3').show()"  >
+									<span class="ui-icon ui-icon-pencil"></span>
+									<f:setPropertyActionListener value="#{arbo}"
+			                     		target="#{arboBean.equi.arboresence}" />
+								</p:commandLink>
+								 </p:column>
+							</p:treeTable>
+							
+							
+							 <div class="col-sm-4">
+     <h:outputText value="Type :"/>
+     <h:selectOneMenu value="#{arboBean.type}">
+   <f:selectItem itemValue="Principale" itemLabel="Principale" />
+   <f:selectItem itemValue="Secondaire" itemLabel="Secondaire" />  
+                
+</h:selectOneMenu>
+         <span class="focus-border"></span>
+     </div>
+    <div >
+     <h:outputText value="name:"/>
+      </div>
+      <div class="col-sm-4">
+                
+                
+                    <h:inputText id="servic" value="#{arboBean.name}" class="effect-2"/>
+              <span class="focus-border"></span>
+             </div> 
+         
+                		<h:panelGrid columns="1" cellpadding="5">
+                		 <p:growl id="msgss" showDetail="true" escape="false"/>
+					<p:commandButton value="Save "  id="ajaxs" update="msgss"
+						actionListener="#{arboBean.doSaveOrUpdatearbo()}"
+						styleClass="ui-priority-primary" icon="ui-icon-disk"
+						onclick="PF('dlg1').show();" />
+				</h:panelGrid>
+
+
+	
+	<br/>	<br/>	
+	    <div    style= "visibility: hidden;">hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden</div>     
+
+ 
+</h:form>		  
+
+ <p:dialog header="Update quantity" widgetVar="ItemDialog3" resizable="false"
+			               width="400" showEffect="explode" hideEffect="explode">
+				  <h:form id="dlgForm3">
+				
+				
+				         <h:panelGrid id="display3" columns="2" cellpadding="4">      
+				
+				             <h:outputText value="Name" />
+				             <h:inputText value="#{arboBean.name2}" />
+				             	 <p:growl id="msgs" showDetail="true" escape="false"/>
+	<p:commandButton value="Update"  id="ajax" update="msgs"
+						actionListener="#{arboBean.updatename()}"
+						styleClass="ui-priority-primary" icon="ui-icon-disk"
+							oncomplete="PF('ItemDialog3').hide()"
+						/>
+				
+						
+			
+				         </h:panelGrid>
+			      </h:form>
+			      
+			 </p:dialog>
+  			
+        				</div>
+			</div>	
+		</div>
+	</div>
+</div>
+	</div>
+	</div>
+
+<br/>		
+<div style= "visibility: hidden;">hidden</div>
+
+</ui:define>
+</ui:composition>

@@ -1,27 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+  
+
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+
+ 
+  <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'></h:outputStylesheet>
+    <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css'></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="articleStyle.css"></h:outputStylesheet>
+        
+    
 <h:head>
+
 <ui:include src="/template/gmaoHeader.xhtml" />
 </h:head>
 <h:body>
-	<div class="page-container">
+<!--//_____________________________________________________Add Article____________________________________________________-->
+<h:form id="Equipement1Form">
+<div class="page-container">
 		<div class="left-content">
 			<div class="mother-grid-inner">
 				<!--header start here-->
 				<div class="header-main">
 					<div id="gpaoBody" class="clearfix">
-<!--//__________________________________________________________________________________________________________________-->
-
+					
    <center><h2><h:outputText value="Equipement"/></h2></center>
-    <h:form id="EquipementForm">
+
+          
+  <center>
+  <h:form id="Equipement1Form">
+  <div class="col-sm-4">
+     <h:outputText value="Recherche by :"/>
+     <h:selectOneMenu value="#{equipementBean.equipment.fabriquant}">
+   <f:selectItem itemValue="serialNum" itemLabel="serialNum" />
+   <f:selectItem itemValue="fabriquant" itemLabel="fabriquant" />  
+     <f:selectItem itemValue="fabriquant" itemLabel="Marque" />                  
+</h:selectOneMenu>
+     </div>
+     
+     
+     
+                      <div class="col-sm-4">
+                    <h:inputText  id="email-id" value="#{equipementBean.equipment.image}" class="form-control"/>
+                </div>
+                
+
+
+                
+<div class="col-sm-4">
+
+ <h:commandButton action="#{equipementBean.find()}" value="Rechercher" class="btn btn-primary" />
+</div>
+</h:form>
+ </center>
+
+   
         <h:dataTable id="offers" binding="#{table}" value="#{equipementBean.equipments}" var="equi" class="table table-striped table-hover table-bordered tableUpdated">
          
-            <h:column>
+     
+             <h:column>
+              <f:facet name="header">Image </f:facet>
+                <p:graphicImage width="70" value="/resources/images/#{equi.image}"/> 
+    </h:column>
+           <h:column>
                 <f:facet name="header">Serial Number</f:facet>
                 <h:outputText value="#{equi.serialNum}" />
             </h:column>
@@ -45,16 +91,42 @@
                 <f:facet name="header">UPDATE</f:facet>
                 <h:commandButton action="#{equipementBean.UpdateB(equi)}" value="Update" class="btn btn-primary" />
             </h:column>
-  
+  <h:column>
+                <f:facet name="header">DELETE</f:facet>
+                <h:commandButton action="#{equipementBean.Delete(equi)}" value="DELETE" class="btn-default btn"/>
+            </h:column>
         </h:dataTable>
      
-    </h:form>
-<!--//__________________________________________________________________________________________________________________-->
-					</div>
+  
+
+					</div>					
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<br/>	<br/>	
+	    <div    style= "visibility: hidden;">hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden</div>     
+
+ <!--//_____________________________________________________Add Article____________________________________________________-->
+
+</h:form>
+<script>
+function topFunction() {
+
+	updateDiv.style.display = 'block';
+//	$("html, body").animate({ scrollBottom: $(window).height() }, "slow");
+	$("html, body").animate({scrollTop: $(document).height() + $(window).height()}, "slow");
+}
+function hide() {
+	
+	updateDiv.style.display = 'none';
+    document.body.scrollTop = 300;
+    document.documentElement.scrollTop = 300;
+}
+
+</script>
 </h:body>
 <ui:include src="/template/footer.xhtml" />
+
 </html>

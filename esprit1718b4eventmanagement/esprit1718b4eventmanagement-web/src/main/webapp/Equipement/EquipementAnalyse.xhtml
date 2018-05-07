@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      template="/template/templateGMAO.xhtml">  
+      
+      
+
+<ui:define name="content">
+
+<div class="inner-block">
+    <div class="cols-grids panel-widget">
+		<div class="chute chute-center text-center">
+			<div class="row mb40">
+					<div class="col-md-12">
+						<div class="demo-grid"></div>
+	
+
+<div class="header-main">
+	<div id="gpaoBody" class="clearfix">
+		
+   <h2 style="color:#2ea7f2"><i>Equipement Analyse</i></h2><br />
+
+
+<h:form id="te">
+
+			<p:graphicImage width="70" value="/resources/images/#{analyseBean.equipement.image}"/> 
+			<h:panelGrid columns="2">
+			
+			<h:outputText value="SERIAL NUMBER:" style="font-weight: bold"/>
+			<h:inputText value="#{analyseBean.equipement.serialNum}"/>
+			<h:outputText value="FABRIQUANT:" style="font-weight: bold"/>
+			<h:inputText value="#{analyseBean.equipement.fabriquant}" />
+			<h:outputText value="MARQUE:" style="font-weight: bold"/>
+			<h:inputText value="#{analyseBean.equipement.marque}"/>
+			
+			
+			<h:outputText value="DESCRIPTION:" style="font-weight: bold" />
+			<h:inputText value="#{analyseBean.equipement.description}"/>
+	<h:outputText value="STATE:" style="font-weight: bold"/>
+			<h:inputText value="#{analyseBean.equipement.state}"/>
+		</h:panelGrid>
+
+        <h:dataTable id="offers" binding="#{table}" value="#{analyseBean.cd}" var="equi" class="table table-striped table-hover table-bordered tableUpdated">
+         
+     
+       <h:column>
+                <f:facet name="header" >Objet</f:facet>
+                <h:outputText value="#{equi.objet}" />
+            </h:column>
+           <h:column>
+                <f:facet name="header">Date de panne</f:facet>
+                <h:outputText value="#{equi.startDate}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Date fin reparation </f:facet>
+                <h:outputText value="#{equi.endDate}" />
+            </h:column>
+              <h:column>
+                <f:facet name="header">serialnum Equipement </f:facet>
+                <h:outputText value="#{equi.equipement.serialNum}" />
+            </h:column>
+        
+        </h:dataTable>	
+        	<h:panelGrid columns="2">
+			
+			<h:outputText value="MTTR:" style="font-weight: bold"/>
+			<h:inputText value="#{ analyseBean.MTTR} Jour "/>
+			<h:outputText value="MTBF:" style="font-weight: bold"/>
+			<h:inputText value="#{ analyseBean.MTBF } Jour" />
+			<h:outputText value="Avaibility:" style="font-weight: bold" />
+			<h:inputText value="#{ analyseBean.avab } % "/>
+			<h:outputText value="Equipement est:"  style="font-weight: bold"/>
+			<h:inputText value="#{analyseBean.EtatEquipement(analyseBean.equipement)}"/>
+				<h:outputText value="Cout d'indisponibilite est:"  style="font-weight: bold"/>
+			<h:inputText value="#{analyseBean.cout(analyseBean.equipement)}"/>
+		
+		</h:panelGrid>
+        
+			 <div class="col-md-12">
+		<p:commandButton class="btn btn-primary" value="Plus de Detail" update=":dlgForm4:ordredItemTable4" oncomplete="PF('ItemDialog4').show()">
+			                 <f:setPropertyActionListener value="#{equi.id}"
+			                     target="#{equipementBean.selectedOrderId}" />	
+			                     </p:commandButton>	  
+			                     </div>
+      	
+</h:form>
+   <p:dialog header="Plus d'information" widgetVar="ItemDialog4" resizable="false"
+			               width="400" showEffect="explode" hideEffect="explode">
+				  <h:form id="dlgForm4">
+				
+				
+				         <h:panelGrid id="ordredItemTable4" columns="2" cellpadding="4">      
+				
+				     
+			
+                <h:outputLabel for="username" class="control-label col-sm-2">Nombre Total de jour Indisponible :</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText id="name-id" value="#{analyseBean.nbrjourindi(analyseBean.equipement)} Jour" class="form-control"/>
+               
+            </div>
+            
+                <h:outputLabel for="email" class="control-label col-sm-2">Nombre de Heur par jour </h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText  id="email-id" value="#{analyseBean.nbheurindi(analyseBean.equipement)} Heur" class="form-control"/>
+                
+            </div>
+            
+          
+                <h:outputLabel for="cpu" class="control-label col-sm-2">Nombre total d'heur:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText id="cpu" value="#{analyseBean.nbrheurtotalindi(analyseBean.equipement)} Heur" class="form-control"/>
+               
+            </div>
+		
+				         </h:panelGrid>
+			     	
+			   
+			      </h:form>
+			 </p:dialog>
+
+
+
+
+        				</div>
+			</div>	
+		</div>
+	</div>
+</div>
+	</div>
+	</div>
+
+<br/>		
+<div style= "visibility: hidden;">hidden</div>
+
+</ui:define>
+</ui:composition>

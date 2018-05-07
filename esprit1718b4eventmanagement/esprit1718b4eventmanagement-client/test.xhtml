@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+
+	
+	
+    
+      
+      
+         
+          xmlns:f="http://xmlns.jcp.org/jsf/core"
+          xmlns:h="http://xmlns.jcp.org/jsf/html"
+          xmlns:p="http://primefaces.org/ui">
+<h:head>
+<ui:include src="/template/gmaoHeader.xhtml" />
+</h:head>
+<h:body>
+	<div class="page-container">
+		<div class="left-content">
+			<div class="mother-grid-inner">
+				<!--header start here-->
+				<div class="header-main">
+					<div id="gpaoBody" class="clearfix">
+<!--//__________________________________________________________________________________________________________________-->
+
+<h:form id="form">
+    <p:dataGrid var="car" value="#{equipementBean.equipments}" columns="3" layout="grid"
+        rows="12" paginator="true" id="cars"
+        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+        rowsPerPageTemplate="6,12,16">
+ 
+        <f:facet name="header">
+            Cars for Sale
+        </f:facet>
+ 
+        <p:panel header="#{car.id}" style="text-align:center">
+            <h:panelGrid columns="1" style="width:100%">
+                <p:graphicImage width="80" value="/resources/images/#{car.image}"/> 
+ 
+                <h:outputText value="#{car.description}" />
+ 
+                
+            </h:panelGrid>
+        </p:panel>
+ 
+    </p:dataGrid>
+ 
+    
+</h:form>
+<!--//__________________________________________________________________________________________________________________-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:body>
+<ui:include src="/template/footer.xhtml" />
+</html>

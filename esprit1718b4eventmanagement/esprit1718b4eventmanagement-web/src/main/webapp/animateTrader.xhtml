@@ -107,16 +107,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<a href="#" class="sidebar-icon"> <span class="gmao">GMAO</span> </a> 
 					</header>
 						<div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
-                           <div class="menu">
+                        <div class="menu">
 									<ul id="menu" >
 									
-									
-										<li ><a href="#" ><i class="fa fa-tachometer"></i> <span >Dashboard</span><div class="clearfix"></div></a></li>
-										
-										
-										  <li id="menu-academico" ><h:link icon="ui-icon-trash" outcome="/faces/schedule.xhtml" value="Preventive works Planning"/><div class="clearfix"></div></li>
-									<li><a href="gallery.html"><i class="fa fa-picture-o" aria-hidden="true"></i><span>Gallery</span><div class="clearfix"></div></a></li>
-									<li id="menu-academico" ><a href="charts.html"><i class="fa fa-bar-chart"></i><span>Charts</span><div class="clearfix"></div></a></li>
+									<li><a href="/esprit1718b4eventmanagement-web/Equipement/Equipement.jsf" ><i class="fa fa-tachometer"></i><span>Equipement</span><div class="clearfix"></div></a>
+										<ul id="menu-academico-sub" >
+										   <li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/Equipement/Equipement.jsf">ADD Equipement</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/Equipement/ListEquipement.jsf">List Equipement</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/Equipement/Arbo.jsf">New Tree </a></li>
+											<li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/Equipement/Analyse.jsf">Analyse</a></li>
+										  </ul>
+										  </li>
+									<li><a href="/esprit1718b4eventmanagement-web/article/procurement.jsf"><i class="fa fa-tachometer"></i><span>Procurement</span><div class="clearfix"></div></a></li>
+								
+											<li><a href="gallery.html"><i class="fa fa-picture-o" aria-hidden="true"></i><span>Gallery</span><div class="clearfix"></div></a></li>
 									 <li id="menu-academico" ><a href="#"><i class="fa fa-list-ul" aria-hidden="true"></i><span> Short Codes</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
 										   <ul id="menu-academico-sub" >
 										   <li id="menu-academico-avaliacoes" ><a href="icons.html">Icons</a></li>
@@ -131,7 +135,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<li id="menu-academico-avaliacoes" ><a href="grid.html">Grids</a></li>
 										  </ul>
 										</li>
-									 <li><a href="tabels.html"><i class="fa fa-table"></i>  <span>Tables</span><div class="clearfix"></div></a></li>
 									<li><a href="maps.html"><i class="fa fa-map-marker" aria-hidden="true"></i>  <span>Maps</span><div class="clearfix"></div></a></li>
 							        <li id="menu-academico" ><a href="#"><i class="fa fa-file-text-o"></i>  <span>Pages</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
 										 <ul id="menu-academico-sub" >
@@ -148,6 +151,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<li><a href="validation.html">Validation</a></li>
 									</ul>
 									</li>
+									 <li><a href="/esprit1718b4eventmanagement-web/faces/schedule.xhtml#"><i class="fa fa-table"></i>  <span>Preventive Planning</span><div class="clearfix"></div></a></li>
+										<li id="an" ><a href="/esprit1718b4eventmanagement-web/faces/animateTrader.xhtml#"><i class="fa fa-bar-chart"></i><span>Works dashboard</span><div class="clearfix"></div></a></li>
+								
 								  </ul>
 								</div>
 							  </div>
@@ -180,9 +186,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div>
 	</div>
 	</div>
-
-  
-<h:panelGrid columns="1"  style="margin: auto;">
+<div class="page-container">
+		<div class="left-content">
+			<div class="mother-grid-inner">
+				<!--header start here-->
+				<div class="header-main">
+					<div id="gpaoBody" class="clearfix">
+  					  <h2 style="color:#2ea7f2">Works Dashboard</h2>
+<h:panelGrid columns="1"  style="margin: auto; width: 497px; ">
     <p:chart type="line" model="#{animateTraderBean.animatedModel1}" style="width:625px;" />
     <p:chart type="bar" model="#{animateTraderBean.animatedModel2}" seriesColors="FFFFFF" style="width:625px;" />
     
@@ -190,22 +201,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </h:panelGrid>
         <p:spacer></p:spacer>
 
-<h:panelGrid columns="1" style="margin: auto;" >
-
-<h:panelGrid columns="1" style="margin:auto;">
+ <h:panelGrid columns="3" style="margin: auto; width: 734px; padding-right: 20px; margin-right: 100px; border-bottom-color: #1b93e1; border-left-color: #1b93e1; border-top-color: #1b93e1; border-right-color: #1b93e1" >
+<h:panelGrid columns="1" style="margin: auto; width: 309px; " >
+<h:panelGrid columns="1" style="margin:auto; width: 325px; ">
 
 <p:chart type="metergauge" model="#{animateTraderBean.meterGaugeModel2}" animated="true" style="width:400px;height:250px" />
   <p:spacer></p:spacer>
 </h:panelGrid>
-  <p:spacer></p:spacer>
-<h:panelGrid columns="1" style="margin:auto;">
-<div class="jqplot-title" style=" text-align: center;color:#666;">Works Preformed on time</div>
-<h:panelGrid columns="1" style="background-color: white ;margin:auto;">
+ <p:spacer></p:spacer>
+<h:panelGrid columns="1" style="margin:auto; border-bottom-color: #D2D660; border-left-color: #D2D660; border-top-color: #D2D660; border-right-color: #D2D660; border-right-style: solid; border-top-width: medium; border-right-width: medium; border-left-style: solid; border-bottom-width: medium; border-bottom-style: solid; border-left-width: medium; border-top-style: solid; height: 95px; ">
+<div class="jqplot-title" style=" text-align: center;color:#666;">Works Performed on time</div>
+<h:panelGrid columns="1" style="background-color: white; margin:auto; ">
 <p:knob id="knoooooob" labelTemplate="{value}"  animated="true" disabled="true" colorTheme="hot-sneaks" />
 </h:panelGrid>
 </h:panelGrid>
+</h:panelGrid>
   <p:spacer></p:spacer>
-<h:panelGrid columns="1"  >
+<h:panelGrid columns="1"  style="width: 375px; border-top-width: medium; border-bottom-color: #1b93e1; border-right-width: medium; border-bottom-width: medium; border-left-color: #1b93e1; border-top-color: #1b93e1; border-right-color: #1b93e1; border-left-width: medium; border-right-style: outset; border-left-style: outset; border-bottom-style: outset; border-top-style: outset; ">
 <div class="jqplot-title" style=" text-align: center;color:#666;">Top 2 Productive technician</div>
 <h:panelGrid columns="2" style="background-color: white ;height:200px;width:380px;margin: auto;">
  <h:outputText value="#{animateTraderBean.l.get(0)[0]}" />
@@ -215,7 +227,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </h:panelGrid>
 </h:panelGrid>
 </h:panelGrid>
-
+</div>
+</div>
+</div>
+</div>
+</div>
  
   </ui:define>
 

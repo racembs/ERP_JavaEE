@@ -31,6 +31,9 @@
 					
 
         <h2 style="color:#2ea7f2"><i>Add / Update Article</i></h2><br />
+        
+         <p:growl id="msgs" showDetail="true" escape="false"/>
+         
      <div class="col-100">
  <h:outputText value="Article Code: "/>
  <h:inputText  class="effect-2"  value="#{treeBean.articleCode}" />
@@ -79,9 +82,10 @@
 
 			<div class="col-sm-8 col-sm-offset-2">
 				<br /><br />
-			<h:commandButton action="#{treeBean.addArticle()}" class="btn-primary btn" value="submit" />
+			 
+			<h:commandButton onclick="PF('msg').show();"  update="msgs" actionListener="#{treeBean.addArticle()}" class="btn-primary btn" value="submit" />
 		    <h:commandButton action="#{treeBean.reset()}" class="btn-inverse btn" value="Reset" ></h:commandButton>
-		    <h:commandButton action="#{treeBean.updteArticle()}" class="btn-primary btn" value="Update" />
+		    <h:commandButton onclick="PF('msg').show();"  update="msgs"  actionListener="#{treeBean.updteArticle()}" class="btn-primary btn" value="Update" />
 		    
 			
 			
@@ -178,7 +182,8 @@
 		<h:column>
 		<f:facet name="">
 		</f:facet>
-		<h:commandButton action="#{treeBean.deleteArticle(articles.id)}" class="btn-default btn" value="Delete" />
+		<h:commandButton onclick="PF('msg').show();"  update="msgs" actionListener="#{treeBean.deleteArticle(articles.id)}" class="btn-default btn" value="Delete" />
+		
 		</h:column>
 		
 		</h:dataTable>

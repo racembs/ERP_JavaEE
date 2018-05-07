@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      template="/template/templateGPAO.xhtml">  
+      
+      
+
+<ui:define name="content">
+
+<div class="inner-block">
+    <div class="cols-grids panel-widget">
+		<div class="chute chute-center text-center">
+			<div class="row mb40">
+					<div class="col-md-12">
+						<div class="demo-grid"></div>
+					</div>
+			</div>	
+		</div>
+	</div>
+</div>
+
+<div class="header-main">
+	<div id="gpaoBody" class="clearfix">
+		<h2 style="color:#2ea7f2"><i>Manufacturing Resources Planning</i></h2><br />
+		<h:form id="tableForm">
+		<center>
+     	<div class="col-100">
+ 			<h:outputText value="Company: "/>
+ 			<h:selectOneMenu class="effect-2" value="#{manufacturingPlanningBean.selectedClientId}">
+ 						<f:selectItem itemLabel="Select a Company" itemValue="" />
+	  					<f:selectItems value="#{manufacturingPlanningBean.listClients}" 
+	  					var="clientt" itemValue="#{clientt.id}"
+	  					itemLabel="#{clientt}"/>
+	  					<p:ajax update=":tableForm:comboOrder"
+            					listener="#{manufacturingPlanningBean.comboClientAction()}" />
+	  				</h:selectOneMenu>
+			<span class="focus-border"></span>
+		</div>
+		
+		<div class="col-100">
+ 			<h:outputText value="Order : "/>
+ 			<h:selectOneMenu id="comboOrder" class="effect-2" value="#{manufacturingPlanningBean.selectedOrderId}">
+ 						<f:selectItem itemLabel="Select an Order" itemValue="" />
+	  					<f:selectItems value="#{manufacturingPlanningBean.listOrders}" 
+	  					var="orders" itemValue="#{orders.id}"
+	  					itemLabel="#{orders.reference}"/>
+	  					<p:ajax update=":tableForm:comboArticle"
+            					listener="#{manufacturingPlanningBean.comboOrderAction()}" />
+	  				</h:selectOneMenu>
+			<span class="focus-border"></span>
+		</div>
+		
+		<div class="col-100">
+ 			<h:outputText value="Article : "/>
+ 			<h:selectOneMenu id="comboArticle" class="effect-2" value="#{manufacturingPlanningBean.selectedArticleId}">
+ 						<f:selectItem itemLabel="Select an Article" itemValue="" />
+	  					<f:selectItems value="#{manufacturingPlanningBean.listOrdredItem}" 
+	  					var="ordredItem" itemValue="#{ordredItem.ordredItemPk.id_Article}"
+	  					itemLabel="#{ordredItem.article.articleCode}"/>
+	  					<p:ajax listener="#{manufacturingPlanningBean.comboOrderAction()}" />
+	  				</h:selectOneMenu>
+			<span class="focus-border"></span>
+		</div>
+		</center>
+		<center>		
+			<p:commandButton action="#{manufacturingPlanningBean.selectOrdredItemChoosed()}" oncomplete="PF('ItemDialog').show()" class="btn-primary btn" value="Calculte" />
+		</center>
+
+			
+		</h:form>
+		<p:dialog header="MRP calculation" widgetVar="ItemDialog" resizable="false"
+			               width="1100" showEffect="explode" hideEffect="explode">
+				  <h:form id="dlgForm">
+						<center>
+						
+							<div class="col-100">
+					 			<h:outputText value="Staking method : "/>
+					 			<h:selectOneMenu id="comboStaking" class="effect-2" value="#{manufacturingPlanningBean.choosedMethod}">
+					 						<f:selectItem itemLabel="Select a staking method" itemValue="" />
+						  					<f:selectItems value="#{manufacturingPlanningBean.stakingMethod}" 
+						  					var="choosedMethod" itemValue="#{choosedMethod}"
+						  					itemLabel="#{choosedMethod}"/>
+						  				</h:selectOneMenu>
+								<span class="focus-border"></span>
+							</div>
+							
+							<div class="col-100">
+					 			<h:outputText value="Shift work : "/>
+					 			<h:selectOneMenu id="comboShift" class="effect-2" value="#{manufacturingPlanningBean.choosedShiftWorkNumber}">
+					 						<f:selectItem itemLabel="select shift work number" itemValue="" />
+						  					<f:selectItems value="#{manufacturingPlanningBean.shiftWorkNumber}" 
+						  					var="number" itemValue="#{number}"
+						  					itemLabel="#{number}"/>
+						  				</h:selectOneMenu>
+								<span class="focus-border"></span>
+							</div>
+							
+							<div class="col-100">
+								<h:outputText value="Select starting Date: " />
+					 			<p:calendar id="date1" class="effect-2" value="#{manufacturingPlanningBean.startingDate}" pattern="dd-MM-yyyy" >
+					 				<f:convertDateTime pattern="dd-MM-yyyy"/>
+					 			</p:calendar>
+								<span class="focus-border"></span>
+							</div>
+							
+						</center>
+						<div class="clearfix"> </div>
+						<center>
+						<div class="col-100"></div>
+						<div class="col-100">
+			       		 <p:commandButton id="btn" value="Make Planning" action="#{manufacturingPlanningBean.makePlanningAction()}" />
+			       		 <span class="focus-border"></span>
+			       		 </div>
+			       		 </center>
+			      </h:form>
+			 </p:dialog>
+	</div>
+</div>
+
+
+<br/>		
+<div style= "visibility: hidden;">hidden</div>
+ 
+
+
+
+<div class="header-main">
+	<div id="gpaoBody" class="clearfix">
+		<h2 style="color:#2ea7f2"><i>Display All Client</i></h2><br />
+		
+		<div class="container">
+  			<h3>Company</h3>
+  			<p>Display all Company List:</p>  
+  			<h:form id="tableForm2">          
+    		<h:dataTable id="ordredItemTable2" class="table table-striped" value="#{ordersBean.listOrders}" var="order" border="2" selectionMode="single">
+				<h:column>
+					<f:facet name="header">
+					<h:outputText value="order Code" />
+					</f:facet>
+					<h:outputText value="#{order.reference}" />
+				</h:column>
+	
+				<h:column>
+					<f:facet name="header">
+					<h:outputText value="Company" />
+					</f:facet>
+					<h:outputText style="color:black" value="#{order.client.company}" />
+				</h:column>
+		
+				<h:column>
+					<f:facet name="header">
+					<h:outputText value="Delivery date" />
+					</f:facet>
+					<h:outputText style="color:black" value="#{order.delivery_date}" />
+				</h:column>
+		
+				<h:column>
+					<f:facet name="header">
+					<h:outputText value="Status" />
+					</f:facet>
+					<h:outputText style="color:black" value="#{order.statut}" />
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+					<h:outputText value="Ordred Item" />
+					</f:facet>
+					<p:commandButton class="btn btn-primary" value="Show Items" update=":dlgForm2:ordredItemTable3" oncomplete="PF('ItemDialog2').show()">
+			                 <f:setPropertyActionListener value="#{order.id}"
+			                     target="#{ordersBean.selectedOrderId}" />
+			     </p:commandButton>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+					<h:outputText value="Ordred Item" />
+					</f:facet>
+					
+					<p:commandLink  update=":tableForm2:ordredItemTable2" oncomplete="PF('ItemDialog1').show()">
+						<span class="ui-icon ui-icon-pencil"></span>
+						<f:setPropertyActionListener value="#{order.id}"
+			                     target="#{ordersBean.selectedOrderId}" />
+					</p:commandLink>
+					<p:commandLink action="#{ordersBean.deleteOrder(order)}"  update=":tableForm2:ordredItemTable2" >
+						<span class="ui-icon ui-icon-trash"></span>
+					</p:commandLink>
+				</h:column>
+				
+			</h:dataTable>
+			</h:form>
+			<p:dialog header="Add new Items" widgetVar="ItemDialog1" resizable="false"
+			               width="400" showEffect="explode" hideEffect="explode">
+				  <h:form id="dlgForm1">
+				
+				
+				         <h:panelGrid id="display1" columns="2" cellpadding="4">
+				
+							<h:outputText value="Delivery Date: " />
+				 			<p:calendar id="mask1" class="effect-2" value="#{ordersBean.deliveryDate}" pattern="dd-MM-yyyy" >
+				 				<f:convertDateTime pattern="dd-MM-yyyy"/>
+				 			</p:calendar>
+				
+				         </h:panelGrid>
+			       		 <p:commandButton value="Add Item" action="#{ordersBean.updateOrder()}" update=":tableForm2:ordredItemTable2" oncomplete="PF('ItemDialog1').hide()"/>
+			      </h:form>
+			 </p:dialog>
+			<p:dialog header="Show Items" widgetVar="ItemDialog2" resizable="false"
+			               width="400" showEffect="explode" hideEffect="explode">
+				  <h:form id="dlgForm2">
+				
+				
+				         <p:dataTable id="ordredItemTable3" var="ordredItem2" value="#{ordersBean.selectedOrdredItemList}" paginator="false" rows="5">
+			
+					         <p:column>
+					             <f:facet name="header" >
+					                 <h:outputText value="Article" />
+					             </f:facet>
+					             <h:outputText value="#{ordredItem2.article.articleCode}" />
+					         </p:column>
+					
+					         <p:column>
+					             <f:facet name="header">
+					                 <h:outputText value="Quantity" />
+					             </f:facet>
+					             <h:outputText value="#{ordredItem2.quantity}" />
+					         </p:column>
+					         
+					         <p:column>
+					         	<p:commandLink oncomplete="PF('ItemDialog3').show()">
+									<span class="ui-icon ui-icon-pencil"></span>
+									<f:setPropertyActionListener value="#{ordredItem2.ordredItemPk}"
+			                     		target="#{ordersBean.selectedOrdredItemPk}" />
+								</p:commandLink>
+								<p:commandLink action="#{ordersBean.deleteSelection(ordredItem2)}"  update=":dlgForm2:ordredItemTable3" >
+									<span class="ui-icon ui-icon-trash"></span>
+								</p:commandLink>
+					         </p:column>
+			
+			     		</p:dataTable>
+			     		<center>
+			       		 <div class="col-sm-8 col-sm-offset-2"><br /><br />
+				       		 <p:commandButton value="Add items" oncomplete="PF('ItemDialog4').show()"/>
+				       		 <p:commandButton value="close" oncomplete="PF('ItemDialog2').hide()"/>
+						</div>
+						</center>
+			      </h:form>
+			 </p:dialog>
+			 <p:dialog header="Update quantity" widgetVar="ItemDialog3" resizable="false"
+			               width="400" showEffect="explode" hideEffect="explode">
+				  <h:form id="dlgForm3">
+				
+				
+				         <h:panelGrid id="display3" columns="2" cellpadding="4">      
+				
+				             <h:outputText value="Quantity" />
+				             <h:inputText value="#{ordersBean.quantity}" />
+				
+				         </h:panelGrid>
+			       		 <p:commandButton value="Update qty" action="#{ordersBean.updateQuantity()}" update=":dlgForm2:ordredItemTable3" oncomplete="PF('ItemDialog3').hide()"/>
+			      </h:form>
+			 </p:dialog>
+			 <p:dialog header="Add new Items" widgetVar="ItemDialog4" resizable="false"
+			               width="400" showEffect="explode" hideEffect="explode">
+				  <h:form id="dlgForm4">
+				
+				
+				         <h:panelGrid id="display4" columns="2" cellpadding="4">
+				
+				
+				           <h:outputText value="Article" />          
+				           <p:selectOneMenu value="#{ordersBean.selectedArticleId}">
+					  					<f:selectItems value="#{ordersBean.produitFini}" 
+					  					var="arti" itemValue="#{arti.id}"
+					  					itemLabel="#{arti.articleCode}"/>
+					  				</p:selectOneMenu>
+				
+				             <h:outputText value="Quantity" />
+				             <h:inputText value="#{ordersBean.quantity}" />
+				
+				         </h:panelGrid>
+			       		 <p:commandButton value="Add Item" action="#{ordersBean.updateOrdredItemList()}" update=":dlgForm2:ordredItemTable3" oncomplete="PF('ItemDialog4').hide()"/>
+			      </h:form>
+			 </p:dialog>
+		</div>
+		
+	</div>
+</div>
+
+<br/>		
+<div style= "visibility: hidden;">hidden</div>
+
+</ui:define>
+</ui:composition>

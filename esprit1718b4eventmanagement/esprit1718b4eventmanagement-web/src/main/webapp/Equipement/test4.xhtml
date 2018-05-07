@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+	  template="/template/templateGPAO.xhtml">
+	
+	  
+
+<ui:define name="content">
+<div class="inner-block">
+    <div class="cols-grids panel-widget">
+		<div class="chute chute-center text-center">
+			<div class="row mb40">
+					<div class="col-md-12">
+						<div class="demo-grid"></div>
+					</div>
+			</div>	
+		</div>
+	</div>
+</div>
+<h1 style="font-family:verdana;">This is a heading</h1>
+<p style="font-family:courier;">This is a paragraph.</p>
+<h:form id="addForm">
+<div class="header-main">
+	<div id="gpaoBody" class="clearfix">
+		<h2 style="color:#2ea7f2"><i>Add / Update Client</i></h2><br />
+
+  		  <p:calendar value="#{analyseBean.datebeb}" ></p:calendar>
+ <p:calendar value="#{analyseBean.datefin}" ></p:calendar>
+     
+				
+					<p:commandButton value="Save equipment" 
+						actionListener="#{analyseBean.test()}"
+				/>	
+				         <h:outputText value="STATE:"/>
+                    <h:inputText id="servic" value="#{analyseBean.l}" class="effect-2"/>
+              <span class="focus-border"></span>
+             
+        					
+                
+	</div>
+</div>
+</h:form>
+
+<br/>		
+<div style= "visibility: hidden;">hidden</div>
+ 
+<div class="header-main">
+	<div id="gpaoBody" class="clearfix">
+		<h2 style="color:#2ea7f2"><i>Display All Client</i></h2><br />
+		
+		<div class="container">
+  			<h3>Company</h3>
+  			<p>Display all Company List:</p>            
+    	
+		</div>
+		
+	</div>
+</div>
+
+<br/>		
+<div style= "visibility: hidden;">hidden</div>
+ 
+</ui:define>
+
+
+</ui:composition>

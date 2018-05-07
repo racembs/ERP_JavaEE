@@ -17,7 +17,6 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 
-
 @LocalBean
 @Stateless
 public class EquipementService extends GenericDAO<Equipment>  implements EquipementServiceLocal,EquipementServiceRemote{
@@ -73,6 +72,14 @@ public class EquipementService extends GenericDAO<Equipment>  implements Equipem
 			TypedQuery<Equipment > query
 			=em.createQuery("SELECT a FROM Equipment  a WHERE a.Marque= :code", Equipment.class);
 			query.setParameter("code", marque );
+			List<Equipment> equipment=query.getResultList();
+			return equipment;
+		}
+		@Override
+		public List<Equipment> findEquipementSerialNum(String serie ) {
+			TypedQuery<Equipment > query
+			=em.createQuery("SELECT a FROM Equipment  a WHERE a.SerialNum= :code", Equipment.class);
+			query.setParameter("code", serie );
 			List<Equipment> equipment=query.getResultList();
 			return equipment;
 		}

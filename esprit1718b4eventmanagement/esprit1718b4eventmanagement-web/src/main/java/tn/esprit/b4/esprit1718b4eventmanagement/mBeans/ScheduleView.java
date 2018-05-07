@@ -69,15 +69,13 @@ public class ScheduleView implements Serializable {
     @PostConstruct
     public void init() {
         eventModel = new DefaultScheduleModel();
+       
         for(PreventiveWork pw:wpservice.DisplayPWorks())
         {
         	 eventModel.addEvent(new DefaultScheduleEvent(pw.getObjet(), pw.getStartDate(), pw.getEndDate()));
         }
        
-        eventModel.addEvent(new DefaultScheduleEvent("Birthday Party", today1Pm(), today6Pm()));
-        eventModel.addEvent(new DefaultScheduleEvent("Breakfast at Tiffanys", nextDay9Am(), nextDay11Am()));
-        eventModel.addEvent(new DefaultScheduleEvent("Plant the new garden stuff", theDayAfter3Pm(), fourDaysLater3pm()));
-         
+              
         lazyEventModel = new LazyScheduleModel() {
              
             @Override
@@ -201,7 +199,10 @@ public class ScheduleView implements Serializable {
      
     public void addEvent(ActionEvent actionEvent) {
         if(event.getId() == null)
-        {  eventModel.addEvent(event);
+        { 	FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage("Successful",  "preventive work add " ) );
+        	eventModel.addEvent(event);
         PreventiveWork pp=new PreventiveWork();
         pp.setCreatDate(new Date());
         pp.setDescription(info);
@@ -214,6 +215,11 @@ public class ScheduleView implements Serializable {
         wpservice.addWP(pp);}
         else
         {
+        	FacesContext context = FacesContext.getCurrentInstance();
+            
+            context.addMessage(null, new FacesMessage("Successful",  "preventive work updated " ) );
+     
+
         	System.out.println("updaaaaate"+event.getTitle()); 
     PreventiveWork wp=  wpservice.findID(idselecteditem);
   	System.out.println("updaaaaate"+wp.getId()); 
@@ -408,6 +414,9 @@ public class ScheduleView implements Serializable {
 			System.out.println("deleeeeeeeeeeet"); 
 	    }
 	   public void delete1() {
+	FacesContext context = FacesContext.getCurrentInstance();
+            
+            context.addMessage(null, new FacesMessage("Successful",  "preventive work deleted " ) );
 		System.out.println("deleeeeeeeeeeet");
 		System.out.println(event.getTitle()); 
 			PreventiveWork prev=wpservice.findObject(event.getTitle());

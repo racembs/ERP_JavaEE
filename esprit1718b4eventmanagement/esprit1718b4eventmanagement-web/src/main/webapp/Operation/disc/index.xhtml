@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script src="websocket.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+
+        <div id="wrapper">
+      Welcome :  <h:outputText value="#{identity.user.firstname} "/><h:outputText value="#{identity.user.lastname} "/>
+            <h1>Equipment Dashboard</h1>
+            <p>Welcome to the Equipment Dashboard. Please specify the BROKEN DOWN EQUIPEMENT</p>
+            <br />
+            <div id="addDevice">
+                <div class="button"> <a href="#" OnClick="showForm()">Add EQUIPEMENT</a> </div>
+                <form id="addDeviceForm">
+                  <h3>EQUIPEMENT DOWN</h3>
+                <h:panelGrid columns="2">	
+                  
+                    <h:outputText value="Equipement" /> 
+                    
+                   
+                    <h:selectOneMenu name="device_name" id="device_name" value="#{ChargingStationBean.serialNum}">
+                    <f:selectItems value="#{ChargingStationBean.equipementList}" var="equipement" itemValue="#{equipement.serialNum}" itemLabel="#{equipement.serialNum}">
+                    
+                    </f:selectItems>
+                    </h:selectOneMenu>
+                    <h:outputText value="Type" /> 
+                        <select id="device_type">
+                            <option name="type" value="Motor">Motor</option>
+                            <option name="type" value="Electronics">Electronics</option>
+                            <option name="type" value="Lubrication">Lubrication</option>
+                            <option name="type" value="Transmission">Transmission</option>
+                            <option name="type" value="Bearing">Bearing</option>
+                            
+                            <option name="type" value="Other">Other</option>
+                            
+                        </select>
+
+                   <h:outputText value="Description" />
+                        <textarea name="description" id="device_description" rows="2" cols="50"></textarea>
+                    
+
+                    <input type="button" class="button" value="Add" onclick="formSubmit()"/>
+                    <input type="reset" class="button" value="Cancel" onclick="hideForm()"/>
+                    
+                    </h:panelGrid>
+                </form>
+            </div>
+            <br />
+            <h3>Currently EQUIPEMENTS DOWN:</h3>
+            <div id="content">
+            </div>
+        </div>
+
+    </body>
+</html>

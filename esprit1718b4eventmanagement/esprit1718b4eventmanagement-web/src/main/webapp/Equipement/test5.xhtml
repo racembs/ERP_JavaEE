@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+   
+                        
+                        xmlns:h="http://xmlns.jcp.org/jsf/html"
+                        xmlns:p="http://primefaces.org/ui">
+	  
+	  
+<ui:define name="content">
+<div class="inner-block">
+    <div class="cols-grids panel-widget">
+		<div class="chute chute-center text-center">
+			<div class="row mb40">
+					<div class="col-md-12">
+						<div class="demo-grid">
+						
+						<h:form id="form">
+       <p:dataView var="car" value="#{equipementBean.equipments}" rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
+                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                gridIcon="fa fa-th-large" listIcon="fa fa-bars">
+ 
+        <p:dataViewGridItem>
+            <p:panel header="#{car.id}" style="text-align:center">
+                <h:panelGrid columns="1" style="width:100%">
+                    <p:graphicImage value="/resources/images/#{car.image}"/> 
+ 
+                    <h:outputText value="#{car.description}" />
+ 
+                  
+                </h:panelGrid>
+            </p:panel>
+        </p:dataViewGridItem>
+ 
+        <p:dataViewListItem>
+            <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
+                <p:graphicImage value="/resources/images/#{car.image}" /> 
+ 
+                <p:outputPanel>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Id:" />
+                        <h:outputText value="#{car.id}" style="font-weight: bold"/>
+ 
+                        <h:outputText value="Year:" />
+                        <h:outputText value="#{car.description}" style="font-weight: bold"/>
+ 
+                        
+                    </h:panelGrid>
+                </p:outputPanel>
+ 
+             
+            </h:panelGrid>
+        </p:dataViewListItem>
+    </p:dataView>
+ 
+  
+</h:form>
+ 
+<style type="text/css">         
+    /*demo*/
+    .ui-dataview-list .ui-dataview-row {
+        border-bottom: 1px solid #A8A8A8;
+        padding: 25px 10px;
+    }
+ 
+    .logo {
+        width: 5%;
+    }
+    .detail {
+        width: 85%;
+        padding-left: 25px;
+    }
+</style>
+						
+						
+						</div>
+					</div>
+			</div>	
+		</div>
+	</div>
+</div>
+
+   
+<br/>		
+<div style= "visibility: hidden;">hidden</div>
+ 
+</ui:define>
+
+
+</ui:composition>

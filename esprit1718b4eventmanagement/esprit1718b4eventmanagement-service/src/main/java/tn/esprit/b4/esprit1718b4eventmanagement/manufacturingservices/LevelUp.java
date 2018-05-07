@@ -15,8 +15,10 @@ public class LevelUp implements Serializable, Comparator<NeededItem> {
 	public int compare(NeededItem o1, NeededItem o2) {
 		if(o1.getLevel()!=o2.getLevel())
 			return o1.getLevel()-o2.getLevel();
-		else
+		else if(o1.compareTo(o2)!=0)
 			return o1.compareTo(o2);
+		else
+			return (int) ((o1.getRand()- o2.getRand())*100);
 	}
 
 }

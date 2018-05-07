@@ -35,6 +35,7 @@ public class NeededItem implements Serializable, Comparable<NeededItem> {
 	@Column(name = "readyLotNumber")
 	private int readyLotNumber;
 	private String status;
+	private double rand = Math.random();
 	
 	@ManyToOne
 	private OrdredItem orderItem;
@@ -220,6 +221,14 @@ public class NeededItem implements Serializable, Comparable<NeededItem> {
 	@Override
 	public int compareTo(NeededItem o) {
 		return this.getNeeded_article().getArticleCode().compareTo(o.getNeeded_article().getArticleCode());
+	}
+
+	public double getRand() {
+		return rand;
+	}
+
+	public void setRand(double rand) {
+		this.rand = rand;
 	}
 
 	

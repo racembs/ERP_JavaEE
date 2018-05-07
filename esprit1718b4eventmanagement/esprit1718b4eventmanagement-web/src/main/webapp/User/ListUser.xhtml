@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<ui:include src="/template/UserHeader.xhtml" />
+</h:head>
+<h:body>
+	<div class="page-container">
+		<div class="left-content">
+			<div class="mother-grid-inner">
+				<!--header start here-->
+				<div class="header-main">
+					<div id="gpaoBody" class="clearfix">
+<!--//__________________________________________________________________________________________________________________-->
+
+	
+   <center><h2><h:outputText value="user"/></h2></center>
+    <h:form id="userForm">
+        <h:dataTable id="offers" binding="#{table}" value="#{userBean.userlist}" var="user" class="table table-striped table-hover table-bordered tableUpdated">
+         
+            <h:column>
+                <f:facet name="header">User name</f:facet>
+                <h:outputText value="#{user.firstname}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">User lastname</f:facet>
+                <h:outputText value="#{user.lastname}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Login</f:facet>
+                <h:outputText value="#{user.login}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Phone Number</f:facet>
+                <h:outputText value="#{user.numtel}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Statut</f:facet>
+                <h:outputText value="#{user.statut}" />
+            </h:column>
+              <h:column>
+                <f:facet name="header">Update</f:facet>
+                <h:commandButton action="#{userBean.UpdateB(user)}" value="Update" class="btn btn-primary" />
+            </h:column>
+  
+        </h:dataTable>
+     
+    </h:form>
+				
+
+
+
+<!--//__________________________________________________________________________________________________________________-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:body>
+<ui:include src="/template/footer.xhtml" />
+</html>

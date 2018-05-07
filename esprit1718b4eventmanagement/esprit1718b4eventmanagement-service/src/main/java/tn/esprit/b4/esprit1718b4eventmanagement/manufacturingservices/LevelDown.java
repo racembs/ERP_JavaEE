@@ -15,8 +15,10 @@ public class LevelDown implements Serializable, Comparator<NeededItem> {
 	public int compare(NeededItem o1, NeededItem o2) {
 		if(o2.getLevel()!=o1.getLevel())
 			return o2.getLevel()-o1.getLevel();
-		else
+		else if(o2.compareTo(o1)!=0)
 			return o2.compareTo(o1);
+		else
+			return (int) ((o2.getRand()- o1.getRand())*100);
 	}
 
 }

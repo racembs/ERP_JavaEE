@@ -15,6 +15,7 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import javax.naming.Context;
@@ -57,6 +58,7 @@ public class LoginController implements Initializable {
     private ImageView imgProgress;
     
     public static String date1 ;
+    public static Date da ;
 public static User user = new User();
     @FXML
     private Hyperlink lienpwdforgot;

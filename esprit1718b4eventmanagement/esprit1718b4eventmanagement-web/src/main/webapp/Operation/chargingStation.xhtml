@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	 <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'></h:outputStylesheet>
+    <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css'></h:outputStylesheet>
+    <h:outputStylesheet library="css" name="articleStyle.css"></h:outputStylesheet>
+    <title>Pooled Admin Panel Category Flat Bootstrap Responsive Web Template | Home :: w3layouts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="keywords" content="Pooled Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- Bootstrap Core CSS -->
+<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+<!-- <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />-->
+<!-- Custom CSS -->
+<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+<!-- <link href="css/style.css" rel='stylesheet' type='text/css' />-->
+<h:outputStylesheet library="css" name="morris.css"></h:outputStylesheet>
+<!-- <link rel="stylesheet" href="css/morris.css" type="text/css"/>-->
+<!-- Graph CSS -->
+<h:outputStylesheet library="css" name="font-awesome.css"></h:outputStylesheet>
+<!-- <link href="css/font-awesome.css" rel="stylesheet"> </link>-->
+<!-- jQuery -->
+<h:outputScript library="js" name="jquery-2.1.4.min.js"></h:outputScript>
+
+<!-- //jQuery -->
+<h:outputStylesheet href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400'></h:outputStylesheet>
+<!-- <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>-->
+<h:outputStylesheet href='//fonts.googleapis.com/css?family=Montserrat:400,700'></h:outputStylesheet>
+<!-- <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'></link>-->
+<!-- lined-icons -->
+<h:outputStylesheet library="css" name="icon-font.min.css"></h:outputStylesheet>
+<!-- <link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />-->
+<!-- //lined-icons -->
+    
+    
+<h:head>
+
+</h:head>
+<h:body>
+	<div class="page-container">
+		<div class="left-content">
+			<div class="mother-grid-inner">
+				<!--header start here-->
+				<div class="header-main">
+					<div id="gpaoBody" class="clearfix">
+<!--//__________________________________________________________________________________________________________________-->
+   <h2 style="color:#2ea7f2"><i>Charging Station</i></h2><br />
+
+
+<h:form>
+	<h:dataTable value="#{ChargingStationBean.chargingStations}" var="chargingStations" border="2" selectionMode="single">
+		
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="User" />
+		</f:facet>
+		<h:outputText value="#{chargingStations.user.firstname}" />
+		</h:column>
+	
+		
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="Equipement" />
+		</f:facet>
+		<h:outputText value="#{chargingStations.equipement.serialNum}" />
+		</h:column>
+		
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="Code" />
+		</f:facet>
+		<h:outputText value="#{chargingStations.code}" />
+		</h:column>
+		
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="Description" />
+		</f:facet>
+		<h:outputText value="#{chargingStations.description}" />
+		</h:column>
+		
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="Nature Post" />
+		</f:facet>
+		<h:outputText value="#{chargingStations.naturepost}" />
+		</h:column>
+		
+		<h:column>
+		<f:facet name="header">
+		<h:outputText value="Nb Days" />
+		</f:facet>
+		<h:outputText value="#{chargingStations.nbday}" />
+		</h:column>
+		
+	    <h:column>
+		<f:facet name="header">
+		<h:outputText value="Nb Hours" />
+		</f:facet>
+		<h:outputText value="#{chargingStations.nbhours}" />
+		</h:column>
+		
+<!-- 		<h:column> -->
+<!-- 		<f:facet name=""> -->
+<!-- 		</f:facet> -->
+<!-- 		<h:commandButton  action="#{ChargingStationBean.setArticle(articles)}" class="btn-inverse btn" value="Update" ></h:commandButton> -->
+<!-- 		</h:column> -->
+		
+		<h:column>
+		<f:facet name="">
+		</f:facet>
+		<h:commandButton action="#{ChargingStationBean.delete(chargingStations.chargingstationPK.id_equipment,chargingStations.chargingstationPK.idUser)}" class="btn btn-info btn-lg" value="Delete" />
+		</h:column>
+		
+				<h:column>
+		<f:facet name="">
+		</f:facet>
+		<h:commandButton action="#{ChargingStationBean.update(chargingStations)}" class="btn btn-info btn-lg" value="Update" />
+		</h:column> 
+		
+		</h:dataTable>
+	</h:form>	
+		
+			<br></br>
+		 <h2 style="color:#2ea7f2"><i> Add Charging Station</i></h2><br />
+		
+			
+	
+<h:form id="add">	
+<h:panelGrid columns="2">	
+<h:outputText value="User" />			
+<p:autoComplete id="u" value="#{ChargingStationBean.userFirstName}" completeMethod="#{ChargingStationBean.findUser}"></p:autoComplete>
+<h:outputText value="Equipement" />
+<p:autoComplete id="e" value="#{ChargingStationBean.serialNum}" completeMethod="#{ChargingStationBean.findEquipement}"></p:autoComplete>
+	
+        	<h:outputText value="Code" />
+			<h:inputText value="#{ChargingStationBean.code}" />
+			<h:outputText value="Description" />
+			<h:inputText value="#{ChargingStationBean.description}" />
+			<h:outputText value="Nature Post" />
+			<h:inputText value="#{ChargingStationBean.naturepost}" />
+			<h:outputText value="Nb Days" />
+			<h:inputText value="#{ChargingStationBean.nbday}" />
+			<h:outputText value="Nb Hours" />
+			<h:inputText value="#{ChargingStationBean.nbhours}" />
+			
+			<h:commandButton style="color:#2ea7f2" action="#{ChargingStationBean.AddChargingStation()}" class="btn-default btn" value="Add" />
+	        <h:commandButton style="color:#2ea7f2" action="#{ChargingStationBean.Confirm()}" class="btn-default btn" value="Confirm" />
+
+
+</h:panelGrid>
+					
+</h:form>
+<!--//__________________________________________________________________________________________________________________-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:body>
+
+<div>
+   <div class="page-container">
+   <!--/content-inner-->
+<div class="left-content">
+	   <div class="mother-grid-inner">
+             <!--header start here-->
+				
+
+  <!--//content-inner-->
+			<!--/sidebar-menu-->
+				<div class="sidebar-menu">
+					<header class="logo1">
+						<a href="#" class="sidebar-icon"> <span class="gmao">GPAO</span> </a> 
+					</header>
+						<div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
+                           <div class="menu">
+									<ul id="menu" >
+									
+									
+										<li><a href="#"><span>Article</span><div class="clearfix"></div></a>
+										<ul id="menu-academico-sub" >
+										   <li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/article/articleManagement.jsf">Article management</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/article/articleTree.jsf">Article Tree</a></li>
+											
+										  </ul>
+										  </li>
+										
+									<li><a href="/esprit1718b4eventmanagement-web/article/procurement.jsf"><span>Procurement</span><div class="clearfix"></div></a></li>
+									<li><a href="/esprit1718b4eventmanagement-web/Operation/chargingStation.jsf"><span>Charging Stations</span><div class="clearfix"></div></a></li>
+									
+									<li><a href="/esprit1718b4eventmanagement-web/Operation/OperatingRange.jsf"><span>Operating Range</span><div class="clearfix"></div></a></li>
+									<li><a href="gallery.html"><span>Manufacturing</span><div class="clearfix"></div></a></li>
+									<li><a href="gallery.html"><span>Orders</span><div class="clearfix"></div></a></li>
+									<li><a href="gallery.html"><span>Clients</span><div class="clearfix"></div></a></li>
+									<li><a href="https://calendar.google.com/calendar/b/2/r"><span>Calendar</span><div class="clearfix"></div></a></li>
+									<li><a href="/esprit1718b4eventmanagement-web/Operation/disc/index.jsf"><span>Dashboard</span><div class="clearfix"></div></a></li>
+									  <li><a href="/esprit1718b4eventmanagement-web/Operation/Stat.jsf"><span>Statistic</span><div class="clearfix"></div></a></li>
+									
+									
+								  </ul>
+								</div>
+							  </div>
+							  <div class="clearfix"></div>		
+							</div>
+							<script>
+							var toggle = true;
+										
+							$(".sidebar-icon").click(function() {                
+							  if (toggle)
+							  {
+								$(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+								$("#menu span").css({"position":"absolute"});
+								$(".gmao").hide();
+							  }
+							  else
+							  {
+								$(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+								setTimeout(function() {
+								  $("#menu span").css({"position":"relative"});
+								}, 400);
+								$(".gmao").show();
+							  }
+											
+											toggle = !toggle;
+										});
+							</script>
+	</div>
+	</div>
+	</div>
+</html>

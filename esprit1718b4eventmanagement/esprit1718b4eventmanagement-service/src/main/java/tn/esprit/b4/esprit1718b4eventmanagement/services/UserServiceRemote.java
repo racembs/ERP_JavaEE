@@ -14,7 +14,7 @@ public interface UserServiceRemote extends IGenericDAO<User> {
 
 	public void update1(User u);
 	public List<User> SearchLogin(String login);
-
+	public User login(String login, String password);
 	public List<User> SearchFirstName(String login);
 	public List<User> SearchMail(String login);
 	public List<User> SearchStatut(String sta);

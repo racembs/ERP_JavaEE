@@ -1,5 +1,7 @@
 package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,11 +12,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.MvtApprov;
+import tn.esprit.b4.esprit1718b4eventmanagement.entities.NeededItem;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Nomenclature;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.NomenclaturePk;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.User;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.UsualWork;
+import tn.esprit.b4.esprit1718b4eventmanagement.manufacturingservices.NeededItemService;
 
 
 @Stateless
@@ -95,6 +101,7 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 		article.setDeliveryTime(newArticle.getDeliveryTime());
 		article.setEtatOrdre(newArticle.getEtatOrdre());
 		article.setPricipalQuantity(newArticle.getPricipalQuantity());
+		article.setMinQuantity(newArticle.getMinQuantity());
 		
 	}
 
@@ -191,8 +198,70 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 		List<Article> article=query.getResultList();
 		return article;
 	}
+	
+//***********************************************Auto Order Generate**************************************************	
 
+	public void AutoOrderCreateByNeededItem() {
+		NeededItemService neededItemService=new NeededItemService();
+		MvtApprov approv=new MvtApprov();
+		java.util.Date CurrentDate=new java.util.Date();
+		java.util.Date alarmDate=new java.util.Date();
+		alarmDate.setDate(alarmDate.getDate());
+		MvtApprovService approvService=new MvtApprovService();
+		List<NeededItem> neededitems=neededItemService.findAll();
+//		for(int i=0;i<neededitems.size()-1;i++) {
+//			
+//			if(neededitems.get(i).getLevel()!=99) {
+//				neededitems.remove(neededitems.get(i));
+//			}
+//			
+//		}
+		
+		for(int i=0;i<neededitems.size()-1;i++){
+			
+			if(neededitems.get(i).getNetNeed()>0) {
+				neededitems.get(i).setNetNeed(0);
+				approv=new MvtApprov(neededitems.get(i).getNeeded_article(), null,neededitems.get(i).getNeeded_article().getPricipalQuantity(),CurrentDate,CurrentDate, null);
+				approvService.addMvtApprov(approv);
+			}
+			
+		}
+		
+		
+		
+	}
+	
+	
+	public void AutoOrderGenerateByMinimumQuantity() {
+		
+		List<Article> list = getArticlesByType("Matiére-Premiére");
 
+		for(int i=0;i<list.size();i++) {
+			
+			if(list.get(i).getQuantity()<=list.get(i).getMinQuantity()) {
+				
+				java.util.Date Date=new java.util.Date();
+				java.util.Date alarmDate=new java.util.Date();
+				
+				alarmDate.setDate(alarmDate.getDate()+list.get(i).getDeliveryTime()+1);
+				
+				int needed=list.get(i).getPricipalQuantity()-list.get(i).getQuantity();
+				
+			//	MvtApprov approv=new MvtApprov(list.get(i),null,needed,alarmDate,Date,null);
+				MvtApprovService mvtApprovService=new MvtApprovService();
+				mvtApprovService.addMvtApprov(new MvtApprov(list.get(i),null,needed,alarmDate,Date,null));
+			}
+		}
+	}
+	
+//***********************************************Auto Order Generate**************************************************	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	//*************************Done By ONS****************************//
@@ -216,5 +285,5 @@ public class ArticleService implements ArticleServiceLocal,ArticleServiceRemote{
 		List<Article> article=query.getResultList();
 		return article;
 	}
-
+	
 }

@@ -2,6 +2,7 @@ package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
 import java.util.List;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,6 +16,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
+@LocalBean
 @Stateless
 public class OperatingRangeService extends GenericDAO<OperatingRange> implements OperatingRangeServiceLocal, OperatingRangeServiceRemote {
 

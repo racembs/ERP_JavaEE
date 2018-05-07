@@ -2,10 +2,12 @@ package tn.esprit.b4.esprit1718b4eventmanagement.services;
 
 import java.util.List;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStation;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.ChargingStationPK;
@@ -14,7 +16,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.OperatingRange;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Operation;
 import tn.esprit.b4.esprit1718b4eventmanagement.utilities.GenericDAO;
 
-
+@LocalBean
 @Stateless
 public class ChargingStationService extends GenericDAO<ChargingStation> implements ChargingStationServiceLocal, ChargingStationServiceRemote {
 
@@ -109,4 +111,8 @@ public class ChargingStationService extends GenericDAO<ChargingStation> implemen
 		return list;
 	}
 
+	public void ajouter(ChargingStation cs) {
+		em.persist(cs);
+		
+	}
 }

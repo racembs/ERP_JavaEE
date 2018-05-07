@@ -1,3 +1,4 @@
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
@@ -107,16 +108,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<a href="#" class="sidebar-icon"> <span class="gmao">GMAO</span> </a> 
 					</header>
 						<div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
-                           <div class="menu">
+                               <div class="menu">
 									<ul id="menu" >
-									
-									
-										<li ><a href="#" ><i class="fa fa-tachometer"></i> <span >Dashboard</span><div class="clearfix"></div></a></li>
-										
-										
-										  <li id="menu-academico" ><h:link icon="ui-icon-trash" outcome="/faces/schedule.xhtml" value="Preventive works Planning"/><div class="clearfix"></div></li>
-									<li><a href="gallery.html"><i class="fa fa-picture-o" aria-hidden="true"></i><span>Gallery</span><div class="clearfix"></div></a></li>
-									<li id="menu-academico" ><a href="charts.html"><i class="fa fa-bar-chart"></i><span>Charts</span><div class="clearfix"></div></a></li>
+									<li><a href="/esprit1718b4eventmanagement-web/Equipement/Equipement.jsf" ><i class="fa fa-tachometer"></i><span>Equipement</span><div class="clearfix"></div></a>
+										<ul id="menu-academico-sub" >
+										   <li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/Equipement/Equipement.jsf">ADD Equipement</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/Equipement/ListEquipement.jsf">List Equipement</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/Equipement/Arbo.jsf">New Tree </a></li>
+											<li id="menu-academico-avaliacoes" ><a href="/esprit1718b4eventmanagement-web/Equipement/Analyse.jsf">Analyse</a></li>
+										  </ul>
+										  </li>
+									<li><a href="/esprit1718b4eventmanagement-web/article/procurement.jsf"><i class="fa fa-tachometer"></i><span>Procurement</span><div class="clearfix"></div></a></li>
+								
+											<li><a href="gallery.html"><i class="fa fa-picture-o" aria-hidden="true"></i><span>Gallery</span><div class="clearfix"></div></a></li>
 									 <li id="menu-academico" ><a href="#"><i class="fa fa-list-ul" aria-hidden="true"></i><span> Short Codes</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
 										   <ul id="menu-academico-sub" >
 										   <li id="menu-academico-avaliacoes" ><a href="icons.html">Icons</a></li>
@@ -131,7 +135,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<li id="menu-academico-avaliacoes" ><a href="grid.html">Grids</a></li>
 										  </ul>
 										</li>
-									 <li><a href="tabels.html"><i class="fa fa-table"></i>  <span>Tables</span><div class="clearfix"></div></a></li>
 									<li><a href="maps.html"><i class="fa fa-map-marker" aria-hidden="true"></i>  <span>Maps</span><div class="clearfix"></div></a></li>
 							        <li id="menu-academico" ><a href="#"><i class="fa fa-file-text-o"></i>  <span>Pages</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
 										 <ul id="menu-academico-sub" >
@@ -148,6 +151,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<li><a href="validation.html">Validation</a></li>
 									</ul>
 									</li>
+									 <li><a href="/esprit1718b4eventmanagement-web/faces/schedule.xhtml#"><i class="fa fa-table"></i>  <span>Preventive Planning</span><div class="clearfix"></div></a></li>
+										<li id="an" ><a href="/esprit1718b4eventmanagement-web/faces/animateTrader.xhtml#"><i class="fa fa-bar-chart"></i><span>Works dashboard</span><div class="clearfix"></div></a></li>
+								
 								  </ul>
 								</div>
 							  </div>
@@ -180,11 +186,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div>
 	</div>
 	</div>
+	<!--//_____________________________________________________Add Article____________________________________________________-->
+	<div class="page-container">
+		<div class="left-content">
+			<div class="mother-grid-inner">
+				<!--header start here-->
+				<div class="header-main">
+					<div id="gpaoBody" class="clearfix">
+					  <h2 style="color:#2ea7f2"><i>Preventive Planning</i></h2><br />
+					 
         <h:form>
+         <p:growl id="growl" showDetail="true" sticky="true" />
             <p:growl id="messages" showDetail="true" />
-     
+              <p:growl id="grow2" showDetail="true" sticky="true" />
             <h:panelGrid columnClasses="value"  style=" margin: auto;
-    width: 55%;
+    width: 90%;
 
     padding: 10px;">
                 
@@ -202,8 +218,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </h:panelGrid>
        
 			
-            <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
-                <h:panelGrid id="eventDetails" columns="2">
+            <p:dialog  widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
+                <h:panelGrid  id="eventDetails" columns="2">
                     <p:outputLabel for="title" value="Titles:" />
                     <p:inputText id="title" value="#{scheduleView.event.title}" required="true" />
 					<p:outputLabel for="info" value="Add info" />
@@ -253,16 +269,36 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
        					 </h:panelGrid>
        					   <h:panelGrid columns="2">
                     <p:commandButton type="reset" value="Reset" />
-                <p:commandButton id="addButton" value="Save" actionListener="#{scheduleView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                <p:commandButton id="addButton" value="Save" actionListener="#{scheduleView.addEvent}" update="growl" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
                 </h:panelGrid>
-                <p:commandButton id="delButton" icon="ui-icon-trash" value="Delete" actionListener="#{scheduleView.delete2}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                <p:commandButton id="delButton" icon="ui-icon-trash" value="Delete" update="grow2" actionListener="#{scheduleView.delete2}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
                 
                 </h:panelGrid>
-            </p:dialog>    
+            </p:dialog>   
+  
         </h:form>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
         
     </ui:define>
 
-  
+  <script>
+function topFunction() {
+
+	updateDiv.style.display = 'block';
+//	$("html, body").animate({ scrollBottom: $(window).height() }, "slow");
+	$("html, body").animate({scrollTop: $(document).height() + $(window).height()}, "slow");
+}
+function hide() {
+	
+	updateDiv.style.display = 'none';
+    document.body.scrollTop = 300;
+    document.documentElement.scrollTop = 300;
+}
+
+</script>
 
 </ui:composition>

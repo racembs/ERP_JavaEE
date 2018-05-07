@@ -67,6 +67,8 @@ public class Article implements Serializable {
 		private int PricipalQuantity=100;
 		@Column(name = "etatOrdre",columnDefinition = "int default 0")
 		private int etatOrdre=0;
+		@Column(name = "minQuantity",columnDefinition = "int default 50")
+		private int minQuantity=50;
 	
 		public int getEtatOrdre() {
 			return etatOrdre;
@@ -137,6 +139,13 @@ public class Article implements Serializable {
 			Quantity = quantity;
 		}
 		
+		
+		public int getMinQuantity() {
+			return minQuantity;
+		}
+		public void setMinQuantity(int minQuantity) {
+			this.minQuantity = minQuantity;
+		}
 		public Article(String articleCode, String description, String unitCode, String type, float pmp,
 				int quantity) {
 			super();

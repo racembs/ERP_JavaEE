@@ -125,6 +125,15 @@ public class OperatingRange implements Serializable {
 		return serialVersionUID;
 	}
 
+	public OperatingRange(int idoptrange, String code, String designation, String stakingcondition, int deadline) {
+		super();
+		this.idoptrange = idoptrange;
+		this.code = code;
+		this.designation = designation;
+		this.stakingcondition = stakingcondition;
+		this.deadline = deadline;
+	}
+
 
 	
 }

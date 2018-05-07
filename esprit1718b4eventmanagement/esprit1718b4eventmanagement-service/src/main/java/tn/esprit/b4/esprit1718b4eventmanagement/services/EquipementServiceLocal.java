@@ -14,6 +14,7 @@ import tn.esprit.b4.esprit1718b4eventmanagement.entities.Works;
 
 @Local
 public interface EquipementServiceLocal {
+	public List<Equipment> findEquipementSerialNum(String serie );
 	public Equipment findEquipementBySerie(String serie);
 	public int addEquippement(Equipment equipement);
 	public List<Equipment> findEquipementMarque(String marque );

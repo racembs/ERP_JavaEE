@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+	  template="/template/templateGPAO.xhtml">
+	  
+	  
+<ui:define name="content">
+<div class="inner-block">
+    <div class="cols-grids panel-widget">
+		<div class="chute chute-center text-center">
+			<div class="row mb40">
+					<div class="col-md-12">
+						<div class="demo-grid"></div>
+					</div>
+			</div>	
+		</div>
+	</div>
+</div>
+<h:form id="addForm">
+<div class="header-main">
+	<div id="gpaoBody" class="clearfix">
+		<h2 style="color:#2ea7f2"><i>Add / Update Client</i></h2><br />
+     	<div class="col-100">
+ 			<h:outputText value="Company: "/>
+ 			<h:inputText  class="effect-2" required="true" requiredMessage="le champs company est obligatoire" 
+ 						  value="#{clientBean.company}" />
+			<span class="focus-border"></span>
+		</div>
+		
+		<div class="clearfix"> </div>
+		
+		<div class="col-100">
+			<h:outputText value="Email: " />
+ 			<h:inputText id="email" class="effect-2" required="true" requiredMessage="le champs email est obligatoire"  
+ 						  value="#{clientBean.email}">
+ 				<f:validateRegex pattern=".+\@.+\..+"/>
+ 			</h:inputText>
+			<span class="focus-border"></span>
+			<h:message for="email" style="color:green"/>
+		</div>
+		
+		<div class="clearfix"> </div>
+
+		<div class="col-100">
+ 			<h:outputText value="Phone Number: " />
+ 			<h:inputText  class="effect-2" value="#{clientBean.phoneNumber}"/>
+			<span class="focus-border"></span>
+		</div>
+
+		<center>
+		<div class="col-sm-8 col-sm-offset-2"><br /><br />
+			<h:commandButton action="#{clientBean.addClient()}" class="btn-primary btn" value="submit" />
+		    <h:commandButton action="#{clientBean.reset()}" class="btn-inverse btn" value="Reset" ></h:commandButton>
+		    <h:commandButton action="#{clientBean.updateClient()}" class="btn-primary btn" value="Update" />
+		</div>	
+		</center>
+	</div>
+</div>
+</h:form>
+
+<br/>		
+<div style= "visibility: hidden;">hidden</div>
+ 
+<div class="header-main">
+	<div id="gpaoBody" class="clearfix">
+		<h2 style="color:#2ea7f2"><i>Display All Client</i></h2><br />
+		
+		<div class="container">
+  			<h3>Company</h3>
+  			<p>Display all Company List:</p>            
+    		<h:dataTable class="table table-striped" value="#{clientBean.clients}" var="client" border="2" selectionMode="single">
+				<h:column>
+					<f:facet name="header">
+					<h:outputText value="Client Code" />
+					</f:facet>
+					<h:outputText value="#{client.code}" />
+				</h:column>
+	
+				<h:column>
+					<f:facet name="header">
+					<h:outputText value="Company" />
+					</f:facet>
+					<h:outputText style="color:black" value="#{client.company}" />
+				</h:column>
+		
+				<h:column>
+					<f:facet name="header">
+					<h:outputText value="Email" />
+					</f:facet>
+					<h:outputText style="color:black" value="#{client.email}" />
+				</h:column>
+		
+				<h:column>
+					<f:facet name="header">
+					<h:outputText value="Phone Number" />
+					</f:facet>
+					<h:outputText style="color:black" value="#{client.phoneNumber}" />
+				</h:column>
+				
+				
+				<h:column>
+					<f:facet name="header">
+					<h:outputText value="Action" />
+					</f:facet>
+					<h:form id="action">
+					<h:commandButton  action="#{clientBean.clientForUpdate(client)}" class="btn btn-primary" value="Update" ></h:commandButton>
+					<h:commandButton action="#{clientBean.delete(client)}" class="btn btn-warning" value="Delete" />
+					</h:form>
+				</h:column>
+				
+				
+			</h:dataTable>
+		</div>
+		
+	</div>
+</div>
+
+<br/>		
+<div style= "visibility: hidden;">hidden</div>
+ 
+</ui:define>
+
+
+</ui:composition>
