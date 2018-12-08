@@ -7,7 +7,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 
  
   <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'></h:outputStylesheet>
@@ -36,26 +37,26 @@
          
      <div class="col-100">
  <h:outputText value="Article Code: "/>
- <h:inputText  class="effect-2"  value="#{treeBean.articleCode}" />
+ <h:inputText required="true" class="effect-2"  value="#{treeBean.articleCode}" />
 <span class="focus-border"></span>
 </div>
 
  <div class="col-100">
  <h:outputText value="Unit Code: " />
- <h:inputText  class="effect-2" value="#{treeBean.unitCode}"/>
+ <h:inputText required="true" class="effect-2" value="#{treeBean.unitCode}"/>
 <span class="focus-border"></span>
 </div>
 
  <div class="col-100">
  <h:outputText value="Price: "/>
- <h:inputText  class="effect-2"  value="#{treeBean.pmp}"/>
+ <h:inputText required="true" class="effect-2"  value="#{treeBean.pmp}"/>
 <span class="focus-border"></span>
 </div>
 
 <br />
  <div class="col-100">
  <h:outputText value="Quantity: " />
- <h:inputText  class="effect-2"  value="#{treeBean.quantity}"/>
+ <h:inputText required="true" class="effect-2"  value="#{treeBean.quantity}"/>
 <span class="focus-border"></span>
 </div>
 
@@ -73,7 +74,7 @@
 
  <div class="col-100">
  <h:outputText value="Description " />
- <h:inputText  class="effect-2"  value="#{treeBean.description}"/>
+ <h:inputText required="true" class="effect-2"  value="#{treeBean.description}"/>
 <span class="focus-border"></span>
 </div>
 
@@ -200,7 +201,7 @@
 				
 				
 				
-					
+			
 					
 					</div>
 				</div>
@@ -209,7 +210,7 @@
 	</div>
 		    <div style= "visibility: hidden;">hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden_hidden</div>     
 	
-	
+	<pe:timer timeout="1000"></pe:timer>
 	
 <!--//_________________________________________Update Article___________________________________________________________-->
 

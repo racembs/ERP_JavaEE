@@ -8,7 +8,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" 
-	xmlns:pe="http://primefaces.org/ui/extensions" >
+  
+  
+      xmlns:pe="http://primefaces.org/ui/extensions">
 
  
   <h:outputStylesheet href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'></h:outputStylesheet>
@@ -99,7 +101,7 @@
 		</h:dataTable>
 		<br/>
 		<center>
-		<h:commandButton  action="#{procurementBean.generatePdf(panier)}" class="btn-inverse btn" value="download pdf" ></h:commandButton>
+		<h:commandButton  action="#{procurementBean.generatePdf()}" class="btn-inverse btn" value="download pdf" ></h:commandButton>
 </center>
 </h:form>
 </p:dialog>
@@ -117,6 +119,7 @@
  <h2 style="color:#2ea7f2"><i>Orders List</i></h2><br />
  <p:commandButton class="btn-inverse btn" value="#{procurementBean.getBasketSize()}" type="button" onclick="PF('dlg1').show();" />
 
+  
  
  
 <h:dataTable id="table" value="#{procurementBean.orders}" var="orders" border="2" selectionMode="single">
@@ -157,16 +160,17 @@
 		</f:facet>
 		<h:graphicImage style="#{procurementBean.getDiplayOption(orders)}" library="images" name="delivered.png" />
 		<h:graphicImage style="#{procurementBean.getDiplayOptionNotDelivered(orders)}" library="images" name="ndelivered.png" />
-		<pe:timer  
+		<pe:timer 
         timeout="#{procurementBean.getRemainingTime(orders)}"  
         format="human"
         visible="#{procurementBean.getVisibility(orders)}"
         />  
         <pe:timer  
-        timeout="#{procurementBean.getAlarmRaminingTime(orders)}"  
+        timeout="#{procurementBean.getAlarmRemainingTime(orders)}"  
         format="HH:mm:ss"
         visible="#{procurementBean.getAlarmVisibility(orders)}"
         />  
+    
 		
 		
 		</h:column>
@@ -195,8 +199,7 @@
 <br/>
 
 <p:growl id="msgs" showDetail="true" />
- 
-
+  
 
     				
 					</div>
@@ -224,17 +227,60 @@
 
 
 
-<script  type="text/javascript">
-// function hide(){
-// 	document.getElementById('timer').style.visibility = 'hidden';
-	
-	 
-// }
-// document.addEventListener('DOMContentLoaded', function() {
-// }, false);
-
-</script>
 </h:body>
- 
+ <!--//_________________________________________ Menu ___________________________________________________________-->
+<div>
+   <div class="page-container">
+   <!--/content-inner-->
+<div class="left-content">
+	   <div class="mother-grid-inner">
+             <!--header start here-->
+				
+
+  <!--//content-inner-->
+			<!--/sidebar-menu-->
+				<div class="sidebar-menu">
+					<header class="logo1">
+						<a href="#" class="sidebar-icon"> <span class="gmao">GPAO</span> </a> 
+					</header>
+						<div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
+                           <div class="menu">
+									<ul id="menu" >
+									
+									<li><a href="/esprit1718b4eventmanagement-web/article/magasinierGpao.jsf"><span>orders</span><div class="clearfix"></div></a></li>
+									<li><a href="/esprit1718b4eventmanagement-web/"><span>LogOut</span><div class="clearfix"></div></a></li>
+									
+									 
+									
+								  </ul>
+								</div>
+							  </div>
+							  <div class="clearfix"></div>		
+							</div>
+							<script>
+							var toggle = true;
+										
+							$(".sidebar-icon").click(function() {                
+							  if (toggle)
+							  {
+								$(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+								$("#menu span").css({"position":"absolute"});
+								$(".gmao").hide();
+							  }
+							  else
+							  {
+								$(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+								setTimeout(function() {
+								  $("#menu span").css({"position":"relative"});
+								}, 400);
+								$(".gmao").show();
+							  }
+											
+											toggle = !toggle;
+										});
+							</script>
+	</div>
+	</div>
+	</div>
 
 </html>

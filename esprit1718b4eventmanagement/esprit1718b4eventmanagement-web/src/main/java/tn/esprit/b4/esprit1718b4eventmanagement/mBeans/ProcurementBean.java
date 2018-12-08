@@ -50,12 +50,8 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.codec.Base64.InputStream;
-import com.itextpdf.text.pdf.codec.Base64.OutputStream;
+
 
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.Article;
 import tn.esprit.b4.esprit1718b4eventmanagement.entities.MvtApprov;
@@ -85,6 +81,7 @@ public class ProcurementBean implements Serializable {
 	public Paragraph ordersParagraph;
     private LineChartModel areaModel;
     private static List<MvtApprov> panierOrdres=new ArrayList<>();
+    private int size;
 
 
 	
@@ -102,6 +99,8 @@ public class ProcurementBean implements Serializable {
 	    public void init() throws NamingException {
 	    	AutoOrderGenerateByMinimumQuantity();
 	    	createAreaModel();
+	    	List<MvtApprov> list =approvService.getAllOrders();
+	    	this.size=list.size();
 	    	
 			 }
 	 
@@ -127,7 +126,8 @@ public class ProcurementBean implements Serializable {
 		    context.addMessage(null, new FacesMessage("order is already added" ) );
 		    return "background-color: red !important;";
 		}else {
-			panierOrdres.add(order);FacesContext context = FacesContext.getCurrentInstance();
+			panierOrdres.add(order);
+			FacesContext context = FacesContext.getCurrentInstance();
 		    context.addMessage(null, new FacesMessage("order is successfully added" ) );
 		    return "background-color: green !important;";
 		}
@@ -156,14 +156,20 @@ public class ProcurementBean implements Serializable {
  public boolean getAlarmVisibility(MvtApprov order) {
 	 java.util.Date Date=new java.util.Date();
 	 int day=(order.getRequestDate().getDate()+order.getArticle().getDeliveryTime()-Date.getDate());
-		if(day<=0&&order.getReceptionDate()==null) {
-			return true;
+		if(day<=0&&order.getReceptionDate()==null&&(order.getAlarmDate().getDate()==Date.getDate()||order.getAlarmDate().getDate()==Date.getDate()+1)) {
+			if(order.getAlarmDate().getDate()==Date.getDate()&&Date.getHours()>11) {
+				return false;
+			}else {
+				return true;
+			}
+			
 		}
 		else {
 			return false;
 		}
  }
- public long getAlarmRaminingTime(MvtApprov order) {
+ 
+ public long getAlarmRemainingTime(MvtApprov order) {
 	 java.util.Date Date=new java.util.Date();
 	 long second;
 	 
@@ -179,7 +185,6 @@ public class ProcurementBean implements Serializable {
  }
  public String getDiplayOption(MvtApprov order) {
 	 java.util.Date Date=new java.util.Date();
-	 int day=(order.getRequestDate().getDate()+order.getArticle().getDeliveryTime()-Date.getDate());
 	 if(order.getReceptionDate()==null) {
 		
 		 return "display:none";
@@ -190,12 +195,16 @@ public class ProcurementBean implements Serializable {
  }
  public String getDiplayOptionNotDelivered(MvtApprov order) {
 	 java.util.Date Date=new java.util.Date();
- if(order.getReceptionDate()!=null||(Date.getDate()<order.getAlarmDate().getDate()&&Date.getHours()<12)) {
+		if(order.getReceptionDate()==null) {
+			if((order.getAlarmDate().compareTo(Date)==0&&Date.getHours()>11)||order.getAlarmDate().compareTo(Date)<0) {
+				return "";	
+					
+				}else  return "display:none";
+				
 		 
-		 return "display:none";
-		 
-	 }
-	 else return "";
+	 }else  return "display:none";
+		
+	
  }
  public boolean getVisibility(MvtApprov order) {
 	 java.util.Date Date=new java.util.Date();
@@ -377,7 +386,9 @@ public List<String> findArticles(String query){
 }
 public void addOrder() {
 	article=articleService.findArticleByCode(articleCode).get(0);
-	approvService.addMvtApprov(new MvtApprov(article, null, quantity,null,requestDate,null));
+	
+	approvService.addMvtApprov(new MvtApprov(article, null, quantity,requestDate,requestDate,null));
+	createAreaModel();
 }
 
 public void updateArticleParamaters() {
@@ -498,6 +509,7 @@ public void confirmReception(int orderId) {
 
 	public List<MvtApprov> getOrders() {
 		List <MvtApprov> list =approvService.getAllOrders();
+		
 		return list;
 	}
 
@@ -570,6 +582,14 @@ public int getMinQuantity() {
 
 	
 	
+public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
 public void AutoOrderGenerateByMinimumQuantity() {
 		
 		List<Article> list = articleService.getArticlesByType("Matiére-Premiére");
@@ -584,27 +604,24 @@ public void AutoOrderGenerateByMinimumQuantity() {
 				alarmDate.setDate(alarmDate.getDate()+list.get(i).getDeliveryTime()+1);
 				
 				int needed=list.get(i).getPricipalQuantity()-list.get(i).getQuantity();
-
+				
 				approvService.addMvtApprov(new MvtApprov(list.get(i),null,needed,alarmDate,Date,null));
 				list.get(i).setEtatOrdre(1);
 				articleService.updateArticle(list.get(i));
+				
+				
+				
 			}
 		}
 	}
 	
-public void generatePdf(MvtApprov order) throws IOException{
+public void generatePdf() throws IOException{
 	try {
     	   try {
     	
     String FILE = "C:\\Users\\RBS\\Desktop\\test.pdf";
 Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
       Font.BOLD, BaseColor.DARK_GRAY);
-Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,
-      Font.NORMAL, BaseColor.RED);
-Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,
-      Font.BOLD, BaseColor.GRAY);
-Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 9,
-      Font.BOLD);
   
   
               Document my_pdf_report = new Document();
@@ -622,8 +639,11 @@ Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 9,
               
               Calendar c = Calendar.getInstance();
             my_pdf_report.add(new Paragraph("Date : "+c.getTime()));
-      		my_pdf_report.add(new Paragraph("Aticle UnitCode : "+order.getArticle().getUnitCode()));
-      	    my_pdf_report.add(new Paragraph("Quantity : "+order.getQuantity())); 
+            for(int i=0;i<panierOrdres.size();i++) {
+            	my_pdf_report.add(new Paragraph("Aticle UnitCode : "+panierOrdres.get(i).getArticle().getUnitCode()));
+          	    my_pdf_report.add(new Paragraph("Quantity : "+panierOrdres.get(i).getQuantity()+"\n")); 
+            }
+      		
       	    my_pdf_report.add(new Paragraph("   ")); 
       	    my_pdf_report.add(new Paragraph("   "));  
          
